@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Alfonso Garcia-Caro">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <link href='https://fonts.googleapis.com/css?family=Josefin+Sans:400,300,600,700|Roboto+Mono' rel='stylesheet' type='text/css'>
+    <link href="//fable-compiler.github.io/content/custom.css" rel='stylesheet' type='text/css'>
+    <script src="//fable-compiler.github.io/content/tips.js"></script>
+    <link rel="stylesheet" type="text/css" href="//fable-compiler.github.io/content/snippets.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <script language="javascript" type="text/javascript">
+      function init() {
+          try {
+            websocket = new WebSocket("ws://"+window.location.host+"/websocket");
+            websocket.onmessage = function(evt) { location.reload(); };
+          } catch(e) { /* For local development only */ }
+      }
+      window.addEventListener("load", init, false);
+    </script>
+    
+  <title>Using NUnit with Fable - F# |> BABEL</title>
+  <script src="../scripts/core.min.js"></script>
+  <script src="../scripts/require.js"></script>
+  
+  <meta name="description" content="Write unit tests compatible with both .NET and JS">
+
+</head>
+<body>
+
+  <div class="fb-navbar">
+  <div class="container">
+  <nav class="navbar navbar-default">
+    <div class="navbar-wrapper">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="//fable-compiler.github.io">Fable</a>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class=""><a href="//fable-compiler.github.io">home</a></li>
+          <li class="active"><a href="//fable-compiler.github.io/samples.html">samples</a></li>
+          <li class=""><a href="//fable-compiler.github.io/docs.html">docs</a></li>
+          <li><a href="https://github.com/fable-compiler/Fable">source</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  </div>
+  </div>
+
+  <div class="fb-content-wrapper">
+  
+<div class="fb-heading">
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>Using NUnit with Fable</h1>
+      <p>Write unit tests compatible with both .NET and JS</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="container fb-content">
+  <div class="row">
+    <div class="col-md-1 col-lg-2"></div>
+    <div class="col-sm-12 col-md-10 col-lg-8">
+      <p></p>
+    </div>
+    <div class="col-md-1 col-lg-2"></div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="app-container" style="">
+        
+      </div>
+      <script>
+        requirejs.config({
+          baseUrl: '.',
+          paths: { 'fable-core': '../scripts/fable-core.min',  }
+        });
+        requirejs(["nunit"]);
+      </script>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-1 col-lg-2"></div>
+    <div class="col-sm-12 col-md-10 col-lg-8">
+      <p>This tutorial shows how to compile NUnit tests so they can be run in JS with <a href="https://mochajs.org">Mocha</a>.
+<a href="https://github.com/fable-compiler/Fable/tree/master/src/tests">Fable's own tests</a> are written using this method.
+However, please note this is not a core feature of Fable as it comes through a <a href="http://fable-compiler.github.io/docs/plugins.html">plugin</a>.
+You can view the <a href="https://github.com/fable-compiler/Fable/blob/master/samples/node/nunit/index.fsx">source code</a>,
+<a href="https://github.com/fable-compiler/Fable/blob/master/samples/node/nunit/package.json">package.json</a> and
+<a href="https://github.com/fable-compiler/Fable/blob/master/samples/node/nunit/fableconfig.json">fableconfig.json</a> on
+GitHub. This page shows the full source code of the demo.</p>
+<h2><a name="Configuring-Fable-and-packages" class="anchor" href="#Configuring-Fable-and-packages">Configuring Fable and packages</a></h2>
+<p>Fable projects usually include a <a href="https://docs.npmjs.com/files/package.json">package.json</a> and a <a href="http://fable-compiler.github.io/docs/compiling.html#fableconfig-json">fableconfig.json</a> files.
+Let's have a look at the first one:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="js">{
+  <span class="s">"private"</span>: <span class="k">true</span>,
+  <span class="s">"dependencies"</span>: {
+    <span class="s">"fable-core"</span>: <span class="s">"^0.1.6"</span>,
+    <span class="s">"isomorphic-fetch"</span>: <span class="s">"^2.2.1"</span>
+  },
+  <span class="s">"devDependencies"</span>: {
+    <span class="s">"fable-import-fetch"</span>: <span class="s">"^0.0.2"</span>,
+    <span class="s">"fable-plugins-nunit"</span>: <span class="s">"^0.0.3"</span>,
+    <span class="s">"mocha"</span>: <span class="s">"^2.5.3"</span>
+  },
+  <span class="s">"scripts"</span>: {
+    <span class="s">"test"</span>: <span class="s">"mocha out"</span>
+  },
+  <span class="s">"engines"</span>: {
+    <span class="s">"fable"</span>: <span class="s">"&gt;=0.3.18"</span>
+  }
+}
+</code></pre></td></tr></table>
+<p>There're several interesting things going on here:</p>
+<ul>
+<li>
+First we install our <strong>npm dependencies</strong>: <code>fable-core</code> which is necessary for all Fable projects
+and <code>isomorphic-fetch</code> in order to use Fetch API on node (see below).
+</li>
+<li>
+Then we install the <strong>development dependencies</strong>: If we were to distribute this package, these dependencies
+wouldn't be installed on the machine of the final consumers as they are only necessary for development.
+<code>fable-import-fetch</code> is the F# type definition for Fetch API, <code>fable-plugins-nunit</code> will extend Fable's
+capabilities to allow NUnit tests compilation and <code>mocha</code> is our test runner on JS.
+</li>
+<li>
+We define a <strong>npm script</strong>: So tests will be run when calling <code>npm test</code> (or <code>npm run-script test</code>).
+The script is as simple as calling <code>mocha</code> and passing the directory where the tests compiled to JS are to be found.
+</li>
+<li>Finally we force the user to compile the project using <code>fable-compiler@0.3.18</code> or higher.</li>
+</ul>
+<p>Let's check now <code>fableconfig.json</code>:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="js">{
+    <span class="s">"module"</span>: <span class="s">"commonjs"</span>,
+    <span class="s">"projFile"</span>: <span class="s">"index.fsx"</span>,
+    <span class="s">"outDir"</span>: <span class="s">"out"</span>,
+    <span class="s">"plugins"</span>: <span class="s">"node_modules/fable-plugins-nunit/Fable.Plugins.NUnit.dll"</span>,
+    <span class="s">"scripts"</span>: {
+        <span class="s">"prebuild"</span>: <span class="s">"npm install"</span>,
+        <span class="s">"postbuild"</span>: <span class="s">"npm test"</span>
+    }
+}
+</code></pre></td></tr></table>
+<p>As in other samples, we specify the JS <code>module</code> system to target, the F# <code>projFile</code>
+and the <code>outDir</code> where to put the compiled JS files. But the interesting part here is
+we pass <code>Fable.Plugins.NUnit.dll</code> through the <code>plugins</code> parameter (which can also be an array)
+and with <code>scripts.postbuild</code> we make Fable run <code>npm test</code> (defined in package.json above)
+after building the project.</p>
+<h2><a name="Referencing-Fable-and-dependencies" class="anchor" href="#Referencing-Fable-and-dependencies">Referencing Fable and dependencies</a></h2>
+<p>As this is a simple F# script, we make a reference to <code>Fable.Core.dll</code> with the <code>#r</code> directive
+and open the appropriate namespaces.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="prep">#r</span> <span class="s">&quot;System.Threading.dll&quot;</span>
+<span class="prep">#r</span> <span class="s">&quot;node_modules/fable-core/Fable.Core.dll&quot;</span>
+
+<span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">System</span>
+<span class="k">open</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">Fable</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="i">Core</span>
+<span class="k">open</span> <span onmouseout="hideTip(event, 'fs2', 4)" onmouseover="showTip(event, 'fs2', 4)" class="i">Fable</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs4', 5)" onmouseover="showTip(event, 'fs4', 5)" class="i">Import</span>
+</code></pre></td>
+</tr>
+</table>
+<p>The demo uses the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API">Fetch API</a> and,
+as we'll be running the tests on node, we have to polyfill it using the <code>isomorphic-fetch</code> package.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="prep">#load</span> <span class="s">&quot;node_modules/fable-import-fetch/Fable.Import.Fetch.fs&quot;</span>
+
+<span class="k">open</span> <span onmouseout="hideTip(event, 'fs2', 6)" onmouseover="showTip(event, 'fs2', 6)" class="i">Fable</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs4', 7)" onmouseover="showTip(event, 'fs4', 7)" class="i">Import</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs5', 8)" onmouseover="showTip(event, 'fs5', 8)" class="i">Fetch</span>
+
+<span onmouseout="hideTip(event, 'fs6', 9)" onmouseover="showTip(event, 'fs6', 9)" class="t">JsInterop</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs7', 10)" onmouseover="showTip(event, 'fs7', 10)" class="f">importAll</span> <span class="s">&quot;isomorphic-fetch&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Here we're using the testing methods and attributes from <code>Fable.Core</code>. If you're referencing
+<code>NUnit</code> library instead, just comment out the next line and adapt the two lines below to
+the path where <code>NUnit</code> can be found on your machine.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span onmouseout="hideTip(event, 'fs2', 11)" onmouseover="showTip(event, 'fs2', 11)" class="i">Fable</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs3', 12)" onmouseover="showTip(event, 'fs3', 12)" class="i">Core</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs8', 13)" onmouseover="showTip(event, 'fs8', 13)" class="i">Testing</span>
+
+<span class="c">// #r &quot;../../../packages/NUnit/lib/nunit.framework.dll&quot;</span>
+<span class="c">// open NUnit.Framework</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Now we can write tests as we would do with NUnit. The most commonly used attributes
+(<code>TestFixture</code> and <code>Test</code>) and their respective <code>SetUp</code>/<code>TearDown</code> counterparts are
+implemented. For assertions, however, only <code>Assert.AreEqual</code> is available. But more
+features will be available soon.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+<span class="l">21: </span>
+<span class="l">22: </span>
+<span class="l">23: </span>
+<span class="l">24: </span>
+<span class="l">25: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">[&lt;<span onmouseout="hideTip(event, 'fs9', 14)" onmouseover="showTip(event, 'fs9', 14)" class="t">TestFixture</span>&gt;]
+<span class="k">module</span> <span onmouseout="hideTip(event, 'fs10', 15)" onmouseover="showTip(event, 'fs10', 15)" class="t">MyTests</span> <span class="o">=</span>
+
+  <span class="c">// Convenience method</span>
+  <span class="k">let</span> <span onmouseout="hideTip(event, 'fs11', 16)" onmouseover="showTip(event, 'fs11', 16)" class="f">equal</span> (<span onmouseout="hideTip(event, 'fs12', 17)" onmouseover="showTip(event, 'fs12', 17)" class="i">expected</span><span class="o">:</span> <span class="o">&#39;</span><span class="i">T</span>) (<span onmouseout="hideTip(event, 'fs13', 18)" onmouseover="showTip(event, 'fs13', 18)" class="i">actual</span><span class="o">:</span> <span class="o">&#39;</span><span class="i">T</span>) <span class="o">=</span>
+      <span onmouseout="hideTip(event, 'fs14', 19)" onmouseover="showTip(event, 'fs14', 19)" class="t">Assert</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs15', 20)" onmouseover="showTip(event, 'fs15', 20)" class="f">AreEqual</span>(<span onmouseout="hideTip(event, 'fs12', 21)" onmouseover="showTip(event, 'fs12', 21)" class="i">expected</span>, <span onmouseout="hideTip(event, 'fs13', 22)" onmouseover="showTip(event, 'fs13', 22)" class="i">actual</span>)
+
+  [&lt;<span onmouseout="hideTip(event, 'fs16', 23)" onmouseover="showTip(event, 'fs16', 23)" class="t">Test</span>&gt;]
+  <span class="k">let</span> <span onmouseout="hideTip(event, 'fs17', 24)" onmouseover="showTip(event, 'fs17', 24)" class="f">``Structural comparison with arrays works``</span>() <span class="o">=</span>
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs18', 25)" onmouseover="showTip(event, 'fs18', 25)" class="i">xs1</span> <span class="o">=</span> [| <span class="n">1</span>; <span class="n">2</span>; <span class="n">3</span> |]
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs19', 26)" onmouseover="showTip(event, 'fs19', 26)" class="i">xs2</span> <span class="o">=</span> [| <span class="n">1</span>; <span class="n">2</span>; <span class="n">3</span> |]
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs20', 27)" onmouseover="showTip(event, 'fs20', 27)" class="i">xs3</span> <span class="o">=</span> [| <span class="n">1</span>; <span class="n">2</span>; <span class="n">4</span> |]
+    <span onmouseout="hideTip(event, 'fs11', 28)" onmouseover="showTip(event, 'fs11', 28)" class="f">equal</span> <span class="k">true</span> (<span onmouseout="hideTip(event, 'fs18', 29)" onmouseover="showTip(event, 'fs18', 29)" class="i">xs1</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs19', 30)" onmouseover="showTip(event, 'fs19', 30)" class="i">xs2</span>)
+    <span onmouseout="hideTip(event, 'fs11', 31)" onmouseover="showTip(event, 'fs11', 31)" class="f">equal</span> <span class="k">false</span> (<span onmouseout="hideTip(event, 'fs18', 32)" onmouseover="showTip(event, 'fs18', 32)" class="i">xs1</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs20', 33)" onmouseover="showTip(event, 'fs20', 33)" class="i">xs3</span>)
+    <span onmouseout="hideTip(event, 'fs11', 34)" onmouseover="showTip(event, 'fs11', 34)" class="f">equal</span> <span class="k">true</span> (<span onmouseout="hideTip(event, 'fs18', 35)" onmouseover="showTip(event, 'fs18', 35)" class="i">xs1</span> <span class="o">&lt;&gt;</span> <span onmouseout="hideTip(event, 'fs20', 36)" onmouseover="showTip(event, 'fs20', 36)" class="i">xs3</span>)
+    <span onmouseout="hideTip(event, 'fs11', 37)" onmouseover="showTip(event, 'fs11', 37)" class="f">equal</span> <span class="k">false</span> (<span onmouseout="hideTip(event, 'fs18', 38)" onmouseover="showTip(event, 'fs18', 38)" class="i">xs1</span> <span class="o">&lt;&gt;</span> <span onmouseout="hideTip(event, 'fs19', 39)" onmouseover="showTip(event, 'fs19', 39)" class="i">xs2</span>)
+  
+  [&lt;<span onmouseout="hideTip(event, 'fs16', 40)" onmouseover="showTip(event, 'fs16', 40)" class="t">Test</span>&gt;]
+  <span class="k">let</span> <span onmouseout="hideTip(event, 'fs21', 41)" onmouseover="showTip(event, 'fs21', 41)" class="f">``Set.intersectMany works``</span>() <span class="o">=</span>
+      <span class="k">let</span> <span onmouseout="hideTip(event, 'fs22', 42)" onmouseover="showTip(event, 'fs22', 42)" class="i">xs</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs23', 43)" onmouseover="showTip(event, 'fs23', 43)" class="f">set</span> [<span class="n">1</span>; <span class="n">2</span>]
+      <span class="k">let</span> <span onmouseout="hideTip(event, 'fs24', 44)" onmouseover="showTip(event, 'fs24', 44)" class="i">ys</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs25', 45)" onmouseover="showTip(event, 'fs25', 45)" class="t">Set</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs26', 46)" onmouseover="showTip(event, 'fs26', 46)" class="f">singleton</span> <span class="n">2</span>
+      <span class="k">let</span> <span onmouseout="hideTip(event, 'fs27', 47)" onmouseover="showTip(event, 'fs27', 47)" class="i">zs</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs23', 48)" onmouseover="showTip(event, 'fs23', 48)" class="f">set</span> [<span class="n">2</span>; <span class="n">3</span>]
+      <span class="k">let</span> <span onmouseout="hideTip(event, 'fs28', 49)" onmouseover="showTip(event, 'fs28', 49)" class="i">ks</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs25', 50)" onmouseover="showTip(event, 'fs25', 50)" class="t">Set</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs29', 51)" onmouseover="showTip(event, 'fs29', 51)" class="f">intersectMany</span> [<span onmouseout="hideTip(event, 'fs22', 52)" onmouseover="showTip(event, 'fs22', 52)" class="i">xs</span>; <span onmouseout="hideTip(event, 'fs24', 53)" onmouseover="showTip(event, 'fs24', 53)" class="i">ys</span>; <span onmouseout="hideTip(event, 'fs27', 54)" onmouseover="showTip(event, 'fs27', 54)" class="i">zs</span>] 
+      (<span onmouseout="hideTip(event, 'fs28', 55)" onmouseover="showTip(event, 'fs28', 55)" class="i">ks</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs30', 56)" onmouseover="showTip(event, 'fs30', 56)" class="f">Contains</span> <span class="n">2</span> <span class="o">&amp;&amp;</span> <span onmouseout="hideTip(event, 'fs31', 57)" onmouseover="showTip(event, 'fs31', 57)" class="f">not</span>(<span onmouseout="hideTip(event, 'fs28', 58)" onmouseover="showTip(event, 'fs28', 58)" class="i">ks</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs30', 59)" onmouseover="showTip(event, 'fs30', 59)" class="f">Contains</span> <span class="n">1</span> <span class="o">||</span> <span onmouseout="hideTip(event, 'fs28', 60)" onmouseover="showTip(event, 'fs28', 60)" class="i">ks</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs30', 61)" onmouseover="showTip(event, 'fs30', 61)" class="f">Contains</span> <span class="n">3</span>))
+      <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs11', 62)" onmouseover="showTip(event, 'fs11', 62)" class="f">equal</span> <span class="k">true</span>
+</code></pre></td>
+</tr>
+</table>
+<p>With some limitations, it's also possible to write asynchronous tests. For this,
+you just need to <strong>wrap the whole test</strong> with <code>async { ... } |&gt; Async.RunSynchronously</code>.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">  [&lt;<span onmouseout="hideTip(event, 'fs16', 63)" onmouseover="showTip(event, 'fs16', 63)" class="t">Test</span>&gt;]
+  <span class="k">let</span> <span onmouseout="hideTip(event, 'fs32', 64)" onmouseover="showTip(event, 'fs32', 64)" class="f">``Async.Parallel works``</span>() <span class="o">=</span>
+    <span onmouseout="hideTip(event, 'fs33', 65)" onmouseover="showTip(event, 'fs33', 65)" class="i">async</span> {
+        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs34', 66)" onmouseover="showTip(event, 'fs34', 66)" class="f">getWebPageLength</span> <span onmouseout="hideTip(event, 'fs35', 67)" onmouseover="showTip(event, 'fs35', 67)" class="i">url</span> <span class="o">=</span>
+            <span onmouseout="hideTip(event, 'fs33', 68)" onmouseover="showTip(event, 'fs33', 68)" class="i">async</span> {
+                <span class="k">let!</span> <span onmouseout="hideTip(event, 'fs36', 69)" onmouseover="showTip(event, 'fs36', 69)" class="i">res</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs37', 70)" onmouseover="showTip(event, 'fs37', 70)" class="t">GlobalFetch</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs38', 71)" onmouseover="showTip(event, 'fs38', 71)" class="f">fetch</span>(<span onmouseout="hideTip(event, 'fs39', 72)" onmouseover="showTip(event, 'fs39', 72)" class="p">Url</span> <span onmouseout="hideTip(event, 'fs35', 73)" onmouseover="showTip(event, 'fs35', 73)" class="i">url</span>) <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs40', 74)" onmouseover="showTip(event, 'fs40', 74)" class="t">Async</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs41', 75)" onmouseover="showTip(event, 'fs41', 75)" class="f">AwaitPromise</span>
+                <span class="k">let!</span> <span onmouseout="hideTip(event, 'fs42', 76)" onmouseover="showTip(event, 'fs42', 76)" class="i">txt</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs36', 77)" onmouseover="showTip(event, 'fs36', 77)" class="i">res</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs43', 78)" onmouseover="showTip(event, 'fs43', 78)" class="f">text</span>() <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs40', 79)" onmouseover="showTip(event, 'fs40', 79)" class="t">Async</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs41', 80)" onmouseover="showTip(event, 'fs41', 80)" class="f">AwaitPromise</span> 
+                <span class="k">return</span> <span onmouseout="hideTip(event, 'fs42', 81)" onmouseover="showTip(event, 'fs42', 81)" class="i">txt</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs44', 82)" onmouseover="showTip(event, 'fs44', 82)" class="i">Length</span>
+            }
+        <span class="k">let!</span> <span onmouseout="hideTip(event, 'fs45', 83)" onmouseover="showTip(event, 'fs45', 83)" class="i">results</span> <span class="o">=</span>
+          [ <span class="s">&quot;http://fable-compiler.github.io&quot;</span>
+            <span class="s">&quot;http://babeljs.io&quot;</span>
+            <span class="s">&quot;http://fsharp.org&quot;</span> ]
+          <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs46', 84)" onmouseover="showTip(event, 'fs46', 84)" class="t">List</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs47', 85)" onmouseover="showTip(event, 'fs47', 85)" class="f">map</span> <span onmouseout="hideTip(event, 'fs34', 86)" onmouseover="showTip(event, 'fs34', 86)" class="f">getWebPageLength</span>
+          <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs40', 87)" onmouseover="showTip(event, 'fs40', 87)" class="t">Async</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs48', 88)" onmouseover="showTip(event, 'fs48', 88)" class="f">Parallel</span>
+        <span class="c">// The sum of lenghts of all web pages is</span>
+        <span class="c">// expected to be bigger than 100 characters</span>
+        (<span onmouseout="hideTip(event, 'fs49', 89)" onmouseover="showTip(event, 'fs49', 89)" class="t">Array</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs50', 90)" onmouseover="showTip(event, 'fs50', 90)" class="f">sum</span> <span onmouseout="hideTip(event, 'fs45', 91)" onmouseover="showTip(event, 'fs45', 91)" class="i">results</span>) <span class="o">&gt;</span> <span class="n">100</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs11', 92)" onmouseover="showTip(event, 'fs11', 92)" class="f">equal</span> <span class="k">true</span>
+    } <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs40', 93)" onmouseover="showTip(event, 'fs40', 93)" class="t">Async</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs51', 94)" onmouseover="showTip(event, 'fs51', 94)" class="f">RunSynchronously</span>
+</code></pre></td>
+</tr>
+</table>
+<blockquote>
+<p>Note: Besides the tests, <code>Async.RunSynchronously</code> is not compatible with Fable as
+asynchronous operations are not allowed to lock the main thread in JS.</p>
+</blockquote>
+
+
+<div class="tip" id="fs1">namespace System</div>
+<div class="tip" id="fs2">namespace Fable</div>
+<div class="tip" id="fs3">namespace Fable.Core</div>
+<div class="tip" id="fs4">namespace Fable.Import</div>
+<div class="tip" id="fs5">module Fetch<br /><br />from Fable.Import</div>
+<div class="tip" id="fs6">module JsInterop<br /><br />from Fable.Core</div>
+<div class="tip" id="fs7">val importAll : path:string -&gt; &#39;T<br /><br />Full name: Fable.Core.JsInterop.importAll</div>
+<div class="tip" id="fs8">module Testing<br /><br />from Fable.Core</div>
+<div class="tip" id="fs9">Multiple items<br />type TestFixtureAttribute =<br />&#160;&#160;inherit Attribute<br />&#160;&#160;new : unit -&gt; TestFixtureAttribute<br /><br />Full name: Fable.Core.Testing.TestFixtureAttribute<br /><br />--------------------<br />new : unit -&gt; TestFixtureAttribute</div>
+<div class="tip" id="fs10">module MyTests<br /><br />from Index</div>
+<div class="tip" id="fs11">val equal : expected:&#39;T -&gt; actual:&#39;T -&gt; unit<br /><br />Full name: Index.MyTests.equal</div>
+<div class="tip" id="fs12">val expected : &#39;T</div>
+<div class="tip" id="fs13">val actual : &#39;T</div>
+<div class="tip" id="fs14">type Assert =<br />&#160;&#160;static member AreEqual : x:&#39;T * y:&#39;T -&gt; unit<br /><br />Full name: Fable.Core.Testing.Assert</div>
+<div class="tip" id="fs15">static member Assert.AreEqual : x:&#39;T * y:&#39;T -&gt; unit</div>
+<div class="tip" id="fs16">Multiple items<br />type TestAttribute =<br />&#160;&#160;inherit Attribute<br />&#160;&#160;new : unit -&gt; TestAttribute<br /><br />Full name: Fable.Core.Testing.TestAttribute<br /><br />--------------------<br />new : unit -&gt; TestAttribute</div>
+<div class="tip" id="fs17">val ( Structural comparison with arrays works ) : unit -&gt; unit<br /><br />Full name: Index.MyTests.( Structural comparison with arrays works )</div>
+<div class="tip" id="fs18">val xs1 : int []</div>
+<div class="tip" id="fs19">val xs2 : int []</div>
+<div class="tip" id="fs20">val xs3 : int []</div>
+<div class="tip" id="fs21">val ( Set.intersectMany works ) : unit -&gt; unit<br /><br />Full name: Index.MyTests.( Set.intersectMany works )</div>
+<div class="tip" id="fs22">val xs : Set&lt;int&gt;</div>
+<div class="tip" id="fs23">val set : elements:seq&lt;&#39;T&gt; -&gt; Set&lt;&#39;T&gt; (requires comparison)<br /><br />Full name: Microsoft.FSharp.Core.ExtraTopLevelOperators.set</div>
+<div class="tip" id="fs24">val ys : Set&lt;int&gt;</div>
+<div class="tip" id="fs25">Multiple items<br />module Set<br /><br />from Microsoft.FSharp.Collections<br /><br />--------------------<br />type Set&lt;&#39;T (requires comparison)&gt; =<br />&#160;&#160;interface IComparable<br />&#160;&#160;interface IEnumerable<br />&#160;&#160;interface IEnumerable&lt;&#39;T&gt;<br />&#160;&#160;interface ICollection&lt;&#39;T&gt;<br />&#160;&#160;new : elements:seq&lt;&#39;T&gt; -&gt; Set&lt;&#39;T&gt;<br />&#160;&#160;member Add : value:&#39;T -&gt; Set&lt;&#39;T&gt;<br />&#160;&#160;member Contains : value:&#39;T -&gt; bool<br />&#160;&#160;override Equals : obj -&gt; bool<br />&#160;&#160;member IsProperSubsetOf : otherSet:Set&lt;&#39;T&gt; -&gt; bool<br />&#160;&#160;member IsProperSupersetOf : otherSet:Set&lt;&#39;T&gt; -&gt; bool<br />&#160;&#160;...<br /><br />Full name: Microsoft.FSharp.Collections.Set&lt;_&gt;<br /><br />--------------------<br />new : elements:seq&lt;&#39;T&gt; -&gt; Set&lt;&#39;T&gt;</div>
+<div class="tip" id="fs26">val singleton : value:&#39;T -&gt; Set&lt;&#39;T&gt; (requires comparison)<br /><br />Full name: Microsoft.FSharp.Collections.Set.singleton</div>
+<div class="tip" id="fs27">val zs : Set&lt;int&gt;</div>
+<div class="tip" id="fs28">val ks : Set&lt;int&gt;</div>
+<div class="tip" id="fs29">val intersectMany : sets:seq&lt;Set&lt;&#39;T&gt;&gt; -&gt; Set&lt;&#39;T&gt; (requires comparison)<br /><br />Full name: Microsoft.FSharp.Collections.Set.intersectMany</div>
+<div class="tip" id="fs30">member Set.Contains : value:&#39;T -&gt; bool</div>
+<div class="tip" id="fs31">val not : value:bool -&gt; bool<br /><br />Full name: Microsoft.FSharp.Core.Operators.not</div>
+<div class="tip" id="fs32">val ( Async.Parallel works ) : unit -&gt; unit<br /><br />Full name: Index.MyTests.( Async.Parallel works )</div>
+<div class="tip" id="fs33">val async : AsyncBuilder<br /><br />Full name: Microsoft.FSharp.Core.ExtraTopLevelOperators.async</div>
+<div class="tip" id="fs34">val getWebPageLength : (string -&gt; Async&lt;int&gt;)</div>
+<div class="tip" id="fs35">val url : string</div>
+<div class="tip" id="fs36">val res : Response</div>
+<div class="tip" id="fs37">type GlobalFetch =<br />&#160;&#160;static member fetch : req:RequestInfo * ?init:RequestInit -&gt; Promise&lt;Response&gt;<br /><br />Full name: Fable.Import.Fetch.GlobalFetch</div>
+<div class="tip" id="fs38">static member GlobalFetch.fetch : req:RequestInfo * ?init:RequestInit -&gt; JS.Promise&lt;Response&gt;</div>
+<div class="tip" id="fs39">union case RequestInfo.Url: string -&gt; RequestInfo</div>
+<div class="tip" id="fs40">Multiple items<br />type Async<br />static member AsBeginEnd : computation:(&#39;Arg -&gt; Async&lt;&#39;T&gt;) -&gt; (&#39;Arg * AsyncCallback * obj -&gt; IAsyncResult) * (IAsyncResult -&gt; &#39;T) * (IAsyncResult -&gt; unit)<br />static member AwaitEvent : event:IEvent&lt;&#39;Del,&#39;T&gt; * ?cancelAction:(unit -&gt; unit) -&gt; Async&lt;&#39;T&gt; (requires delegate and &#39;Del :&gt; Delegate)<br />static member AwaitIAsyncResult : iar:IAsyncResult * ?millisecondsTimeout:int -&gt; Async&lt;bool&gt;<br />static member AwaitTask : task:Task -&gt; Async&lt;unit&gt;<br />static member AwaitTask : task:Task&lt;&#39;T&gt; -&gt; Async&lt;&#39;T&gt;<br />static member AwaitWaitHandle : waitHandle:WaitHandle * ?millisecondsTimeout:int -&gt; Async&lt;bool&gt;<br />static member CancelDefaultToken : unit -&gt; unit<br />static member Catch : computation:Async&lt;&#39;T&gt; -&gt; Async&lt;Choice&lt;&#39;T,exn&gt;&gt;<br />static member Choice : computations:seq&lt;Async&lt;&#39;T option&gt;&gt; -&gt; Async&lt;&#39;T option&gt;<br />static member FromBeginEnd : beginAction:(AsyncCallback * obj -&gt; IAsyncResult) * endAction:(IAsyncResult -&gt; &#39;T) * ?cancelAction:(unit -&gt; unit) -&gt; Async&lt;&#39;T&gt;<br />static member FromBeginEnd : arg:&#39;Arg1 * beginAction:(&#39;Arg1 * AsyncCallback * obj -&gt; IAsyncResult) * endAction:(IAsyncResult -&gt; &#39;T) * ?cancelAction:(unit -&gt; unit) -&gt; Async&lt;&#39;T&gt;<br />static member FromBeginEnd : arg1:&#39;Arg1 * arg2:&#39;Arg2 * beginAction:(&#39;Arg1 * &#39;Arg2 * AsyncCallback * obj -&gt; IAsyncResult) * endAction:(IAsyncResult -&gt; &#39;T) * ?cancelAction:(unit -&gt; unit) -&gt; Async&lt;&#39;T&gt;<br />static member FromBeginEnd : arg1:&#39;Arg1 * arg2:&#39;Arg2 * arg3:&#39;Arg3 * beginAction:(&#39;Arg1 * &#39;Arg2 * &#39;Arg3 * AsyncCallback * obj -&gt; IAsyncResult) * endAction:(IAsyncResult -&gt; &#39;T) * ?cancelAction:(unit -&gt; unit) -&gt; Async&lt;&#39;T&gt;<br />static member FromContinuations : callback:((&#39;T -&gt; unit) * (exn -&gt; unit) * (OperationCanceledException -&gt; unit) -&gt; unit) -&gt; Async&lt;&#39;T&gt;<br />static member Ignore : computation:Async&lt;&#39;T&gt; -&gt; Async&lt;unit&gt;<br />static member OnCancel : interruption:(unit -&gt; unit) -&gt; Async&lt;IDisposable&gt;<br />static member Parallel : computations:seq&lt;Async&lt;&#39;T&gt;&gt; -&gt; Async&lt;&#39;T []&gt;<br />static member RunSynchronously : computation:Async&lt;&#39;T&gt; * ?timeout:int * ?cancellationToken:CancellationToken -&gt; &#39;T<br />static member Sleep : millisecondsDueTime:int -&gt; Async&lt;unit&gt;<br />static member Start : computation:Async&lt;unit&gt; * ?cancellationToken:CancellationToken -&gt; unit<br />static member StartAsTask : computation:Async&lt;&#39;T&gt; * ?taskCreationOptions:TaskCreationOptions * ?cancellationToken:CancellationToken -&gt; Task&lt;&#39;T&gt;<br />static member StartChild : computation:Async&lt;&#39;T&gt; * ?millisecondsTimeout:int -&gt; Async&lt;Async&lt;&#39;T&gt;&gt;<br />static member StartChildAsTask : computation:Async&lt;&#39;T&gt; * ?taskCreationOptions:TaskCreationOptions -&gt; Async&lt;Task&lt;&#39;T&gt;&gt;<br />static member StartImmediate : computation:Async&lt;unit&gt; * ?cancellationToken:CancellationToken -&gt; unit<br />static member StartWithContinuations : computation:Async&lt;&#39;T&gt; * continuation:(&#39;T -&gt; unit) * exceptionContinuation:(exn -&gt; unit) * cancellationContinuation:(OperationCanceledException -&gt; unit) * ?cancellationToken:CancellationToken -&gt; unit<br />static member SwitchToContext : syncContext:SynchronizationContext -&gt; Async&lt;unit&gt;<br />static member SwitchToNewThread : unit -&gt; Async&lt;unit&gt;<br />static member SwitchToThreadPool : unit -&gt; Async&lt;unit&gt;<br />static member TryCancelled : computation:Async&lt;&#39;T&gt; * compensation:(OperationCanceledException -&gt; unit) -&gt; Async&lt;&#39;T&gt;<br />static member CancellationToken : Async&lt;CancellationToken&gt;<br />static member DefaultCancellationToken : CancellationToken<br /><br />Full name: Microsoft.FSharp.Control.Async<br /><br />--------------------<br />type Async&lt;&#39;T&gt;<br /><br />Full name: Microsoft.FSharp.Control.Async&lt;_&gt;</div>
+<div class="tip" id="fs41">static member Async.AwaitPromise : promise:JS.Promise&lt;&#39;T&gt; -&gt; Async&lt;&#39;T&gt;</div>
+<div class="tip" id="fs42">val txt : string</div>
+<div class="tip" id="fs43">abstract member Body.text : unit -&gt; JS.Promise&lt;string&gt;</div>
+<div class="tip" id="fs44">property String.Length: int</div>
+<div class="tip" id="fs45">val results : int []</div>
+<div class="tip" id="fs46">Multiple items<br />module List<br /><br />from Microsoft.FSharp.Collections<br /><br />--------------------<br />type List&lt;&#39;T&gt; =<br />&#160;&#160;| ( [] )<br />&#160;&#160;| ( :: ) of Head: &#39;T * Tail: &#39;T list<br />&#160;&#160;interface IEnumerable<br />&#160;&#160;interface IEnumerable&lt;&#39;T&gt;<br />&#160;&#160;member GetSlice : startIndex:int option * endIndex:int option -&gt; &#39;T list<br />&#160;&#160;member Head : &#39;T<br />&#160;&#160;member IsEmpty : bool<br />&#160;&#160;member Item : index:int -&gt; &#39;T with get<br />&#160;&#160;member Length : int<br />&#160;&#160;member Tail : &#39;T list<br />&#160;&#160;static member Cons : head:&#39;T * tail:&#39;T list -&gt; &#39;T list<br />&#160;&#160;static member Empty : &#39;T list<br /><br />Full name: Microsoft.FSharp.Collections.List&lt;_&gt;</div>
+<div class="tip" id="fs47">val map : mapping:(&#39;T -&gt; &#39;U) -&gt; list:&#39;T list -&gt; &#39;U list<br /><br />Full name: Microsoft.FSharp.Collections.List.map</div>
+<div class="tip" id="fs48">static member Async.Parallel : computations:seq&lt;Async&lt;&#39;T&gt;&gt; -&gt; Async&lt;&#39;T []&gt;</div>
+<div class="tip" id="fs49">type Array =<br />&#160;&#160;member Clone : unit -&gt; obj<br />&#160;&#160;member CopyTo : array:Array * index:int -&gt; unit + 1 overload<br />&#160;&#160;member GetEnumerator : unit -&gt; IEnumerator<br />&#160;&#160;member GetLength : dimension:int -&gt; int<br />&#160;&#160;member GetLongLength : dimension:int -&gt; int64<br />&#160;&#160;member GetLowerBound : dimension:int -&gt; int<br />&#160;&#160;member GetUpperBound : dimension:int -&gt; int<br />&#160;&#160;member GetValue : [&lt;ParamArray&gt;] indices:int[] -&gt; obj + 7 overloads<br />&#160;&#160;member Initialize : unit -&gt; unit<br />&#160;&#160;member IsFixedSize : bool<br />&#160;&#160;...<br /><br />Full name: System.Array</div>
+<div class="tip" id="fs50">val sum : array:&#39;T [] -&gt; &#39;T (requires member ( + ) and member get_Zero)<br /><br />Full name: Microsoft.FSharp.Collections.Array.sum</div>
+<div class="tip" id="fs51">static member Async.RunSynchronously : computation:Async&lt;&#39;T&gt; * ?timeout:int * ?cancellationToken:Threading.CancellationToken -&gt; &#39;T</div>
+
+    </div>
+    <div class="col-md-1 col-lg-2"></div>
+  </div>
+</div>
+
+  </div>
+
+  <a class="gh-forkme" href="https://github.com/fable-compiler/Fable"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+</body>
+</html>
