@@ -114,9 +114,7 @@ define(["exports", "queue", "topojson", "d3", "fable-core"], function (exports, 
       }).tween("rotate", function (_arg3) {
         var patternInput = _d.geo.centroid(countries[i]);
 
-        var p2 = patternInput[1];
-        var p1 = patternInput[0];
-        var r = d3.interpolate(projection.rotate(), [-p1, -p2]);
+        var r = d3.interpolate(projection.rotate(), [-patternInput[0], -patternInput[1]]);
         return function (t) {
           return render(countries[i])(r(t));
         };

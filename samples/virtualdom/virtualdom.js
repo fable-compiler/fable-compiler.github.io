@@ -89,29 +89,11 @@ define(["exports", "fable-core", "./fable_external/Fable.Helpers.Virtualdom-1273
             return [m, _FableHelpers.App.toActionList(function (h) {
                 fakeAjaxCall(model, h);
             })];
-        }(command.Case === "Increment" ? function () {
-            var x = command.Fields[0];
-            return model + x;
-        }() : function () {
-            var x = command.Fields[0];
-            return model - x;
-        }());
+        }(command.Case === "Increment" ? model + command.Fields[0] : model - command.Fields[0]);
     }
 
     function counterView(model) {
-        var bgColor = function () {
-            var x = model;
-            return x > 10;
-        }() ? function () {
-            var x = model;
-            return "red";
-        }() : function () {
-            var x = model;
-            return x < 0;
-        }() ? function () {
-            var x = model;
-            return "blue";
-        }() : "green";
+        var bgColor = model > 10 ? "red" : model < 0 ? "blue" : "green";
         return function () {
             var tagName = "div";
             return function (children) {
@@ -220,27 +202,21 @@ define(["exports", "fable-core", "./fable_external/Fable.Helpers.Virtualdom-1273
 
     function nestedUpdate(model, action) {
         return action.Case === "Top" ? function () {
-            var ca = action.Fields[0];
-            var patternInput = counterUpdate(model.Top, ca);
-            var res = patternInput[0];
-            var action_1 = patternInput[1];
+            var patternInput = counterUpdate(model.Top, action.Fields[0]);
 
             var action_ = _FableHelpers.App.mapActions(function (arg0) {
                 return new NestedAction("Top", [arg0]);
-            })(action_1);
+            })(patternInput[1]);
 
-            return [new NestedModel(res, model.Bottom), action_];
+            return [new NestedModel(patternInput[0], model.Bottom), action_];
         }() : action.Case === "Bottom" ? function () {
-            var ca = action.Fields[0];
-            var patternInput = counterUpdate(model.Bottom, ca);
-            var res = patternInput[0];
-            var action_1 = patternInput[1];
+            var patternInput = counterUpdate(model.Bottom, action.Fields[0]);
 
             var action_ = _FableHelpers.App.mapActions(function (arg0) {
                 return new NestedAction("Bottom", [arg0]);
-            })(action_1);
+            })(patternInput[1]);
 
-            return [new NestedModel(model.Top, res), action_];
+            return [new NestedModel(model.Top, patternInput[0]), action_];
         }() : [new NestedModel(0, 0), new _fableCore.List()];
     }
 
@@ -425,36 +401,21 @@ define(["exports", "fable-core", "./fable_external/Fable.Helpers.Virtualdom-1273
                     return new Item(model.Input, false, Id, false);
                 }()]));
             });
-        }() : msg.Case === "ChangeInput" ? function () {
-            var v = msg.Fields[0];
-            return new TodoModel(model.Items, v, model.Filter);
-        }() : msg.Case === "MarkAsDone" ? function () {
-            var i = msg.Fields[0];
-            return updateItem(function () {
-                var Done = true;
-                return new Item(i.Name, Done, i.Id, i.IsEditing);
-            }())(model);
-        }() : msg.Case === "CheckAll" ? checkAllWith(true) : msg.Case === "UnCheckAll" ? checkAllWith(false) : msg.Case === "Destroy" ? function () {
-            var i = msg.Fields[0];
-            return updateItems(model)(function () {
-                var predicate = function predicate(i_) {
-                    return i_.Id !== i.Id;
-                };
+        }() : msg.Case === "ChangeInput" ? new TodoModel(model.Items, msg.Fields[0], model.Filter) : msg.Case === "MarkAsDone" ? updateItem(function () {
+            var Done = true;
+            return new Item(msg.Fields[0].Name, Done, msg.Fields[0].Id, msg.Fields[0].IsEditing);
+        }())(model) : msg.Case === "CheckAll" ? checkAllWith(true) : msg.Case === "UnCheckAll" ? checkAllWith(false) : msg.Case === "Destroy" ? updateItems(model)(function () {
+            var predicate = function predicate(i_) {
+                return i_.Id !== msg.Fields[0].Id;
+            };
 
-                return function (list) {
-                    return _fableCore.List.filter(predicate, list);
-                };
-            }());
-        }() : msg.Case === "ToggleItem" ? function () {
-            var i = msg.Fields[0];
-            return updateItem(function () {
-                var Done = !i.Done;
-                return new Item(i.Name, Done, i.Id, i.IsEditing);
-            }())(model);
-        }() : msg.Case === "SetActiveFilter" ? function () {
-            var f = msg.Fields[0];
-            return new TodoModel(model.Items, model.Input, f);
-        }() : msg.Case === "ClearCompleted" ? updateItems(model)(function () {
+            return function (list) {
+                return _fableCore.List.filter(predicate, list);
+            };
+        }()) : msg.Case === "ToggleItem" ? updateItem(function () {
+            var Done = !msg.Fields[0].Done;
+            return new Item(msg.Fields[0].Name, Done, msg.Fields[0].Id, msg.Fields[0].IsEditing);
+        }())(model) : msg.Case === "SetActiveFilter" ? new TodoModel(model.Items, model.Input, msg.Fields[0]) : msg.Case === "ClearCompleted" ? updateItems(model)(function () {
             var predicate = function predicate(i) {
                 return !i.Done;
             };
@@ -462,26 +423,16 @@ define(["exports", "fable-core", "./fable_external/Fable.Helpers.Virtualdom-1273
             return function (list) {
                 return _fableCore.List.filter(predicate, list);
             };
-        }()) : msg.Case === "EditItem" ? function () {
-            var i = msg.Fields[0];
-            return updateItem(function () {
-                var IsEditing = true;
-                return new Item(i.Name, i.Done, i.Id, IsEditing);
-            }())(model);
-        }() : msg.Case === "SaveItem" ? function () {
-            var str = msg.Fields[1];
-            var i = msg.Fields[0];
-            return updateItem(function () {
-                var IsEditing = false;
-                return new Item(str, i.Done, i.Id, IsEditing);
-            }())(model);
-        }() : model;
-        var jsCall = msg.Case === "EditItem" ? function () {
-            var i = msg.Fields[0];
-            return _FableHelpers.App.toActionList(function (x) {
-                document.getElementById("item-" + String(i.Id)).focus();
-            });
-        }() : new _fableCore.List();
+        }()) : msg.Case === "EditItem" ? updateItem(function () {
+            var IsEditing = true;
+            return new Item(msg.Fields[0].Name, msg.Fields[0].Done, msg.Fields[0].Id, IsEditing);
+        }())(model) : msg.Case === "SaveItem" ? updateItem(function () {
+            var IsEditing = false;
+            return new Item(msg.Fields[1], msg.Fields[0].Done, msg.Fields[0].Id, IsEditing);
+        }())(model) : model;
+        var jsCall = msg.Case === "EditItem" ? _FableHelpers.App.toActionList(function (x) {
+            document.getElementById("item-" + String(msg.Fields[0].Id)).focus();
+        }) : new _fableCore.List();
         return [model_, jsCall];
     }
 
@@ -492,8 +443,6 @@ define(["exports", "fable-core", "./fable_external/Fable.Helpers.Virtualdom-1273
     function filter(activeFilter, f) {
         var linkClass = f.Equals(activeFilter) ? "selected" : "";
         var patternInput = filterToTextAndUrl(f);
-        var url = patternInput[1];
-        var fText = patternInput[0];
         return function () {
             var tagName = "li";
             return function (children) {
@@ -504,9 +453,9 @@ define(["exports", "fable-core", "./fable_external/Fable.Helpers.Virtualdom-1273
         }()(_fableCore.List.ofArray([function () {
             var tagName = "a";
             return function (children) {
-                return new _FableHelpers.Html.Types.DomNode("Element", [[tagName, _fableCore.List.ofArray([new _FableHelpers.Html.Types.Attribute("Attribute", [["href", "#/" + url]]), new _FableHelpers.Html.Types.Attribute("Attribute", [["class", linkClass]])])], children]);
+                return new _FableHelpers.Html.Types.DomNode("Element", [[tagName, _fableCore.List.ofArray([new _FableHelpers.Html.Types.Attribute("Attribute", [["href", "#/" + patternInput[1]]]), new _FableHelpers.Html.Types.Attribute("Attribute", [["class", linkClass]])])], children]);
             };
-        }()(_fableCore.List.ofArray([new _FableHelpers.Html.Types.DomNode("Text", [fText])]))]));
+        }()(_fableCore.List.ofArray([new _FableHelpers.Html.Types.DomNode("Text", [patternInput[0]])]))]));
     }
 
     function filters(model) {
@@ -515,12 +464,9 @@ define(["exports", "fable-core", "./fable_external/Fable.Helpers.Virtualdom-1273
             return function (children) {
                 return new _FableHelpers.Html.Types.DomNode("Element", [[tagName, _fableCore.List.ofArray([new _FableHelpers.Html.Types.Attribute("Attribute", [["class", "filters"]])])], children]);
             };
-        }()(_fableCore.List.map(function () {
-            var activeFilter = model.Filter;
-            return function (f) {
-                return filter(activeFilter, f);
-            };
-        }(), _fableCore.List.ofArray([new Filter("All", []), new Filter("Active", []), new Filter("Completed", [])])));
+        }()(_fableCore.List.map(function (f) {
+            return filter(model.Filter, f);
+        }, _fableCore.List.ofArray([new Filter("All", []), new Filter("Active", []), new Filter("Completed", [])])));
     }
 
     function todoFooter(model) {
@@ -633,11 +579,9 @@ define(["exports", "fable-core", "./fable_external/Fable.Helpers.Virtualdom-1273
     }
 
     function todoMain(model) {
-        var items = model.Items;
-
         var allChecked = _fableCore.Seq.exists(function (i) {
             return !i.Done;
-        }, items);
+        }, model.Items);
 
         return function () {
             var tagName = "section";
@@ -651,7 +595,7 @@ define(["exports", "fable-core", "./fable_external/Fable.Helpers.Virtualdom-1273
             return function (children) {
                 return new _FableHelpers.Html.Types.DomNode("Element", [[tagName, _fableCore.List.ofArray([new _FableHelpers.Html.Types.Attribute("Attribute", [["for", "toggle-all"]])])], children]);
             };
-        }()(_fableCore.List.ofArray([new _FableHelpers.Html.Types.DomNode("Text", ["Mark all as complete"])])), itemList(items, model.Filter)]));
+        }()(_fableCore.List.ofArray([new _FableHelpers.Html.Types.DomNode("Text", ["Mark all as complete"])])), itemList(model.Items, model.Filter)]));
     }
 
     function todoView(model) {
@@ -670,10 +614,7 @@ define(["exports", "fable-core", "./fable_external/Fable.Helpers.Virtualdom-1273
             return function (arg00) {
                 return JSON.parse(arg00);
             }(function (_arg1) {
-                return _arg1 == null ? "[]" : function () {
-                    var x = _arg1;
-                    return x;
-                }();
+                return _arg1 == null ? "[]" : _arg1;
             }(localStorage.getItem(STORAGE_KEY)));
         };
 
@@ -695,9 +636,7 @@ define(["exports", "fable-core", "./fable_external/Fable.Helpers.Virtualdom-1273
         console.log(x);
     }), _FableHelpers.App.withSubscriber("storagesub", function (_arg1) {
         if (_arg1.Case === "ModelChanged") {
-            var old = _arg1.Fields[1];
-            var newModel = _arg1.Fields[0];
-            Storage.save(Array.from(newModel.Items));
+            Storage.save(Array.from(_arg1.Fields[0].Items));
         }
     }, _FableHelpers.App.createApp(initModel, function (model) {
         return todoView(model);

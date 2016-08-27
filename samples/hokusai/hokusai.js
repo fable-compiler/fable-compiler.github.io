@@ -58,32 +58,24 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
     }], [{
       key: "Abs",
       value: function Abs(_arg1) {
-        var r = _arg1.Fields[0];
-        var i = _arg1.Fields[1];
-        var patternInput = [Math.abs(r), Math.abs(i)];
-        var num2 = patternInput[1];
-        var num1 = patternInput[0];
+        var patternInput = [Math.abs(_arg1.Fields[0]), Math.abs(_arg1.Fields[1])];
 
-        if (num1 > num2) {
-          var num3 = num2 / num1;
-          return num1 * Math.sqrt(1 + num3 * num3);
+        if (patternInput[0] > patternInput[1]) {
+          var num3 = patternInput[1] / patternInput[0];
+          return patternInput[0] * Math.sqrt(1 + num3 * num3);
         } else {
-          if (num2 === 0) {
-            return num1;
+          if (patternInput[1] === 0) {
+            return patternInput[0];
           } else {
-            var num4 = num1 / num2;
-            return num2 * Math.sqrt(1 + num4 * num4);
+            var num4 = patternInput[0] / patternInput[1];
+            return patternInput[1] * Math.sqrt(1 + num4 * num4);
           }
         }
       }
     }, {
       key: "op_Addition",
       value: function op_Addition(_arg2, _arg3) {
-        var r1 = _arg2.Fields[0];
-        var i1 = _arg2.Fields[1];
-        var r2 = _arg3.Fields[0];
-        var i2 = _arg3.Fields[1];
-        return new Complex("Complex", [r1 + r2, i1 + i2]);
+        return new Complex("Complex", [_arg2.Fields[0] + _arg3.Fields[0], _arg2.Fields[1] + _arg3.Fields[1]]);
       }
     }]);
 
@@ -94,10 +86,8 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
 
   var ComplexModule = exports.ComplexModule = function ($exports) {
     var Pow = $exports.Pow = function Pow(_arg1, power) {
-      var r = _arg1.Fields[0];
-      var i = _arg1.Fields[1];
-      var num = Complex.Abs(new Complex("Complex", [r, i]));
-      var num2 = Math.atan2(i, r);
+      var num = Complex.Abs(new Complex("Complex", [_arg1.Fields[0], _arg1.Fields[1]]));
+      var num2 = Math.atan2(_arg1.Fields[1], _arg1.Fields[0]);
       var num3 = power * num2;
       var num4 = Math.pow(num, power);
       return new Complex("Complex", [num4 * Math.cos(num3), num4 * Math.sin(num3)]);
@@ -131,9 +121,6 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
   }
 
   function op_MinusMinusGreater(_arg1, count, r2, g2, b2) {
-    var r1 = _arg1[0];
-    var g1 = _arg1[1];
-    var b1 = _arg1[2];
     return _fableCore.Seq.toList(_fableCore.Seq.delay(function (unitVar) {
       return _fableCore.Seq.map(function (c_1) {
         var k = c_1 / count;
@@ -144,7 +131,7 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
           };
         };
 
-        return [mid(r1)(r2), mid(g1)(g2), mid(b1)(b2)];
+        return [mid(_arg1[0])(r2), mid(_arg1[1])(g2), mid(_arg1[2])(b2)];
       }, _fableCore.Seq.range(0, count - 1));
     }));
   }
@@ -153,71 +140,36 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
     return _fableCore.Seq.append(function () {
       var tupledArg = op_MinusMinus([245, 219, 184], 3);
       var tupledArg_1 = [245, 219, 184];
-      var arg00_ = tupledArg[0];
-      var count = tupledArg[1];
-      var r2 = tupledArg_1[0];
-      var g2 = tupledArg_1[1];
-      var b2 = tupledArg_1[2];
-      return op_MinusMinusGreater(arg00_, count, r2, g2, b2);
+      return op_MinusMinusGreater(tupledArg[0], tupledArg[1], tupledArg_1[0], tupledArg_1[1], tupledArg_1[2]);
     }(), _fableCore.Seq.delay(function (unitVar_1) {
       return _fableCore.Seq.append(function () {
         var tupledArg = op_MinusMinus([245, 219, 184], 4);
         var tupledArg_1 = [138, 173, 179];
-        var arg00_ = tupledArg[0];
-        var count = tupledArg[1];
-        var r2 = tupledArg_1[0];
-        var g2 = tupledArg_1[1];
-        var b2 = tupledArg_1[2];
-        return op_MinusMinusGreater(arg00_, count, r2, g2, b2);
+        return op_MinusMinusGreater(tupledArg[0], tupledArg[1], tupledArg_1[0], tupledArg_1[1], tupledArg_1[2]);
       }(), _fableCore.Seq.delay(function (unitVar_2) {
         return _fableCore.Seq.append(function () {
           var tupledArg = op_MinusMinus([138, 173, 179], 4);
           var tupledArg_1 = [2, 12, 74];
-          var arg00_ = tupledArg[0];
-          var count = tupledArg[1];
-          var r2 = tupledArg_1[0];
-          var g2 = tupledArg_1[1];
-          var b2 = tupledArg_1[2];
-          return op_MinusMinusGreater(arg00_, count, r2, g2, b2);
+          return op_MinusMinusGreater(tupledArg[0], tupledArg[1], tupledArg_1[0], tupledArg_1[1], tupledArg_1[2]);
         }(), _fableCore.Seq.delay(function (unitVar_3) {
           return _fableCore.Seq.append(function () {
             var tupledArg = op_MinusMinus([2, 12, 74], 4);
             var tupledArg_1 = [61, 102, 130];
-            var arg00_ = tupledArg[0];
-            var count = tupledArg[1];
-            var r2 = tupledArg_1[0];
-            var g2 = tupledArg_1[1];
-            var b2 = tupledArg_1[2];
-            return op_MinusMinusGreater(arg00_, count, r2, g2, b2);
+            return op_MinusMinusGreater(tupledArg[0], tupledArg[1], tupledArg_1[0], tupledArg_1[1], tupledArg_1[2]);
           }(), _fableCore.Seq.delay(function (unitVar_4) {
             return _fableCore.Seq.append(function () {
               var tupledArg = op_MinusMinus([61, 102, 130], 8);
               var tupledArg_1 = [249, 243, 221];
-              var arg00_ = tupledArg[0];
-              var count = tupledArg[1];
-              var r2 = tupledArg_1[0];
-              var g2 = tupledArg_1[1];
-              var b2 = tupledArg_1[2];
-              return op_MinusMinusGreater(arg00_, count, r2, g2, b2);
+              return op_MinusMinusGreater(tupledArg[0], tupledArg[1], tupledArg_1[0], tupledArg_1[1], tupledArg_1[2]);
             }(), _fableCore.Seq.delay(function (unitVar_5) {
               return _fableCore.Seq.append(function () {
                 var tupledArg = op_MinusMinus([249, 243, 221], 32);
                 var tupledArg_1 = [138, 173, 179];
-                var arg00_ = tupledArg[0];
-                var count = tupledArg[1];
-                var r2 = tupledArg_1[0];
-                var g2 = tupledArg_1[1];
-                var b2 = tupledArg_1[2];
-                return op_MinusMinusGreater(arg00_, count, r2, g2, b2);
+                return op_MinusMinusGreater(tupledArg[0], tupledArg[1], tupledArg_1[0], tupledArg_1[1], tupledArg_1[2]);
               }(), _fableCore.Seq.delay(function (unitVar_6) {
                 var tupledArg = op_MinusMinus([138, 173, 179], 32);
                 var tupledArg_1 = [61, 102, 130];
-                var arg00_ = tupledArg[0];
-                var count = tupledArg[1];
-                var r2 = tupledArg_1[0];
-                var g2 = tupledArg_1[1];
-                var b2 = tupledArg_1[2];
-                return op_MinusMinusGreater(arg00_, count, r2, g2, b2);
+                return op_MinusMinusGreater(tupledArg[0], tupledArg[1], tupledArg_1[0], tupledArg_1[1], tupledArg_1[2]);
               }));
             }));
           }));
@@ -249,18 +201,13 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
         var ctx = canv.getContext('2d');
         var img = ctx.createImageData(width, height);
         return builder_.For(_fableCore.Seq.range(0, Math.floor(width) - 1), function (_arg1) {
-          var x = _arg1;
           return builder_.Combine(builder_.For(_fableCore.Seq.range(0, Math.floor(height) - 1), function (_arg2) {
-            var y = _arg2;
-            var x_ = x / width * (w[1] - w[0]) + w[0];
-            var y_ = y / height * (h[1] - h[0]) + h[0];
+            var x_ = _arg1 / width * (w[1] - w[0]) + w[0];
+            var y_ = _arg2 / height * (h[1] - h[0]) + h[0];
             var it = countIterations(palette.length, x_, y_);
             {
               var tupledArg = palette[it];
-              var r = tupledArg[0];
-              var g = tupledArg[1];
-              var b = tupledArg[2];
-              setPixel(img, x, y, width, r, g, b);
+              setPixel(img, _arg1, _arg2, width, tupledArg[0], tupledArg[1], tupledArg[2]);
             }
             return builder_.Zero();
           }), builder_.Delay(function (unitVar_1) {

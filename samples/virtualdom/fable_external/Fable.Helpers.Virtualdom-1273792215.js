@@ -63,76 +63,29 @@ define(["exports", "fable-core", "virtual-dom"], function (exports, _fableCore, 
         };
 
         var mapAttributes = $exports.mapAttributes = function mapAttributes(mapping, attribute) {
-            return attribute.Case === "Style" ? function () {
-                var s = attribute.Fields[0];
-                return new Types.Attribute("Style", [s]);
-            }() : attribute.Case === "Property" ? function () {
-                var kv = attribute.Fields[0];
-                return new Types.Attribute("Property", [kv]);
-            }() : attribute.Case === "Attribute" ? function () {
-                var kv = attribute.Fields[0];
-                return new Types.Attribute("Attribute", [kv]);
-            }() : function () {
-                var eb = attribute.Fields[0];
-                var e = eb[0];
-                var f = eb[1];
-                return mapEventHandler(mapping, e, f);
-            }();
+            return attribute.Case === "Style" ? new Types.Attribute("Style", [attribute.Fields[0]]) : attribute.Case === "Property" ? new Types.Attribute("Property", [attribute.Fields[0]]) : attribute.Case === "Attribute" ? new Types.Attribute("Attribute", [attribute.Fields[0]]) : mapEventHandler(mapping, attribute.Fields[0][0], attribute.Fields[0][1]);
         };
 
         var mapElem = $exports.mapElem = function mapElem(mapping, node_0, node_1) {
             var node = [node_0, node_1];
-            var tag = node[0];
-            var attrs = node[1];
-            return [tag, _fableCore.List.map(function (attribute) {
+            return [node[0], _fableCore.List.map(function (attribute) {
                 return mapAttributes(mapping, attribute);
-            }, attrs)];
+            }, node[1])];
         };
 
         var mapVoidElem = $exports.mapVoidElem = function mapVoidElem(mapping, node_0, node_1) {
             var node = [node_0, node_1];
-            var tag = node[0];
-            var attrs = node[1];
-            return [tag, _fableCore.List.map(function (attribute) {
+            return [node[0], _fableCore.List.map(function (attribute) {
                 return mapAttributes(mapping, attribute);
-            }, attrs)];
+            }, node[1])];
         };
 
         var map = $exports.map = function map(mapping, node) {
-            return node.Case === "VoidElement" ? function () {
-                var ve = node.Fields[0];
-                return new Types.DomNode("VoidElement", [function () {
-                    var arg10_ = ve[0];
-                    var arg11_ = ve[1];
-                    return mapVoidElem(mapping, arg10_, arg11_);
-                }()]);
-            }() : node.Case === "Text" ? function () {
-                var s = node.Fields[0];
-                return new Types.DomNode("Text", [s]);
-            }() : node.Case === "WhiteSpace" ? function () {
-                var ws = node.Fields[0];
-                return new Types.DomNode("WhiteSpace", [ws]);
-            }() : node.Case === "Svg" ? function () {
-                var ns = node.Fields[1];
-                var e = node.Fields[0];
-                return new Types.DomNode("Element", [function () {
-                    var arg10_ = e[0];
-                    var arg11_ = e[1];
-                    return mapElem(mapping, arg10_, arg11_);
-                }(), _fableCore.List.map(function (node_1) {
-                    return map(mapping, node_1);
-                }, ns)]);
-            }() : function () {
-                var ns = node.Fields[1];
-                var e = node.Fields[0];
-                return new Types.DomNode("Element", [function () {
-                    var arg10_ = e[0];
-                    var arg11_ = e[1];
-                    return mapElem(mapping, arg10_, arg11_);
-                }(), _fableCore.List.map(function (node_1) {
-                    return map(mapping, node_1);
-                }, ns)]);
-            }();
+            return node.Case === "VoidElement" ? new Types.DomNode("VoidElement", [mapVoidElem(mapping, node.Fields[0][0], node.Fields[0][1])]) : node.Case === "Text" ? new Types.DomNode("Text", [node.Fields[0]]) : node.Case === "WhiteSpace" ? new Types.DomNode("WhiteSpace", [node.Fields[0]]) : node.Case === "Svg" ? new Types.DomNode("Element", [mapElem(mapping, node.Fields[0][0], node.Fields[0][1]), _fableCore.List.map(function (node_1) {
+                return map(mapping, node_1);
+            }, node.Fields[1])]) : new Types.DomNode("Element", [mapElem(mapping, node.Fields[0][0], node.Fields[0][1]), _fableCore.List.map(function (node_1) {
+                return map(mapping, node_1);
+            }, node.Fields[1])]);
         };
 
         var Tags = $exports.Tags = function ($exports) {
@@ -330,10 +283,7 @@ define(["exports", "fable-core", "virtual-dom"], function (exports, _fableCore, 
                     return function (builder_) {
                         return builder_.Delay(function (unitVar) {
                             return builder_.Bind(inbox.receive(), function (_arg1) {
-                                var message = _arg1;
-                                var milliseconds = message.Fields[0];
-                                var cb = message.Fields[1];
-                                window.setTimeout(cb, milliseconds);
+                                window.setTimeout(_arg1.Fields[1], _arg1.Fields[0]);
                                 return builder_.ReturnFrom(loop());
                             });
                         });
@@ -348,14 +298,11 @@ define(["exports", "fable-core", "virtual-dom"], function (exports, _fableCore, 
             var tree = renderTree(state.View)(post)(state.Model);
             var rootNode = renderer.CreateElement(tree);
             startElem.appendChild(rootNode);
-            {
-                var matchValue = state.InitMessage;
 
-                if (matchValue != null) {
-                    var init = matchValue;
-                    init(post);
-                }
+            if (state.InitMessage != null) {
+                state.InitMessage(post);
             }
+
             var CurrentTree = tree;
             var _Node = rootNode;
             return new App(state.Model, state.View, state.Update, state.InitMessage, state.Actions, state.Producers, _Node, CurrentTree, state.Subscribers, state.NodeSelector, state.RenderState);
@@ -364,34 +311,22 @@ define(["exports", "fable-core", "virtual-dom"], function (exports, _fableCore, 
         var handleMessage = $exports.handleMessage = function handleMessage(msg, notify, schedule, state) {
             notify(state.Subscribers)(new AppEvents("ActionReceived", [msg]));
             var patternInput = state.Update(state.Model)(msg);
-            var model_ = patternInput[0];
-            var actions = patternInput[1];
-
-            var renderState = function () {
-                var matchValue = state.RenderState;
-
-                if (matchValue.Case === "InProgress") {
-                    return new RenderState("InProgress", []);
-                } else {
-                    schedule();
-                    return new RenderState("InProgress", []);
-                }
+            var renderState = state.RenderState.Case === "InProgress" ? new RenderState("InProgress", []) : function () {
+                schedule();
+                return new RenderState("InProgress", []);
             }();
 
-            var Actions = _fableCore.List.append(state.Actions, actions);
+            var Actions = _fableCore.List.append(state.Actions, patternInput[1]);
 
-            return new App(model_, state.View, state.Update, state.InitMessage, Actions, state.Producers, state.Node, state.CurrentTree, state.Subscribers, state.NodeSelector, renderState);
+            return new App(patternInput[0], state.View, state.Update, state.InitMessage, Actions, state.Producers, state.Node, state.CurrentTree, state.Subscribers, state.NodeSelector, renderState);
         };
 
         var handleDraw = $exports.handleDraw = function handleDraw(renderTree, renderer, post, notify, rootNode, currentTree, state) {
-            var matchValue = state.RenderState;
-
-            if (matchValue.Case === "NoRequest") {
+            return state.RenderState.Case === "NoRequest" ? function () {
                 throw "Shouldn't happen";
-            } else {
+            }() : function () {
                 notify(state.Subscribers)(new AppEvents("DrawStarted", []));
-                var model = state.Model;
-                var tree = renderTree(state.View)(post)(model);
+                var tree = renderTree(state.View)(post)(state.Model);
                 var patches = renderer.Diff(currentTree)(tree);
                 renderer.Patch(rootNode)(patches);
 
@@ -399,12 +334,12 @@ define(["exports", "fable-core", "virtual-dom"], function (exports, _fableCore, 
                     i(post);
                 }, state.Actions);
 
-                notify(state.Subscribers)(new AppEvents("ModelChanged", [model, state.Model]));
+                notify(state.Subscribers)(new AppEvents("ModelChanged", [state.Model, state.Model]));
                 var RenderState_1 = new RenderState("NoRequest", []);
                 var CurrentTree = tree;
                 var Actions = new _fableCore.List();
                 return new App(state.Model, state.View, state.Update, state.InitMessage, Actions, state.Producers, state.Node, CurrentTree, state.Subscribers, state.NodeSelector, RenderState_1);
-            }
+            }();
         };
 
         var start = $exports.start = function start(renderer, app) {
@@ -416,17 +351,7 @@ define(["exports", "fable-core", "virtual-dom"], function (exports, _fableCore, 
                 };
             };
 
-            var startElem = function () {
-                var matchValue = app.NodeSelector;
-
-                if (matchValue != null) {
-                    var sel = matchValue;
-                    return document.body.querySelector(sel);
-                } else {
-                    return document.body;
-                }
-            }();
-
+            var startElem = app.NodeSelector != null ? document.body.querySelector(app.NodeSelector) : document.body;
             var scheduler = createScheduler();
             return _fableCore.MailboxProcessor.start(function (inbox) {
                 var post = function post(message) {
@@ -461,20 +386,13 @@ define(["exports", "fable-core", "virtual-dom"], function (exports, _fableCore, 
                                     var currentTree = matchValue[1];
                                     var rootNode = matchValue[0];
                                     return builder_.Bind(inbox.receive(), function (_arg1) {
-                                        var message = _arg1;
-
-                                        if (message.Case === "Message") {
-                                            var msg = message.Fields[0];
-                                            var state_ = handleMessage(msg, notifySubscribers, schedule, state);
+                                        return _arg1.Case === "Message" ? function () {
+                                            var state_ = handleMessage(_arg1.Fields[0], notifySubscribers, schedule, state);
                                             return builder_.ReturnFrom(loop(state_));
-                                        } else {
-                                            if (message.Case === "Draw") {
-                                                var state_ = handleDraw(renderTree, renderer, post, notifySubscribers, rootNode, currentTree, state);
-                                                return builder_.ReturnFrom(loop(state_));
-                                            } else {
-                                                return builder_.ReturnFrom(loop(state));
-                                            }
-                                        }
+                                        }() : _arg1.Case === "Draw" ? function () {
+                                            var state_ = handleDraw(renderTree, renderer, post, notifySubscribers, rootNode, currentTree, state);
+                                            return builder_.ReturnFrom(loop(state_));
+                                        }() : builder_.ReturnFrom(loop(state));
                                     });
                                 } else {
                                     throw "Shouldn't happen";
@@ -498,10 +416,7 @@ define(["exports", "fable-core", "virtual-dom"], function (exports, _fableCore, 
     function createTree(handler, tag, attributes, children) {
         var toAttrs = function toAttrs(attrs) {
             var elAttributes = function (_arg2) {
-                return _arg2.tail == null ? null : function () {
-                    var v = _arg2;
-                    return ["attributes", _fableCore.Util.createObj(v)];
-                }();
+                return _arg2.tail == null ? null : ["attributes", _fableCore.Util.createObj(_arg2)];
             }(_fableCore.List.choose(function (x) {
                 return x;
             }, _fableCore.List.map(function (_arg1) {
@@ -513,10 +428,7 @@ define(["exports", "fable-core", "virtual-dom"], function (exports, _fableCore, 
             }, attrs)));
 
             var props = _fableCore.List.map(function (_arg4) {
-                return _arg4.Case === "Style" ? function () {
-                    var style = _arg4.Fields[0];
-                    return ["style", _fableCore.Util.createObj(style)];
-                }() : _arg4.Case === "Property" ? function () {
+                return _arg4.Case === "Style" ? ["style", _fableCore.Util.createObj(_arg4.Fields[0])] : _arg4.Case === "Property" ? function () {
                     var v = _arg4.Fields[0][1];
                     var k = _arg4.Fields[0][0];
                     return [k, v];
@@ -533,10 +445,7 @@ define(["exports", "fable-core", "virtual-dom"], function (exports, _fableCore, 
                 return _arg3.Case === "Attribute" ? false : true;
             }, attrs));
 
-            return _fableCore.Util.createObj(elAttributes != null ? function () {
-                var x = elAttributes;
-                return _fableCore.List.ofArray([x], props);
-            }() : props);
+            return _fableCore.Util.createObj(elAttributes != null ? _fableCore.List.ofArray([elAttributes], props) : props);
         };
 
         var elem = (0, _virtualDom.h)(tag, toAttrs(attributes), Array.from(children));
@@ -559,12 +468,10 @@ define(["exports", "fable-core", "virtual-dom"], function (exports, _fableCore, 
                 return createTree(handler, tag, attrs, new _fableCore.List());
             } else {
                 if (node.Case === "Text") {
-                    var str = node.Fields[0];
-                    return str;
+                    return node.Fields[0];
                 } else {
                     if (node.Case === "WhiteSpace") {
-                        var str = node.Fields[0];
-                        return str;
+                        return node.Fields[0];
                     } else {
                         return $target0(node.Fields[0][1], node.Fields[1], node.Fields[0][0]);
                     }

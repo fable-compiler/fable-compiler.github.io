@@ -122,9 +122,7 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
 
   function noWall(x, y, ex, ey) {
     var patternInput = [x + 6 + ex >> 3, y + 6 + ey >> 3];
-    var by = patternInput[1];
-    var bx = patternInput[0];
-    return !isWallAt(bx, by);
+    return !isWallAt(patternInput[0], patternInput[1]);
   }
 
   function canGoUp(x, y) {
@@ -198,17 +196,13 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
       for (var x = 0; x <= line.length - 1; x++) {
         var c = line[x];
         var patternInput = toTile(c);
-        var tile = patternInput[0];
-        var color = patternInput[1];
-        var brush = color === "Y" ? yellow : blue;
+        var brush = patternInput[1] === "Y" ? yellow : blue;
 
         var f = function f(tupledArg) {
-          var x_ = tupledArg[0];
-          var y_ = tupledArg[1];
-          context.putImageData(brush, x * 8 + x_, y * 8 + y_);
+          context.putImageData(brush, x * 8 + tupledArg[0], y * 8 + tupledArg[1]);
         };
 
-        draw(f, tile);
+        draw(f, patternInput[0]);
       }
     }
 
@@ -249,13 +243,9 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
       key: "Move",
       value: function Move(v) {
         this["v'"] = v;
-        var dy = v[1];
-        var dx = v[0];
-        var patternInput = wrap(this["x'"], this["y'"], dx, dy);
-        var y = patternInput[1];
-        var x = patternInput[0];
-        this["x'"] = x;
-        this["y'"] = y;
+        var patternInput = wrap(this["x'"], this["y'"], v[0], v[1]);
+        this["x'"] = patternInput[0];
+        this["y'"] = patternInput[1];
       }
     }, {
       key: "Image",
@@ -294,12 +284,7 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
 
   function createGhosts(context) {
     return [[Images.redd, [16, 11], [1, 0]], [Images.cyand, [14, 15], [1, 0]], [Images.pinkd, [16, 13], [0, -1]], [Images.oranged, [18, 15], [-1, 0]]].map(function (tupledArg) {
-      var data = tupledArg[0];
-      var _arg1 = tupledArg[1];
-      var v = tupledArg[2];
-      var y = _arg1[1];
-      var x = _arg1[0];
-      return new Ghost(createImage(data), x * 8 - 7, y * 8 - 3, v);
+      return new Ghost(createImage(tupledArg[0]), tupledArg[1][0] * 8 - 7, tupledArg[1][1] * 8 - 3, tupledArg[2]);
     });
   }
 
@@ -307,25 +292,17 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
     var f = function f(n) {
       return function (_arg1) {
         if (_arg1.tail == null) {} else {
-          var ps = _arg1;
-
-          var ps_1 = _fableCore.List.filter(function (tupledArg) {
-            var x_1 = tupledArg[0];
-            var y_1 = tupledArg[1];
-            return canFill([x_1, y_1]);
-          }, ps);
+          var ps = _fableCore.List.filter(function (tupledArg) {
+            return canFill([tupledArg[0], tupledArg[1]]);
+          }, _arg1);
 
           _fableCore.Seq.iterate(function (tupledArg) {
-            var x_1 = tupledArg[0];
-            var y_1 = tupledArg[1];
-            fill([x_1, y_1, n]);
-          }, ps_1);
+            fill([tupledArg[0], tupledArg[1], n]);
+          }, ps);
 
           f(n + 1)(_fableCore.List.collect(function (tupledArg) {
-            var x_1 = tupledArg[0];
-            var y_1 = tupledArg[1];
-            return _fableCore.List.ofArray([[x_1 - 1, y_1], [x_1 + 1, y_1], [x_1, y_1 - 1], [x_1, y_1 + 1]]);
-          }, ps_1));
+            return _fableCore.List.ofArray([[tupledArg[0] - 1, tupledArg[1]], [tupledArg[0] + 1, tupledArg[1]], [tupledArg[0], tupledArg[1] - 1], [tupledArg[0], tupledArg[1] + 1]]);
+          }, ps));
         }
       };
     };
@@ -341,21 +318,11 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
     });
 
     var canFill = function canFill(tupledArg) {
-      var x = tupledArg[0];
-      var y = tupledArg[1];
-
-      if (((y >= 0 ? y < numbers.length - 1 : false) ? x >= 0 : false) ? x < numbers[y].length - 1 : false) {
-        return numbers[y][x] === -1;
-      } else {
-        return false;
-      }
+      return (((tupledArg[1] >= 0 ? tupledArg[1] < numbers.length - 1 : false) ? tupledArg[0] >= 0 : false) ? tupledArg[0] < numbers[tupledArg[1]].length - 1 : false) ? numbers[tupledArg[1]][tupledArg[0]] === -1 : false;
     };
 
     var fill = function fill(tupledArg) {
-      var x = tupledArg[0];
-      var y = tupledArg[1];
-      var n = tupledArg[2];
-      numbers[y][x] = n;
+      numbers[tupledArg[1]][tupledArg[0]] = tupledArg[2];
     };
 
     flood(canFill, fill, 16, 15);
@@ -386,32 +353,17 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
 
   function chooseDirection(ghost) {
     var patternInput = [ghost.X, ghost.Y];
-    var y = patternInput[1];
-    var x = patternInput[0];
     var patternInput_1 = ghost.V;
-    var dy = patternInput_1[1];
-    var dx = patternInput_1[0];
 
     var isBackwards = function isBackwards(tupledArg) {
-      var a = tupledArg[0];
-      var b = tupledArg[1];
-
-      if (a !== 0 ? a === -dx : false) {
-        return true;
-      } else {
-        if (b !== 0) {
-          return b === -dy;
-        } else {
-          return false;
-        }
-      }
+      return (tupledArg[0] !== 0 ? tupledArg[0] === -patternInput_1[0] : false) ? true : tupledArg[1] !== 0 ? tupledArg[1] === -patternInput_1[1] : false;
     };
 
     var directions = Array.from(_fableCore.Seq.delay(function (unitVar) {
-      return _fableCore.Seq.append(canGoLeft(x, y) ? _fableCore.Seq.singleton([[-1, 0], fillLeft(x, y)]) : _fableCore.Seq.empty(), _fableCore.Seq.delay(function (unitVar_1) {
-        return _fableCore.Seq.append(canGoDown(x, y) ? _fableCore.Seq.singleton([[0, 1], fillDown(x, y)]) : _fableCore.Seq.empty(), _fableCore.Seq.delay(function (unitVar_2) {
-          return _fableCore.Seq.append(canGoRight(x, y) ? _fableCore.Seq.singleton([[1, 0], fillRight(x, y)]) : _fableCore.Seq.empty(), _fableCore.Seq.delay(function (unitVar_3) {
-            return canGoUp(x, y) ? _fableCore.Seq.singleton([[0, -1], fillUp(x, y)]) : _fableCore.Seq.empty();
+      return _fableCore.Seq.append(canGoLeft(patternInput[0], patternInput[1]) ? _fableCore.Seq.singleton([[-1, 0], fillLeft(patternInput[0], patternInput[1])]) : _fableCore.Seq.empty(), _fableCore.Seq.delay(function (unitVar_1) {
+        return _fableCore.Seq.append(canGoDown(patternInput[0], patternInput[1]) ? _fableCore.Seq.singleton([[0, 1], fillDown(patternInput[0], patternInput[1])]) : _fableCore.Seq.empty(), _fableCore.Seq.delay(function (unitVar_2) {
+          return _fableCore.Seq.append(canGoRight(patternInput[0], patternInput[1]) ? _fableCore.Seq.singleton([[1, 0], fillRight(patternInput[0], patternInput[1])]) : _fableCore.Seq.empty(), _fableCore.Seq.delay(function (unitVar_3) {
+            return canGoUp(patternInput[0], patternInput[1]) ? _fableCore.Seq.singleton([[0, -1], fillUp(patternInput[0], patternInput[1])]) : _fableCore.Seq.empty();
           }));
         }));
       }));
@@ -426,14 +378,12 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
         }(y));
       }, directions));
       var patternInput_2 = xs[0];
-      var v = patternInput_2[0];
-      var n = patternInput_2[1];
 
-      if (n === 0) {
+      if (patternInput_2[1] === 0) {
         ghost.IsReturning = false;
       }
 
-      return v;
+      return patternInput_2[0];
     } else {
       var xs = directions.map(function (tuple) {
         return tuple[0];
@@ -557,11 +507,9 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
         }
       }();
 
-      var p2 = patternInput[1];
-      var p1 = patternInput[0];
       var x_ = Math.floor(Math.floor(x.contents / 6));
       var y_ = Math.floor(Math.floor(y.contents / 6));
-      var p = (x_ + y_) % 2 === 0 ? p1 : p2;
+      var p = (x_ + y_) % 2 === 0 ? patternInput[0] : patternInput[1];
       lastp.contents = p;
       return p;
     };
@@ -588,8 +536,6 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
     var background = createBackground();
     var ghosts = createGhosts(context);
     var patternInput = [createImage(Images.blue), createImage(Images.eyed)];
-    var eyed = patternInput[1];
-    var blue = patternInput[0];
     var pills = maze.map(function (line) {
       return line.split("").map(function (c) {
         return c;
@@ -621,8 +567,6 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
     }, {
       contents: 23 * 8 - 3
     }];
-    var y = patternInput_1[1];
-    var x = patternInput_1[0];
     var v = {
       contents: [0, 0]
     };
@@ -635,10 +579,10 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
 
     var movePacman = function movePacman(unitVar0) {
       var inputs = Array.from(_fableCore.Seq.delay(function (unitVar) {
-        return _fableCore.Seq.append(Keyboard.isPressed(81) ? _fableCore.Seq.singleton([canGoUp(x.contents, y.contents), [0, -1]]) : _fableCore.Seq.empty(), _fableCore.Seq.delay(function (unitVar_1) {
-          return _fableCore.Seq.append(Keyboard.isPressed(65) ? _fableCore.Seq.singleton([canGoDown(x.contents, y.contents), [0, 1]]) : _fableCore.Seq.empty(), _fableCore.Seq.delay(function (unitVar_2) {
-            return _fableCore.Seq.append(Keyboard.isPressed(90) ? _fableCore.Seq.singleton([canGoLeft(x.contents, y.contents), [-1, 0]]) : _fableCore.Seq.empty(), _fableCore.Seq.delay(function (unitVar_3) {
-              return Keyboard.isPressed(88) ? _fableCore.Seq.singleton([canGoRight(x.contents, y.contents), [1, 0]]) : _fableCore.Seq.empty();
+        return _fableCore.Seq.append(Keyboard.isPressed(81) ? _fableCore.Seq.singleton([canGoUp(patternInput_1[0].contents, patternInput_1[1].contents), [0, -1]]) : _fableCore.Seq.empty(), _fableCore.Seq.delay(function (unitVar_1) {
+          return _fableCore.Seq.append(Keyboard.isPressed(65) ? _fableCore.Seq.singleton([canGoDown(patternInput_1[0].contents, patternInput_1[1].contents), [0, 1]]) : _fableCore.Seq.empty(), _fableCore.Seq.delay(function (unitVar_2) {
+            return _fableCore.Seq.append(Keyboard.isPressed(90) ? _fableCore.Seq.singleton([canGoLeft(patternInput_1[0].contents, patternInput_1[1].contents), [-1, 0]]) : _fableCore.Seq.empty(), _fableCore.Seq.delay(function (unitVar_3) {
+              return Keyboard.isPressed(88) ? _fableCore.Seq.singleton([canGoRight(patternInput_1[0].contents, patternInput_1[1].contents), [1, 0]]) : _fableCore.Seq.empty();
             }));
           }));
         }));
@@ -653,17 +597,17 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
 
         if (matchValue[0] === -1) {
           if (matchValue[1] === 0) {
-            return canGoLeft(x.contents, y.contents);
+            return canGoLeft(patternInput_1[0].contents, patternInput_1[1].contents);
           } else {
             return $target4();
           }
         } else {
           if (matchValue[0] === 0) {
             if (matchValue[1] === -1) {
-              return canGoUp(x.contents, y.contents);
+              return canGoUp(patternInput_1[0].contents, patternInput_1[1].contents);
             } else {
               if (matchValue[1] === 1) {
-                return canGoDown(x.contents, y.contents);
+                return canGoDown(patternInput_1[0].contents, patternInput_1[1].contents);
               } else {
                 return $target4();
               }
@@ -671,7 +615,7 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
           } else {
             if (matchValue[0] === 1) {
               if (matchValue[1] === 0) {
-                return canGoRight(x.contents, y.contents);
+                return canGoRight(patternInput_1[0].contents, patternInput_1[1].contents);
               } else {
                 return $target4();
               }
@@ -703,24 +647,18 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
       }
 
       var patternInput_2 = function () {
-        var tupledArg = [x.contents, y.contents];
+        var tupledArg = [patternInput_1[0].contents, patternInput_1[1].contents];
         var tupledArg_1 = v.contents;
-        var x_1 = tupledArg[0];
-        var y_1 = tupledArg[1];
-        var dx = tupledArg_1[0];
-        var dy = tupledArg_1[1];
-        return wrap(x_1, y_1, dx, dy);
+        return wrap(tupledArg[0], tupledArg[1], tupledArg_1[0], tupledArg_1[1]);
       }();
 
-      var y_ = patternInput_2[1];
-      var x_ = patternInput_2[0];
-      x.contents = x_;
-      y.contents = y_;
+      patternInput_1[0].contents = patternInput_2[0];
+      patternInput_1[1].contents = patternInput_2[1];
     };
 
     var eatPills = function eatPills(unitVar0) {
-      var tx = Math.floor(Math.floor(~~((x.contents + 6) / 8)));
-      var ty = Math.floor(Math.floor(~~((y.contents + 6) / 8)));
+      var tx = Math.floor(Math.floor(~~((patternInput_1[0].contents + 6) / 8)));
+      var ty = Math.floor(Math.floor(~~((patternInput_1[1].contents + 6) / 8)));
       var c = pills[ty][tx];
 
       if (c === ".") {
@@ -743,20 +681,16 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
     };
 
     var touchingGhosts = function touchingGhosts(unitVar0) {
-      var patternInput_2 = [x.contents, y.contents];
-      var py = patternInput_2[1];
-      var px = patternInput_2[0];
+      var patternInput_2 = [patternInput_1[0].contents, patternInput_1[1].contents];
       return ghosts.filter(function (ghost) {
         var patternInput_3 = [ghost.X, ghost.Y];
-        var y_1 = patternInput_3[1];
-        var x_1 = patternInput_3[0];
 
-        if ((px >= x_1 ? px < x_1 + 13 : false) ? true : x_1 < px + 13 ? x_1 >= px : false) {
-          if (py >= y_1 ? py < y_1 + 13 : false) {
+        if ((patternInput_2[0] >= patternInput_3[0] ? patternInput_2[0] < patternInput_3[0] + 13 : false) ? true : patternInput_3[0] < patternInput_2[0] + 13 ? patternInput_3[0] >= patternInput_2[0] : false) {
+          if (patternInput_2[1] >= patternInput_3[1] ? patternInput_2[1] < patternInput_3[1] + 13 : false) {
             return true;
           } else {
-            if (y_1 < py + 13) {
-              return y_1 >= py;
+            if (patternInput_3[1] < patternInput_2[1] + 13) {
+              return patternInput_3[1] >= patternInput_2[1];
             } else {
               return false;
             }
@@ -808,14 +742,10 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
       var patternInput_2 = _fableCore.List.partition(function ($var2) {
         return 0 === $var2[0];
       }, _fableCore.List.map(function (tupledArg) {
-        var count = tupledArg[0];
-        var x_1 = tupledArg[1];
-        return [count - 1, x_1];
+        return [tupledArg[0] - 1, tupledArg[1]];
       }, bonuses.contents));
 
-      var removals = patternInput_2[0];
-      var remainders = patternInput_2[1];
-      bonuses.contents = remainders;
+      bonuses.contents = patternInput_2[1];
     };
 
     var logic = function logic(unitVar0) {
@@ -832,10 +762,10 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
     };
 
     var renderPacman = function renderPacman(unitVar0) {
-      var p = Pacman.imageAt(x, y, v);
+      var p = Pacman.imageAt(patternInput_1[0], patternInput_1[1], v);
 
       if ((flashCountdown.contents >> 1) % 2 === 0) {
-        context.drawImage(p, x.contents, y.contents);
+        context.drawImage(p, patternInput_1[0].contents, patternInput_1[1].contents);
       }
     };
 
@@ -846,7 +776,7 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
 
     var renderGhosts = function renderGhosts(unitVar0) {
       ghosts.forEach(function (ghost) {
-        var image = ghost.IsReturning ? eyed : powerCountdown.contents === 0 ? ghost.Image : (powerCountdown.contents > 100 ? true : (powerCountdown.contents >> 3) % 2 !== 0) ? blue : ghost.Image;
+        var image = ghost.IsReturning ? patternInput[1] : powerCountdown.contents === 0 ? ghost.Image : (powerCountdown.contents > 100 ? true : (powerCountdown.contents >> 3) % 2 !== 0) ? patternInput[0] : ghost.Image;
         context.drawImage(image, ghost.X, ghost.Y);
       });
     };
@@ -862,12 +792,7 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
 
     var renderBonus = function renderBonus(unitVar0) {
       _fableCore.Seq.iterate(function (tupledArg) {
-        var _arg1 = tupledArg[0];
-        var _arg2 = tupledArg[1];
-        var y_1 = _arg2[2];
-        var x_1 = _arg2[1];
-        var image = _arg2[0];
-        context.drawImage(image, x_1, y_1);
+        context.drawImage(tupledArg[1][0], tupledArg[1][1], tupledArg[1][2]);
       }, bonuses.contents);
     };
 
@@ -904,12 +829,9 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
     var context = canvas.getContext('2d');
 
     var drawText = function drawText(tupledArg) {
-      var text = tupledArg[0];
-      var x = tupledArg[1];
-      var y = tupledArg[2];
       context.fillStyle = "white";
       context.font = "bold 8px";
-      context.fillText(text, x, y);
+      context.fillText(tupledArg[0], tupledArg[1], tupledArg[2]);
     };
 
     var levelCompleted = function levelCompleted(unitVar0) {

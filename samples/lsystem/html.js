@@ -55,12 +55,8 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
 
   function render(node) {
     return node.Case === "Element" ? function () {
-      var tag = node.Fields[1];
-      var ns = node.Fields[0];
-      var children = node.Fields[3];
-      var attrs = node.Fields[2];
-      var el = ns === "" ? document.createElement(tag) : document.createElementNS(ns, tag);
-      var rc = children.map(function (node_1) {
+      var el = node.Fields[0] === "" ? document.createElement(node.Fields[1]) : document.createElementNS(node.Fields[0], node.Fields[1]);
+      var rc = node.Fields[3].map(function (node_1) {
         return render(node_1);
       });
 
@@ -69,32 +65,24 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
         el.appendChild(c);
       }
 
-      for (var idx = 0; idx <= attrs.length - 1; idx++) {
-        var forLoopVar = attrs[idx];
-        var k = forLoopVar[0];
-        var a = forLoopVar[1];
+      for (var idx = 0; idx <= node.Fields[2].length - 1; idx++) {
+        var forLoopVar = node.Fields[2][idx];
 
-        if (a.Case === "Event") {
-          var f = a.Fields[0];
-          el.addEventListener(k, function (delegateArg0) {
-            f(el)(delegateArg0);
+        if (forLoopVar[1].Case === "Event") {
+          el.addEventListener(forLoopVar[0], function (delegateArg0) {
+            forLoopVar[1].Fields[0](el)(delegateArg0);
           });
         } else {
-          var v = a.Fields[0];
-
-          if (ns === "") {
-            el.setAttribute(k, v);
+          if (node.Fields[0] === "") {
+            el.setAttribute(forLoopVar[0], forLoopVar[1].Fields[0]);
           } else {
-            el.setAttributeNS(null, k, v);
+            el.setAttributeNS(null, forLoopVar[0], forLoopVar[1].Fields[0]);
           }
         }
       }
 
       return el;
-    }() : function () {
-      var s = node.Fields[0];
-      return document.createTextNode(s);
-    }();
+    }() : document.createTextNode(node.Fields[0]);
   }
 
   function renderTo(node, dom) {

@@ -218,6 +218,10 @@ If you have problems on Windows <a href="https://github.com/fable-compiler/Fable
 </tbody>
 </table>
 
+<blockquote>
+<p>Besides <code>projFile</code>, all paths (<code>outDir</code>, <code>plugins</code>...) will be considered relative to
+the project file directory if they're not absolute, but see <code>fableconfig.json</code> below.</p>
+</blockquote>
 <h2><a name="Project-references" class="anchor" href="#Project-references">Project references</a></h2>
 <p>You can use <code>--refs</code> argument to link referenced dll or projects with the JS import path that must be used,
 using the following format: <code>[Reference name without extension]=[JS import path]</code>.</p>
@@ -260,8 +264,8 @@ If you omit the path, the compiler will assume it's in the current directory.</p
 <td class="snippet"><pre class="fssnip"><code lang="shell">fable my/path/
 </code></pre></td></tr></table>
 <blockquote>
-<p>Note that in this case, all path configurations (<code>outDir</code>, <code>plugins</code>...) will be relative to
-the directory where <code>fableconfig.json</code> resides.</p>
+<p>Note that in this case, all path configurations (<code>projFile</code>, <code>outDir</code>, <code>plugins</code>...) will be
+relative to the directory where <code>fableconfig.json</code> resides.</p>
 </blockquote>
 <p>Project references can be passed using a plain object:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>

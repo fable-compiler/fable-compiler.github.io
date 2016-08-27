@@ -301,18 +301,11 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
         var hasValidMoves = function hasValidMoves(board) {
             return _fableCore.Seq.exists(function (col) {
                 return _fableCore.Seq.exists(function (cell) {
-                    var matchValue = cell.State;
-
-                    if (matchValue.Case === "Stone") {
-                        var c = matchValue.Fields[0];
-                        return function ($var1) {
-                            return !($var1.tail == null);
-                        }(function (pos) {
-                            return findAdjacentWithSameColor(board, c, pos);
-                        }(cell.Position));
-                    } else {
-                        return false;
-                    }
+                    return cell.State.Case === "Stone" ? function ($var1) {
+                        return !($var1.tail == null);
+                    }(function (pos) {
+                        return findAdjacentWithSameColor(board, cell.State.Fields[0], pos);
+                    }(cell.Position)) : false;
                 }, col);
             }, _fableCore.Seq.mapIndexed(function (i, col) {
                 return _fableCore.Seq.mapIndexed(function (j, cell) {
@@ -324,10 +317,7 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
         var numberOfStones = function numberOfStones(board) {
             var numOfStonesInCol = function () {
                 var projection = function projection(_arg1) {
-                    return _arg1.Case === "Empty" ? 0 : function () {
-                        var c = _arg1.Fields[0];
-                        return 1;
-                    }();
+                    return _arg1.Case === "Empty" ? 0 : 1;
                 };
 
                 return function (list) {
@@ -361,18 +351,15 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
                 return function (col) {
                     return function (group) {
                         return ps.tail != null ? function () {
-                            var xs = ps.tail;
-                            var x = ps.head;
-
                             var cells = _fableCore.List.filter(function (pos) {
                                 return !_fableCore.Seq.exists(function (y) {
                                     return pos.Equals(y);
-                                }, _fableCore.List.append(xs, group));
+                                }, _fableCore.List.append(ps.tail, group));
                             }, function (pos) {
                                 return findAdjacentWithSameColor(board, col, pos);
-                            }(x));
+                            }(ps.head));
 
-                            return find(_fableCore.List.append(cells, xs))(col)(_fableCore.List.ofArray([x], group));
+                            return find(_fableCore.List.append(cells, ps.tail))(col)(_fableCore.List.ofArray([ps.head], group));
                         }() : group;
                     };
                 };
@@ -380,11 +367,10 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
 
             return function (_arg1) {
                 return _arg1.Case === "Stone" ? function () {
-                    var c = _arg1.Fields[0];
-                    var positions = find(_fableCore.List.ofArray([position]))(c)(new _fableCore.List());
+                    var positions = find(_fableCore.List.ofArray([position]))(_arg1.Fields[0])(new _fableCore.List());
 
                     if (positions.length > 1) {
-                        return new SameGameTypes.Group(c, positions);
+                        return new SameGameTypes.Group(_arg1.Fields[0], positions);
                     }
                 }() : null;
             }(getCellState(board, position));
@@ -402,12 +388,9 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
                     return cell.State;
                 }, _fableCore.List.filter(function (cell) {
                     return function ($var4) {
-                        return !_fableCore.Seq.exists(function () {
-                            var x = cell.Position;
-                            return function (y) {
-                                return x.Equals(y);
-                            };
-                        }(), $var4);
+                        return !_fableCore.Seq.exists(function (y) {
+                            return cell.Position.Equals(y);
+                        }, $var4);
                     }(group.Positions);
                 }, _fableCore.List.mapIndexed(function (j, cell) {
                     return new SameGameTypes.Cell(new SameGameTypes.Position(i, j), cell);
@@ -418,22 +401,17 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
         var play = function play(gameState, pos) {
             return function (_arg1) {
                 return _arg1 != null ? function () {
-                    var g = _arg1;
-
                     var newBoard = function (board) {
-                        return removeGroup(g, board);
+                        return removeGroup(_arg1, board);
                     }(gameState.Board);
 
-                    return new SameGameTypes.GameState(newBoard, gameState.Score + calcScore(g.Positions.length));
+                    return new SameGameTypes.GameState(newBoard, gameState.Score + calcScore(_arg1.Positions.length));
                 }() : gameState;
             }(getGroup(gameState.Board, pos));
         };
 
         var playIfRunning = function playIfRunning(game, pos) {
-            return game.Case === "InProgress" ? function () {
-                var gameState = game.Fields[0];
-                return evaluateGameState(play(gameState, pos));
-            }() : game;
+            return game.Case === "InProgress" ? evaluateGameState(play(game.Fields[0], pos)) : game;
         };
 
         var isValid = function isValid(conf) {
@@ -511,14 +489,12 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
 
         var play = function play(game_1) {
             return function (tupledArg) {
-                var x = tupledArg[0];
-                var y = tupledArg[1];
                 updateUi(function () {
                     var $var5 = game_1;
 
                     if ($var5 != null) {
                         return function (g) {
-                            return api.Play(g)(new SameGameTypes.Position(x, y));
+                            return api.Play(g)(new SameGameTypes.Position(tupledArg[0], tupledArg[1]));
                         }($var5);
                     } else {
                         return $var5;

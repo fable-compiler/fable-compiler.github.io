@@ -141,22 +141,18 @@ define(["exports", "fable-core", "./html"], function (exports, _fableCore, _html
     }, xs), _fableCore.Seq.reduce(function (x, y) {
       return Math.max(x, y);
     }, xs)];
-    var minx = patternInput[0];
-    var maxx = patternInput[1];
     var patternInput_1 = [_fableCore.Seq.reduce(function (x, y) {
       return Math.min(x, y);
     }, ys), _fableCore.Seq.reduce(function (x, y) {
       return Math.max(x, y);
     }, ys)];
-    var miny = patternInput_1[0];
-    var maxy = patternInput_1[1];
 
     var convx = function convx(x) {
-      return (x - minx) / (maxx - minx) * 600;
+      return (x - patternInput[0]) / (patternInput[1] - patternInput[0]) * 600;
     };
 
     var convy = function convy(y) {
-      return (y - miny) / (maxy - miny) * 600;
+      return (y - patternInput_1[0]) / (patternInput_1[1] - patternInput_1[0]) * 600;
     };
 
     return function (arg0) {
@@ -292,10 +288,7 @@ define(["exports", "fable-core", "./html"], function (exports, _fableCore, _html
                   return phono(_fableCore.List.ofArray([turtle_1], stack))(output)(turtle_1)(t);
                 } else {
                   if (_arg1.head.Case === "Pop") {
-                    if (function () {
-                      var t = _arg1.tail;
-                      return stack.tail == null;
-                    }()) {
+                    if (stack.tail == null) {
                       var t = _arg1.tail;
                       return phono(stack)(output)(turtle_1)(t);
                     } else {
@@ -380,13 +373,11 @@ define(["exports", "fable-core", "./html"], function (exports, _fableCore, _html
       return s_1.indexOf("->") >= 0;
     }, _fableCore.String.trim(s, "both").split("\n"));
 
-    var prods = patternInput[0];
-    var ax = patternInput[1];
-    var axiom = ax.length !== 1 ? function () {
+    var axiom = patternInput[1].length !== 1 ? function () {
       error("There should be exactly one axiom");
       return "A";
-    }() : _fableCore.String.trim(ax[0], "both");
-    var prods_1 = prods.map(function (s_1) {
+    }() : _fableCore.String.trim(patternInput[1][0], "both");
+    var prods = patternInput[0].map(function (s_1) {
       var i = s_1.indexOf("->");
 
       var c = _fableCore.String.trim(s_1.substr(0, i), "both");
@@ -402,10 +393,8 @@ define(["exports", "fable-core", "./html"], function (exports, _fableCore, _html
     });
     return new LSystem(axiom, function (c) {
       var matchValue = _fableCore.Seq.tryFind(function (tupledArg) {
-        var k = tupledArg[0];
-        var _arg1 = tupledArg[1];
-        return k === c;
-      }, prods_1);
+        return tupledArg[0] === c;
+      }, prods);
 
       if (matchValue != null) {
         var r = matchValue[1];

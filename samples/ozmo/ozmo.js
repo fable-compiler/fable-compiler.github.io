@@ -283,44 +283,35 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
     return function (builder_) {
       return builder_.Delay(function (unitVar) {
         var patternInput = updateDrops(drops, countdown);
-        var drops_1 = patternInput[0];
-        var countdown_1 = patternInput[1];
-        var patternInput_1 = countDrops(drops_1);
-        var beforeShrink = patternInput_1[1];
-        var beforeGrow = patternInput_1[0];
+        var patternInput_1 = countDrops(patternInput[0]);
 
-        var drops_2 = function (drops_2) {
-          return absorb(blob, drops_2);
+        var drops_1 = function (drops_1) {
+          return absorb(blob, drops_1);
         }(_fableCore.List.map(function ($var1) {
           return move(gravity($var1));
-        }, drops_1));
+        }, patternInput[0]));
 
-        var patternInput_2 = countDrops(drops_2);
-        var afterShrink = patternInput_2[1];
-        var afterGrow = patternInput_2[0];
+        var patternInput_2 = countDrops(drops_1);
 
-        var drops_3 = _fableCore.List.filter(function (blob_1) {
+        var drops_2 = _fableCore.List.filter(function (blob_1) {
           return blob_1.Y > 0;
-        }, drops_2);
+        }, drops_1);
 
-        var radius = blob.Radius + (beforeGrow - afterGrow) * 4;
-        var radius_1 = radius - (beforeShrink - afterShrink) * 4;
+        var radius = blob.Radius + (patternInput_1[0] - patternInput_2[0]) * 4;
+        var radius_1 = radius - (patternInput_1[1] - patternInput_2[1]) * 4;
         var radius_2 = 5 > radius_1 ? 5 : radius_1;
         var blob_1 = new Blob(blob.X, blob.Y, blob.vx, blob.vy, radius_2, blob.color);
 
         var blob_2 = function () {
           var tupledArg = Keyboard.arrows();
-          var arg00_ = tupledArg[0];
-          var arg01_ = tupledArg[1];
           return function (blob_2) {
-            return step(arg00_, arg01_, blob_2);
+            return step(tupledArg[0], tupledArg[1], blob_2);
           };
         }()(blob_1);
 
         drawBg(ctx, canvas);
-        return builder_.Combine(builder_.For(drops_3, function (_arg2) {
-          var drop = _arg2;
-          drawBlob(ctx, canvas, drop);
+        return builder_.Combine(builder_.For(drops_2, function (_arg2) {
+          drawBlob(ctx, canvas, _arg2);
           return builder_.Zero();
         }), builder_.Delay(function (unitVar_1) {
           drawBlob(ctx, canvas, blob_2);
@@ -329,7 +320,7 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
             return builder_.ReturnFrom(completed());
           } else {
             return builder_.Bind(_fableCore.Async.sleep(Math.floor(1000 / 60)), function (_arg3) {
-              return builder_.ReturnFrom(update(blob_2, drops_3, countdown_1));
+              return builder_.ReturnFrom(update(blob_2, drops_2, patternInput[1]));
             });
           }
         }));

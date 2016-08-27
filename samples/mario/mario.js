@@ -107,11 +107,7 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
       ctx.fillStyle = color;
 
       (function (tupledArg) {
-        var arg00 = tupledArg[0];
-        var arg01 = tupledArg[1];
-        var arg02 = tupledArg[2];
-        var arg03 = tupledArg[3];
-        ctx.fillRect(arg00, arg01, arg02, arg03);
+        ctx.fillRect(tupledArg[0], tupledArg[1], tupledArg[2], tupledArg[3]);
       })(rect);
     };
 
@@ -202,30 +198,20 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
     (function () {
       var color = Win.rgb(174, 238, 238);
       return function (tupledArg) {
-        var arg10_ = tupledArg[0];
-        var arg11_ = tupledArg[1];
-        var arg12_ = tupledArg[2];
-        var arg13_ = tupledArg[3];
-        Win.filled(color, arg10_, arg11_, arg12_, arg13_);
+        Win.filled(color, tupledArg[0], tupledArg[1], tupledArg[2], tupledArg[3]);
       };
     })()([0, 0, w, h]);
     (function () {
       var color = Win.rgb(74, 163, 41);
       return function (tupledArg) {
-        var arg10_ = tupledArg[0];
-        var arg11_ = tupledArg[1];
-        var arg12_ = tupledArg[2];
-        var arg13_ = tupledArg[3];
-        Win.filled(color, arg10_, arg11_, arg12_, arg13_);
+        Win.filled(color, tupledArg[0], tupledArg[1], tupledArg[2], tupledArg[3]);
       };
     })()([0, h - 50, w, 50]);
     var verb = mario.y > 0 ? "jump" : mario.vx !== 0 ? "walk" : "stand";
     (function () {
       var tupledArg = [w / 2 - 16 + mario.x, h - 50 - 31 - mario.y];
-      var x = tupledArg[0];
-      var y = tupledArg[1];
       return function (img) {
-        Win.position(x, y, img);
+        Win.position(tupledArg[0], tupledArg[1], img);
       };
     })()(Win.image("images/mario" + verb + mario.dir + ".gif"));
   }
@@ -238,10 +224,8 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
   function update(mario, unitVar1) {
     var mario_1 = function () {
       var tupledArg = Keyboard.arrows();
-      var arg00_ = tupledArg[0];
-      var arg01_ = tupledArg[1];
       return function (mario_1) {
-        return step(arg00_, arg01_, mario_1);
+        return step(tupledArg[0], tupledArg[1], mario_1);
       };
     }()(mario);
 
