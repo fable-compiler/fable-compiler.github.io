@@ -228,6 +228,6 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
     })(render());
 
     return null;
-  }, null);
+  });
 });
 //# sourceMappingURL=hokusai.js.map

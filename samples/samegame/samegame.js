@@ -515,7 +515,7 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
                         el.addEventListener('click', function (_arg1) {
                             play(game)([x, y]);
                             return null;
-                        }, null);
+                        });
                     }, _fableCore.Seq.toList(_fableCore.Seq.range(0, maxRowIndex)));
                 }, _fableCore.Seq.toList(_fableCore.Seq.range(0, maxColIndex)));
             };
@@ -600,11 +600,11 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
     selectGame.addEventListener('change', function (_arg1) {
         selectGameOnChange();
         return null;
-    }, null);
+    });
     buttonNewGame.addEventListener('click', function (_arg2) {
         newGameOnClick();
         return null;
-    }, null);
+    });
     updateUi(api.NewGame(defaultConfig));
 });
 //# sourceMappingURL=samegame.js.map

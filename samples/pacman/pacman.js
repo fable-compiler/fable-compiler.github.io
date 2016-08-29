@@ -442,10 +442,10 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
     var init = $exports.init = function init() {
       window.addEventListener('keydown', function (e) {
         return update(e, true);
-      }, null);
+      });
       window.addEventListener('keyup', function (e) {
         return update(e, false);
-      }, null);
+      });
     };
 
     return $exports;

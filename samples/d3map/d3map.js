@@ -83,7 +83,7 @@ define(["exports", "queue", "topojson", "d3", "fable-core"], function (exports, 
 
             ctx.lineWidth = width_1;
             ctx.beginPath();
-            path(line, null);
+            path(line);
 
             if (fill) {
               ctx.fill();

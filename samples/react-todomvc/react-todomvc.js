@@ -323,7 +323,7 @@ define(["exports", "fable-core", "react", "react-dom", "classnames"], function (
             _this2.contents = _this2;
             _this2.contents.state = new TodoItemState(props.todo.title);
             _this2.editField = null;
-            _this2["init@156"] = 1;
+            _this2["init@157"] = 1;
             return _this2;
         }
 
@@ -554,7 +554,7 @@ define(["exports", "fable-core", "react", "react-dom", "classnames"], function (
             };
             var _this_1 = _this6;
             _this6.contents = _this6;
-            _this6["init@285-1"] = 1;
+            _this6["init@311-1"] = 1;
             _this6.contents.state = new TodoAppState("all", null, "");
             return _this6;
         }

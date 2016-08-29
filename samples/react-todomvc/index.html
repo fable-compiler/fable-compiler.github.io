@@ -86,7 +86,8 @@
 is to take advantage of the full power of <a href="https://facebook.github.io/react/">React</a> in Fable apps.
 You can also compare the <a href="https://github.com/fable-compiler/Fable/blob/master/samples/browser/react-todomvc/react-todomvc.fsx">F# source code</a>
 with the <a href="https://github.com/tastejs/todomvc/tree/gh-pages/examples/react">original JS implementation</a>
-to see the advantages of Fable programming. And remember <a href="http://www.navision-blog.de/blog/2016/08/06/fable-react-native/">Fable is also compatible with React Native</a> for mobile development!</p>
+to see the advantages of Fable programming. There's also a port of the <a href="https://github.com/fable-compiler/Fable/tree/master/samples/browser/react-tutorial">React tutorial</a>,
+including an express server and hot reloading. And remember <a href="http://www.navision-blog.de/blog/2016/08/06/fable-react-native/">Fable is also compatible with React Native</a> for mobile development!</p>
     </div>
     <div class="col-md-1 col-lg-2"></div>
   </div>
@@ -306,6 +307,318 @@ as we would do with JSX.</p>
 <p>A big difference from JS is we can define simple models for the state and props
 of custom views, either by using records or interfaces, to allow for autocompletion
 and static checking, making our app much more robust than by using plain JS objects.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+<span class="l">21: </span>
+<span class="l">22: </span>
+<span class="l">23: </span>
+<span class="l">24: </span>
+<span class="l">25: </span>
+<span class="l">26: </span>
+<span class="l">27: </span>
+<span class="l">28: </span>
+<span class="l">29: </span>
+<span class="l">30: </span>
+<span class="l">31: </span>
+<span class="l">32: </span>
+<span class="l">33: </span>
+<span class="l">34: </span>
+<span class="l">35: </span>
+<span class="l">36: </span>
+<span class="l">37: </span>
+<span class="l">38: </span>
+<span class="l">39: </span>
+<span class="l">40: </span>
+<span class="l">41: </span>
+<span class="l">42: </span>
+<span class="l">43: </span>
+<span class="l">44: </span>
+<span class="l">45: </span>
+<span class="l">46: </span>
+<span class="l">47: </span>
+<span class="l">48: </span>
+<span class="l">49: </span>
+<span class="l">50: </span>
+<span class="l">51: </span>
+<span class="l">52: </span>
+<span class="l">53: </span>
+<span class="l">54: </span>
+<span class="l">55: </span>
+<span class="l">56: </span>
+<span class="l">57: </span>
+<span class="l">58: </span>
+<span class="l">59: </span>
+<span class="l">60: </span>
+<span class="l">61: </span>
+<span class="l">62: </span>
+<span class="l">63: </span>
+<span class="l">64: </span>
+<span class="l">65: </span>
+<span class="l">66: </span>
+<span class="l">67: </span>
+<span class="l">68: </span>
+<span class="l">69: </span>
+<span class="l">70: </span>
+<span class="l">71: </span>
+<span class="l">72: </span>
+<span class="l">73: </span>
+<span class="l">74: </span>
+<span class="l">75: </span>
+<span class="l">76: </span>
+<span class="l">77: </span>
+<span class="l">78: </span>
+<span class="l">79: </span>
+<span class="l">80: </span>
+<span class="l">81: </span>
+<span class="l">82: </span>
+<span class="l">83: </span>
+<span class="l">84: </span>
+<span class="l">85: </span>
+<span class="l">86: </span>
+<span class="l">87: </span>
+<span class="l">88: </span>
+<span class="l">89: </span>
+<span class="l">90: </span>
+<span class="l">91: </span>
+<span class="l">92: </span>
+<span class="l">93: </span>
+<span class="l">94: </span>
+<span class="l">95: </span>
+<span class="l">96: </span>
+<span class="l">97: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">module</span> <span onmouseout="hideTip(event, 'fs67', 182)" onmouseover="showTip(event, 'fs67', 182)" class="t">R</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 183)" onmouseover="showTip(event, 'fs2', 183)" class="i">Fable</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs68', 184)" onmouseover="showTip(event, 'fs68', 184)" class="i">Helpers</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs67', 185)" onmouseover="showTip(event, 'fs67', 185)" class="i">React</span>
+<span class="k">open</span> <span class="i">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs69', 186)" onmouseover="showTip(event, 'fs69', 186)" class="i">Props</span>
+
+<span class="k">type</span> <span onmouseout="hideTip(event, 'fs70', 187)" onmouseover="showTip(event, 'fs70', 187)" class="t">TodoItemState</span> <span class="o">=</span> { <span onmouseout="hideTip(event, 'fs71', 188)" onmouseover="showTip(event, 'fs71', 188)" class="i">editText</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs10', 189)" onmouseover="showTip(event, 'fs10', 189)" class="t">string</span> }
+<span class="k">type</span> <span onmouseout="hideTip(event, 'fs72', 190)" onmouseover="showTip(event, 'fs72', 190)" class="t">TodoItemProps</span> <span class="o">=</span>
+    <span class="k">abstract</span> <span onmouseout="hideTip(event, 'fs73', 191)" onmouseover="showTip(event, 'fs73', 191)" class="i">key</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs27', 192)" onmouseover="showTip(event, 'fs27', 192)" class="t">Guid</span> 
+    <span class="k">abstract</span> <span onmouseout="hideTip(event, 'fs74', 193)" onmouseover="showTip(event, 'fs74', 193)" class="i">todo</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs25', 194)" onmouseover="showTip(event, 'fs25', 194)" class="t">Todo</span> 
+    <span class="k">abstract</span> <span onmouseout="hideTip(event, 'fs75', 195)" onmouseover="showTip(event, 'fs75', 195)" class="i">editing</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs30', 196)" onmouseover="showTip(event, 'fs30', 196)" class="t">bool</span>
+    <span class="k">abstract</span> <span onmouseout="hideTip(event, 'fs76', 197)" onmouseover="showTip(event, 'fs76', 197)" class="f">onSave</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs9', 198)" onmouseover="showTip(event, 'fs9', 198)" class="t">obj</span><span class="k">-&gt;</span><span onmouseout="hideTip(event, 'fs35', 199)" onmouseover="showTip(event, 'fs35', 199)" class="t">unit</span>
+    <span class="k">abstract</span> <span onmouseout="hideTip(event, 'fs77', 200)" onmouseover="showTip(event, 'fs77', 200)" class="f">onEdit</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs9', 201)" onmouseover="showTip(event, 'fs9', 201)" class="t">obj</span><span class="k">-&gt;</span><span onmouseout="hideTip(event, 'fs35', 202)" onmouseover="showTip(event, 'fs35', 202)" class="t">unit</span>
+    <span class="k">abstract</span> <span onmouseout="hideTip(event, 'fs78', 203)" onmouseover="showTip(event, 'fs78', 203)" class="f">onDestroy</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs9', 204)" onmouseover="showTip(event, 'fs9', 204)" class="t">obj</span><span class="k">-&gt;</span><span onmouseout="hideTip(event, 'fs35', 205)" onmouseover="showTip(event, 'fs35', 205)" class="t">unit</span>
+    <span class="k">abstract</span> <span onmouseout="hideTip(event, 'fs79', 206)" onmouseover="showTip(event, 'fs79', 206)" class="f">onCancel</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs9', 207)" onmouseover="showTip(event, 'fs9', 207)" class="t">obj</span><span class="k">-&gt;</span><span onmouseout="hideTip(event, 'fs35', 208)" onmouseover="showTip(event, 'fs35', 208)" class="t">unit</span>
+    <span class="k">abstract</span> <span onmouseout="hideTip(event, 'fs80', 209)" onmouseover="showTip(event, 'fs80', 209)" class="f">onToggle</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs9', 210)" onmouseover="showTip(event, 'fs9', 210)" class="t">obj</span><span class="k">-&gt;</span><span onmouseout="hideTip(event, 'fs35', 211)" onmouseover="showTip(event, 'fs35', 211)" class="t">unit</span>
+
+<span class="k">let</span> [&lt;<span onmouseout="hideTip(event, 'fs81', 212)" onmouseover="showTip(event, 'fs81', 212)" class="t">Literal</span>&gt;] <span onmouseout="hideTip(event, 'fs82', 213)" onmouseover="showTip(event, 'fs82', 213)" class="i">ESCAPE_KEY</span> <span class="o">=</span> <span class="n">27.</span>
+<span class="k">let</span> [&lt;<span onmouseout="hideTip(event, 'fs81', 214)" onmouseover="showTip(event, 'fs81', 214)" class="t">Literal</span>&gt;] <span onmouseout="hideTip(event, 'fs83', 215)" onmouseover="showTip(event, 'fs83', 215)" class="i">ENTER_KEY</span> <span class="o">=</span> <span class="n">13.</span>
+<span class="k">let</span> [&lt;<span onmouseout="hideTip(event, 'fs81', 216)" onmouseover="showTip(event, 'fs81', 216)" class="t">Literal</span>&gt;] <span onmouseout="hideTip(event, 'fs84', 217)" onmouseover="showTip(event, 'fs84', 217)" class="i">ALL_TODOS</span> <span class="o">=</span> <span class="s">&quot;all&quot;</span>
+<span class="k">let</span> [&lt;<span onmouseout="hideTip(event, 'fs81', 218)" onmouseover="showTip(event, 'fs81', 218)" class="t">Literal</span>&gt;] <span onmouseout="hideTip(event, 'fs85', 219)" onmouseover="showTip(event, 'fs85', 219)" class="i">ACTIVE_TODOS</span> <span class="o">=</span> <span class="s">&quot;active&quot;</span>
+<span class="k">let</span> [&lt;<span onmouseout="hideTip(event, 'fs81', 220)" onmouseover="showTip(event, 'fs81', 220)" class="t">Literal</span>&gt;] <span onmouseout="hideTip(event, 'fs86', 221)" onmouseover="showTip(event, 'fs86', 221)" class="i">COMPLETED_TODOS</span> <span class="o">=</span> <span class="s">&quot;completed&quot;</span>
+
+<span class="k">type</span> <span onmouseout="hideTip(event, 'fs87', 222)" onmouseover="showTip(event, 'fs87', 222)" class="t">TodoItem</span>(<span onmouseout="hideTip(event, 'fs88', 223)" onmouseover="showTip(event, 'fs88', 223)" class="i">props</span>, <span onmouseout="hideTip(event, 'fs89', 224)" onmouseover="showTip(event, 'fs89', 224)" class="i">ctx</span>) <span class="k">as</span> <span onmouseout="hideTip(event, 'fs90', 225)" onmouseover="showTip(event, 'fs90', 225)" class="v">this</span> <span class="o">=</span>
+    <span class="k">inherit</span> <span onmouseout="hideTip(event, 'fs91', 226)" onmouseover="showTip(event, 'fs91', 226)" class="t">React</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs92', 227)" onmouseover="showTip(event, 'fs92', 227)" class="t">Component</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'fs72', 228)" onmouseover="showTip(event, 'fs72', 228)" class="t">TodoItemProps</span>, <span onmouseout="hideTip(event, 'fs70', 229)" onmouseover="showTip(event, 'fs70', 229)" class="t">TodoItemState</span><span class="o">&gt;</span>(<span class="i">props</span>, <span class="i">ctx</span>)
+    <span class="k">do</span> <span class="v">this</span><span class="o">.</span><span class="i">state</span> <span class="o">&lt;-</span> { <span class="i">editText</span> <span class="o">=</span> <span class="i">props</span><span class="o">.</span><span class="i">todo</span><span class="o">.</span><span class="i">title</span> }
+
+    <span class="k">let</span> <span class="k">mutable</span> <span onmouseout="hideTip(event, 'fs93', 230)" onmouseover="showTip(event, 'fs93', 230)" class="v">editField</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs9', 231)" onmouseover="showTip(event, 'fs9', 231)" class="t">obj</span> <span onmouseout="hideTip(event, 'fs94', 232)" onmouseover="showTip(event, 'fs94', 232)" class="t">option</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs95', 233)" onmouseover="showTip(event, 'fs95', 233)" class="p">None</span>
+
+    <span class="k">member</span> <span onmouseout="hideTip(event, 'fs90', 234)" onmouseover="showTip(event, 'fs90', 234)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs96', 235)" onmouseover="showTip(event, 'fs96', 235)" class="f">handleSubmit</span> (<span onmouseout="hideTip(event, 'fs97', 236)" onmouseover="showTip(event, 'fs97', 236)" class="i">e</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs91', 237)" onmouseover="showTip(event, 'fs91', 237)" class="t">React</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs98', 238)" onmouseover="showTip(event, 'fs98', 238)" class="t">SyntheticEvent</span>) <span class="o">=</span>
+        <span class="k">match</span> <span onmouseout="hideTip(event, 'fs90', 239)" onmouseover="showTip(event, 'fs90', 239)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs99', 240)" onmouseover="showTip(event, 'fs99', 240)" class="i">state</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs71', 241)" onmouseover="showTip(event, 'fs71', 241)" class="i">editText</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs100', 242)" onmouseover="showTip(event, 'fs100', 242)" class="f">Trim</span>() <span class="k">with</span>
+        | <span onmouseout="hideTip(event, 'fs101', 243)" onmouseover="showTip(event, 'fs101', 243)" class="i">value</span> <span class="k">when</span> <span onmouseout="hideTip(event, 'fs101', 244)" onmouseover="showTip(event, 'fs101', 244)" class="i">value</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs102', 245)" onmouseover="showTip(event, 'fs102', 245)" class="i">Length</span> <span class="o">&gt;</span> <span class="n">0</span> <span class="k">-&gt;</span>
+            <span onmouseout="hideTip(event, 'fs90', 246)" onmouseover="showTip(event, 'fs90', 246)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 247)" onmouseover="showTip(event, 'fs103', 247)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs104', 248)" onmouseover="showTip(event, 'fs104', 248)" class="f">onSave</span>(<span onmouseout="hideTip(event, 'fs101', 249)" onmouseover="showTip(event, 'fs101', 249)" class="i">value</span>)
+            <span onmouseout="hideTip(event, 'fs90', 250)" onmouseover="showTip(event, 'fs90', 250)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs105', 251)" onmouseover="showTip(event, 'fs105', 251)" class="f">setState</span> { <span class="i">editText</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs101', 252)" onmouseover="showTip(event, 'fs101', 252)" class="i">value</span> }
+        | _ <span class="k">-&gt;</span>
+            <span onmouseout="hideTip(event, 'fs90', 253)" onmouseover="showTip(event, 'fs90', 253)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 254)" onmouseover="showTip(event, 'fs103', 254)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs106', 255)" onmouseover="showTip(event, 'fs106', 255)" class="f">onDestroy</span>(<span onmouseout="hideTip(event, 'fs97', 256)" onmouseover="showTip(event, 'fs97', 256)" class="i">e</span>)
+
+    <span class="k">member</span> <span onmouseout="hideTip(event, 'fs90', 257)" onmouseover="showTip(event, 'fs90', 257)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs107', 258)" onmouseover="showTip(event, 'fs107', 258)" class="f">handleEdit</span> (<span onmouseout="hideTip(event, 'fs108', 259)" onmouseover="showTip(event, 'fs108', 259)" class="i">ev</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs91', 260)" onmouseover="showTip(event, 'fs91', 260)" class="t">React</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs109', 261)" onmouseover="showTip(event, 'fs109', 261)" class="t">MouseEvent</span>) <span class="o">=</span>
+        <span onmouseout="hideTip(event, 'fs90', 262)" onmouseover="showTip(event, 'fs90', 262)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 263)" onmouseover="showTip(event, 'fs103', 263)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs110', 264)" onmouseover="showTip(event, 'fs110', 264)" class="f">onEdit</span>(<span onmouseout="hideTip(event, 'fs108', 265)" onmouseover="showTip(event, 'fs108', 265)" class="i">ev</span>)
+        <span onmouseout="hideTip(event, 'fs90', 266)" onmouseover="showTip(event, 'fs90', 266)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs105', 267)" onmouseover="showTip(event, 'fs105', 267)" class="f">setState</span> { <span class="i">editText</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs90', 268)" onmouseover="showTip(event, 'fs90', 268)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 269)" onmouseover="showTip(event, 'fs103', 269)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs111', 270)" onmouseover="showTip(event, 'fs111', 270)" class="i">todo</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs28', 271)" onmouseover="showTip(event, 'fs28', 271)" class="i">title</span> }
+
+    <span class="k">member</span> <span onmouseout="hideTip(event, 'fs90', 272)" onmouseover="showTip(event, 'fs90', 272)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs112', 273)" onmouseover="showTip(event, 'fs112', 273)" class="f">handleKeyDown</span> (<span onmouseout="hideTip(event, 'fs113', 274)" onmouseover="showTip(event, 'fs113', 274)" class="i">e</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs91', 275)" onmouseover="showTip(event, 'fs91', 275)" class="t">React</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs114', 276)" onmouseover="showTip(event, 'fs114', 276)" class="t">KeyboardEvent</span>) <span class="o">=</span>
+        <span class="k">match</span> <span onmouseout="hideTip(event, 'fs113', 277)" onmouseover="showTip(event, 'fs113', 277)" class="i">e</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs115', 278)" onmouseover="showTip(event, 'fs115', 278)" class="i">which</span> <span class="k">with</span>
+        | <span onmouseout="hideTip(event, 'fs82', 279)" onmouseover="showTip(event, 'fs82', 279)" class="i">ESCAPE_KEY</span> <span class="k">-&gt;</span>
+            <span onmouseout="hideTip(event, 'fs90', 280)" onmouseover="showTip(event, 'fs90', 280)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs105', 281)" onmouseover="showTip(event, 'fs105', 281)" class="f">setState</span> { <span class="i">editText</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs90', 282)" onmouseover="showTip(event, 'fs90', 282)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 283)" onmouseover="showTip(event, 'fs103', 283)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs111', 284)" onmouseover="showTip(event, 'fs111', 284)" class="i">todo</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs28', 285)" onmouseover="showTip(event, 'fs28', 285)" class="i">title</span> }
+            <span onmouseout="hideTip(event, 'fs90', 286)" onmouseover="showTip(event, 'fs90', 286)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 287)" onmouseover="showTip(event, 'fs103', 287)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs116', 288)" onmouseover="showTip(event, 'fs116', 288)" class="f">onCancel</span>(<span onmouseout="hideTip(event, 'fs113', 289)" onmouseover="showTip(event, 'fs113', 289)" class="i">e</span>)
+        | <span onmouseout="hideTip(event, 'fs83', 290)" onmouseover="showTip(event, 'fs83', 290)" class="i">ENTER_KEY</span> <span class="k">-&gt;</span>
+            <span onmouseout="hideTip(event, 'fs90', 291)" onmouseover="showTip(event, 'fs90', 291)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs117', 292)" onmouseover="showTip(event, 'fs117', 292)" class="f">handleSubmit</span>(<span onmouseout="hideTip(event, 'fs113', 293)" onmouseover="showTip(event, 'fs113', 293)" class="i">e</span>)
+        | _ <span class="k">-&gt;</span> ()
+
+    <span class="k">member</span> <span onmouseout="hideTip(event, 'fs90', 294)" onmouseover="showTip(event, 'fs90', 294)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs118', 295)" onmouseover="showTip(event, 'fs118', 295)" class="f">handleChange</span> (<span onmouseout="hideTip(event, 'fs97', 296)" onmouseover="showTip(event, 'fs97', 296)" class="i">e</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs91', 297)" onmouseover="showTip(event, 'fs91', 297)" class="t">React</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs98', 298)" onmouseover="showTip(event, 'fs98', 298)" class="t">SyntheticEvent</span>) <span class="o">=</span>
+        <span class="k">if</span> <span onmouseout="hideTip(event, 'fs90', 299)" onmouseover="showTip(event, 'fs90', 299)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 300)" onmouseover="showTip(event, 'fs103', 300)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs119', 301)" onmouseover="showTip(event, 'fs119', 301)" class="i">editing</span> <span class="k">then</span>
+            <span onmouseout="hideTip(event, 'fs90', 302)" onmouseover="showTip(event, 'fs90', 302)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs105', 303)" onmouseover="showTip(event, 'fs105', 303)" class="f">setState</span> { <span class="i">editText</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs10', 304)" onmouseover="showTip(event, 'fs10', 304)" class="f">string</span> <span onmouseout="hideTip(event, 'fs97', 305)" onmouseover="showTip(event, 'fs97', 305)" class="i">e</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs120', 306)" onmouseover="showTip(event, 'fs120', 306)" class="i">target</span><span class="o">?</span><span class="i">value</span> }
+
+    <span class="k">member</span> <span onmouseout="hideTip(event, 'fs90', 307)" onmouseover="showTip(event, 'fs90', 307)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs121', 308)" onmouseover="showTip(event, 'fs121', 308)" class="f">shouldComponentUpdate</span> (<span onmouseout="hideTip(event, 'fs122', 309)" onmouseover="showTip(event, 'fs122', 309)" class="i">nextProps</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs72', 310)" onmouseover="showTip(event, 'fs72', 310)" class="t">TodoItemProps</span>) (<span onmouseout="hideTip(event, 'fs123', 311)" onmouseover="showTip(event, 'fs123', 311)" class="i">nextState</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs70', 312)" onmouseover="showTip(event, 'fs70', 312)" class="t">TodoItemState</span>) <span class="o">=</span>
+        <span onmouseout="hideTip(event, 'fs59', 313)" onmouseover="showTip(event, 'fs59', 313)" class="f">not</span>(<span onmouseout="hideTip(event, 'fs9', 314)" onmouseover="showTip(event, 'fs9', 314)" class="t">obj</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs124', 315)" onmouseover="showTip(event, 'fs124', 315)" class="f">ReferenceEquals</span>(<span onmouseout="hideTip(event, 'fs122', 316)" onmouseover="showTip(event, 'fs122', 316)" class="i">nextProps</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs111', 317)" onmouseover="showTip(event, 'fs111', 317)" class="i">todo</span>, <span onmouseout="hideTip(event, 'fs90', 318)" onmouseover="showTip(event, 'fs90', 318)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 319)" onmouseover="showTip(event, 'fs103', 319)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs111', 320)" onmouseover="showTip(event, 'fs111', 320)" class="i">todo</span>))
+        <span class="o">||</span> <span onmouseout="hideTip(event, 'fs122', 321)" onmouseover="showTip(event, 'fs122', 321)" class="i">nextProps</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs119', 322)" onmouseover="showTip(event, 'fs119', 322)" class="i">editing</span> <span class="o">&lt;&gt;</span> <span onmouseout="hideTip(event, 'fs90', 323)" onmouseover="showTip(event, 'fs90', 323)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 324)" onmouseover="showTip(event, 'fs103', 324)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs119', 325)" onmouseover="showTip(event, 'fs119', 325)" class="i">editing</span>
+        <span class="o">||</span> <span onmouseout="hideTip(event, 'fs123', 326)" onmouseover="showTip(event, 'fs123', 326)" class="i">nextState</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs71', 327)" onmouseover="showTip(event, 'fs71', 327)" class="i">editText</span> <span class="o">&lt;&gt;</span> <span onmouseout="hideTip(event, 'fs90', 328)" onmouseover="showTip(event, 'fs90', 328)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs99', 329)" onmouseover="showTip(event, 'fs99', 329)" class="i">state</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs71', 330)" onmouseover="showTip(event, 'fs71', 330)" class="i">editText</span>
+
+    <span class="k">member</span> <span onmouseout="hideTip(event, 'fs90', 331)" onmouseover="showTip(event, 'fs90', 331)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs125', 332)" onmouseover="showTip(event, 'fs125', 332)" class="f">componentDidUpdate</span> (<span onmouseout="hideTip(event, 'fs126', 333)" onmouseover="showTip(event, 'fs126', 333)" class="i">prevProps</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs72', 334)" onmouseover="showTip(event, 'fs72', 334)" class="t">TodoItemProps</span>) <span class="o">=</span>
+        <span class="k">if</span> <span onmouseout="hideTip(event, 'fs59', 335)" onmouseover="showTip(event, 'fs59', 335)" class="f">not</span> <span onmouseout="hideTip(event, 'fs126', 336)" onmouseover="showTip(event, 'fs126', 336)" class="i">prevProps</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs119', 337)" onmouseover="showTip(event, 'fs119', 337)" class="i">editing</span> <span class="o">&amp;&amp;</span> <span onmouseout="hideTip(event, 'fs90', 338)" onmouseover="showTip(event, 'fs90', 338)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 339)" onmouseover="showTip(event, 'fs103', 339)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs119', 340)" onmouseover="showTip(event, 'fs119', 340)" class="i">editing</span> <span class="k">then</span>
+            <span class="k">let</span> <span onmouseout="hideTip(event, 'fs127', 341)" onmouseover="showTip(event, 'fs127', 341)" class="i">node</span> <span class="o">=</span>
+                <span onmouseout="hideTip(event, 'fs128', 342)" onmouseover="showTip(event, 'fs128', 342)" class="i">ReactDom</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs129', 343)" onmouseover="showTip(event, 'fs129', 343)" class="f">findDOMNode</span>(<span onmouseout="hideTip(event, 'fs18', 344)" onmouseover="showTip(event, 'fs18', 344)" class="f">unbox</span> <span onmouseout="hideTip(event, 'fs93', 345)" onmouseover="showTip(event, 'fs93', 345)" class="v">editField</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs130', 346)" onmouseover="showTip(event, 'fs130', 346)" class="i">Value</span>)
+                <span class="o">:?&gt;</span> <span onmouseout="hideTip(event, 'fs16', 347)" onmouseover="showTip(event, 'fs16', 347)" class="t">Browser</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs131', 348)" onmouseover="showTip(event, 'fs131', 348)" class="t">HTMLInputElement</span>
+            <span onmouseout="hideTip(event, 'fs127', 349)" onmouseover="showTip(event, 'fs127', 349)" class="i">node</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs132', 350)" onmouseover="showTip(event, 'fs132', 350)" class="f">focus</span>()
+            <span onmouseout="hideTip(event, 'fs127', 351)" onmouseover="showTip(event, 'fs127', 351)" class="i">node</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs133', 352)" onmouseover="showTip(event, 'fs133', 352)" class="f">setSelectionRange</span>(<span onmouseout="hideTip(event, 'fs134', 353)" onmouseover="showTip(event, 'fs134', 353)" class="f">float</span> <span onmouseout="hideTip(event, 'fs127', 354)" onmouseover="showTip(event, 'fs127', 354)" class="i">node</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs135', 355)" onmouseover="showTip(event, 'fs135', 355)" class="i">value</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs102', 356)" onmouseover="showTip(event, 'fs102', 356)" class="i">Length</span>, <span onmouseout="hideTip(event, 'fs134', 357)" onmouseover="showTip(event, 'fs134', 357)" class="f">float</span> <span onmouseout="hideTip(event, 'fs127', 358)" onmouseover="showTip(event, 'fs127', 358)" class="i">node</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs135', 359)" onmouseover="showTip(event, 'fs135', 359)" class="i">value</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs102', 360)" onmouseover="showTip(event, 'fs102', 360)" class="i">Length</span>)
+
+    <span class="k">member</span> <span onmouseout="hideTip(event, 'fs90', 361)" onmouseover="showTip(event, 'fs90', 361)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs136', 362)" onmouseover="showTip(event, 'fs136', 362)" class="f">render</span> () <span class="o">=</span>
+        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs137', 363)" onmouseover="showTip(event, 'fs137', 363)" class="i">className</span> <span class="o">=</span>
+            <span onmouseout="hideTip(event, 'fs7', 364)" onmouseover="showTip(event, 'fs7', 364)" class="f">classNames</span>(
+                <span onmouseout="hideTip(event, 'fs138', 365)" onmouseover="showTip(event, 'fs138', 365)" class="f">createObj</span> [
+                    <span class="s">&quot;completed&quot;</span> <span class="o">==&gt;</span> <span onmouseout="hideTip(event, 'fs90', 366)" onmouseover="showTip(event, 'fs90', 366)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 367)" onmouseover="showTip(event, 'fs103', 367)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs111', 368)" onmouseover="showTip(event, 'fs111', 368)" class="i">todo</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs29', 369)" onmouseover="showTip(event, 'fs29', 369)" class="i">completed</span>
+                    <span class="s">&quot;editing&quot;</span> <span class="o">==&gt;</span> <span onmouseout="hideTip(event, 'fs90', 370)" onmouseover="showTip(event, 'fs90', 370)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 371)" onmouseover="showTip(event, 'fs103', 371)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs119', 372)" onmouseover="showTip(event, 'fs119', 372)" class="i">editing</span>
+                ])
+        <span class="c">// The React helper defines a simple DSL to build HTML elements.</span>
+        <span class="c">// For more info about transforming F# unions to JS option objects:</span>
+        <span class="c">// https://fable-compiler.github.io/docs/interacting.html#KeyValueList-attribute</span>
+        <span onmouseout="hideTip(event, 'fs67', 373)" onmouseover="showTip(event, 'fs67', 373)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs139', 374)" onmouseover="showTip(event, 'fs139', 374)" class="f">li</span> [ <span onmouseout="hideTip(event, 'fs140', 375)" onmouseover="showTip(event, 'fs140', 375)" class="p">ClassName</span> <span onmouseout="hideTip(event, 'fs137', 376)" onmouseover="showTip(event, 'fs137', 376)" class="i">className</span> ] [
+            <span onmouseout="hideTip(event, 'fs67', 377)" onmouseover="showTip(event, 'fs67', 377)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs141', 378)" onmouseover="showTip(event, 'fs141', 378)" class="f">div</span> [ <span onmouseout="hideTip(event, 'fs140', 379)" onmouseover="showTip(event, 'fs140', 379)" class="p">ClassName</span> <span class="s">&quot;view&quot;</span> ] [
+                <span onmouseout="hideTip(event, 'fs67', 380)" onmouseover="showTip(event, 'fs67', 380)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs142', 381)" onmouseover="showTip(event, 'fs142', 381)" class="f">input</span> [
+                    <span onmouseout="hideTip(event, 'fs140', 382)" onmouseover="showTip(event, 'fs140', 382)" class="p">ClassName</span> <span class="s">&quot;toggle&quot;</span>
+                    <span onmouseout="hideTip(event, 'fs143', 383)" onmouseover="showTip(event, 'fs143', 383)" class="p">Type</span> <span class="s">&quot;checkbox&quot;</span>
+                    <span onmouseout="hideTip(event, 'fs144', 384)" onmouseover="showTip(event, 'fs144', 384)" class="p">Checked</span> <span onmouseout="hideTip(event, 'fs90', 385)" onmouseover="showTip(event, 'fs90', 385)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 386)" onmouseover="showTip(event, 'fs103', 386)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs111', 387)" onmouseover="showTip(event, 'fs111', 387)" class="i">todo</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs29', 388)" onmouseover="showTip(event, 'fs29', 388)" class="i">completed</span>
+                    <span onmouseout="hideTip(event, 'fs145', 389)" onmouseover="showTip(event, 'fs145', 389)" class="p">OnChange</span> <span onmouseout="hideTip(event, 'fs90', 390)" onmouseover="showTip(event, 'fs90', 390)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 391)" onmouseover="showTip(event, 'fs103', 391)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs146', 392)" onmouseover="showTip(event, 'fs146', 392)" class="f">onToggle</span>  
+                ] []
+                <span onmouseout="hideTip(event, 'fs67', 393)" onmouseover="showTip(event, 'fs67', 393)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs147', 394)" onmouseover="showTip(event, 'fs147', 394)" class="f">label</span> [ <span onmouseout="hideTip(event, 'fs148', 395)" onmouseover="showTip(event, 'fs148', 395)" class="p">OnDoubleClick</span> <span onmouseout="hideTip(event, 'fs90', 396)" onmouseover="showTip(event, 'fs90', 396)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs149', 397)" onmouseover="showTip(event, 'fs149', 397)" class="f">handleEdit</span> ]
+                        [ <span onmouseout="hideTip(event, 'fs18', 398)" onmouseover="showTip(event, 'fs18', 398)" class="f">unbox</span> <span onmouseout="hideTip(event, 'fs90', 399)" onmouseover="showTip(event, 'fs90', 399)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 400)" onmouseover="showTip(event, 'fs103', 400)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs111', 401)" onmouseover="showTip(event, 'fs111', 401)" class="i">todo</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs28', 402)" onmouseover="showTip(event, 'fs28', 402)" class="i">title</span> ]
+                <span onmouseout="hideTip(event, 'fs67', 403)" onmouseover="showTip(event, 'fs67', 403)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs150', 404)" onmouseover="showTip(event, 'fs150', 404)" class="f">button</span> [
+                    <span onmouseout="hideTip(event, 'fs140', 405)" onmouseover="showTip(event, 'fs140', 405)" class="p">ClassName</span> <span class="s">&quot;destroy&quot;</span>
+                    <span onmouseout="hideTip(event, 'fs151', 406)" onmouseover="showTip(event, 'fs151', 406)" class="p">OnClick</span> <span onmouseout="hideTip(event, 'fs90', 407)" onmouseover="showTip(event, 'fs90', 407)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 408)" onmouseover="showTip(event, 'fs103', 408)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs106', 409)" onmouseover="showTip(event, 'fs106', 409)" class="f">onDestroy</span> ] [ ]
+            ]
+            <span onmouseout="hideTip(event, 'fs67', 410)" onmouseover="showTip(event, 'fs67', 410)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs142', 411)" onmouseover="showTip(event, 'fs142', 411)" class="f">input</span> [
+                <span onmouseout="hideTip(event, 'fs140', 412)" onmouseover="showTip(event, 'fs140', 412)" class="p">ClassName</span> <span class="s">&quot;edit&quot;</span>
+                <span onmouseout="hideTip(event, 'fs152', 413)" onmouseover="showTip(event, 'fs152', 413)" class="p">Ref</span> (<span class="k">fun</span> <span onmouseout="hideTip(event, 'fs153', 414)" onmouseover="showTip(event, 'fs153', 414)" class="i">x</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs93', 415)" onmouseover="showTip(event, 'fs93', 415)" class="v">editField</span> <span class="o">&lt;-</span> <span onmouseout="hideTip(event, 'fs154', 416)" onmouseover="showTip(event, 'fs154', 416)" class="p">Some</span> <span onmouseout="hideTip(event, 'fs153', 417)" onmouseover="showTip(event, 'fs153', 417)" class="i">x</span>)
+                <span onmouseout="hideTip(event, 'fs155', 418)" onmouseover="showTip(event, 'fs155', 418)" class="p">Value</span> (<span onmouseout="hideTip(event, 'fs156', 419)" onmouseover="showTip(event, 'fs156', 419)" class="t">U2</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs157', 420)" onmouseover="showTip(event, 'fs157', 420)" class="p">Case1</span> <span onmouseout="hideTip(event, 'fs90', 421)" onmouseover="showTip(event, 'fs90', 421)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs99', 422)" onmouseover="showTip(event, 'fs99', 422)" class="i">state</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs71', 423)" onmouseover="showTip(event, 'fs71', 423)" class="i">editText</span>)
+                <span onmouseout="hideTip(event, 'fs158', 424)" onmouseover="showTip(event, 'fs158', 424)" class="p">OnBlur</span> <span onmouseout="hideTip(event, 'fs90', 425)" onmouseover="showTip(event, 'fs90', 425)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs117', 426)" onmouseover="showTip(event, 'fs117', 426)" class="f">handleSubmit</span>
+                <span onmouseout="hideTip(event, 'fs145', 427)" onmouseover="showTip(event, 'fs145', 427)" class="p">OnChange</span> <span onmouseout="hideTip(event, 'fs90', 428)" onmouseover="showTip(event, 'fs90', 428)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs159', 429)" onmouseover="showTip(event, 'fs159', 429)" class="f">handleChange</span>
+                <span onmouseout="hideTip(event, 'fs160', 430)" onmouseover="showTip(event, 'fs160', 430)" class="p">OnKeyDown</span> <span onmouseout="hideTip(event, 'fs90', 431)" onmouseover="showTip(event, 'fs90', 431)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs161', 432)" onmouseover="showTip(event, 'fs161', 432)" class="f">handleKeyDown</span>
+            ] []
+        ]
+</code></pre></td>
+</tr>
+</table>
+<p>The next view is <code>TodoFooter</code>. This component just presents some buttons below
+the Todo list to filter by or change the <code>completed</code> property of the Todos.</p>
+<p>Same as <code>TodoItem</code>, notice the component subscribes to some events (like <code>OnClick</code>)
+but instead of containing the logic to react to the event it just runs a callback
+received from its parent through the <code>props</code> object. Remember the state of React
+components cannot be directly updated, so this is a way to transmit the event to
+the parent and let it re-render the subtree if necessary.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+<span class="l">21: </span>
+<span class="l">22: </span>
+<span class="l">23: </span>
+<span class="l">24: </span>
+<span class="l">25: </span>
+<span class="l">26: </span>
+<span class="l">27: </span>
+<span class="l">28: </span>
+<span class="l">29: </span>
+<span class="l">30: </span>
+<span class="l">31: </span>
+<span class="l">32: </span>
+<span class="l">33: </span>
+<span class="l">34: </span>
+<span class="l">35: </span>
+<span class="l">36: </span>
+<span class="l">37: </span>
+<span class="l">38: </span>
+<span class="l">39: </span>
+<span class="l">40: </span>
+<span class="l">41: </span>
+<span class="l">42: </span>
+<span class="l">43: </span>
+<span class="l">44: </span>
+<span class="l">45: </span>
+<span class="l">46: </span>
+<span class="l">47: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">type</span> <span onmouseout="hideTip(event, 'fs162', 433)" onmouseover="showTip(event, 'fs162', 433)" class="t">TodoFooterProps</span> <span class="o">=</span>
+    <span class="k">abstract</span> <span onmouseout="hideTip(event, 'fs163', 434)" onmouseover="showTip(event, 'fs163', 434)" class="i">count</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs164', 435)" onmouseover="showTip(event, 'fs164', 435)" class="t">int</span>
+    <span class="k">abstract</span> <span onmouseout="hideTip(event, 'fs165', 436)" onmouseover="showTip(event, 'fs165', 436)" class="i">completedCount</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs164', 437)" onmouseover="showTip(event, 'fs164', 437)" class="t">int</span>
+    <span class="k">abstract</span> <span onmouseout="hideTip(event, 'fs166', 438)" onmouseover="showTip(event, 'fs166', 438)" class="f">onClearCompleted</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs9', 439)" onmouseover="showTip(event, 'fs9', 439)" class="t">obj</span><span class="k">-&gt;</span><span onmouseout="hideTip(event, 'fs35', 440)" onmouseover="showTip(event, 'fs35', 440)" class="t">unit</span>
+    <span class="k">abstract</span> <span onmouseout="hideTip(event, 'fs167', 441)" onmouseover="showTip(event, 'fs167', 441)" class="i">nowShowing</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs10', 442)" onmouseover="showTip(event, 'fs10', 442)" class="t">string</span>
+
+<span class="k">type</span> <span onmouseout="hideTip(event, 'fs168', 443)" onmouseover="showTip(event, 'fs168', 443)" class="t">TodoFooter</span>(<span onmouseout="hideTip(event, 'fs169', 444)" onmouseover="showTip(event, 'fs169', 444)" class="i">props</span>, <span onmouseout="hideTip(event, 'fs89', 445)" onmouseover="showTip(event, 'fs89', 445)" class="i">ctx</span>) <span class="o">=</span>
+    <span class="k">inherit</span> <span onmouseout="hideTip(event, 'fs91', 446)" onmouseover="showTip(event, 'fs91', 446)" class="t">React</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs92', 447)" onmouseover="showTip(event, 'fs92', 447)" class="t">Component</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'fs162', 448)" onmouseover="showTip(event, 'fs162', 448)" class="t">TodoFooterProps</span>,<span onmouseout="hideTip(event, 'fs9', 449)" onmouseover="showTip(event, 'fs9', 449)" class="t">obj</span><span class="o">&gt;</span>(<span class="i">props</span>, <span class="i">ctx</span>)
+    <span class="k">member</span> <span onmouseout="hideTip(event, 'fs170', 450)" onmouseover="showTip(event, 'fs170', 450)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs171', 451)" onmouseover="showTip(event, 'fs171', 451)" class="f">render</span> () <span class="o">=</span>
+        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs172', 452)" onmouseover="showTip(event, 'fs172', 452)" class="i">activeTodoWord</span> <span class="o">=</span>
+            <span class="s">&quot;item&quot;</span> <span class="o">+</span> (<span class="k">if</span> <span onmouseout="hideTip(event, 'fs170', 453)" onmouseover="showTip(event, 'fs170', 453)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs173', 454)" onmouseover="showTip(event, 'fs173', 454)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs174', 455)" onmouseover="showTip(event, 'fs174', 455)" class="i">count</span> <span class="o">=</span> <span class="n">1</span> <span class="k">then</span> <span class="s">&quot;&quot;</span> <span class="k">else</span> <span class="s">&quot;s&quot;</span>)
+        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs175', 456)" onmouseover="showTip(event, 'fs175', 456)" class="i">clearButton</span> <span class="o">=</span>
+            <span class="k">if</span> <span onmouseout="hideTip(event, 'fs170', 457)" onmouseover="showTip(event, 'fs170', 457)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs173', 458)" onmouseover="showTip(event, 'fs173', 458)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs176', 459)" onmouseover="showTip(event, 'fs176', 459)" class="i">completedCount</span> <span class="o">&gt;</span> <span class="n">0</span> <span class="k">then</span>
+                <span onmouseout="hideTip(event, 'fs67', 460)" onmouseover="showTip(event, 'fs67', 460)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs150', 461)" onmouseover="showTip(event, 'fs150', 461)" class="f">button</span> [
+                    <span onmouseout="hideTip(event, 'fs140', 462)" onmouseover="showTip(event, 'fs140', 462)" class="p">ClassName</span> <span class="s">&quot;clear-completed&quot;</span>
+                    <span onmouseout="hideTip(event, 'fs151', 463)" onmouseover="showTip(event, 'fs151', 463)" class="p">OnClick</span> <span onmouseout="hideTip(event, 'fs170', 464)" onmouseover="showTip(event, 'fs170', 464)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs173', 465)" onmouseover="showTip(event, 'fs173', 465)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs177', 466)" onmouseover="showTip(event, 'fs177', 466)" class="f">onClearCompleted</span>
+                ] [ <span onmouseout="hideTip(event, 'fs18', 467)" onmouseover="showTip(event, 'fs18', 467)" class="f">unbox</span> <span class="s">&quot;Clear completed&quot;</span> ] <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs154', 468)" onmouseover="showTip(event, 'fs154', 468)" class="p">Some</span>
+            <span class="k">else</span> <span onmouseout="hideTip(event, 'fs95', 469)" onmouseover="showTip(event, 'fs95', 469)" class="p">None</span>
+        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs178', 470)" onmouseover="showTip(event, 'fs178', 470)" class="f">className</span> <span onmouseout="hideTip(event, 'fs179', 471)" onmouseover="showTip(event, 'fs179', 471)" class="i">category</span> <span class="o">=</span>
+            <span onmouseout="hideTip(event, 'fs7', 472)" onmouseover="showTip(event, 'fs7', 472)" class="f">classNames</span>(
+                <span onmouseout="hideTip(event, 'fs138', 473)" onmouseover="showTip(event, 'fs138', 473)" class="f">createObj</span> [<span class="s">&quot;selected&quot;</span> <span class="o">==&gt;</span> (<span onmouseout="hideTip(event, 'fs170', 474)" onmouseover="showTip(event, 'fs170', 474)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs173', 475)" onmouseover="showTip(event, 'fs173', 475)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs180', 476)" onmouseover="showTip(event, 'fs180', 476)" class="i">nowShowing</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs179', 477)" onmouseover="showTip(event, 'fs179', 477)" class="i">category</span>)])
+        <span onmouseout="hideTip(event, 'fs67', 478)" onmouseover="showTip(event, 'fs67', 478)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs181', 479)" onmouseover="showTip(event, 'fs181', 479)" class="f">footer</span> [ <span onmouseout="hideTip(event, 'fs140', 480)" onmouseover="showTip(event, 'fs140', 480)" class="p">ClassName</span> <span class="s">&quot;footer&quot;</span> ] [
+            <span onmouseout="hideTip(event, 'fs67', 481)" onmouseover="showTip(event, 'fs67', 481)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs182', 482)" onmouseover="showTip(event, 'fs182', 482)" class="f">span</span> [ <span onmouseout="hideTip(event, 'fs140', 483)" onmouseover="showTip(event, 'fs140', 483)" class="p">ClassName</span> <span class="s">&quot;todo-count&quot;</span> ] [
+                <span onmouseout="hideTip(event, 'fs67', 484)" onmouseover="showTip(event, 'fs67', 484)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs183', 485)" onmouseover="showTip(event, 'fs183', 485)" class="f">strong</span> [] [ <span onmouseout="hideTip(event, 'fs18', 486)" onmouseover="showTip(event, 'fs18', 486)" class="f">unbox</span> <span onmouseout="hideTip(event, 'fs170', 487)" onmouseover="showTip(event, 'fs170', 487)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs173', 488)" onmouseover="showTip(event, 'fs173', 488)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs174', 489)" onmouseover="showTip(event, 'fs174', 489)" class="i">count</span> ]
+                <span onmouseout="hideTip(event, 'fs18', 490)" onmouseover="showTip(event, 'fs18', 490)" class="f">unbox</span> (<span class="s">&quot; &quot;</span> <span class="o">+</span> <span onmouseout="hideTip(event, 'fs172', 491)" onmouseover="showTip(event, 'fs172', 491)" class="i">activeTodoWord</span> <span class="o">+</span> <span class="s">&quot; left&quot;</span>)
+            ]
+            <span onmouseout="hideTip(event, 'fs67', 492)" onmouseover="showTip(event, 'fs67', 492)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs184', 493)" onmouseover="showTip(event, 'fs184', 493)" class="f">ul</span> [ <span onmouseout="hideTip(event, 'fs140', 494)" onmouseover="showTip(event, 'fs140', 494)" class="p">ClassName</span> <span class="s">&quot;filters&quot;</span> ] [
+                <span onmouseout="hideTip(event, 'fs67', 495)" onmouseover="showTip(event, 'fs67', 495)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs139', 496)" onmouseover="showTip(event, 'fs139', 496)" class="f">li</span> [] [
+                    <span onmouseout="hideTip(event, 'fs67', 497)" onmouseover="showTip(event, 'fs67', 497)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs185', 498)" onmouseover="showTip(event, 'fs185', 498)" class="f">a</span> [
+                        <span onmouseout="hideTip(event, 'fs186', 499)" onmouseover="showTip(event, 'fs186', 499)" class="p">Href</span> <span class="s">&quot;#/&quot;</span>
+                        <span onmouseout="hideTip(event, 'fs140', 500)" onmouseover="showTip(event, 'fs140', 500)" class="p">ClassName</span> (<span onmouseout="hideTip(event, 'fs178', 501)" onmouseover="showTip(event, 'fs178', 501)" class="f">className</span> <span onmouseout="hideTip(event, 'fs84', 502)" onmouseover="showTip(event, 'fs84', 502)" class="i">ALL_TODOS</span>)
+                    ] [ <span onmouseout="hideTip(event, 'fs18', 503)" onmouseover="showTip(event, 'fs18', 503)" class="f">unbox</span> <span class="s">&quot;All&quot;</span> ] ]
+                <span onmouseout="hideTip(event, 'fs18', 504)" onmouseover="showTip(event, 'fs18', 504)" class="f">unbox</span> <span class="s">&quot; &quot;</span>
+                <span onmouseout="hideTip(event, 'fs67', 505)" onmouseover="showTip(event, 'fs67', 505)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs139', 506)" onmouseover="showTip(event, 'fs139', 506)" class="f">li</span> [] [
+                    <span onmouseout="hideTip(event, 'fs67', 507)" onmouseover="showTip(event, 'fs67', 507)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs185', 508)" onmouseover="showTip(event, 'fs185', 508)" class="f">a</span> [
+                        <span onmouseout="hideTip(event, 'fs186', 509)" onmouseover="showTip(event, 'fs186', 509)" class="p">Href</span> <span class="s">&quot;#/active&quot;</span>
+                        <span onmouseout="hideTip(event, 'fs140', 510)" onmouseover="showTip(event, 'fs140', 510)" class="p">ClassName</span> (<span onmouseout="hideTip(event, 'fs178', 511)" onmouseover="showTip(event, 'fs178', 511)" class="f">className</span> <span onmouseout="hideTip(event, 'fs85', 512)" onmouseover="showTip(event, 'fs85', 512)" class="i">ACTIVE_TODOS</span>)
+                    ] [ <span onmouseout="hideTip(event, 'fs18', 513)" onmouseover="showTip(event, 'fs18', 513)" class="f">unbox</span> <span class="s">&quot;Active&quot;</span> ] ]
+                <span onmouseout="hideTip(event, 'fs18', 514)" onmouseover="showTip(event, 'fs18', 514)" class="f">unbox</span> <span class="s">&quot; &quot;</span>
+                <span onmouseout="hideTip(event, 'fs67', 515)" onmouseover="showTip(event, 'fs67', 515)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs139', 516)" onmouseover="showTip(event, 'fs139', 516)" class="f">li</span> [] [
+                    <span onmouseout="hideTip(event, 'fs67', 517)" onmouseover="showTip(event, 'fs67', 517)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs185', 518)" onmouseover="showTip(event, 'fs185', 518)" class="f">a</span> [
+                        <span onmouseout="hideTip(event, 'fs186', 519)" onmouseover="showTip(event, 'fs186', 519)" class="p">Href</span> <span class="s">&quot;#/completed&quot;</span>
+                        <span onmouseout="hideTip(event, 'fs140', 520)" onmouseover="showTip(event, 'fs140', 520)" class="p">ClassName</span> (<span onmouseout="hideTip(event, 'fs178', 521)" onmouseover="showTip(event, 'fs178', 521)" class="f">className</span> <span onmouseout="hideTip(event, 'fs86', 522)" onmouseover="showTip(event, 'fs86', 522)" class="i">COMPLETED_TODOS</span>)
+                    ] [ <span onmouseout="hideTip(event, 'fs18', 523)" onmouseover="showTip(event, 'fs18', 523)" class="f">unbox</span> <span class="s">&quot;Completed&quot;</span> ] ]
+                <span onmouseout="hideTip(event, 'fs175', 524)" onmouseover="showTip(event, 'fs175', 524)" class="i">clearButton</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs187', 525)" onmouseover="showTip(event, 'fs187', 525)" class="i">Value</span>
+            ]
+        ]
+</code></pre></td>
+</tr>
+</table>
+<p>We finish with the <code>TodoApp</code> view. This component is the parent of the two previously
+defined components, which are invoked in <code>render</code> by calling the <code>R.com</code> helper.
+Notice that, among the arguments of <code>R.com</code>, we use F# object expressions to build the props.</p>
+<p>In the <a href="https://github.com/tastejs/todomvc/blob/gh-pages/examples/react/js/app.jsx#L28">original JS implementation</a>
+of <code>componentDidMount</code> method, we need to take care to preserve the meaning of <code>this</code>
+when passing a lambda to another object by using <code>bind</code>. Luckily, that's not something
+we need to worry about in Fable :)</p>
+<p>Note also we haven't defined an interface for the object returned by <code>Router</code>,
+so we just access its <code>init</code> method with the dynamic <code>?</code> operator.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">  1: </span>
 <span class="l">  2: </span>
 <span class="l">  3: </span>
@@ -425,304 +738,8 @@ and static checking, making our app much more robust than by using plain JS obje
 <span class="l">117: </span>
 <span class="l">118: </span>
 <span class="l">119: </span>
-<span class="l">120: </span>
-<span class="l">121: </span>
-<span class="l">122: </span>
-<span class="l">123: </span>
-<span class="l">124: </span>
-<span class="l">125: </span>
-<span class="l">126: </span>
-<span class="l">127: </span>
-<span class="l">128: </span>
-<span class="l">129: </span>
-<span class="l">130: </span>
-<span class="l">131: </span>
-<span class="l">132: </span>
-<span class="l">133: </span>
-<span class="l">134: </span>
-<span class="l">135: </span>
-<span class="l">136: </span>
-<span class="l">137: </span>
-<span class="l">138: </span>
-<span class="l">139: </span>
-<span class="l">140: </span>
-<span class="l">141: </span>
-<span class="l">142: </span>
-<span class="l">143: </span>
-<span class="l">144: </span>
-<span class="l">145: </span>
-<span class="l">146: </span>
-<span class="l">147: </span>
-<span class="l">148: </span>
-<span class="l">149: </span>
-<span class="l">150: </span>
-<span class="l">151: </span>
-<span class="l">152: </span>
-<span class="l">153: </span>
-<span class="l">154: </span>
-<span class="l">155: </span>
-<span class="l">156: </span>
-<span class="l">157: </span>
-<span class="l">158: </span>
-<span class="l">159: </span>
-<span class="l">160: </span>
-<span class="l">161: </span>
-<span class="l">162: </span>
-<span class="l">163: </span>
-<span class="l">164: </span>
-<span class="l">165: </span>
-<span class="l">166: </span>
-<span class="l">167: </span>
-<span class="l">168: </span>
-<span class="l">169: </span>
-<span class="l">170: </span>
-<span class="l">171: </span>
-<span class="l">172: </span>
-<span class="l">173: </span>
-<span class="l">174: </span>
-<span class="l">175: </span>
-<span class="l">176: </span>
-<span class="l">177: </span>
-<span class="l">178: </span>
-<span class="l">179: </span>
-<span class="l">180: </span>
-<span class="l">181: </span>
-<span class="l">182: </span>
-<span class="l">183: </span>
-<span class="l">184: </span>
-<span class="l">185: </span>
-<span class="l">186: </span>
-<span class="l">187: </span>
-<span class="l">188: </span>
-<span class="l">189: </span>
-<span class="l">190: </span>
-<span class="l">191: </span>
-<span class="l">192: </span>
-<span class="l">193: </span>
-<span class="l">194: </span>
-<span class="l">195: </span>
-<span class="l">196: </span>
-<span class="l">197: </span>
-<span class="l">198: </span>
-<span class="l">199: </span>
-<span class="l">200: </span>
-<span class="l">201: </span>
-<span class="l">202: </span>
-<span class="l">203: </span>
-<span class="l">204: </span>
-<span class="l">205: </span>
-<span class="l">206: </span>
-<span class="l">207: </span>
-<span class="l">208: </span>
-<span class="l">209: </span>
-<span class="l">210: </span>
-<span class="l">211: </span>
-<span class="l">212: </span>
-<span class="l">213: </span>
-<span class="l">214: </span>
-<span class="l">215: </span>
-<span class="l">216: </span>
-<span class="l">217: </span>
-<span class="l">218: </span>
-<span class="l">219: </span>
-<span class="l">220: </span>
-<span class="l">221: </span>
-<span class="l">222: </span>
-<span class="l">223: </span>
-<span class="l">224: </span>
-<span class="l">225: </span>
-<span class="l">226: </span>
-<span class="l">227: </span>
-<span class="l">228: </span>
-<span class="l">229: </span>
-<span class="l">230: </span>
-<span class="l">231: </span>
-<span class="l">232: </span>
-<span class="l">233: </span>
-<span class="l">234: </span>
-<span class="l">235: </span>
-<span class="l">236: </span>
-<span class="l">237: </span>
-<span class="l">238: </span>
-<span class="l">239: </span>
-<span class="l">240: </span>
-<span class="l">241: </span>
-<span class="l">242: </span>
-<span class="l">243: </span>
-<span class="l">244: </span>
-<span class="l">245: </span>
-<span class="l">246: </span>
-<span class="l">247: </span>
-<span class="l">248: </span>
-<span class="l">249: </span>
-<span class="l">250: </span>
-<span class="l">251: </span>
-<span class="l">252: </span>
-<span class="l">253: </span>
-<span class="l">254: </span>
-<span class="l">255: </span>
-<span class="l">256: </span>
-<span class="l">257: </span>
-<span class="l">258: </span>
-<span class="l">259: </span>
-<span class="l">260: </span>
-<span class="l">261: </span>
-<span class="l">262: </span>
-<span class="l">263: </span>
-<span class="l">264: </span>
-<span class="l">265: </span>
-<span class="l">266: </span>
-<span class="l">267: </span>
-<span class="l">268: </span>
-<span class="l">269: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">module</span> <span onmouseout="hideTip(event, 'fs67', 182)" onmouseover="showTip(event, 'fs67', 182)" class="t">R</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 183)" onmouseover="showTip(event, 'fs2', 183)" class="i">Fable</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs68', 184)" onmouseover="showTip(event, 'fs68', 184)" class="i">Helpers</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs67', 185)" onmouseover="showTip(event, 'fs67', 185)" class="i">React</span>
-<span class="k">open</span> <span class="i">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs69', 186)" onmouseover="showTip(event, 'fs69', 186)" class="i">Props</span>
-
-<span class="k">type</span> <span onmouseout="hideTip(event, 'fs70', 187)" onmouseover="showTip(event, 'fs70', 187)" class="t">TodoItemState</span> <span class="o">=</span> { <span onmouseout="hideTip(event, 'fs71', 188)" onmouseover="showTip(event, 'fs71', 188)" class="i">editText</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs10', 189)" onmouseover="showTip(event, 'fs10', 189)" class="t">string</span> }
-<span class="k">type</span> <span onmouseout="hideTip(event, 'fs72', 190)" onmouseover="showTip(event, 'fs72', 190)" class="t">TodoItemProps</span> <span class="o">=</span>
-    <span class="k">abstract</span> <span onmouseout="hideTip(event, 'fs73', 191)" onmouseover="showTip(event, 'fs73', 191)" class="i">key</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs27', 192)" onmouseover="showTip(event, 'fs27', 192)" class="t">Guid</span> 
-    <span class="k">abstract</span> <span onmouseout="hideTip(event, 'fs74', 193)" onmouseover="showTip(event, 'fs74', 193)" class="i">todo</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs25', 194)" onmouseover="showTip(event, 'fs25', 194)" class="t">Todo</span> 
-    <span class="k">abstract</span> <span onmouseout="hideTip(event, 'fs75', 195)" onmouseover="showTip(event, 'fs75', 195)" class="i">editing</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs30', 196)" onmouseover="showTip(event, 'fs30', 196)" class="t">bool</span>
-    <span class="k">abstract</span> <span onmouseout="hideTip(event, 'fs76', 197)" onmouseover="showTip(event, 'fs76', 197)" class="f">onSave</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs9', 198)" onmouseover="showTip(event, 'fs9', 198)" class="t">obj</span><span class="k">-&gt;</span><span onmouseout="hideTip(event, 'fs35', 199)" onmouseover="showTip(event, 'fs35', 199)" class="t">unit</span>
-    <span class="k">abstract</span> <span onmouseout="hideTip(event, 'fs77', 200)" onmouseover="showTip(event, 'fs77', 200)" class="f">onEdit</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs9', 201)" onmouseover="showTip(event, 'fs9', 201)" class="t">obj</span><span class="k">-&gt;</span><span onmouseout="hideTip(event, 'fs35', 202)" onmouseover="showTip(event, 'fs35', 202)" class="t">unit</span>
-    <span class="k">abstract</span> <span onmouseout="hideTip(event, 'fs78', 203)" onmouseover="showTip(event, 'fs78', 203)" class="f">onDestroy</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs9', 204)" onmouseover="showTip(event, 'fs9', 204)" class="t">obj</span><span class="k">-&gt;</span><span onmouseout="hideTip(event, 'fs35', 205)" onmouseover="showTip(event, 'fs35', 205)" class="t">unit</span>
-    <span class="k">abstract</span> <span onmouseout="hideTip(event, 'fs79', 206)" onmouseover="showTip(event, 'fs79', 206)" class="f">onCancel</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs9', 207)" onmouseover="showTip(event, 'fs9', 207)" class="t">obj</span><span class="k">-&gt;</span><span onmouseout="hideTip(event, 'fs35', 208)" onmouseover="showTip(event, 'fs35', 208)" class="t">unit</span>
-    <span class="k">abstract</span> <span onmouseout="hideTip(event, 'fs80', 209)" onmouseover="showTip(event, 'fs80', 209)" class="f">onToggle</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs9', 210)" onmouseover="showTip(event, 'fs9', 210)" class="t">obj</span><span class="k">-&gt;</span><span onmouseout="hideTip(event, 'fs35', 211)" onmouseover="showTip(event, 'fs35', 211)" class="t">unit</span>
-
-<span class="k">let</span> [&lt;<span onmouseout="hideTip(event, 'fs81', 212)" onmouseover="showTip(event, 'fs81', 212)" class="t">Literal</span>&gt;] <span onmouseout="hideTip(event, 'fs82', 213)" onmouseover="showTip(event, 'fs82', 213)" class="i">ESCAPE_KEY</span> <span class="o">=</span> <span class="n">27.</span>
-<span class="k">let</span> [&lt;<span onmouseout="hideTip(event, 'fs81', 214)" onmouseover="showTip(event, 'fs81', 214)" class="t">Literal</span>&gt;] <span onmouseout="hideTip(event, 'fs83', 215)" onmouseover="showTip(event, 'fs83', 215)" class="i">ENTER_KEY</span> <span class="o">=</span> <span class="n">13.</span>
-<span class="k">let</span> [&lt;<span onmouseout="hideTip(event, 'fs81', 216)" onmouseover="showTip(event, 'fs81', 216)" class="t">Literal</span>&gt;] <span onmouseout="hideTip(event, 'fs84', 217)" onmouseover="showTip(event, 'fs84', 217)" class="i">ALL_TODOS</span> <span class="o">=</span> <span class="s">&quot;all&quot;</span>
-<span class="k">let</span> [&lt;<span onmouseout="hideTip(event, 'fs81', 218)" onmouseover="showTip(event, 'fs81', 218)" class="t">Literal</span>&gt;] <span onmouseout="hideTip(event, 'fs85', 219)" onmouseover="showTip(event, 'fs85', 219)" class="i">ACTIVE_TODOS</span> <span class="o">=</span> <span class="s">&quot;active&quot;</span>
-<span class="k">let</span> [&lt;<span onmouseout="hideTip(event, 'fs81', 220)" onmouseover="showTip(event, 'fs81', 220)" class="t">Literal</span>&gt;] <span onmouseout="hideTip(event, 'fs86', 221)" onmouseover="showTip(event, 'fs86', 221)" class="i">COMPLETED_TODOS</span> <span class="o">=</span> <span class="s">&quot;completed&quot;</span>
-
-<span class="k">type</span> <span onmouseout="hideTip(event, 'fs87', 222)" onmouseover="showTip(event, 'fs87', 222)" class="t">TodoItem</span>(<span onmouseout="hideTip(event, 'fs88', 223)" onmouseover="showTip(event, 'fs88', 223)" class="i">props</span>, <span onmouseout="hideTip(event, 'fs89', 224)" onmouseover="showTip(event, 'fs89', 224)" class="i">ctx</span>) <span class="k">as</span> <span onmouseout="hideTip(event, 'fs90', 225)" onmouseover="showTip(event, 'fs90', 225)" class="v">this</span> <span class="o">=</span>
-    <span class="k">inherit</span> <span onmouseout="hideTip(event, 'fs91', 226)" onmouseover="showTip(event, 'fs91', 226)" class="t">React</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs92', 227)" onmouseover="showTip(event, 'fs92', 227)" class="t">Component</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'fs72', 228)" onmouseover="showTip(event, 'fs72', 228)" class="t">TodoItemProps</span>, <span onmouseout="hideTip(event, 'fs70', 229)" onmouseover="showTip(event, 'fs70', 229)" class="t">TodoItemState</span><span class="o">&gt;</span>(<span class="i">props</span>, <span class="i">ctx</span>)
-    <span class="k">do</span> <span class="v">this</span><span class="o">.</span><span class="i">state</span> <span class="o">&lt;-</span> { <span class="i">editText</span> <span class="o">=</span> <span class="i">props</span><span class="o">.</span><span class="i">todo</span><span class="o">.</span><span class="i">title</span> }
-
-    <span class="k">let</span> <span class="k">mutable</span> <span onmouseout="hideTip(event, 'fs93', 230)" onmouseover="showTip(event, 'fs93', 230)" class="v">editField</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs9', 231)" onmouseover="showTip(event, 'fs9', 231)" class="t">obj</span> <span onmouseout="hideTip(event, 'fs94', 232)" onmouseover="showTip(event, 'fs94', 232)" class="t">option</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs95', 233)" onmouseover="showTip(event, 'fs95', 233)" class="p">None</span>
-
-    <span class="k">member</span> <span onmouseout="hideTip(event, 'fs90', 234)" onmouseover="showTip(event, 'fs90', 234)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs96', 235)" onmouseover="showTip(event, 'fs96', 235)" class="f">handleSubmit</span> (<span onmouseout="hideTip(event, 'fs97', 236)" onmouseover="showTip(event, 'fs97', 236)" class="i">e</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs91', 237)" onmouseover="showTip(event, 'fs91', 237)" class="t">React</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs98', 238)" onmouseover="showTip(event, 'fs98', 238)" class="t">SyntheticEvent</span>) <span class="o">=</span>
-        <span class="k">match</span> <span onmouseout="hideTip(event, 'fs90', 239)" onmouseover="showTip(event, 'fs90', 239)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs99', 240)" onmouseover="showTip(event, 'fs99', 240)" class="i">state</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs71', 241)" onmouseover="showTip(event, 'fs71', 241)" class="i">editText</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs100', 242)" onmouseover="showTip(event, 'fs100', 242)" class="f">Trim</span>() <span class="k">with</span>
-        | <span onmouseout="hideTip(event, 'fs101', 243)" onmouseover="showTip(event, 'fs101', 243)" class="i">value</span> <span class="k">when</span> <span onmouseout="hideTip(event, 'fs101', 244)" onmouseover="showTip(event, 'fs101', 244)" class="i">value</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs102', 245)" onmouseover="showTip(event, 'fs102', 245)" class="i">Length</span> <span class="o">&gt;</span> <span class="n">0</span> <span class="k">-&gt;</span>
-            <span onmouseout="hideTip(event, 'fs90', 246)" onmouseover="showTip(event, 'fs90', 246)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 247)" onmouseover="showTip(event, 'fs103', 247)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs104', 248)" onmouseover="showTip(event, 'fs104', 248)" class="f">onSave</span>(<span onmouseout="hideTip(event, 'fs101', 249)" onmouseover="showTip(event, 'fs101', 249)" class="i">value</span>)
-            <span onmouseout="hideTip(event, 'fs90', 250)" onmouseover="showTip(event, 'fs90', 250)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs105', 251)" onmouseover="showTip(event, 'fs105', 251)" class="f">setState</span> { <span class="i">editText</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs101', 252)" onmouseover="showTip(event, 'fs101', 252)" class="i">value</span> }
-        | _ <span class="k">-&gt;</span>
-            <span onmouseout="hideTip(event, 'fs90', 253)" onmouseover="showTip(event, 'fs90', 253)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 254)" onmouseover="showTip(event, 'fs103', 254)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs106', 255)" onmouseover="showTip(event, 'fs106', 255)" class="f">onDestroy</span>(<span onmouseout="hideTip(event, 'fs97', 256)" onmouseover="showTip(event, 'fs97', 256)" class="i">e</span>)
-
-    <span class="k">member</span> <span onmouseout="hideTip(event, 'fs90', 257)" onmouseover="showTip(event, 'fs90', 257)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs107', 258)" onmouseover="showTip(event, 'fs107', 258)" class="f">handleEdit</span> (<span onmouseout="hideTip(event, 'fs108', 259)" onmouseover="showTip(event, 'fs108', 259)" class="i">ev</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs91', 260)" onmouseover="showTip(event, 'fs91', 260)" class="t">React</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs109', 261)" onmouseover="showTip(event, 'fs109', 261)" class="t">MouseEvent</span>) <span class="o">=</span>
-        <span onmouseout="hideTip(event, 'fs90', 262)" onmouseover="showTip(event, 'fs90', 262)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 263)" onmouseover="showTip(event, 'fs103', 263)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs110', 264)" onmouseover="showTip(event, 'fs110', 264)" class="f">onEdit</span>(<span onmouseout="hideTip(event, 'fs108', 265)" onmouseover="showTip(event, 'fs108', 265)" class="i">ev</span>)
-        <span onmouseout="hideTip(event, 'fs90', 266)" onmouseover="showTip(event, 'fs90', 266)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs105', 267)" onmouseover="showTip(event, 'fs105', 267)" class="f">setState</span> { <span class="i">editText</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs90', 268)" onmouseover="showTip(event, 'fs90', 268)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 269)" onmouseover="showTip(event, 'fs103', 269)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs111', 270)" onmouseover="showTip(event, 'fs111', 270)" class="i">todo</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs28', 271)" onmouseover="showTip(event, 'fs28', 271)" class="i">title</span> }
-
-    <span class="k">member</span> <span onmouseout="hideTip(event, 'fs90', 272)" onmouseover="showTip(event, 'fs90', 272)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs112', 273)" onmouseover="showTip(event, 'fs112', 273)" class="f">handleKeyDown</span> (<span onmouseout="hideTip(event, 'fs113', 274)" onmouseover="showTip(event, 'fs113', 274)" class="i">e</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs91', 275)" onmouseover="showTip(event, 'fs91', 275)" class="t">React</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs114', 276)" onmouseover="showTip(event, 'fs114', 276)" class="t">KeyboardEvent</span>) <span class="o">=</span>
-        <span class="k">match</span> <span onmouseout="hideTip(event, 'fs113', 277)" onmouseover="showTip(event, 'fs113', 277)" class="i">e</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs115', 278)" onmouseover="showTip(event, 'fs115', 278)" class="i">which</span> <span class="k">with</span>
-        | <span onmouseout="hideTip(event, 'fs82', 279)" onmouseover="showTip(event, 'fs82', 279)" class="i">ESCAPE_KEY</span> <span class="k">-&gt;</span>
-            <span onmouseout="hideTip(event, 'fs90', 280)" onmouseover="showTip(event, 'fs90', 280)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs105', 281)" onmouseover="showTip(event, 'fs105', 281)" class="f">setState</span> { <span class="i">editText</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs90', 282)" onmouseover="showTip(event, 'fs90', 282)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 283)" onmouseover="showTip(event, 'fs103', 283)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs111', 284)" onmouseover="showTip(event, 'fs111', 284)" class="i">todo</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs28', 285)" onmouseover="showTip(event, 'fs28', 285)" class="i">title</span> }
-            <span onmouseout="hideTip(event, 'fs90', 286)" onmouseover="showTip(event, 'fs90', 286)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 287)" onmouseover="showTip(event, 'fs103', 287)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs116', 288)" onmouseover="showTip(event, 'fs116', 288)" class="f">onCancel</span>(<span onmouseout="hideTip(event, 'fs113', 289)" onmouseover="showTip(event, 'fs113', 289)" class="i">e</span>)
-        | <span onmouseout="hideTip(event, 'fs83', 290)" onmouseover="showTip(event, 'fs83', 290)" class="i">ENTER_KEY</span> <span class="k">-&gt;</span>
-            <span onmouseout="hideTip(event, 'fs90', 291)" onmouseover="showTip(event, 'fs90', 291)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs117', 292)" onmouseover="showTip(event, 'fs117', 292)" class="f">handleSubmit</span>(<span onmouseout="hideTip(event, 'fs113', 293)" onmouseover="showTip(event, 'fs113', 293)" class="i">e</span>)
-        | _ <span class="k">-&gt;</span> ()
-
-    <span class="k">member</span> <span onmouseout="hideTip(event, 'fs90', 294)" onmouseover="showTip(event, 'fs90', 294)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs118', 295)" onmouseover="showTip(event, 'fs118', 295)" class="f">handleChange</span> (<span onmouseout="hideTip(event, 'fs97', 296)" onmouseover="showTip(event, 'fs97', 296)" class="i">e</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs91', 297)" onmouseover="showTip(event, 'fs91', 297)" class="t">React</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs98', 298)" onmouseover="showTip(event, 'fs98', 298)" class="t">SyntheticEvent</span>) <span class="o">=</span>
-        <span class="k">if</span> <span onmouseout="hideTip(event, 'fs90', 299)" onmouseover="showTip(event, 'fs90', 299)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 300)" onmouseover="showTip(event, 'fs103', 300)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs119', 301)" onmouseover="showTip(event, 'fs119', 301)" class="i">editing</span> <span class="k">then</span>
-            <span onmouseout="hideTip(event, 'fs90', 302)" onmouseover="showTip(event, 'fs90', 302)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs105', 303)" onmouseover="showTip(event, 'fs105', 303)" class="f">setState</span> { <span class="i">editText</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs10', 304)" onmouseover="showTip(event, 'fs10', 304)" class="f">string</span> <span onmouseout="hideTip(event, 'fs97', 305)" onmouseover="showTip(event, 'fs97', 305)" class="i">e</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs120', 306)" onmouseover="showTip(event, 'fs120', 306)" class="i">target</span><span class="o">?</span><span class="i">value</span> }
-
-    <span class="k">member</span> <span onmouseout="hideTip(event, 'fs90', 307)" onmouseover="showTip(event, 'fs90', 307)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs121', 308)" onmouseover="showTip(event, 'fs121', 308)" class="f">shouldComponentUpdate</span> (<span onmouseout="hideTip(event, 'fs122', 309)" onmouseover="showTip(event, 'fs122', 309)" class="i">nextProps</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs72', 310)" onmouseover="showTip(event, 'fs72', 310)" class="t">TodoItemProps</span>) (<span onmouseout="hideTip(event, 'fs123', 311)" onmouseover="showTip(event, 'fs123', 311)" class="i">nextState</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs70', 312)" onmouseover="showTip(event, 'fs70', 312)" class="t">TodoItemState</span>) <span class="o">=</span>
-        <span onmouseout="hideTip(event, 'fs59', 313)" onmouseover="showTip(event, 'fs59', 313)" class="f">not</span>(<span onmouseout="hideTip(event, 'fs9', 314)" onmouseover="showTip(event, 'fs9', 314)" class="t">obj</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs124', 315)" onmouseover="showTip(event, 'fs124', 315)" class="f">ReferenceEquals</span>(<span onmouseout="hideTip(event, 'fs122', 316)" onmouseover="showTip(event, 'fs122', 316)" class="i">nextProps</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs111', 317)" onmouseover="showTip(event, 'fs111', 317)" class="i">todo</span>, <span onmouseout="hideTip(event, 'fs90', 318)" onmouseover="showTip(event, 'fs90', 318)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 319)" onmouseover="showTip(event, 'fs103', 319)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs111', 320)" onmouseover="showTip(event, 'fs111', 320)" class="i">todo</span>))
-        <span class="o">||</span> <span onmouseout="hideTip(event, 'fs122', 321)" onmouseover="showTip(event, 'fs122', 321)" class="i">nextProps</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs119', 322)" onmouseover="showTip(event, 'fs119', 322)" class="i">editing</span> <span class="o">&lt;&gt;</span> <span onmouseout="hideTip(event, 'fs90', 323)" onmouseover="showTip(event, 'fs90', 323)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 324)" onmouseover="showTip(event, 'fs103', 324)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs119', 325)" onmouseover="showTip(event, 'fs119', 325)" class="i">editing</span>
-        <span class="o">||</span> <span onmouseout="hideTip(event, 'fs123', 326)" onmouseover="showTip(event, 'fs123', 326)" class="i">nextState</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs71', 327)" onmouseover="showTip(event, 'fs71', 327)" class="i">editText</span> <span class="o">&lt;&gt;</span> <span onmouseout="hideTip(event, 'fs90', 328)" onmouseover="showTip(event, 'fs90', 328)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs99', 329)" onmouseover="showTip(event, 'fs99', 329)" class="i">state</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs71', 330)" onmouseover="showTip(event, 'fs71', 330)" class="i">editText</span>
-
-    <span class="k">member</span> <span onmouseout="hideTip(event, 'fs90', 331)" onmouseover="showTip(event, 'fs90', 331)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs125', 332)" onmouseover="showTip(event, 'fs125', 332)" class="f">componentDidUpdate</span> (<span onmouseout="hideTip(event, 'fs126', 333)" onmouseover="showTip(event, 'fs126', 333)" class="i">prevProps</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs72', 334)" onmouseover="showTip(event, 'fs72', 334)" class="t">TodoItemProps</span>) <span class="o">=</span>
-        <span class="k">if</span> <span onmouseout="hideTip(event, 'fs59', 335)" onmouseover="showTip(event, 'fs59', 335)" class="f">not</span> <span onmouseout="hideTip(event, 'fs126', 336)" onmouseover="showTip(event, 'fs126', 336)" class="i">prevProps</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs119', 337)" onmouseover="showTip(event, 'fs119', 337)" class="i">editing</span> <span class="o">&amp;&amp;</span> <span onmouseout="hideTip(event, 'fs90', 338)" onmouseover="showTip(event, 'fs90', 338)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 339)" onmouseover="showTip(event, 'fs103', 339)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs119', 340)" onmouseover="showTip(event, 'fs119', 340)" class="i">editing</span> <span class="k">then</span>
-            <span class="k">let</span> <span onmouseout="hideTip(event, 'fs127', 341)" onmouseover="showTip(event, 'fs127', 341)" class="i">node</span> <span class="o">=</span>
-                <span onmouseout="hideTip(event, 'fs128', 342)" onmouseover="showTip(event, 'fs128', 342)" class="i">ReactDom</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs129', 343)" onmouseover="showTip(event, 'fs129', 343)" class="f">findDOMNode</span>(<span onmouseout="hideTip(event, 'fs18', 344)" onmouseover="showTip(event, 'fs18', 344)" class="f">unbox</span> <span onmouseout="hideTip(event, 'fs93', 345)" onmouseover="showTip(event, 'fs93', 345)" class="v">editField</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs130', 346)" onmouseover="showTip(event, 'fs130', 346)" class="i">Value</span>)
-                <span class="o">:?&gt;</span> <span onmouseout="hideTip(event, 'fs16', 347)" onmouseover="showTip(event, 'fs16', 347)" class="t">Browser</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs131', 348)" onmouseover="showTip(event, 'fs131', 348)" class="t">HTMLInputElement</span>
-            <span onmouseout="hideTip(event, 'fs127', 349)" onmouseover="showTip(event, 'fs127', 349)" class="i">node</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs132', 350)" onmouseover="showTip(event, 'fs132', 350)" class="f">focus</span>()
-            <span onmouseout="hideTip(event, 'fs127', 351)" onmouseover="showTip(event, 'fs127', 351)" class="i">node</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs133', 352)" onmouseover="showTip(event, 'fs133', 352)" class="f">setSelectionRange</span>(<span onmouseout="hideTip(event, 'fs134', 353)" onmouseover="showTip(event, 'fs134', 353)" class="f">float</span> <span onmouseout="hideTip(event, 'fs127', 354)" onmouseover="showTip(event, 'fs127', 354)" class="i">node</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs135', 355)" onmouseover="showTip(event, 'fs135', 355)" class="i">value</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs102', 356)" onmouseover="showTip(event, 'fs102', 356)" class="i">Length</span>, <span onmouseout="hideTip(event, 'fs134', 357)" onmouseover="showTip(event, 'fs134', 357)" class="f">float</span> <span onmouseout="hideTip(event, 'fs127', 358)" onmouseover="showTip(event, 'fs127', 358)" class="i">node</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs135', 359)" onmouseover="showTip(event, 'fs135', 359)" class="i">value</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs102', 360)" onmouseover="showTip(event, 'fs102', 360)" class="i">Length</span>)
-
-    <span class="k">member</span> <span onmouseout="hideTip(event, 'fs90', 361)" onmouseover="showTip(event, 'fs90', 361)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs136', 362)" onmouseover="showTip(event, 'fs136', 362)" class="f">render</span> () <span class="o">=</span>
-        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs137', 363)" onmouseover="showTip(event, 'fs137', 363)" class="i">className</span> <span class="o">=</span>
-            <span onmouseout="hideTip(event, 'fs7', 364)" onmouseover="showTip(event, 'fs7', 364)" class="f">classNames</span>(
-                <span onmouseout="hideTip(event, 'fs138', 365)" onmouseover="showTip(event, 'fs138', 365)" class="f">createObj</span> [
-                    <span class="s">&quot;completed&quot;</span> <span class="o">==&gt;</span> <span onmouseout="hideTip(event, 'fs90', 366)" onmouseover="showTip(event, 'fs90', 366)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 367)" onmouseover="showTip(event, 'fs103', 367)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs111', 368)" onmouseover="showTip(event, 'fs111', 368)" class="i">todo</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs29', 369)" onmouseover="showTip(event, 'fs29', 369)" class="i">completed</span>
-                    <span class="s">&quot;editing&quot;</span> <span class="o">==&gt;</span> <span onmouseout="hideTip(event, 'fs90', 370)" onmouseover="showTip(event, 'fs90', 370)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 371)" onmouseover="showTip(event, 'fs103', 371)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs119', 372)" onmouseover="showTip(event, 'fs119', 372)" class="i">editing</span>
-                ])
-        <span class="c">// The React helper defines a simple DSL to build HTML elements.</span>
-        <span class="c">// For more info about transforming F# unions to JS option objects:</span>
-        <span class="c">// https://fable-compiler.github.io/docs/interacting.html#KeyValueList-attribute</span>
-        <span onmouseout="hideTip(event, 'fs67', 373)" onmouseover="showTip(event, 'fs67', 373)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs139', 374)" onmouseover="showTip(event, 'fs139', 374)" class="f">li</span> [ <span onmouseout="hideTip(event, 'fs140', 375)" onmouseover="showTip(event, 'fs140', 375)" class="p">ClassName</span> <span onmouseout="hideTip(event, 'fs137', 376)" onmouseover="showTip(event, 'fs137', 376)" class="i">className</span> ] [
-            <span onmouseout="hideTip(event, 'fs67', 377)" onmouseover="showTip(event, 'fs67', 377)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs141', 378)" onmouseover="showTip(event, 'fs141', 378)" class="f">div</span> [ <span onmouseout="hideTip(event, 'fs140', 379)" onmouseover="showTip(event, 'fs140', 379)" class="p">ClassName</span> <span class="s">&quot;view&quot;</span> ] [
-                <span onmouseout="hideTip(event, 'fs67', 380)" onmouseover="showTip(event, 'fs67', 380)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs142', 381)" onmouseover="showTip(event, 'fs142', 381)" class="f">input</span> [
-                    <span onmouseout="hideTip(event, 'fs140', 382)" onmouseover="showTip(event, 'fs140', 382)" class="p">ClassName</span> <span class="s">&quot;toggle&quot;</span>
-                    <span onmouseout="hideTip(event, 'fs143', 383)" onmouseover="showTip(event, 'fs143', 383)" class="p">Type</span> <span class="s">&quot;checkbox&quot;</span>
-                    <span onmouseout="hideTip(event, 'fs144', 384)" onmouseover="showTip(event, 'fs144', 384)" class="p">Checked</span> <span onmouseout="hideTip(event, 'fs90', 385)" onmouseover="showTip(event, 'fs90', 385)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 386)" onmouseover="showTip(event, 'fs103', 386)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs111', 387)" onmouseover="showTip(event, 'fs111', 387)" class="i">todo</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs29', 388)" onmouseover="showTip(event, 'fs29', 388)" class="i">completed</span>
-                    <span onmouseout="hideTip(event, 'fs145', 389)" onmouseover="showTip(event, 'fs145', 389)" class="p">OnChange</span> <span onmouseout="hideTip(event, 'fs90', 390)" onmouseover="showTip(event, 'fs90', 390)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 391)" onmouseover="showTip(event, 'fs103', 391)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs146', 392)" onmouseover="showTip(event, 'fs146', 392)" class="f">onToggle</span>  
-                ] []
-                <span onmouseout="hideTip(event, 'fs67', 393)" onmouseover="showTip(event, 'fs67', 393)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs147', 394)" onmouseover="showTip(event, 'fs147', 394)" class="f">label</span> [ <span onmouseout="hideTip(event, 'fs148', 395)" onmouseover="showTip(event, 'fs148', 395)" class="p">OnDoubleClick</span> <span onmouseout="hideTip(event, 'fs90', 396)" onmouseover="showTip(event, 'fs90', 396)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs149', 397)" onmouseover="showTip(event, 'fs149', 397)" class="f">handleEdit</span> ]
-                        [ <span onmouseout="hideTip(event, 'fs18', 398)" onmouseover="showTip(event, 'fs18', 398)" class="f">unbox</span> <span onmouseout="hideTip(event, 'fs90', 399)" onmouseover="showTip(event, 'fs90', 399)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 400)" onmouseover="showTip(event, 'fs103', 400)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs111', 401)" onmouseover="showTip(event, 'fs111', 401)" class="i">todo</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs28', 402)" onmouseover="showTip(event, 'fs28', 402)" class="i">title</span> ]
-                <span onmouseout="hideTip(event, 'fs67', 403)" onmouseover="showTip(event, 'fs67', 403)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs150', 404)" onmouseover="showTip(event, 'fs150', 404)" class="f">button</span> [
-                    <span onmouseout="hideTip(event, 'fs140', 405)" onmouseover="showTip(event, 'fs140', 405)" class="p">ClassName</span> <span class="s">&quot;destroy&quot;</span>
-                    <span onmouseout="hideTip(event, 'fs151', 406)" onmouseover="showTip(event, 'fs151', 406)" class="p">OnClick</span> <span onmouseout="hideTip(event, 'fs90', 407)" onmouseover="showTip(event, 'fs90', 407)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs103', 408)" onmouseover="showTip(event, 'fs103', 408)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs106', 409)" onmouseover="showTip(event, 'fs106', 409)" class="f">onDestroy</span> ] [ ]
-            ]
-            <span onmouseout="hideTip(event, 'fs67', 410)" onmouseover="showTip(event, 'fs67', 410)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs142', 411)" onmouseover="showTip(event, 'fs142', 411)" class="f">input</span> [
-                <span onmouseout="hideTip(event, 'fs140', 412)" onmouseover="showTip(event, 'fs140', 412)" class="p">ClassName</span> <span class="s">&quot;edit&quot;</span>
-                <span onmouseout="hideTip(event, 'fs152', 413)" onmouseover="showTip(event, 'fs152', 413)" class="p">Ref</span> (<span class="k">fun</span> <span onmouseout="hideTip(event, 'fs153', 414)" onmouseover="showTip(event, 'fs153', 414)" class="i">x</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs93', 415)" onmouseover="showTip(event, 'fs93', 415)" class="v">editField</span> <span class="o">&lt;-</span> <span onmouseout="hideTip(event, 'fs154', 416)" onmouseover="showTip(event, 'fs154', 416)" class="p">Some</span> <span onmouseout="hideTip(event, 'fs153', 417)" onmouseover="showTip(event, 'fs153', 417)" class="i">x</span>)
-                <span onmouseout="hideTip(event, 'fs155', 418)" onmouseover="showTip(event, 'fs155', 418)" class="p">Value</span> (<span onmouseout="hideTip(event, 'fs156', 419)" onmouseover="showTip(event, 'fs156', 419)" class="t">U2</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs157', 420)" onmouseover="showTip(event, 'fs157', 420)" class="p">Case1</span> <span onmouseout="hideTip(event, 'fs90', 421)" onmouseover="showTip(event, 'fs90', 421)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs99', 422)" onmouseover="showTip(event, 'fs99', 422)" class="i">state</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs71', 423)" onmouseover="showTip(event, 'fs71', 423)" class="i">editText</span>)
-                <span onmouseout="hideTip(event, 'fs158', 424)" onmouseover="showTip(event, 'fs158', 424)" class="p">OnBlur</span> <span onmouseout="hideTip(event, 'fs90', 425)" onmouseover="showTip(event, 'fs90', 425)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs117', 426)" onmouseover="showTip(event, 'fs117', 426)" class="f">handleSubmit</span>
-                <span onmouseout="hideTip(event, 'fs145', 427)" onmouseover="showTip(event, 'fs145', 427)" class="p">OnChange</span> <span onmouseout="hideTip(event, 'fs90', 428)" onmouseover="showTip(event, 'fs90', 428)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs159', 429)" onmouseover="showTip(event, 'fs159', 429)" class="f">handleChange</span>
-                <span onmouseout="hideTip(event, 'fs160', 430)" onmouseover="showTip(event, 'fs160', 430)" class="p">OnKeyDown</span> <span onmouseout="hideTip(event, 'fs90', 431)" onmouseover="showTip(event, 'fs90', 431)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs161', 432)" onmouseover="showTip(event, 'fs161', 432)" class="f">handleKeyDown</span>
-            ] []
-        ]
-
-<span class="k">type</span> <span onmouseout="hideTip(event, 'fs162', 433)" onmouseover="showTip(event, 'fs162', 433)" class="t">TodoFooterProps</span> <span class="o">=</span>
-    <span class="k">abstract</span> <span onmouseout="hideTip(event, 'fs163', 434)" onmouseover="showTip(event, 'fs163', 434)" class="i">count</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs164', 435)" onmouseover="showTip(event, 'fs164', 435)" class="t">int</span>
-    <span class="k">abstract</span> <span onmouseout="hideTip(event, 'fs165', 436)" onmouseover="showTip(event, 'fs165', 436)" class="i">completedCount</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs164', 437)" onmouseover="showTip(event, 'fs164', 437)" class="t">int</span>
-    <span class="k">abstract</span> <span onmouseout="hideTip(event, 'fs166', 438)" onmouseover="showTip(event, 'fs166', 438)" class="f">onClearCompleted</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs9', 439)" onmouseover="showTip(event, 'fs9', 439)" class="t">obj</span><span class="k">-&gt;</span><span onmouseout="hideTip(event, 'fs35', 440)" onmouseover="showTip(event, 'fs35', 440)" class="t">unit</span>
-    <span class="k">abstract</span> <span onmouseout="hideTip(event, 'fs167', 441)" onmouseover="showTip(event, 'fs167', 441)" class="i">nowShowing</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs10', 442)" onmouseover="showTip(event, 'fs10', 442)" class="t">string</span>
-
-<span class="k">type</span> <span onmouseout="hideTip(event, 'fs168', 443)" onmouseover="showTip(event, 'fs168', 443)" class="t">TodoFooter</span>(<span onmouseout="hideTip(event, 'fs169', 444)" onmouseover="showTip(event, 'fs169', 444)" class="i">props</span>, <span onmouseout="hideTip(event, 'fs89', 445)" onmouseover="showTip(event, 'fs89', 445)" class="i">ctx</span>) <span class="o">=</span>
-    <span class="k">inherit</span> <span onmouseout="hideTip(event, 'fs91', 446)" onmouseover="showTip(event, 'fs91', 446)" class="t">React</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs92', 447)" onmouseover="showTip(event, 'fs92', 447)" class="t">Component</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'fs162', 448)" onmouseover="showTip(event, 'fs162', 448)" class="t">TodoFooterProps</span>,<span onmouseout="hideTip(event, 'fs9', 449)" onmouseover="showTip(event, 'fs9', 449)" class="t">obj</span><span class="o">&gt;</span>(<span class="i">props</span>, <span class="i">ctx</span>)
-    <span class="k">member</span> <span onmouseout="hideTip(event, 'fs170', 450)" onmouseover="showTip(event, 'fs170', 450)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs171', 451)" onmouseover="showTip(event, 'fs171', 451)" class="f">render</span> () <span class="o">=</span>
-        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs172', 452)" onmouseover="showTip(event, 'fs172', 452)" class="i">activeTodoWord</span> <span class="o">=</span>
-            <span class="s">&quot;item&quot;</span> <span class="o">+</span> (<span class="k">if</span> <span onmouseout="hideTip(event, 'fs170', 453)" onmouseover="showTip(event, 'fs170', 453)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs173', 454)" onmouseover="showTip(event, 'fs173', 454)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs174', 455)" onmouseover="showTip(event, 'fs174', 455)" class="i">count</span> <span class="o">=</span> <span class="n">1</span> <span class="k">then</span> <span class="s">&quot;&quot;</span> <span class="k">else</span> <span class="s">&quot;s&quot;</span>)
-        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs175', 456)" onmouseover="showTip(event, 'fs175', 456)" class="i">clearButton</span> <span class="o">=</span>
-            <span class="k">if</span> <span onmouseout="hideTip(event, 'fs170', 457)" onmouseover="showTip(event, 'fs170', 457)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs173', 458)" onmouseover="showTip(event, 'fs173', 458)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs176', 459)" onmouseover="showTip(event, 'fs176', 459)" class="i">completedCount</span> <span class="o">&gt;</span> <span class="n">0</span> <span class="k">then</span>
-                <span onmouseout="hideTip(event, 'fs67', 460)" onmouseover="showTip(event, 'fs67', 460)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs150', 461)" onmouseover="showTip(event, 'fs150', 461)" class="f">button</span> [
-                    <span onmouseout="hideTip(event, 'fs140', 462)" onmouseover="showTip(event, 'fs140', 462)" class="p">ClassName</span> <span class="s">&quot;clear-completed&quot;</span>
-                    <span onmouseout="hideTip(event, 'fs151', 463)" onmouseover="showTip(event, 'fs151', 463)" class="p">OnClick</span> <span onmouseout="hideTip(event, 'fs170', 464)" onmouseover="showTip(event, 'fs170', 464)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs173', 465)" onmouseover="showTip(event, 'fs173', 465)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs177', 466)" onmouseover="showTip(event, 'fs177', 466)" class="f">onClearCompleted</span>
-                ] [ <span onmouseout="hideTip(event, 'fs18', 467)" onmouseover="showTip(event, 'fs18', 467)" class="f">unbox</span> <span class="s">&quot;Clear completed&quot;</span> ] <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs154', 468)" onmouseover="showTip(event, 'fs154', 468)" class="p">Some</span>
-            <span class="k">else</span> <span onmouseout="hideTip(event, 'fs95', 469)" onmouseover="showTip(event, 'fs95', 469)" class="p">None</span>
-        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs178', 470)" onmouseover="showTip(event, 'fs178', 470)" class="f">className</span> <span onmouseout="hideTip(event, 'fs179', 471)" onmouseover="showTip(event, 'fs179', 471)" class="i">category</span> <span class="o">=</span>
-            <span onmouseout="hideTip(event, 'fs7', 472)" onmouseover="showTip(event, 'fs7', 472)" class="f">classNames</span>(
-                <span onmouseout="hideTip(event, 'fs138', 473)" onmouseover="showTip(event, 'fs138', 473)" class="f">createObj</span> [<span class="s">&quot;selected&quot;</span> <span class="o">==&gt;</span> (<span onmouseout="hideTip(event, 'fs170', 474)" onmouseover="showTip(event, 'fs170', 474)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs173', 475)" onmouseover="showTip(event, 'fs173', 475)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs180', 476)" onmouseover="showTip(event, 'fs180', 476)" class="i">nowShowing</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs179', 477)" onmouseover="showTip(event, 'fs179', 477)" class="i">category</span>)])
-        <span onmouseout="hideTip(event, 'fs67', 478)" onmouseover="showTip(event, 'fs67', 478)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs181', 479)" onmouseover="showTip(event, 'fs181', 479)" class="f">footer</span> [ <span onmouseout="hideTip(event, 'fs140', 480)" onmouseover="showTip(event, 'fs140', 480)" class="p">ClassName</span> <span class="s">&quot;footer&quot;</span> ] [
-            <span onmouseout="hideTip(event, 'fs67', 481)" onmouseover="showTip(event, 'fs67', 481)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs182', 482)" onmouseover="showTip(event, 'fs182', 482)" class="f">span</span> [ <span onmouseout="hideTip(event, 'fs140', 483)" onmouseover="showTip(event, 'fs140', 483)" class="p">ClassName</span> <span class="s">&quot;todo-count&quot;</span> ] [
-                <span onmouseout="hideTip(event, 'fs67', 484)" onmouseover="showTip(event, 'fs67', 484)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs183', 485)" onmouseover="showTip(event, 'fs183', 485)" class="f">strong</span> [] [ <span onmouseout="hideTip(event, 'fs18', 486)" onmouseover="showTip(event, 'fs18', 486)" class="f">unbox</span> <span onmouseout="hideTip(event, 'fs170', 487)" onmouseover="showTip(event, 'fs170', 487)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs173', 488)" onmouseover="showTip(event, 'fs173', 488)" class="i">props</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs174', 489)" onmouseover="showTip(event, 'fs174', 489)" class="i">count</span> ]
-                <span onmouseout="hideTip(event, 'fs18', 490)" onmouseover="showTip(event, 'fs18', 490)" class="f">unbox</span> (<span class="s">&quot; &quot;</span> <span class="o">+</span> <span onmouseout="hideTip(event, 'fs172', 491)" onmouseover="showTip(event, 'fs172', 491)" class="i">activeTodoWord</span> <span class="o">+</span> <span class="s">&quot; left&quot;</span>)
-            ]
-            <span onmouseout="hideTip(event, 'fs67', 492)" onmouseover="showTip(event, 'fs67', 492)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs184', 493)" onmouseover="showTip(event, 'fs184', 493)" class="f">ul</span> [ <span onmouseout="hideTip(event, 'fs140', 494)" onmouseover="showTip(event, 'fs140', 494)" class="p">ClassName</span> <span class="s">&quot;filters&quot;</span> ] [
-                <span onmouseout="hideTip(event, 'fs67', 495)" onmouseover="showTip(event, 'fs67', 495)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs139', 496)" onmouseover="showTip(event, 'fs139', 496)" class="f">li</span> [] [
-                    <span onmouseout="hideTip(event, 'fs67', 497)" onmouseover="showTip(event, 'fs67', 497)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs185', 498)" onmouseover="showTip(event, 'fs185', 498)" class="f">a</span> [
-                        <span onmouseout="hideTip(event, 'fs186', 499)" onmouseover="showTip(event, 'fs186', 499)" class="p">Href</span> <span class="s">&quot;#/&quot;</span>
-                        <span onmouseout="hideTip(event, 'fs140', 500)" onmouseover="showTip(event, 'fs140', 500)" class="p">ClassName</span> (<span onmouseout="hideTip(event, 'fs178', 501)" onmouseover="showTip(event, 'fs178', 501)" class="f">className</span> <span onmouseout="hideTip(event, 'fs84', 502)" onmouseover="showTip(event, 'fs84', 502)" class="i">ALL_TODOS</span>)
-                    ] [ <span onmouseout="hideTip(event, 'fs18', 503)" onmouseover="showTip(event, 'fs18', 503)" class="f">unbox</span> <span class="s">&quot;All&quot;</span> ] ]
-                <span onmouseout="hideTip(event, 'fs18', 504)" onmouseover="showTip(event, 'fs18', 504)" class="f">unbox</span> <span class="s">&quot; &quot;</span>
-                <span onmouseout="hideTip(event, 'fs67', 505)" onmouseover="showTip(event, 'fs67', 505)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs139', 506)" onmouseover="showTip(event, 'fs139', 506)" class="f">li</span> [] [
-                    <span onmouseout="hideTip(event, 'fs67', 507)" onmouseover="showTip(event, 'fs67', 507)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs185', 508)" onmouseover="showTip(event, 'fs185', 508)" class="f">a</span> [
-                        <span onmouseout="hideTip(event, 'fs186', 509)" onmouseover="showTip(event, 'fs186', 509)" class="p">Href</span> <span class="s">&quot;#/active&quot;</span>
-                        <span onmouseout="hideTip(event, 'fs140', 510)" onmouseover="showTip(event, 'fs140', 510)" class="p">ClassName</span> (<span onmouseout="hideTip(event, 'fs178', 511)" onmouseover="showTip(event, 'fs178', 511)" class="f">className</span> <span onmouseout="hideTip(event, 'fs85', 512)" onmouseover="showTip(event, 'fs85', 512)" class="i">ACTIVE_TODOS</span>)
-                    ] [ <span onmouseout="hideTip(event, 'fs18', 513)" onmouseover="showTip(event, 'fs18', 513)" class="f">unbox</span> <span class="s">&quot;Active&quot;</span> ] ]
-                <span onmouseout="hideTip(event, 'fs18', 514)" onmouseover="showTip(event, 'fs18', 514)" class="f">unbox</span> <span class="s">&quot; &quot;</span>
-                <span onmouseout="hideTip(event, 'fs67', 515)" onmouseover="showTip(event, 'fs67', 515)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs139', 516)" onmouseover="showTip(event, 'fs139', 516)" class="f">li</span> [] [
-                    <span onmouseout="hideTip(event, 'fs67', 517)" onmouseover="showTip(event, 'fs67', 517)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs185', 518)" onmouseover="showTip(event, 'fs185', 518)" class="f">a</span> [
-                        <span onmouseout="hideTip(event, 'fs186', 519)" onmouseover="showTip(event, 'fs186', 519)" class="p">Href</span> <span class="s">&quot;#/completed&quot;</span>
-                        <span onmouseout="hideTip(event, 'fs140', 520)" onmouseover="showTip(event, 'fs140', 520)" class="p">ClassName</span> (<span onmouseout="hideTip(event, 'fs178', 521)" onmouseover="showTip(event, 'fs178', 521)" class="f">className</span> <span onmouseout="hideTip(event, 'fs86', 522)" onmouseover="showTip(event, 'fs86', 522)" class="i">COMPLETED_TODOS</span>)
-                    ] [ <span onmouseout="hideTip(event, 'fs18', 523)" onmouseover="showTip(event, 'fs18', 523)" class="f">unbox</span> <span class="s">&quot;Completed&quot;</span> ] ]
-                <span onmouseout="hideTip(event, 'fs175', 524)" onmouseover="showTip(event, 'fs175', 524)" class="i">clearButton</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs187', 525)" onmouseover="showTip(event, 'fs187', 525)" class="i">Value</span>
-            ]
-        ]
-
-<span class="k">type</span> <span onmouseout="hideTip(event, 'fs188', 526)" onmouseover="showTip(event, 'fs188', 526)" class="t">TodoAppProps</span> <span class="o">=</span> { <span onmouseout="hideTip(event, 'fs189', 527)" onmouseover="showTip(event, 'fs189', 527)" class="i">model</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs31', 528)" onmouseover="showTip(event, 'fs31', 528)" class="t">TodoModel</span> }
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">type</span> <span onmouseout="hideTip(event, 'fs188', 526)" onmouseover="showTip(event, 'fs188', 526)" class="t">TodoAppProps</span> <span class="o">=</span> { <span onmouseout="hideTip(event, 'fs189', 527)" onmouseover="showTip(event, 'fs189', 527)" class="i">model</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs31', 528)" onmouseover="showTip(event, 'fs31', 528)" class="t">TodoModel</span> }
 <span class="k">type</span> <span onmouseout="hideTip(event, 'fs190', 529)" onmouseover="showTip(event, 'fs190', 529)" class="t">TodoAppState</span> <span class="o">=</span> { <span onmouseout="hideTip(event, 'fs191', 530)" onmouseover="showTip(event, 'fs191', 530)" class="i">nowShowing</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs10', 531)" onmouseover="showTip(event, 'fs10', 531)" class="t">string</span>; <span onmouseout="hideTip(event, 'fs192', 532)" onmouseover="showTip(event, 'fs192', 532)" class="i">editing</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs27', 533)" onmouseover="showTip(event, 'fs27', 533)" class="t">Guid</span> <span onmouseout="hideTip(event, 'fs94', 534)" onmouseover="showTip(event, 'fs94', 534)" class="t">option</span>; <span onmouseout="hideTip(event, 'fs193', 535)" onmouseover="showTip(event, 'fs193', 535)" class="i">newTodo</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs10', 536)" onmouseover="showTip(event, 'fs10', 536)" class="t">string</span> }
 
 <span class="k">type</span> <span onmouseout="hideTip(event, 'fs194', 537)" onmouseover="showTip(event, 'fs194', 537)" class="t">TodoApp</span>(<span onmouseout="hideTip(event, 'fs195', 538)" onmouseover="showTip(event, 'fs195', 538)" class="i">props</span>, <span onmouseout="hideTip(event, 'fs89', 539)" onmouseover="showTip(event, 'fs89', 539)" class="i">ctx</span>) <span class="k">as</span> <span onmouseout="hideTip(event, 'fs196', 540)" onmouseover="showTip(event, 'fs196', 540)" class="v">this</span> <span class="o">=</span>
@@ -738,8 +755,6 @@ and static checking, making our app much more robust than by using plain JS obje
                     <span class="s">&quot;/active&quot;</span> <span class="o">==&gt;</span> <span onmouseout="hideTip(event, 'fs198', 561)" onmouseover="showTip(event, 'fs198', 561)" class="f">nowShowing</span> <span onmouseout="hideTip(event, 'fs85', 562)" onmouseover="showTip(event, 'fs85', 562)" class="i">ACTIVE_TODOS</span>
                     <span class="s">&quot;/completed&quot;</span> <span class="o">==&gt;</span> <span onmouseout="hideTip(event, 'fs198', 563)" onmouseover="showTip(event, 'fs198', 563)" class="f">nowShowing</span> <span onmouseout="hideTip(event, 'fs86', 564)" onmouseover="showTip(event, 'fs86', 564)" class="i">COMPLETED_TODOS</span>
             ])
-        <span class="c">// We haven&#39;t defined any interface for the router object but we can</span>
-        <span class="c">// can still dynamically access its properties with the `?` operator. </span>
         <span onmouseout="hideTip(event, 'fs200', 565)" onmouseover="showTip(event, 'fs200', 565)" class="i">router</span><span class="o">?</span><span class="i">init</span>(<span class="s">&quot;/&quot;</span>)
 
     <span class="k">member</span> <span onmouseout="hideTip(event, 'fs196', 566)" onmouseover="showTip(event, 'fs196', 566)" class="i">this</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs201', 567)" onmouseover="showTip(event, 'fs201', 567)" class="f">handleChange</span> (<span onmouseout="hideTip(event, 'fs202', 568)" onmouseover="showTip(event, 'fs202', 568)" class="i">ev</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs91', 569)" onmouseover="showTip(event, 'fs91', 569)" class="t">React</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs98', 570)" onmouseover="showTip(event, 'fs98', 570)" class="t">SyntheticEvent</span>) <span class="o">=</span>
@@ -785,8 +800,6 @@ and static checking, making our app much more robust than by using plain JS obje
                 | <span onmouseout="hideTip(event, 'fs86', 690)" onmouseover="showTip(event, 'fs86', 690)" class="i">COMPLETED_TODOS</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs56', 691)" onmouseover="showTip(event, 'fs56', 691)" class="i">todo</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs29', 692)" onmouseover="showTip(event, 'fs29', 692)" class="i">completed</span>
                 | _ <span class="k">-&gt;</span> <span class="k">true</span>)
             <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs43', 693)" onmouseover="showTip(event, 'fs43', 693)" class="t">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs226', 694)" onmouseover="showTip(event, 'fs226', 694)" class="f">map</span> (<span class="k">fun</span> <span onmouseout="hideTip(event, 'fs56', 695)" onmouseover="showTip(event, 'fs56', 695)" class="i">todo</span> <span class="k">-&gt;</span>
-                <span class="c">// R.com is used to instantiate customly defined React components.</span>
-                <span class="c">// Note we use an F# object expression to build the props.</span>
                 <span onmouseout="hideTip(event, 'fs67', 696)" onmouseover="showTip(event, 'fs67', 696)" class="t">R</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs227', 697)" onmouseover="showTip(event, 'fs227', 697)" class="f">com</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'fs87', 698)" onmouseover="showTip(event, 'fs87', 698)" class="t">TodoItem</span>,_,_<span class="o">&gt;</span>(
                     { <span class="k">new</span> <span onmouseout="hideTip(event, 'fs72', 699)" onmouseover="showTip(event, 'fs72', 699)" class="t">TodoItemProps</span> <span class="k">with</span>
                         <span class="k">member</span> <span class="i">__</span><span class="o">.</span><span class="i">key</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs56', 700)" onmouseover="showTip(event, 'fs56', 700)" class="i">todo</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs26', 701)" onmouseover="showTip(event, 'fs26', 701)" class="i">id</span>

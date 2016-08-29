@@ -80,10 +80,10 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
     var init = $exports.init = function init() {
       document.addEventListener('keydown', function (e) {
         return update(e, true);
-      }, null);
+      });
       document.addEventListener('keyup', function (e) {
         return update(e, false);
-      }, null);
+      });
     };
 
     return $exports;

@@ -423,19 +423,19 @@ define(["exports", "fable-core", "./html"], function (exports, _fableCore, _html
   input.addEventListener('keyup', function (_arg1) {
     run();
     return null;
-  }, null);
+  });
   iters.addEventListener('change', function (_arg2) {
     run();
     return null;
-  }, null);
+  });
   angle.addEventListener('change', function (_arg3) {
     run();
     return null;
-  }, null);
+  });
   width.addEventListener('change', function (_arg4) {
     run();
     return null;
-  }, null);
+  });
   run();
 });
 //# sourceMappingURL=lsystem.js.map
