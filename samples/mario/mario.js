@@ -125,13 +125,13 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
     };
 
     var image = $exports.image = function image(src) {
-      var image = document.getElementsByTagName('img')[0];
+      var image_1 = document.getElementsByTagName('img')[0];
 
-      if (image.src.indexOf(src) === -1) {
-        image.src = src;
+      if (image_1.src.indexOf(src) === -1) {
+        image_1.src = src;
       }
 
-      return image;
+      return image_1;
     };
 
     return $exports;

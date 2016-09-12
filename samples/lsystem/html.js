@@ -65,8 +65,8 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
         el.appendChild(c);
       }
 
-      for (var idx = 0; idx <= node.Fields[2].length - 1; idx++) {
-        var forLoopVar = node.Fields[2][idx];
+      var _loop = function _loop(_idx) {
+        var forLoopVar = node.Fields[2][_idx];
 
         if (forLoopVar[1].Case === "Event") {
           el.addEventListener(forLoopVar[0], function (delegateArg0) {
@@ -79,6 +79,10 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
             el.setAttributeNS(null, forLoopVar[0], forLoopVar[1].Fields[0]);
           }
         }
+      };
+
+      for (var _idx = 0; _idx <= node.Fields[2].length - 1; _idx++) {
+        _loop(_idx);
       }
 
       return el;

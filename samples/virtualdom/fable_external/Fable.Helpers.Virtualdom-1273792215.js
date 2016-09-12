@@ -9,6 +9,12 @@ define(["exports", "fable-core", "virtual-dom"], function (exports, _fableCore, 
     exports.render = render;
     exports.renderer = renderer;
 
+    var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+        return typeof obj;
+    } : function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj;
+    };
+
     var _createClass = function () {
         function defineProperties(target, props) {
             for (var i = 0; i < props.length; i++) {
@@ -287,7 +293,7 @@ define(["exports", "fable-core", "virtual-dom"], function (exports, _fableCore, 
                                 return builder_.ReturnFrom(loop());
                             });
                         });
-                    }(_fableCore.defaultAsyncBuilder);
+                    }(_fableCore.AsyncBuilder.singleton);
                 };
 
                 return loop();
@@ -383,17 +389,23 @@ define(["exports", "fable-core", "virtual-dom"], function (exports, _fableCore, 
 
                             if (matchValue[0] != null) {
                                 if (matchValue[1] != null) {
-                                    var currentTree = matchValue[1];
-                                    var rootNode = matchValue[0];
-                                    return builder_.Bind(inbox.receive(), function (_arg1) {
-                                        return _arg1.Case === "Message" ? function () {
-                                            var state_ = handleMessage(_arg1.Fields[0], notifySubscribers, schedule, state);
-                                            return builder_.ReturnFrom(loop(state_));
-                                        }() : _arg1.Case === "Draw" ? function () {
-                                            var state_ = handleDraw(renderTree, renderer, post, notifySubscribers, rootNode, currentTree, state);
-                                            return builder_.ReturnFrom(loop(state_));
-                                        }() : builder_.ReturnFrom(loop(state));
-                                    });
+                                    var _ret = function () {
+                                        var currentTree = matchValue[1];
+                                        var rootNode = matchValue[0];
+                                        return {
+                                            v: builder_.Bind(inbox.receive(), function (_arg1) {
+                                                return _arg1.Case === "Message" ? function () {
+                                                    var state_ = handleMessage(_arg1.Fields[0], notifySubscribers, schedule, state);
+                                                    return builder_.ReturnFrom(loop(state_));
+                                                }() : _arg1.Case === "Draw" ? function () {
+                                                    var state_ = handleDraw(renderTree, renderer, post, notifySubscribers, rootNode, currentTree, state);
+                                                    return builder_.ReturnFrom(loop(state_));
+                                                }() : builder_.ReturnFrom(loop(state));
+                                            })
+                                        };
+                                    }();
+
+                                    if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
                                 } else {
                                     throw "Shouldn't happen";
                                     return builder_.Zero();
@@ -403,7 +415,7 @@ define(["exports", "fable-core", "virtual-dom"], function (exports, _fableCore, 
                                 return builder_.ReturnFrom(loop(state_));
                             }
                         });
-                    }(_fableCore.defaultAsyncBuilder);
+                    }(_fableCore.AsyncBuilder.singleton);
                 };
 
                 return loop(app);

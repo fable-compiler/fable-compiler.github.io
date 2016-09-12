@@ -20,7 +20,7 @@
     <script src="//fable-compiler.github.io/content/tips.js"></script>
     <link rel="stylesheet" type="text/css" href="//fable-compiler.github.io/content/snippets.css" />
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-    <script language="javascript" type="text/javascript">
+    <!--<script language="javascript" type="text/javascript">
       function init() {
           try {
             websocket = new WebSocket("ws://"+window.location.host+"/websocket");
@@ -28,7 +28,7 @@
           } catch(e) { /* For local development only */ }
       }
       window.addEventListener("load", init, false);
-    </script>
+    </script>-->
     
   <title>Compiling to JavaScript - F# |> BABEL</title>
   <meta name="description" content="Using Fable as part of your node applications">
@@ -286,7 +286,7 @@ relative to the directory where <code>fableconfig.json</code> resides.</p>
 <ul>
 <li>
 <strong>scripts</strong>: Commands that should be executed during specific phases of compilation.
-Currently <code>prebuild</code>, <code>postbuild</code> and <code>onwatch</code> are accepted. For example, if you want
+Currently <code>prebuild</code> and <code>postbuild</code> are accepted. For example, if you want
 to run tests defined in the npm <code>package.json</code> file after the build you can write.
 </li>
 </ul>
@@ -302,6 +302,14 @@ to run tests defined in the npm <code>package.json</code> file after the build y
     }
 }
 </code></pre></td></tr></table>
+<blockquote>
+<p>The scripts will run as if you typed the command on a terminal window from
+the directory where <code>fableconfig.json</code> is. Fable scripts are not as powerful
+as npm scripts in <code>package.json</code>: if you want to run a binary from a local
+npm package you must specify the full path (e.g. use <code>node node_modules/webpack/bin/webpack</code>
+instead of just <code>webpack</code>). But you can always call an npm script from <code>fableconfig.json</code>
+as in the sample above.</p>
+</blockquote>
 <ul>
 <li>
 <strong>targets</strong>: You can group different options in targets. If you don't want,

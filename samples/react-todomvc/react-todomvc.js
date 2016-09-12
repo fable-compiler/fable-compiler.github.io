@@ -350,14 +350,17 @@ define(["exports", "fable-core", "react", "react-dom", "classnames"], function (
             value: function handleKeyDown(e) {
                 var matchValue = e.which;
 
-                if (matchValue === 27) {
-                    this.setState(new TodoItemState(this.props.todo.title));
-                    this.props.onCancel(e);
-                } else {
-                    if (matchValue === 13) {
+                switch (matchValue) {
+                    case 27:
+                        this.setState(new TodoItemState(this.props.todo.title));
+                        this.props.onCancel(e);
+                        break;
+
+                    case 13:
                         this.handleSubmit(e);
-                    }
-                }
+                        break;
+
+                    default:}
             }
         }, {
             key: "handleChange",
@@ -703,16 +706,22 @@ define(["exports", "fable-core", "react", "react-dom", "classnames"], function (
                     }())].concat([]));
                 }, _fableCore.Seq.filter(function (todo) {
                     var matchValue = _this13.state.nowShowing;
+                    var $var4 = null;
 
-                    if (matchValue === "active") {
-                        return !todo.completed;
-                    } else {
-                        if (matchValue === "completed") {
-                            return todo.completed;
-                        } else {
-                            return true;
-                        }
+                    switch (matchValue) {
+                        case "active":
+                            $var4 = !todo.completed;
+                            break;
+
+                        case "completed":
+                            $var4 = todo.completed;
+                            break;
+
+                        default:
+                            $var4 = true;
                     }
+
+                    return $var4;
                 }, todos)));
 
                 var activeTodoCount = _fableCore.Seq.fold(function (accum, todo) {
@@ -723,15 +732,15 @@ define(["exports", "fable-core", "react", "react-dom", "classnames"], function (
                 var footer = (activeTodoCount > 0 ? true : completedCount > 0) ? react.createElement.apply(react, [TodoFooter, _fableCore.Util.toPlainJsObj(function () {
                     var _count, _completedCount, _nowShowing, _ref2, _mutatorMap2;
 
-                    var $var4 = _this13;
+                    var $var5 = _this13;
                     return _ref2 = {}, _defineProperty(_ref2, _fableCore.Symbol.interfaces, ["React-todomvc.TodoFooterProps"]), _count = "count", _mutatorMap2 = {}, _mutatorMap2[_count] = _mutatorMap2[_count] || {}, _mutatorMap2[_count].get = function () {
                         return activeTodoCount;
                     }, _completedCount = "completedCount", _mutatorMap2[_completedCount] = _mutatorMap2[_completedCount] || {}, _mutatorMap2[_completedCount].get = function () {
                         return completedCount;
                     }, _nowShowing = "nowShowing", _mutatorMap2[_nowShowing] = _mutatorMap2[_nowShowing] || {}, _mutatorMap2[_nowShowing].get = function () {
-                        return $var4.state.nowShowing;
+                        return $var5.state.nowShowing;
                     }, _defineProperty(_ref2, "onClearCompleted", function onClearCompleted(_arg5) {
-                        $var4.clearCompleted();
+                        $var5.clearCompleted();
                     }), _defineEnumerableProperties(_ref2, _mutatorMap2), _ref2;
                 }())].concat([])) : null;
                 var main = todos.length > 0 ? react.createElement.apply(react, ["section", {

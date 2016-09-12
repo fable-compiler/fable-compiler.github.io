@@ -247,23 +247,24 @@ define(["exports", "fable-core", "./html"], function (exports, _fableCore, _html
                 } else {
                   if (_arg1.head.Case === "DrawForward") {
                     var d = _arg1.head.Fields[0];
-                    var t = _arg1.tail;
+                    var _t = _arg1.tail;
                     {
                       var rads = turtle_1.angle * (3.141592653589793 / 180);
                       var x = turtle_1.x + d * Math.cos(rads);
                       var y = turtle_1.y + d * Math.sin(rads);
                       var newTurtle = new LTurtle(turtle_1.angle, x, y, turtle_1.c);
                       var seg = new LineSegment(new Point(turtle_1.x, turtle_1.y), new Point(x, y), turtle_1.c);
-                      return phono(stack)(_fableCore.List.ofArray([seg], output))(newTurtle)(t);
+                      return phono(stack)(_fableCore.List.ofArray([seg], output))(newTurtle)(_t);
                     }
                   } else {
                     if (_arg1.head.Case === "Turn") {
                       var delta = _arg1.head.Fields[0];
-                      var t = _arg1.tail;
+                      var _t2 = _arg1.tail;
                       {
-                        var d = turtle_1.angle + delta;
-                        var d_1 = (delta > 0 ? d > 360 : false) ? d - 360 : (delta < 0 ? d < 0 : false) ? 360 + d : d;
-                        return phono(stack)(output)(new LTurtle(d_1, turtle_1.x, turtle_1.y, turtle_1.c))(t);
+                        var _d = turtle_1.angle + delta;
+
+                        var d_1 = (delta > 0 ? _d > 360 : false) ? _d - 360 : (delta < 0 ? _d < 0 : false) ? 360 + _d : _d;
+                        return phono(stack)(output)(new LTurtle(d_1, turtle_1.x, turtle_1.y, turtle_1.c))(_t2);
                       }
                     } else {
                       return $target3();
@@ -284,13 +285,13 @@ define(["exports", "fable-core", "./html"], function (exports, _fableCore, _html
                 }())(t);
               } else {
                 if (_arg1.head.Case === "Push") {
-                  var t = _arg1.tail;
-                  return phono(_fableCore.List.ofArray([turtle_1], stack))(output)(turtle_1)(t);
+                  var _t3 = _arg1.tail;
+                  return phono(_fableCore.List.ofArray([turtle_1], stack))(output)(turtle_1)(_t3);
                 } else {
                   if (_arg1.head.Case === "Pop") {
                     if (stack.tail == null) {
-                      var t = _arg1.tail;
-                      return phono(stack)(output)(turtle_1)(t);
+                      var _t4 = _arg1.tail;
+                      return phono(stack)(output)(turtle_1)(_t4);
                     } else {
                       return $target4();
                     }

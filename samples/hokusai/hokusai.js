@@ -218,7 +218,7 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
           }));
         });
       });
-    }(_fableCore.defaultAsyncBuilder);
+    }(_fableCore.AsyncBuilder.singleton);
   }
 
   var go = exports.go = op_Dynamic(document, "go");

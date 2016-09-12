@@ -9,7 +9,7 @@ define(["exports", "queue", "topojson", "d3", "fable-core"], function (exports, 
 
   var _queue2 = _interopRequireDefault(_queue);
 
-  var _topojson2 = _interopRequireDefault(_topojson);
+  var topojson_1 = _interopRequireWildcard(_topojson);
 
   var d3 = _interopRequireWildcard(_d);
 
@@ -37,7 +37,7 @@ define(["exports", "queue", "topojson", "d3", "fable-core"], function (exports, 
   }
 
   var queue = exports.queue = _queue2.default;
-  var topojson = exports.topojson = _topojson2.default;
+  var topojson = exports.topojson = topojson_1;
   var patternInput_52 = [500, 500];
   var width = exports.width = patternInput_52[0];
   var height = exports.height = patternInput_52[1];

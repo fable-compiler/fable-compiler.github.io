@@ -530,13 +530,15 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
                     return x;
                 })(gs.Score);
             } else {
-                var gs = game.Fields[0];
-                var board = renderBoardToHtmlString(gs.Board);
-                boardElement.innerHTML = board;
-                addListeners(gs.Board.length - 1)(_fableCore.Seq.item(0, gs.Board).length - 1);
+                var _gs = game.Fields[0];
+
+                var _board = renderBoardToHtmlString(_gs.Board);
+
+                boardElement.innerHTML = _board;
+                addListeners(_gs.Board.length - 1)(_fableCore.Seq.item(0, _gs.Board).length - 1);
                 scoreElement.innerText = _fableCore.String.fsFormat("%i point(s).")(function (x) {
                     return x;
-                })(gs.Score);
+                })(_gs.Score);
             }
         } else {
             boardElement.innerText = "Sorry, an error occurred while rendering the board.";

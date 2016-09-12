@@ -187,9 +187,11 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
       return new Blob(X, blob.Y, vx, blob.vy, blob.Radius, blob.color);
     } else {
       if (blob.X > n) {
-        var X = n - (blob.X - n);
-        var vx = -blob.vx;
-        return new Blob(X, blob.Y, vx, blob.vy, blob.Radius, blob.color);
+        var _X = n - (blob.X - n);
+
+        var _vx = -blob.vx;
+
+        return new Blob(_X, blob.Y, _vx, blob.vy, blob.Radius, blob.color);
       } else {
         return blob;
       }
@@ -265,7 +267,7 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
 
         return builder_.ReturnFrom(update(blob, _fableCore.List.ofArray([newGrow()]), 0));
       });
-    }(_fableCore.defaultAsyncBuilder);
+    }(_fableCore.AsyncBuilder.singleton);
   }
 
   function completed() {
@@ -276,7 +278,7 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
           return builder_.ReturnFrom(game());
         });
       });
-    }(_fableCore.defaultAsyncBuilder);
+    }(_fableCore.AsyncBuilder.singleton);
   }
 
   function update(blob, drops, countdown) {
@@ -325,7 +327,7 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
           }
         }));
       });
-    }(_fableCore.defaultAsyncBuilder);
+    }(_fableCore.AsyncBuilder.singleton);
   }
 
   (function (arg00) {

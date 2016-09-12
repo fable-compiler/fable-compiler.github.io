@@ -190,10 +190,10 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
     var yellow = createBrush(context, 255, 255, 0, 255);
     var lines = maze;
 
-    for (var y = 0; y <= lines.length - 1; y++) {
+    var _loop = function _loop(y) {
       var line = lines[y];
 
-      for (var x = 0; x <= line.length - 1; x++) {
+      var _loop2 = function _loop2(x) {
         var c = line[x];
         var patternInput = toTile(c);
         var brush = patternInput[1] === "Y" ? yellow : blue;
@@ -203,7 +203,15 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
         };
 
         draw(f, patternInput[0]);
+      };
+
+      for (var x = 0; x <= line.length - 1; x++) {
+        _loop2(x);
       }
+    };
+
+    for (var y = 0; y <= lines.length - 1; y++) {
+      _loop(y);
     }
 
     return background;
@@ -385,7 +393,7 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
 
       return patternInput_2[0];
     } else {
-      var xs = directions.map(function (tuple) {
+      var _xs = directions.map(function (tuple) {
         return tuple[0];
       }).filter(function ($var1) {
         return function (value) {
@@ -393,11 +401,12 @@ define(["exports", "fable-core"], function (exports, _fableCore) {
         }(isBackwards($var1));
       });
 
-      if (xs.length === 0) {
+      if (_xs.length === 0) {
         return [0, 0];
       } else {
-        var i = Math.random() * xs.length;
-        return xs[Math.floor(Math.floor(i))];
+        var i = Math.random() * _xs.length;
+
+        return _xs[Math.floor(Math.floor(i))];
       }
     }
   }
