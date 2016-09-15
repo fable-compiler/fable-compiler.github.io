@@ -187,7 +187,8 @@ Please use FSharp.Core functions (e.g. <code>int</code>) instead to operate them
 
 <h3><a name="Caveats" class="anchor" href="#Caveats">Caveats</a></h3>
 <ul>
-<li>No bound checks for numeric types.</li>
+<li>All numeric types become JS <code>number</code> (64-bit floating type), including <code>decimal</code> and <code>int64</code>.</li>
+<li>No bound checks for numeric types, unless you do explicit conversions (e.g. <code>byte 500</code>).</li>
 <li>Integer division will always produce an integer.</li>
 <li>Numeric arrays are compiled to <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray">Typed Arrays</a> when possible.</li>
 <li><code>Regex</code> will always behave as if passed <code>RegexOptions.ECMAScript</code> flag (e.g., no negative look-behind or named groups).</li>
