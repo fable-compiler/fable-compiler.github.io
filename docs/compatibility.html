@@ -293,6 +293,7 @@ This is needed for example, to represent TypeScript <a href="https://www.typescr
 <code>IEnumerable</code> interface cannot be implemented. Use <code>seq</code> comprehensions
 or <code>Seq</code> module functions to generate lazy sequences.
 </li>
+<li>anArray.[i] where anArray's type is either Array or ResizeArray, and the index i is out of range, will not produce an exception but will return null</li>
 <li><code>Async.RunSynchronously</code> is not supported.</li>
 <li>
 When opening <code>Fable.Core</code> you'll have access to <code>Async.AwaitPromise</code>

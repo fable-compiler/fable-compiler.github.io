@@ -118,7 +118,7 @@ If you have problems on Windows <a href="https://github.com/fable-compiler/Fable
 <tr class="even">
 <td><p><code>--module</code></p></td>
 <td><p><code>-m</code></p></td>
-<td><p>Specify module code generation: <code>umd</code> (default), <code>commonjs</code>, <code>amd</code> or <code>es2015</code>.</p></td>
+<td><p>Specify module code generation: <code>commonjs</code> (default), <code>amd</code>, <code>umd</code> or <code>es2015</code>.</p></td>
 </tr>
 <tr class="odd">
 <td><p><code>--sourceMaps</code></p></td>
@@ -153,64 +153,69 @@ If you have problems on Windows <a href="https://github.com/fable-compiler/Fable
 <tr class="odd">
 <td><p><code>--loose</code></p></td>
 <td></td>
-<td><p>Enable “loose” transformations for babel-preset-es2015 plugins.</p></td>
+<td><p>Enable “loose” transformations for babel-preset-es2015 plugins (true by default).</p></td>
 </tr>
 <tr class="even">
+<td><p><code>--babelrc</code></p></td>
+<td></td>
+<td><p>Use a <code>.babelrc</code> file for Babel configuration (invalidates other Babel related options).</p></td>
+</tr>
+<tr class="odd">
 <td><p><code>--refs</code></p></td>
 <td></td>
 <td><p>Specify dll or project references in <code>Reference=js/import/path</code> format (see below).</p></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><p><code>--msbuild</code></p></td>
 <td></td>
 <td><p>Pass MSBuild arguments like <code>Configuration=Release</code>.</p></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><p><code>--clamp</code></p></td>
 <td></td>
 <td><p>Compile unsigned byte arrays as Uint8ClampedArray.</p></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><p><code>--copyExt</code></p></td>
 <td></td>
 <td><p>Copy external files into <code>fable_external</code> folder (true by default).</p></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><p><code>--coreLib</code></p></td>
 <td></td>
 <td><p>In some cases, you may need to pass a different route to the core library, like <code>--coreLib fable-core/es2015</code>.</p></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><p><code>--verbose</code></p></td>
 <td></td>
 <td><p>Print more information about the compilation process.</p></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><p><code>--target</code></p></td>
 <td><p><code>-t</code></p></td>
 <td><p>Use options from a specific target in <code>fableconfig.json</code>.</p></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><p><code>--debug</code></p></td>
 <td><p><code>-d</code></p></td>
 <td><p>Shortcut for <code>--target debug</code>.</p></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><p><code>--production</code></p></td>
 <td><p><code>-p</code></p></td>
 <td><p>Shortcut for <code>--target production</code>.</p></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><p><code>--declaration</code></p></td>
 <td></td>
 <td><p>[Experimental] Generates corresponding ‘.d.ts’ file.</p></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><p><code>--extra</code></p></td>
 <td></td>
 <td><p>Custom options for plugins in <code>Key=Value</code> format.</p></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><p><code>--help</code></p></td>
 <td><p><code>-h</code></p></td>
 <td><p>Display usage guide.</p></td>
@@ -286,7 +291,7 @@ relative to the directory where <code>fableconfig.json</code> resides.</p>
 <ul>
 <li>
 <strong>scripts</strong>: Commands that should be executed during specific phases of compilation.
-Currently <code>prebuild</code> and <code>postbuild</code> are accepted. For example, if you want
+Currently <code>prebuild</code>, <code>postbuild</code> and <code>postbuild-once</code> are accepted. For example, if you want
 to run tests defined in the npm <code>package.json</code> file after the build you can write.
 </li>
 </ul>
@@ -303,7 +308,9 @@ to run tests defined in the npm <code>package.json</code> file after the build y
 }
 </code></pre></td></tr></table>
 <blockquote>
-<p>The scripts will run as if you typed the command on a terminal window from
+<p><code>postbuild</code> will also run for every compilation in watch mode. If you only want
+to run the script after the first full compilation, use <code>postbuild-once</code>.
+The scripts will run as if you typed the command on a terminal window from
 the directory where <code>fableconfig.json</code> is. Fable scripts are not as powerful
 as npm scripts in <code>package.json</code>: if you want to run a binary from a local
 npm package you must specify the full path (e.g. use <code>node node_modules/webpack/bin/webpack</code>
