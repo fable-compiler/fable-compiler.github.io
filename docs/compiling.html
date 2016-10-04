@@ -308,8 +308,10 @@ to run tests defined in the npm <code>package.json</code> file after the build y
 }
 </code></pre></td></tr></table>
 <blockquote>
-<p><code>postbuild</code> will also run for every compilation in watch mode. If you only want
+<p><code>postbuild</code> will run for every compilation in watch mode. If you only want
 to run the script after the first full compilation, use <code>postbuild-once</code>.
+Attention: On Windows, <code>postbuild-once</code> can only be used with executable files (<code>.exe</code>),
+not with <code>.bat</code> or <code>.cmd</code> scripts.
 The scripts will run as if you typed the command on a terminal window from
 the directory where <code>fableconfig.json</code> is. Fable scripts are not as powerful
 as npm scripts in <code>package.json</code>: if you want to run a binary from a local
