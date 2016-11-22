@@ -54,6 +54,7 @@
           <li class=""><a href="//fable.io">home</a></li>
           <li class=""><a href="//fable.io/samples.html">samples</a></li>
           <li class=""><a href="//fable.io/docs.html">docs</a></li>
+          <li class=""><a href="//fable.io/blog.html">blog</a></li>
           <li><a href="https://github.com/fable-compiler/Fable">source</a></li>
         </ul>
       </div>
@@ -79,7 +80,8 @@
   <div class="row">
     <div class="col-md-1 col-lg-2"></div>
     <div class="col-sm-12 col-md-10 col-lg-8">
-      <p>You can install the <code>fable-compiler</code> package from <a href="https://www.npmjs.com/package/fable-compiler">npm</a>
+      <p><strong>Attention</strong>: This document corresponds to Fable 0.6.x and needs to be updated to the latest version. Please check the <a href="../blog/Introducing-0-7.html">migration guide</a>.</p>
+<p>You can install the <code>fable-compiler</code> package from <a href="https://www.npmjs.com/package/fable-compiler">npm</a>
 either locally or globally. Here we'll assume it's been installed globally so the <code>fable</code>
 command is available from any directory.</p>
 <p>The simplest way to compile a F# project (<code>.fsproj</code>) or script (<code>.fsx</code>) is
@@ -166,56 +168,51 @@ If you have problems on Windows <a href="https://github.com/fable-compiler/Fable
 <td><p>Specify dll or project references in <code>Reference=js/import/path</code> format (see below).</p></td>
 </tr>
 <tr class="even">
-<td><p><code>--msbuild</code></p></td>
-<td></td>
-<td><p>Pass MSBuild arguments like <code>Configuration=Release</code>.</p></td>
-</tr>
-<tr class="odd">
 <td><p><code>--clamp</code></p></td>
 <td></td>
 <td><p>Compile unsigned byte arrays as Uint8ClampedArray.</p></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><p><code>--copyExt</code></p></td>
 <td></td>
 <td><p>Copy external files into <code>fable_external</code> folder (true by default).</p></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><p><code>--coreLib</code></p></td>
 <td></td>
 <td><p>In some cases, you may need to pass a different route to the core library, like <code>--coreLib fable-core/es2015</code>.</p></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><p><code>--verbose</code></p></td>
 <td></td>
 <td><p>Print more information about the compilation process.</p></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><p><code>--target</code></p></td>
 <td><p><code>-t</code></p></td>
 <td><p>Use options from a specific target in <code>fableconfig.json</code>.</p></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><p><code>--debug</code></p></td>
 <td><p><code>-d</code></p></td>
 <td><p>Shortcut for <code>--target debug</code>.</p></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><p><code>--production</code></p></td>
 <td><p><code>-p</code></p></td>
 <td><p>Shortcut for <code>--target production</code>.</p></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><p><code>--declaration</code></p></td>
 <td></td>
 <td><p>[Experimental] Generates corresponding ‘.d.ts’ file.</p></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><p><code>--extra</code></p></td>
 <td></td>
 <td><p>Custom options for plugins in <code>Key=Value</code> format.</p></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><p><code>--help</code></p></td>
 <td><p><code>-h</code></p></td>
 <td><p>Display usage guide.</p></td>
@@ -258,6 +255,7 @@ we can omit <code>./node_modules/</code> in the JS import path).</p>
 <blockquote>
 <p>See <a href="https://www.npmjs.com/package/fable-helpers-sample">fable-helpers-sample</a> to know how to publish a Fable package.</p>
 </blockquote>
+<p>TODO: Explain how to use the EntryModule attribute</p>
 <h2><a name="fableconfig-json" class="anchor" href="#fableconfig-json">fableconfig.json</a></h2>
 <p>Rather than passing all the options to the CLI, it may be more convenient to put them
 in JSON format in a file named <code>fableconfig.json</code> and let the compiler read them for you.

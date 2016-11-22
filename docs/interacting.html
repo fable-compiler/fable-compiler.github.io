@@ -54,6 +54,7 @@
           <li class=""><a href="//fable.io">home</a></li>
           <li class=""><a href="//fable.io/samples.html">samples</a></li>
           <li class=""><a href="//fable.io/docs.html">docs</a></li>
+          <li class=""><a href="//fable.io/blog.html">blog</a></li>
           <li><a href="https://github.com/fable-compiler/Fable">source</a></li>
         </ul>
       </div>
@@ -79,7 +80,8 @@
   <div class="row">
     <div class="col-md-1 col-lg-2"></div>
     <div class="col-sm-12 col-md-10 col-lg-8">
-      <p>There are several ways to interact with the JavaScript world:</p>
+      <p><strong>Attention</strong>: This document corresponds to Fable 0.6.x and needs to be updated to the latest version. Please check the <a href="../blog/Introducing-0-7.html">migration guide</a>.</p>
+<p>There are several ways to interact with the JavaScript world:</p>
 <ul>
 <li><a href="#Dynamic-programming">Dynamic programming</a></li>
 <li><a href="#Foreign-interfaces">Foreign interfaces</a></li>
@@ -246,11 +248,6 @@ See the <a href="https://www.npmjs.com/package/ts2fable">README</a> for more inf
 </code></pre></td></tr></table>
 <p>You can find common definitions already parsed <a href="https://github.com/fable-compiler/Fable/blob/master/import">here</a>.
 Some of them are available in npm, just search for <code>fable-import</code> packages.</p>
-<blockquote>
-<p><strong>Attention</strong>: Files starting with <code>Fable.Import</code> are ignored by Fable compiler as they're supposed
-to contain only empty bindings. If you're writing you're own bindings, please be aware of this fact
-and don't include any compilable code in a file with this prefix.</p>
-</blockquote>
 <h2><a name="Special-attributes" class="anchor" href="#Special-attributes">Special attributes</a></h2>
 <p>There are some attributes available in the <code>Fable.Core</code> namespace to ease the interaction with JS.</p>
 <h3><a name="Emit-attribute" class="anchor" href="#Emit-attribute">Emit attribute</a></h3>
@@ -344,7 +341,9 @@ which can be later transformed to <code>commonjs</code>, <code>amd</code> or <co
 </table>
 <blockquote>
 <p>If the module or value is globally accessible in JavaScript,
-you can use the <code>Global</code> attribute without parameters instead.</p>
+you can use the <code>Global</code> attribute without parameters instead.
+When importing a relative path (starting with <code>.</code> as in <code>./js/myLib.js</code>),
+the path will be resolved so it can be reached from <code>outDir</code> in the compiled JS code.</p>
 </blockquote>
 <p><code>Fable.Core.JsInterop</code> also contains import expressions. These are mostly
 useful when you need to import JS libraries without a foreign interface.</p>
@@ -375,7 +374,12 @@ useful when you need to import JS libraries without a foreign interface.</p>
 <blockquote>
 <p>Note that Fable automatically uses the name of the let-bound variable
 in the second example, this means you must always immediately assign the
-result of <code>importMember</code> to a named value.</p>
+result of <code>importMember</code> to a named value.
+A difference between import attributes and expressions is the former are
+not resolved in the file where they're declared (as this can be erased
+bindings) but in the file where thery're used. While import expressions are
+always resolved where they're declared. But if you don't understand this,
+don't worry too much, this is usually transparent to the user :)</p>
 </blockquote>
 <h3><a name="Erase-attribute" class="anchor" href="#Erase-attribute">Erase attribute</a></h3>
 <p>In TypeScript there's a concept of <a href="https://www.typescriptlang.org/docs/handbook/advanced-types.html#union-types">Union Types</a>
@@ -477,6 +481,8 @@ a plain JS object.</p>
 <p>As with <code>StringEnum</code> the first letter of the key (the union case name)
 will be lowered. Again, you can modify this behaviour with the <code>CompiledName</code>
 attribute.</p>
+<p>You can also allow custom key value pairs by adding an extra
+union case with the <code>Erase</code> attribute.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -490,6 +496,8 @@ attribute.</p>
 <span class="l">11: </span>
 <span class="l">12: </span>
 <span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="i">Fable</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs1', 47)" onmouseover="showTip(event, 'fs1', 47)" class="i">Core</span>
 
@@ -498,11 +506,13 @@ attribute.</p>
     | <span class="i">Flag1</span>
     | <span class="i">Name</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs11', 48)" onmouseover="showTip(event, 'fs11', 48)" class="i">string</span>
     | [&lt;<span onmouseout="hideTip(event, 'fs17', 49)" onmouseover="showTip(event, 'fs17', 49)" class="i">CompiledName</span>(<span class="s">&quot;QTY&quot;</span>)&gt;] <span class="i">QTY</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs10', 50)" onmouseover="showTip(event, 'fs10', 50)" class="i">int</span>
+    | [&lt;<span class="i">Erase</span>&gt;] <span class="i">Extra</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs11', 51)" onmouseover="showTip(event, 'fs11', 51)" class="i">string</span> <span class="o">*</span> <span onmouseout="hideTip(event, 'fs12', 52)" onmouseover="showTip(event, 'fs12', 52)" class="i">obj</span>
 
 <span class="i">myLib</span><span class="o">.</span><span class="i">myMethod</span> [
     <span class="i">Name</span> <span class="s">&quot;Fable&quot;</span>
     <span class="i">QTY</span> <span class="n">5</span>
     <span class="i">Flag1</span>
+    <span class="i">Extra</span> (<span class="s">&quot;newOption&quot;</span>, <span class="n">10.5</span>)
 ]
 </code></pre></td>
 </tr>
@@ -512,24 +522,26 @@ attribute.</p>
 <span class="l">3: </span>
 <span class="l">4: </span>
 <span class="l">5: </span>
+<span class="l">6: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="js">myLib.myMethod({
     name: <span class="s">"Fable"</span>,
     QTY: <span class="n">5</span>,
-    flag<span class="n">1</span>: <span class="k">true</span>
+    flag<span class="n">1</span>: <span class="k">true</span>,
+    newOption: <span class="n">10.5</span>
 })
 </code></pre></td></tr></table>
-<p>If necessary you can cheat the compiler using tuples:</p>
+<blockquote>
+<p>Note: Using tuples directly will have the same effect as the <code>Erase</code> attribute:</p>
+</blockquote>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">myLib</span><span class="o">.</span><span class="i">myMethod</span> [<span class="i">Name</span> <span class="s">&quot;Fable&quot;</span>; <span onmouseout="hideTip(event, 'fs18', 51)" onmouseover="showTip(event, 'fs18', 51)" class="i">unbox</span>(<span class="s">&quot;level&quot;</span>, <span class="n">4</span>)]
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">myLib</span><span class="o">.</span><span class="i">myMethod</span> [<span class="i">Name</span> <span class="s">&quot;Fable&quot;</span>; <span onmouseout="hideTip(event, 'fs18', 53)" onmouseover="showTip(event, 'fs18', 53)" class="i">unbox</span>(<span class="s">&quot;level&quot;</span>, <span class="n">4</span>)]
+<span class="c">// myLib.myMethod({ name: &quot;Fable&quot;, level: 4 })</span>
 </code></pre></td>
 </tr>
 </table>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="js">myLib.myMethod({ name: <span class="s">"Fable"</span>, level: <span class="n">4</span> })
-</code></pre></td></tr></table>
 <p>As these lists will be compiled as JS objects, please note you
 cannot apply the usual list operations to them (e.g. appending).
 If you want to manipulate the "fake" lists you must implement the
@@ -547,11 +559,11 @@ methods yourself. For example:</p>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">[&lt;<span class="i">KeyValueList</span>&gt;]
 <span class="k">type</span> <span class="i">CSSProp</span> <span class="o">=</span>
-    | <span class="i">Border</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs11', 52)" onmouseover="showTip(event, 'fs11', 52)" class="i">string</span>
-    | <span class="i">Display</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs11', 53)" onmouseover="showTip(event, 'fs11', 53)" class="i">string</span>
+    | <span class="i">Border</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs11', 54)" onmouseover="showTip(event, 'fs11', 54)" class="i">string</span>
+    | <span class="i">Display</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs11', 55)" onmouseover="showTip(event, 'fs11', 55)" class="i">string</span>
 
 [&lt;<span class="i">Emit</span>(<span class="s">&quot;Object.assign({}, $0, $1)&quot;</span>)&gt;]
-<span class="k">let</span> ( <span class="o">++</span> ) (<span class="i">a</span><span class="o">:</span><span class="o">&#39;</span><span class="i">a</span> <span onmouseout="hideTip(event, 'fs19', 54)" onmouseover="showTip(event, 'fs19', 54)" class="i">list</span>) (<span class="i">b</span><span class="o">:</span><span class="o">&#39;</span><span class="i">a</span> <span onmouseout="hideTip(event, 'fs19', 55)" onmouseover="showTip(event, 'fs19', 55)" class="i">list</span>) <span class="o">:</span> <span class="o">&#39;</span><span class="i">a</span> <span onmouseout="hideTip(event, 'fs19', 56)" onmouseover="showTip(event, 'fs19', 56)" class="i">list</span> <span class="o">=</span> <span class="i">jsNative</span>
+<span class="k">let</span> ( <span class="o">++</span> ) (<span class="i">a</span><span class="o">:</span><span class="o">&#39;</span><span class="i">a</span> <span onmouseout="hideTip(event, 'fs19', 56)" onmouseover="showTip(event, 'fs19', 56)" class="i">list</span>) (<span class="i">b</span><span class="o">:</span><span class="o">&#39;</span><span class="i">a</span> <span onmouseout="hideTip(event, 'fs19', 57)" onmouseover="showTip(event, 'fs19', 57)" class="i">list</span>) <span class="o">:</span> <span class="o">&#39;</span><span class="i">a</span> <span onmouseout="hideTip(event, 'fs19', 58)" onmouseover="showTip(event, 'fs19', 58)" class="i">list</span> <span class="o">=</span> <span class="i">jsNative</span>
 
 <span class="k">let</span> <span class="i">niceBorder</span> <span class="o">=</span> [ <span class="i">Border</span> <span class="s">&quot;1px solid blue&quot;</span> ]
 <span class="k">let</span> <span class="i">style</span> <span class="o">=</span> [ <span class="i">Display</span> <span class="s">&quot;inline-block&quot;</span> ] <span class="o">++</span> <span class="i">niceBorder</span>
@@ -590,7 +602,7 @@ To make it a multi-argument function in JS, you must <strong>convert it to a del
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">fun</span> <span class="i">x</span> <span class="i">y</span> <span class="k">-&gt;</span> <span class="i">x</span> <span class="o">+</span> <span class="i">y</span>
 <span class="c">// JS: function (x) { return function (y) { return x + y; } }</span>
 
-<span onmouseout="hideTip(event, 'fs20', 57)" onmouseover="showTip(event, 'fs20', 57)" class="i">System</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs21', 58)" onmouseover="showTip(event, 'fs21', 58)" class="i">Func</span><span class="o">&lt;</span>_,_,_<span class="o">&gt;</span>(<span class="k">fun</span> <span class="i">x</span> <span class="i">y</span> <span class="k">-&gt;</span> <span class="i">x</span> <span class="o">+</span> <span class="i">y</span>)
+<span onmouseout="hideTip(event, 'fs20', 59)" onmouseover="showTip(event, 'fs20', 59)" class="i">System</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs21', 60)" onmouseover="showTip(event, 'fs21', 60)" class="i">Func</span><span class="o">&lt;</span>_,_,_<span class="o">&gt;</span>(<span class="k">fun</span> <span class="i">x</span> <span class="i">y</span> <span class="k">-&gt;</span> <span class="i">x</span> <span class="o">+</span> <span class="i">y</span>)
 <span class="c">// JS: function (x, y) { return x + y; }</span>
 </code></pre></td>
 </tr>
@@ -600,6 +612,7 @@ To make it a multi-argument function in JS, you must <strong>convert it to a del
 Fable will <strong>automatically convert F# functions to delegates</strong> in some situations:
 <ul>
 <li>When passing an F# lambda to a method accepting a delegate.</li>
+<li>When passing functions as arguments to <code>EmitAttribute</code>.</li>
 <li>When using dynamic programming, with <code>?</code>, <code>$</code>, <code>createObj</code> or <code>createNew</code>.</li>
 </ul>
 </li>
@@ -620,7 +633,7 @@ Fable will <strong>automatically convert F# functions to delegates</strong> in s
 <span class="l">11: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">type</span> <span class="i">ITest</span> <span class="o">=</span>
-    <span class="k">abstract</span> <span class="i">setCallback</span><span class="o">:</span> <span class="i">Func</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'fs10', 59)" onmouseover="showTip(event, 'fs10', 59)" class="i">int</span>,<span onmouseout="hideTip(event, 'fs10', 60)" onmouseover="showTip(event, 'fs10', 60)" class="i">int</span>,<span onmouseout="hideTip(event, 'fs10', 61)" onmouseover="showTip(event, 'fs10', 61)" class="i">int</span><span class="o">&gt;</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs14', 62)" onmouseover="showTip(event, 'fs14', 62)" class="i">unit</span>
+    <span class="k">abstract</span> <span class="i">setCallback</span><span class="o">:</span> <span class="i">Func</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'fs10', 61)" onmouseover="showTip(event, 'fs10', 61)" class="i">int</span>,<span onmouseout="hideTip(event, 'fs10', 62)" onmouseover="showTip(event, 'fs10', 62)" class="i">int</span>,<span onmouseout="hideTip(event, 'fs10', 63)" onmouseover="showTip(event, 'fs10', 63)" class="i">int</span><span class="o">&gt;</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs14', 64)" onmouseover="showTip(event, 'fs14', 64)" class="i">unit</span>
 
 <span class="k">let</span> <span class="i">test</span>(<span class="i">o</span><span class="o">:</span> <span class="i">ITest</span>) <span class="o">=</span>
     <span class="i">o</span><span class="o">.</span><span class="i">setCallback</span>(<span class="k">fun</span> <span class="i">x</span> <span class="i">y</span> <span class="k">-&gt;</span> <span class="i">x</span> <span class="o">+</span> <span class="i">y</span>)
@@ -672,12 +685,12 @@ Fable will <strong>automatically convert F# functions to delegates</strong> in s
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span class="i">myMeth</span> <span class="i">x</span> <span class="i">y</span> <span class="o">=</span> <span class="i">x</span> <span class="o">+</span> <span class="i">y</span>
 
-<span class="k">let</span> <span class="i">test</span>(<span class="i">o</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs12', 63)" onmouseover="showTip(event, 'fs12', 63)" class="i">obj</span>) <span class="o">=</span>
-    <span class="i">o</span><span class="o">?</span><span class="i">foo</span>(<span class="k">fun</span> <span class="i">x</span> <span class="i">y</span> <span class="k">-&gt;</span> <span class="i">x</span> <span class="o">+</span> <span class="i">y</span>) <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs22', 64)" onmouseover="showTip(event, 'fs22', 64)" class="i">ignore</span>
+<span class="k">let</span> <span class="i">test</span>(<span class="i">o</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs12', 65)" onmouseover="showTip(event, 'fs12', 65)" class="i">obj</span>) <span class="o">=</span>
+    <span class="i">o</span><span class="o">?</span><span class="i">foo</span>(<span class="k">fun</span> <span class="i">x</span> <span class="i">y</span> <span class="k">-&gt;</span> <span class="i">x</span> <span class="o">+</span> <span class="i">y</span>) <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs22', 66)" onmouseover="showTip(event, 'fs22', 66)" class="i">ignore</span>
     <span class="i">o</span><span class="o">?</span><span class="i">bar</span> <span class="o">&lt;-</span> <span class="k">fun</span> <span class="i">x</span> <span class="i">y</span> <span class="k">-&gt;</span> <span class="i">x</span> <span class="o">+</span> <span class="i">y</span>
 
     <span class="c">// Direct application with ($) operator</span>
-    <span class="i">o</span> <span class="o">$</span> (<span class="k">fun</span> <span class="i">x</span> <span class="i">y</span> <span class="k">-&gt;</span> <span class="i">x</span> <span class="o">*</span> <span class="i">y</span>) <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs22', 65)" onmouseover="showTip(event, 'fs22', 65)" class="i">ignore</span>
+    <span class="i">o</span> <span class="o">$</span> (<span class="k">fun</span> <span class="i">x</span> <span class="i">y</span> <span class="k">-&gt;</span> <span class="i">x</span> <span class="o">*</span> <span class="i">y</span>) <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs22', 67)" onmouseover="showTip(event, 'fs22', 67)" class="i">ignore</span>
 
     <span class="i">createObj</span> [
         <span class="s">&quot;bar&quot;</span> <span class="o">==&gt;</span> <span class="k">fun</span> <span class="i">x</span> <span class="i">y</span> <span class="i">z</span> <span class="k">-&gt;</span> <span class="i">x</span> <span class="o">*</span> <span class="i">y</span> <span class="o">*</span> <span class="i">z</span>
@@ -739,16 +752,16 @@ when deserializing:</p>
 <span class="l">18: </span>
 <span class="l">19: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="i">Fable</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs1', 66)" onmouseover="showTip(event, 'fs1', 66)" class="i">Core</span><span class="o">.</span><span class="i">JsInterop</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="i">Fable</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs1', 68)" onmouseover="showTip(event, 'fs1', 68)" class="i">Core</span><span class="o">.</span><span class="i">JsInterop</span>
 
 <span class="k">type</span> <span class="i">Tree</span> <span class="o">=</span>
-    | <span class="i">Leaf</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs10', 67)" onmouseover="showTip(event, 'fs10', 67)" class="i">int</span>
+    | <span class="i">Leaf</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs10', 69)" onmouseover="showTip(event, 'fs10', 69)" class="i">int</span>
     | <span class="i">Branch</span> <span class="k">of</span> <span class="i">Tree</span>[]
     <span class="k">member</span> <span class="i">this</span><span class="o">.</span><span class="i">Sum</span>() <span class="o">=</span>
         <span class="k">match</span> <span class="i">this</span> <span class="k">with</span>
         | <span class="i">Leaf</span> <span class="i">i</span> <span class="k">-&gt;</span> <span class="i">i</span>
         | <span class="i">Branch</span> <span class="i">trees</span> <span class="k">-&gt;</span>
-            <span class="i">trees</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs23', 68)" onmouseover="showTip(event, 'fs23', 68)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs24', 69)" onmouseover="showTip(event, 'fs24', 69)" class="i">map</span> (<span class="k">fun</span> <span class="i">x</span> <span class="k">-&gt;</span> <span class="i">x</span><span class="o">.</span><span class="i">Sum</span>()) <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs23', 70)" onmouseover="showTip(event, 'fs23', 70)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs25', 71)" onmouseover="showTip(event, 'fs25', 71)" class="i">sum</span>
+            <span class="i">trees</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs23', 70)" onmouseover="showTip(event, 'fs23', 70)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs24', 71)" onmouseover="showTip(event, 'fs24', 71)" class="i">map</span> (<span class="k">fun</span> <span class="i">x</span> <span class="k">-&gt;</span> <span class="i">x</span><span class="o">.</span><span class="i">Sum</span>()) <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs23', 72)" onmouseover="showTip(event, 'fs23', 72)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs25', 73)" onmouseover="showTip(event, 'fs25', 73)" class="i">sum</span>
 
 <span class="k">let</span> <span class="i">tree</span> <span class="o">=</span>
     <span class="i">Branch</span> [|<span class="i">Leaf</span> <span class="n">1</span>; <span class="i">Leaf</span> <span class="n">2</span>; <span class="i">Branch</span> [|<span class="i">Leaf</span> <span class="n">3</span>; <span class="i">Leaf</span> <span class="n">4</span>|]|]
@@ -756,7 +769,7 @@ when deserializing:</p>
 <span class="k">let</span> <span class="i">json</span> <span class="o">=</span> <span class="i">toJson</span> <span class="i">tree</span>
 <span class="k">let</span> <span class="i">tree2</span> <span class="o">=</span> <span class="i">ofJson</span><span class="o">&lt;</span><span class="i">Tree</span><span class="o">&gt;</span> <span class="i">json</span>
 
-<span class="k">let</span> <span class="i">typeTest</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs26', 72)" onmouseover="showTip(event, 'fs26', 72)" class="i">box</span> <span class="i">tree2</span> <span class="o">:?</span> <span class="i">Tree</span>    <span class="c">// Type is kept</span>
+<span class="k">let</span> <span class="i">typeTest</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs26', 74)" onmouseover="showTip(event, 'fs26', 74)" class="i">box</span> <span class="i">tree2</span> <span class="o">:?</span> <span class="i">Tree</span>    <span class="c">// Type is kept</span>
 <span class="k">let</span> <span class="i">sum</span> <span class="o">=</span> <span class="i">tree2</span><span class="o">.</span><span class="i">Sum</span>()   <span class="c">// Prototype members can be accessed</span>
 </code></pre></td>
 </tr>
@@ -774,7 +787,7 @@ this by simply using the <code>TypeNameHandling.All</code> setting.</p>
 <span class="l">5: </span>
 <span class="l">6: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">type</span> <span class="i">R</span> <span class="o">=</span> { <span class="i">i</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs10', 73)" onmouseover="showTip(event, 'fs10', 73)" class="i">int</span>; <span class="i">s</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs11', 74)" onmouseover="showTip(event, 'fs11', 74)" class="i">string</span> }
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">type</span> <span class="i">R</span> <span class="o">=</span> { <span class="i">i</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs10', 75)" onmouseover="showTip(event, 'fs10', 75)" class="i">int</span>; <span class="i">s</span><span class="o">:</span> <span onmouseout="hideTip(event, 'fs11', 76)" onmouseover="showTip(event, 'fs11', 76)" class="i">string</span> }
 
 <span class="k">let</span> <span class="i">x</span> <span class="o">=</span> { <span class="i">i</span><span class="o">=</span><span class="n">1</span>; <span class="i">s</span><span class="o">=</span><span class="s">&quot;1&quot;</span> }
 <span class="k">let</span> <span class="i">json</span> <span class="o">=</span> <span class="i">JsonConvert</span><span class="o">.</span><span class="i">SerializeObject</span>(<span class="i">x</span>, <span class="i">JsonSerializerSettings</span>(<span class="i">TypeNameHandling</span><span class="o">=</span><span class="i">TypeNameHandling</span><span class="o">.</span><span class="i">All</span>))
@@ -843,9 +856,9 @@ but you can use the following converter:
 <span class="l">35: </span>
 <span class="l">36: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span onmouseout="hideTip(event, 'fs27', 75)" onmouseover="showTip(event, 'fs27', 75)" class="i">FSharp</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs28', 76)" onmouseover="showTip(event, 'fs28', 76)" class="i">Reflection</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span onmouseout="hideTip(event, 'fs27', 77)" onmouseover="showTip(event, 'fs27', 77)" class="i">FSharp</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs28', 78)" onmouseover="showTip(event, 'fs28', 78)" class="i">Reflection</span>
 <span class="k">open</span> <span class="i">Newtonsoft</span><span class="o">.</span><span class="i">Json</span>
-<span class="k">open</span> <span class="i">Newtonsoft</span><span class="o">.</span><span class="i">Json</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs29', 77)" onmouseover="showTip(event, 'fs29', 77)" class="i">Linq</span>
+<span class="k">open</span> <span class="i">Newtonsoft</span><span class="o">.</span><span class="i">Json</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs29', 79)" onmouseover="showTip(event, 'fs29', 79)" class="i">Linq</span>
 
 <span class="k">type</span> <span class="i">UnionTypeInfoConverter</span>() <span class="o">=</span>
     <span class="k">inherit</span> <span class="i">JsonConverter</span>()
@@ -876,7 +889,7 @@ but you can use the following converter:
         <span class="i">Converters</span> <span class="o">=</span> [|<span class="i">UnionTypeInfoConverter</span>()|],
         <span class="i">TypeNameHandling</span> <span class="o">=</span> <span class="i">TypeNameHandling</span><span class="o">.</span><span class="i">All</span>)
 
-<span class="k">type</span> <span class="i">U</span> <span class="o">=</span> <span class="i">A</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs10', 78)" onmouseover="showTip(event, 'fs10', 78)" class="i">int</span> | <span class="i">B</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs11', 79)" onmouseover="showTip(event, 'fs11', 79)" class="i">string</span> <span class="o">*</span> <span onmouseout="hideTip(event, 'fs9', 80)" onmouseover="showTip(event, 'fs9', 80)" class="i">float</span>
+<span class="k">type</span> <span class="i">U</span> <span class="o">=</span> <span class="i">A</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs10', 80)" onmouseover="showTip(event, 'fs10', 80)" class="i">int</span> | <span class="i">B</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs11', 81)" onmouseover="showTip(event, 'fs11', 81)" class="i">string</span> <span class="o">*</span> <span onmouseout="hideTip(event, 'fs9', 82)" onmouseover="showTip(event, 'fs9', 82)" class="i">float</span>
 <span class="i">JsonConvert</span><span class="o">.</span><span class="i">SerializeObject</span>(<span class="i">A</span> <span class="n">4</span>, <span class="i">settings</span>)
 <span class="i">JsonConvert</span><span class="o">.</span><span class="i">SerializeObject</span>(<span class="i">B</span>(<span class="s">&quot;hi&quot;</span>,<span class="n">5.6</span>), <span class="i">settings</span>)
 </code></pre></td>

@@ -30,8 +30,8 @@
       window.addEventListener("load", init, false);
     </script>-->
     
-  <title>FAQ - F# |> BABEL</title>
-  <meta name="description" content="Frequently asked questions about Fable">
+  <title>Fable blog - F# |> BABEL</title>
+  <meta name="description" content="Latest news about Fable!">
 
 </head>
 <body>
@@ -54,7 +54,7 @@
           <li class=""><a href="//fable.io">home</a></li>
           <li class=""><a href="//fable.io/samples.html">samples</a></li>
           <li class=""><a href="//fable.io/docs.html">docs</a></li>
-          <li class=""><a href="//fable.io/blog.html">blog</a></li>
+          <li class="active"><a href="//fable.io/blog.html">blog</a></li>
           <li><a href="https://github.com/fable-compiler/Fable">source</a></li>
         </ul>
       </div>
@@ -69,8 +69,8 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
-      <h1>FAQ</h1>
-      <p>Frequently asked questions about Fable</p>
+      <h1>Fable blog</h1>
+      <p>Latest news about Fable!</p>
     </div>
   </div>
 </div>
@@ -80,39 +80,12 @@
   <div class="row">
     <div class="col-md-1 col-lg-2"></div>
     <div class="col-sm-12 col-md-10 col-lg-8">
-      <h2><a name="How-does-this-relate-to-FunScript" class="anchor" href="#How-does-this-relate-to-FunScript">How does this relate to FunScript?</a></h2>
-<p>Fable takes a lot from FunScript and probably it wouldn't have been possible if FunScript didn't come first.
-But besides that it's completely a different project, the main differences are:</p>
-<ul>
-<li>
-Fable uses F# Compiler Services to generate the AST instead of quotations. This means it's not necessary to
-compile to .NET bytecode first.
-</li>
-<li>
-Fable doesn't generate JS code directly, rather transforms the F# AST into a new one which is passed to
-Babel.js. This way it's easier to target different EcmaScript versions or module systems when needed.
-</li>
-<li>
-One of the main goals of FunScript was to keep the full F# semantics, like generics or structural comparison.
-Fable sacrifices some of the semantics to generate cleaner and more idiomatic JS code.
-</li>
-<li>
-The generated code is structured using ES6 modules, making it much easier to interact with other JS
-development tools.
-</li>
-<li>
-Like FunScript, Fable <em>translates</em> TypeScript definition files to build foreign interfaces, but the latter uses
-plain .fs files instead of .dll assemblies, making it easier to edit the files if needed.
-</li>
-</ul>
-<p>In any case, I want to show my admiration to FunScript (which was created before the F# compiler and Babel
-exposed the language AST) and my gratitude to @ZachBray for his work :)</p>
-<h2><a name="What-was-the-best-moment-during-development" class="anchor" href="#What-was-the-best-moment-during-development">What was the best moment during development?</a></h2>
-<p>The best moment was when, after going through three different AST and JSON serialization,
-the compiler correctly transformed <code>1 + 1</code> into <code>1 + 1</code>.</p>
-<h2><a name="What-lessons-have-you-learned-developing-the-project" class="anchor" href="#What-lessons-have-you-learned-developing-the-project">What lessons have you learned developing the project?</a></h2>
-<p>While I was coding I prepared a cup of tea and drank it too quickly, burning my tongue.
-I learnt I must check first the temperature of the cup before drinking.</p>
+      <h2><a name="Introducing-0-7" class="anchor" href="#Introducing-0-7">Introducing 0.7</a></h2>
+<blockquote>
+<p>By <a href="https://twitter.com/alfonsogcnunez">Alfonso García-Caro</a> on Nov 22, 2016</p>
+</blockquote>
+<p>So finally here it is! It took a bit longer than expected but I'm very happy to announce Fable 0.7 has been released to npm. This version includes lots of improvements thanks to feedback from the community, it's almost a full rewrite and could be considered 1.0 (in fact, 1.0 will probably be this with minor upgrades).</p>
+<p><a href="blog/Introducing-0-7.html">Read more...</a></p>
 
 
 
