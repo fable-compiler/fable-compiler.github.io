@@ -36,7 +36,7 @@
 </head>
 <body>
 
-  <div class="fb-navbar">
+  <div class="fable-navbar">
   <div class="container">
   <nav class="navbar navbar-default">
     <div class="navbar-wrapper">
@@ -62,20 +62,25 @@
   </div>
   </div>
 
-  <div class="fb-content-wrapper">
+  <div class="fable-content-wrapper">
   
-<div class="fb-heading">
+<div class="fable-heading">
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
       <h1>Tree Shaking with Fable</h1>
       <p>Light webs load faster!</p>
+      <p class="links">
+        <a href="https://twitter.com/FableCompiler"><i class="fa fa-twitter"></i> follow</a>
+        <a href="https://github.com/fable-compiler/Fable"><i class="fa fa-github"></i> contribute</a>
+        <a href="https://gitter.im/fable-compiler/Fable"><i class="fa fa-comments"></i> chat</a>
+      </p>
     </div>
   </div>
 </div>
 </div>
 
-<div class="container fb-content">
+<div class="container fable-content">
   <div class="row">
     <div class="col-md-1 col-lg-2"></div>
     <div class="col-sm-12 col-md-10 col-lg-8">
@@ -101,20 +106,20 @@
 <span class="l">6: </span>
 <span class="l">7: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="js">export <span class="k">function</span> square ( x ) {
-  <span class="k">return</span> x <span class="o">*</span> x;
+<td class="snippet"><pre class="fssnip"><code lang="[lang=js]">export function square ( x ) {
+  return x * x;
 }
 
-export <span class="k">function</span> cube ( x ) {
-  <span class="k">return</span> x <span class="o">*</span> x <span class="o">*</span> x;
+export function cube ( x ) {
+  return x * x * x;
 }
 </code></pre></td></tr></table>
 <p>main.js (entry module)</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="js">import { cube } from <span class="s">'./maths.js'</span>;
-console.log( cube( <span class="n">5</span> ) ); <span class="c">// 125</span>
+<td class="snippet"><pre class="fssnip"><code lang="[lang=js]">import { cube } from './maths.js';
+console.log( cube( 5 ) ); // 125
 </code></pre></td></tr></table>
 <p>bundle.js (<code>square</code> is excluded)</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
@@ -122,10 +127,10 @@ console.log( cube( <span class="n">5</span> ) ); <span class="c">// 125</span>
 <span class="l">3: </span>
 <span class="l">4: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="js"><span class="k">function</span> cube ( x ) {
-  <span class="k">return</span> x <span class="o">*</span> x <span class="o">*</span> x;
+<td class="snippet"><pre class="fssnip"><code lang="[lang=js]">function cube ( x ) {
+  return x * x * x;
 }
-console.log( cube( <span class="n">5</span> ) );
+console.log( cube( 5 ) );
 </code></pre></td></tr></table>
 <p>Check Rollup's website to see how this works <a href="http://rollupjs.org/">live</a>.</p>
 <p>Cool, isn't it? But... wait, what am I doing? I wanted to convince you to try Fable and here I am only talking about the niceties of ES2015 modules. Obviously, it's not possible for Fable to have any advantage regarding a feature that was specifically designed for JS and its ecosystem, right? Well, let's see. Challenge accepted!</p>
@@ -158,7 +163,7 @@ console.log( cube( <span class="n">5</span> ) );
 <span class="l">6: </span>
 <span class="l">7: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip"><code lang="JS">export function foo(x) {
+<td class="snippet"><pre class="fssnip"><code lang="[lang=js]">export function foo(x) {
   return x + x;
 }
 
@@ -199,7 +204,7 @@ export function bar(y) {
 <span class="l">8: </span>
 <span class="l">9: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip"><code lang="JS">import { fsFormat } from "fable-core/String";
+<td class="snippet"><pre class="fssnip"><code lang="[lang=js]">import { fsFormat } from "fable-core/String";
 import { bar } from "./MyLib"
 
 function test() {
