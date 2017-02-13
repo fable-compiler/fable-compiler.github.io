@@ -44,9 +44,9 @@ function compile(source) {
             }
             var readAllBytes = function (fileName) { return metadata[fileName]; }
             var references2 = references.filter(x => x.endsWith(".dll")).map(x => x.replace(".dll", ""));
-            checker = project.createChecker(readAllBytes, references2);
+            checker = Fable.createChecker(readAllBytes, references2);
         }
-        var json = project.compileSource(checker, source);
+        var json = Fable.compileSource(checker, source);
         postMessage(json);
     }
     catch (err) {
