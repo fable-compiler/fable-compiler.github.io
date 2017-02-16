@@ -3,6 +3,7 @@ importScripts('repl/bundle.min.js');
 var checker = null;
 var metadata = {}
 
+// Files have .txt extension to allow gzipping in Github Pages
 var references = [
     "FSharp.Core.sigdata.txt",
     "FSharp.Core.txt",
