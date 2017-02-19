@@ -60,6 +60,13 @@ define(["require", "exports", "./Util", "./Util", "./RegExp", "./Date", "./Date"
         return cmp(x, y, false);
     }
     exports.compareTo = compareTo;
+    function startsWith(str, pattern, ic) {
+        if (str.length >= pattern.length) {
+            return cmp(str.substr(0, pattern.length), pattern, ic) === 0;
+        }
+        return false;
+    }
+    exports.startsWith = startsWith;
     function indexOfAny(str, anyOf) {
         var args = [];
         for (var _i = 2; _i < arguments.length; _i++) {

@@ -11,4 +11,10 @@ define(["require", "exports", "./Util", "./Symbol"], function (require, exports,
     }());
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = GenericComparer;
+    function fromEqualityComparer(eqComparer) {
+        var f = typeof eqComparer.Compare === "function"
+            ? eqComparer.Compare : function (x, y) { return eqComparer.Equals(x, y) ? 0 : 1; };
+        return new GenericComparer(f);
+    }
+    exports.fromEqualityComparer = fromEqualityComparer;
 });

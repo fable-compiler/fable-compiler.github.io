@@ -321,4 +321,56 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
         return arg == null ? defaultValue : (f != null ? f(arg) : arg);
     }
     exports.defaultArg = defaultArg;
+    function applyOperator(x, y, operator) {
+        function getMethod(obj) {
+            if (typeof obj === "object") {
+                var cons = Object.getPrototypeOf(obj).constructor;
+                if (typeof cons[operator] === "function") {
+                    return cons[operator];
+                }
+            }
+            return null;
+        }
+        var meth = getMethod(x);
+        if (meth != null) {
+            return meth(x, y);
+        }
+        meth = getMethod(y);
+        if (meth != null) {
+            return meth(x, y);
+        }
+        switch (operator) {
+            case "op_Addition":
+                return x + y;
+            case "op_Subtraction":
+                return x - y;
+            case "op_Multiply":
+                return x * y;
+            case "op_Division":
+                return x / y;
+            case "op_Modulus":
+                return x % y;
+            case "op_LeftShift":
+                return x << y;
+            case "op_RightShift":
+                return x >> y;
+            case "op_BitwiseAnd":
+                return x & y;
+            case "op_BitwiseOr":
+                return x | y;
+            case "op_ExclusiveOr":
+                return x ^ y;
+            case "op_LogicalNot":
+                return x + y;
+            case "op_UnaryNegation":
+                return !x;
+            case "op_BooleanAnd":
+                return x && y;
+            case "op_BooleanOr":
+                return x || y;
+            default:
+                return null;
+        }
+    }
+    exports.applyOperator = applyOperator;
 });
