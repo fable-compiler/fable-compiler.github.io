@@ -11,10 +11,21 @@ define(["require", "exports", "./Util", "./Symbol"], function (require, exports,
     }());
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = GenericComparer;
-    function fromEqualityComparer(eqComparer) {
-        var f = typeof eqComparer.Compare === "function"
-            ? eqComparer.Compare : function (x, y) { return eqComparer.Equals(x, y) ? 0 : 1; };
-        return new GenericComparer(f);
+    function fromEqualityComparer(comparer) {
+        if (typeof comparer.Compare === "function") {
+            return new GenericComparer(comparer.Compare);
+        }
+        else {
+            return new GenericComparer(function (x, y) {
+                var xhash = comparer.GetHashCode(x), yhash = comparer.GetHashCode(y);
+                if (xhash === yhash) {
+                    return comparer.Equals(x, y) ? 0 : 1;
+                }
+                else {
+                    return xhash < yhash ? -1 : 1;
+                }
+            });
+        }
     }
     exports.fromEqualityComparer = fromEqualityComparer;
 });

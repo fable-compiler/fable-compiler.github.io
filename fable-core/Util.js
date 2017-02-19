@@ -113,12 +113,17 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
     }
     exports.toString = toString;
     function hash(x) {
-        var s = JSON.stringify(x);
-        var h = 5381, i = 0, len = s.length;
-        while (i < len) {
-            h = (h * 33) ^ s.charCodeAt(i++);
+        if (x != null && typeof x.GetHashCode == "function") {
+            return x.GetHashCode();
         }
-        return h;
+        else {
+            var s = JSON.stringify(x);
+            var h = 5381, i = 0, len = s.length;
+            while (i < len) {
+                h = (h * 33) ^ s.charCodeAt(i++);
+            }
+            return h;
+        }
     }
     exports.hash = hash;
     function equals(x, y) {
@@ -150,7 +155,7 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
             return true;
         }
         else if (x instanceof Date)
-            return x.getTime() == y.getTime();
+            return x.getTime() === y.getTime();
         else
             return false;
     }
@@ -187,8 +192,14 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
             }
             return 0;
         }
-        else if (x instanceof Date)
-            return compare(x.getTime(), y.getTime());
+        else if (x instanceof Date) {
+            var xtime = x.getTime(), ytime = y.getTime();
+            return xtime === ytime ? 0 : (xtime < ytime ? -1 : 1);
+        }
+        else if (typeof x === "object") {
+            var xhash = hash(x), yhash = hash(y);
+            return xhash < yhash ? -1 : 1;
+        }
         else
             return x < y ? -1 : 1;
     }
