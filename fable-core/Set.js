@@ -1,4 +1,4 @@
-define(["require", "exports", "./List", "./List", "./Util", "./GenericComparer", "./Symbol", "./Seq", "./Seq", "./Seq", "./Seq", "./Seq", "./Seq", "./Seq"], function (require, exports, List_1, List_2, Util_1, GenericComparer_1, Symbol_1, Seq_1, Seq_2, Seq_3, Seq_4, Seq_5, Seq_6, Seq_7) {
+define(["require", "exports", "./List", "./List", "./Util", "./Comparer", "./Symbol", "./Seq", "./Seq", "./Seq", "./Seq", "./Seq", "./Seq", "./Seq"], function (require, exports, List_1, List_2, Util_1, Comparer_1, Symbol_1, Seq_1, Seq_2, Seq_3, Seq_4, Seq_5, Seq_6, Seq_7) {
     "use strict";
     function distinctBy(f, xs) {
         return Seq_6.choose(function (tup) { return tup[0]; }, Seq_7.scan(function (tup, x) {
@@ -679,11 +679,11 @@ define(["require", "exports", "./List", "./List", "./Util", "./GenericComparer",
     function from(comparer, tree) {
         var s = new FableSet();
         s.tree = tree;
-        s.comparer = comparer || new GenericComparer_1.default();
+        s.comparer = comparer || new Comparer_1.default();
         return s;
     }
     function create(ie, comparer) {
-        comparer = comparer || new GenericComparer_1.default();
+        comparer = comparer || new Comparer_1.default();
         return from(comparer, ie ? tree_ofSeq(comparer, ie) : new SetTree(0));
     }
     exports.create = create;
@@ -846,7 +846,7 @@ define(["require", "exports", "./List", "./List", "./Util", "./GenericComparer",
     }
     exports.filter = filter;
     function map(f, s) {
-        var comparer = new GenericComparer_1.default();
+        var comparer = new Comparer_1.default();
         return from(comparer, tree_fold(function (acc, k) { return tree_add(comparer, f(k), acc); }, new SetTree(0), s.tree));
     }
     exports.map = map;

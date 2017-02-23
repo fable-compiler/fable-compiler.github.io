@@ -47,7 +47,14 @@ define(["require", "exports"], function (require, exports) {
     function protectedBind(computation, binder) {
         return protectedCont(function (ctx) {
             computation({
-                onSuccess: function (x) { return binder(x)(ctx); },
+                onSuccess: function (x) {
+                    try {
+                        binder(x)(ctx);
+                    }
+                    catch (ex) {
+                        ctx.onError(ex);
+                    }
+                },
                 onError: ctx.onError,
                 onCancel: ctx.onCancel,
                 cancelToken: ctx.cancelToken,

@@ -1,4 +1,4 @@
-define(["require", "exports", "./ListClass", "./ListClass", "./Util", "./Util", "./Util", "./GenericComparer", "./Symbol", "./Seq", "./Seq", "./Seq", "./Seq", "./Seq"], function (require, exports, ListClass_1, ListClass_2, Util_1, Util_2, Util_3, GenericComparer_1, Symbol_1, Seq_1, Seq_2, Seq_3, Seq_4, Seq_5) {
+define(["require", "exports", "./ListClass", "./ListClass", "./Util", "./Util", "./Util", "./Comparer", "./Symbol", "./Seq", "./Seq", "./Seq", "./Seq", "./Seq"], function (require, exports, ListClass_1, ListClass_2, Util_1, Util_2, Util_3, Comparer_1, Symbol_1, Seq_1, Seq_2, Seq_3, Seq_4, Seq_5) {
     "use strict";
     function groupBy(f, xs) {
         var keys = [], iter = xs[Symbol.iterator]();
@@ -478,11 +478,11 @@ define(["require", "exports", "./ListClass", "./ListClass", "./Util", "./Util", 
     function from(comparer, tree) {
         var map = new FableMap();
         map.tree = tree;
-        map.comparer = comparer || new GenericComparer_1.default();
+        map.comparer = comparer || new Comparer_1.default();
         return map;
     }
     function create(ie, comparer) {
-        comparer = comparer || new GenericComparer_1.default();
+        comparer = comparer || new Comparer_1.default();
         return from(comparer, ie ? tree_ofSeq(comparer, ie) : tree_empty());
     }
     exports.create = create;

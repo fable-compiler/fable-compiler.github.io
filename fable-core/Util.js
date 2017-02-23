@@ -52,7 +52,7 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
     }
     exports.makeGeneric = makeGeneric;
     function isGeneric(typ) {
-        return typ instanceof NonDeclaredType && typ.generics != null;
+        return typ instanceof NonDeclaredType && typ.kind === "GenericType";
     }
     exports.isGeneric = isGeneric;
     function getDefinition(typ) {
@@ -94,10 +94,19 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
         if (obj == null) {
             return [];
         }
-        var propertyMap = typeof obj[Symbol_1.default.reflection] === "function" ? obj[Symbol_1.default.reflection]().properties : obj;
+        var propertyMap = typeof obj[Symbol_1.default.reflection] === "function" ? obj[Symbol_1.default.reflection]().properties || [] : obj;
         return Object.getOwnPropertyNames(propertyMap);
     }
     exports.getPropertyNames = getPropertyNames;
+    function getUnionFields(obj) {
+        var fields = [];
+        for (var i = 97, j = void 0; i < 97 + (obj.size | 0); i++) {
+            var j_1 = String.fromCharCode(i);
+            fields.push(obj[j_1]);
+        }
+        return fields;
+    }
+    exports.getUnionFields = getUnionFields;
     function isArray(obj) {
         return Array.isArray(obj) || ArrayBuffer.isView(obj);
     }
@@ -160,6 +169,10 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
             return false;
     }
     exports.equals = equals;
+    function comparePrimitives(x, y) {
+        return x === y ? 0 : (x < y ? -1 : 1);
+    }
+    exports.comparePrimitives = comparePrimitives;
     function compare(x, y) {
         if (x === y)
             return 0;
@@ -198,7 +211,12 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
         }
         else if (typeof x === "object") {
             var xhash = hash(x), yhash = hash(y);
-            return xhash < yhash ? -1 : 1;
+            if (xhash === yhash) {
+                return equals(x, y) ? 0 : -1;
+            }
+            else {
+                return xhash < yhash ? -1 : 1;
+            }
         }
         else
             return x < y ? -1 : 1;

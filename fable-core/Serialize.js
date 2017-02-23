@@ -1,4 +1,4 @@
-define(["require", "exports", "./Symbol", "./Symbol", "./List", "./List", "./Set", "./Map", "./Map", "./Set", "./Util", "./Util", "./Util", "./Seq", "./Reflection", "./Date", "./String"], function (require, exports, Symbol_1, Symbol_2, List_1, List_2, Set_1, Map_1, Map_2, Set_2, Util_1, Util_2, Util_3, Seq_1, Reflection_1, Date_1, String_1) {
+define(["require", "exports", "./Symbol", "./Symbol", "./List", "./List", "./Set", "./Map", "./Map", "./Set", "./Util", "./Seq", "./Reflection", "./Date", "./String"], function (require, exports, Symbol_1, Symbol_2, List_1, List_2, Set_1, Map_1, Map_2, Set_2, Util_1, Seq_1, Reflection_1, Date_1, String_1) {
     "use strict";
     function deflate(v) {
         if (ArrayBuffer.isView(v)) {
@@ -34,13 +34,7 @@ define(["require", "exports", "./Symbol", "./Symbol", "./List", "./List", "./Set
                     return _a = {}, _a[caseName] = fieldValue, _a;
                 }
                 else {
-                    var fields = [];
-                    var startCode = 'a'.charCodeAt(0);
-                    for (var i = 0; i < v.size; i++) {
-                        var j = String.fromCharCode(startCode + i);
-                        fields.push(v[j]);
-                    }
-                    return _b = {}, _b[caseName] = fields, _b;
+                    return _b = {}, _b[caseName] = Util_1.getUnionFields(v), _b;
                 }
             }
         }
@@ -60,7 +54,7 @@ define(["require", "exports", "./Symbol", "./Symbol", "./List", "./List", "./Set
         if (typeof typ === "string") {
             return typ !== "boolean" && typ !== "number";
         }
-        else if (typ instanceof Util_3.NonDeclaredType) {
+        else if (typ instanceof Util_1.NonDeclaredType) {
             return typ.kind !== "Array" && typ.kind !== "Tuple";
         }
         else {
@@ -77,7 +71,7 @@ define(["require", "exports", "./Symbol", "./Symbol", "./List", "./List", "./Set
         if (typeof typ === "string") {
             return false;
         }
-        if (typ instanceof Util_3.NonDeclaredType) {
+        if (typ instanceof Util_1.NonDeclaredType) {
             switch (typ.kind) {
                 case "Option":
                 case "Array":
@@ -183,7 +177,7 @@ define(["require", "exports", "./Symbol", "./Symbol", "./List", "./List", "./Set
             }
             return val;
         }
-        else if (typ instanceof Util_3.NonDeclaredType) {
+        else if (typ instanceof Util_1.NonDeclaredType) {
             switch (typ.kind) {
                 case "Unit":
                     return null;
@@ -272,22 +266,21 @@ define(["require", "exports", "./Symbol", "./Symbol", "./List", "./List", "./Set
                 else if (v instanceof Map_1.default || v instanceof Map) {
                     return Seq_1.fold(function (o, kv) { o[kv[0]] = kv[1]; return o; }, { $type: info.type || "System.Collections.Generic.Dictionary" }, v);
                 }
-                else if (info.type) {
-                    if (Util_1.hasInterface(v, "FSharpUnion") || Util_1.hasInterface(v, "FSharpRecord")) {
-                        return Object.assign({ $type: info.type }, v);
-                    }
-                    else {
-                        var proto = Object.getPrototypeOf(v), props = Object.getOwnPropertyNames(proto), o_1 = { $type: info.type };
-                        for (var i = 0; i < props.length; i++) {
-                            var prop = Object.getOwnPropertyDescriptor(proto, props[i]);
-                            if (prop.get)
-                                o_1[props[i]] = prop.get.apply(v);
-                        }
-                        return o_1;
-                    }
+                else if (info.properties) {
+                    return Seq_1.fold(function (o, prop) {
+                        return o[prop] = v[prop], o;
+                    }, { $type: info.type }, Object.getOwnPropertyNames(info.properties));
+                }
+                else if (info.cases) {
+                    var uci = info.cases[v.tag], fields = Util_1.getUnionFields(v);
+                    return _a = {},
+                        _a[uci[0]] = uci.length <= 2 ? fields[0] : fields,
+                        _a.$type = info.type,
+                        _a;
                 }
             }
             return v;
+            var _a;
         });
     }
     exports.toJsonWithTypeInfo = toJsonWithTypeInfo;
@@ -343,7 +336,7 @@ define(["require", "exports", "./Symbol", "./Symbol", "./List", "./List", "./Set
         });
         var expected = genArgs ? genArgs.T : null;
         if (parsed != null && typeof expected === "function"
-            && !(parsed instanceof Util_2.getDefinition(expected))) {
+            && !(parsed instanceof Util_1.getDefinition(expected))) {
             throw new Error("JSON is not of type " + expected.name + ": " + json);
         }
         return parsed;
