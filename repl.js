@@ -358,7 +358,8 @@
         tailcall: "Tail call",
         sudoku: "Sudoku solver",
         fibonacci: "Recursive Fibonacci",
-        fibonacci_memoize: "Memoized Fibonacci"
+        fibonacci_memoize: "Memoized Fibonacci",
+        safe_wrappers: "Safe Wrappers"
       }
 
       // Create the checkboxes for all available samples
