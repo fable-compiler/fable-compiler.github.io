@@ -24,7 +24,7 @@ match parseInt "20" with
 
 
 let x = new obj()
-x |> setProp "message" "Hello there" 
+x |> setProp "message" "Hello there"
 
 let propValue = getProp<string> "message" x
 
