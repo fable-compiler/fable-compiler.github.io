@@ -36,7 +36,7 @@
 </head>
 <body>
 
-  <div class="fb-navbar">
+  <div class="fable-navbar">
   <div class="container">
   <nav class="navbar navbar-default">
     <div class="navbar-wrapper">
@@ -62,9 +62,9 @@
   </div>
   </div>
 
-  <div class="fb-content-wrapper">
+  <div class="fable-content-wrapper">
   
-<div class="fb-heading">
+<div class="fable-heading">
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
@@ -80,7 +80,7 @@
 </div>
 </div>
 
-<div class="container fb-content">
+<div class="container fable-content">
   <div class="row">
     <div class="col-md-1 col-lg-2"></div>
     <div class="col-sm-12 col-md-10 col-lg-8">
@@ -363,84 +363,6 @@ us if necessary.</p>
 </table>
 <p>If you need more help to create replacements you can have a look at the <a href="https://github.com/fable-compiler/Fable/blob/master/src/fable-fsharp/Replacements/Replacements.fs">Fable.Replacements
 module</a>.</p>
-<h2><a name="Creating-rewriter-plugins" class="anchor" href="#Creating-rewriter-plugins">Creating rewriter plugins</a></h2>
-<p>Rewriter plugins let you perform transformations on the Fable AST. This can be useful if you
-want to modify how Fable handles certain constructs, or if you want to perform something along
-the lines of <a href="https://en.wikipedia.org/wiki/Aspect-oriented_programming">aspect-oriented programming</a>
-and, for example, insert custom logging or exception handling into every function declaration
-in your project.</p>
-<p>To implement rewriter plugin, you need to implement the <code>IRewritePlugin</code> interface. For example,
-let's say we want to insert a <code>console.log</code> call at the beginning of every top-level function
-and use it to log the names of called functions. To do this, we can implement a rewrite plugin
-that will go through all declarations and inject the call at the beginning of each function
-declaration. To inject the call, we write the following helper:</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-<span class="l">4: </span>
-<span class="l">5: </span>
-<span class="l">6: </span>
-<span class="l">7: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span class="i">injectLog</span> <span class="i">name</span> <span class="i">expr</span> <span class="o">=</span> 
-  <span class="k">let</span> <span class="i">logExpr</span> <span class="o">=</span> 
-    <span class="i">Apply</span>
-      ( <span class="i">Value</span>(<span class="i">Emit</span>(<span class="s">&quot;x=&gt;console.log(x)&quot;</span>)), 
-        [<span class="i">Value</span>(<span class="i">StringConst</span> <span class="i">name</span>)], 
-        <span class="i">ApplyMeth</span>, <span class="i">Unit</span>, <span onmouseout="hideTip(event, 'fs1', 44)" onmouseover="showTip(event, 'fs1', 44)" class="i">None</span> )
-  <span class="i">Sequential</span>([ <span class="i">logExpr</span>; <span class="i">expr</span> ], <span onmouseout="hideTip(event, 'fs1', 45)" onmouseover="showTip(event, 'fs1', 45)" class="i">None</span>)
-</code></pre></td>
-</tr>
-</table>
-<p>The function takes a name of function and its body and it returns a <code>Sequential</code> expression that
-first calls <code>console.log</code> and then calls the original expression.  To call <code>console.log</code>, we
-use Fable's <code>Emit</code> constructor, which emits inline JavaScript and we use <code>Apply</code> to call the
-inline function with the function name as argument.</p>
-<p>Next, we need to write a function to transform all declarations in a file:</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
-<span class="l"> 2: </span>
-<span class="l"> 3: </span>
-<span class="l"> 4: </span>
-<span class="l"> 5: </span>
-<span class="l"> 6: </span>
-<span class="l"> 7: </span>
-<span class="l"> 8: </span>
-<span class="l"> 9: </span>
-<span class="l">10: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span class="i">transformFile</span> (<span class="i">file</span><span class="o">:</span><span class="i">File</span>) <span class="o">=</span> 
-  <span class="k">let</span> <span class="i">newDecls</span> <span class="o">=</span> 
-    <span class="i">file</span><span class="o">.</span><span class="i">Declarations</span>
-    <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs16', 46)" onmouseover="showTip(event, 'fs16', 46)" class="i">List</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs17', 47)" onmouseover="showTip(event, 'fs17', 47)" class="i">map</span> (<span class="k">function</span>
-      | <span class="i">MemberDeclaration</span>(<span class="i">membr</span>, <span class="i">name</span>, <span class="i">args</span>, <span class="i">body</span>, <span class="i">loc</span>) <span class="k">-&gt;</span>
-          <span class="k">let</span> <span class="i">body</span> <span class="o">=</span> <span class="i">injectLog</span> <span class="i">membr</span><span class="o">.</span><span class="i">Name</span> <span class="i">body</span>
-          <span class="i">MemberDeclaration</span>(<span class="i">membr</span>, <span class="i">name</span>, <span class="i">args</span>, <span class="i">body</span>, <span class="i">loc</span>)
-      | <span class="i">decl</span> <span class="k">-&gt;</span> <span class="i">decl</span> )
-
-  <span class="i">File</span>(<span class="i">file</span><span class="o">.</span><span class="i">FileName</span>, <span class="i">file</span><span class="o">.</span><span class="i">Root</span>, <span class="i">newDecls</span>, <span class="i">file</span><span class="o">.</span><span class="i">UsedVarNames</span>)
-</code></pre></td>
-</tr>
-</table>
-<p>A file has a list of declarations in <code>file.Declarations</code> and so we simply iterate over all the
-declarations. If the declaration is <code>MemberDeclaration</code> (meaning top-level function), we use our
-<code>injectLog</code> function to add logging to its body. At the end, we create new <code>File</code> object using
-the original file information and new declarations. Finally, we need to implement
-<code>IRewritePlugin</code>:</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">type</span> <span class="i">LoggingRewrite</span>() <span class="o">=</span>
-  <span class="k">interface</span> <span class="i">IRewritePlugin</span> <span class="k">with</span>
-    <span class="k">member</span> <span class="i">x</span><span class="o">.</span><span class="i">Rewrite</span>(<span class="i">files</span>) <span class="o">=</span> <span class="i">files</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs18', 48)" onmouseover="showTip(event, 'fs18', 48)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs19', 49)" onmouseover="showTip(event, 'fs19', 49)" class="i">map</span> <span class="i">transformFile</span>
-</code></pre></td>
-</tr>
-</table>
-<p>Here, we transform all files in the project using the <code>transformFile</code> function.
-The rest is the same as in the previous example - you'll need to compile the plugin
-and specify it in <code>fableconfig.json</code> and that's all you need to do!</p>
-<p>Nice, isn't it? Now you have the capability to extend Fable to fit your own needs.
-I'm looking forward to seeing the wonderful plugins you'll create!</p>
 
 
 <div class="tip" id="fs1">union case Option.None: Option&lt;&#39;T&gt;</div>
@@ -458,10 +380,6 @@ I'm looking forward to seeing the wonderful plugins you'll create!</p>
 <div class="tip" id="fs13">field int.MaxValue = 2147483647</div>
 <div class="tip" id="fs14">Multiple items<br />type Random =<br />&#160;&#160;new : unit -&gt; Random + 1 overload<br />&#160;&#160;member Next : unit -&gt; int + 2 overloads<br />&#160;&#160;member NextBytes : buffer:byte[] -&gt; unit<br />&#160;&#160;member NextDouble : unit -&gt; float<br /><br />Full name: System.Random<br /><br />--------------------<br />System.Random() : unit<br />System.Random(Seed: int) : unit</div>
 <div class="tip" id="fs15">val printfn : format:Printf.TextWriterFormat&lt;&#39;T&gt; -&gt; &#39;T<br /><br />Full name: Microsoft.FSharp.Core.ExtraTopLevelOperators.printfn</div>
-<div class="tip" id="fs16">Multiple items<br />module List<br /><br />from Microsoft.FSharp.Collections<br /><br />--------------------<br />type List&lt;&#39;T&gt; =<br />&#160;&#160;| ( [] )<br />&#160;&#160;| ( :: ) of Head: &#39;T * Tail: &#39;T list<br />&#160;&#160;interface IEnumerable<br />&#160;&#160;interface IEnumerable&lt;&#39;T&gt;<br />&#160;&#160;member GetSlice : startIndex:int option * endIndex:int option -&gt; &#39;T list<br />&#160;&#160;member Head : &#39;T<br />&#160;&#160;member IsEmpty : bool<br />&#160;&#160;member Item : index:int -&gt; &#39;T with get<br />&#160;&#160;member Length : int<br />&#160;&#160;member Tail : &#39;T list<br />&#160;&#160;static member Cons : head:&#39;T * tail:&#39;T list -&gt; &#39;T list<br />&#160;&#160;static member Empty : &#39;T list<br /><br />Full name: Microsoft.FSharp.Collections.List&lt;_&gt;</div>
-<div class="tip" id="fs17">val map : mapping:(&#39;T -&gt; &#39;U) -&gt; list:&#39;T list -&gt; &#39;U list<br /><br />Full name: Microsoft.FSharp.Collections.List.map</div>
-<div class="tip" id="fs18">module Seq<br /><br />from Microsoft.FSharp.Collections</div>
-<div class="tip" id="fs19">val map : mapping:(&#39;T -&gt; &#39;U) -&gt; source:seq&lt;&#39;T&gt; -&gt; seq&lt;&#39;U&gt;<br /><br />Full name: Microsoft.FSharp.Collections.Seq.map</div>
 
     </div>
     <div class="col-md-1 col-lg-2"></div>

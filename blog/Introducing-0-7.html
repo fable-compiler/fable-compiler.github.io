@@ -36,7 +36,7 @@
 </head>
 <body>
 
-  <div class="fb-navbar">
+  <div class="fable-navbar">
   <div class="container">
   <nav class="navbar navbar-default">
     <div class="navbar-wrapper">
@@ -62,9 +62,9 @@
   </div>
   </div>
 
-  <div class="fb-content-wrapper">
+  <div class="fable-content-wrapper">
   
-<div class="fb-heading">
+<div class="fable-heading">
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
@@ -80,7 +80,7 @@
 </div>
 </div>
 
-<div class="container fb-content">
+<div class="container fable-content">
   <div class="row">
     <div class="col-md-1 col-lg-2"></div>
     <div class="col-sm-12 col-md-10 col-lg-8">
@@ -192,9 +192,6 @@
 <p>Reflection info is only produced on demand so your types won't have any overhead compared to normal JS objects.</p>
 </blockquote>
 <p>If you still want to use the old method (e.g. when you don't know the concrete type you will receive), please call the <code>toJsonWithTypeInfo</code> and <code>ofJsonWithTypeInfo</code> functions. You can then interact with Json.NET using the <code>TypeNameHandling.All</code> option, but please remember Json.NET is not adding type info to F# union types so you will need <a href="https://github.com/fable-compiler/Fable/blob/master/src/tools/UnionTypeInfoConverter.fsx">the following converter</a>.</p>
-<blockquote>
-<p><strong>Caveat</strong>: The JSON is not validated as there's no Reflection API for Fable yet. Coming soon!</p>
-</blockquote>
 <br />
 <p>There are still many new features in Fable 0.7, here I'm only listing the most important points for the migration. Again, please be understanding while the documentation and samples are being updated. The community is already making wonderful with Fable like the <a href="http://rio2016.thegamma.net/">Gamma Project</a> by Tomas Petricek, <a href="http://ionide.io/">Ionide</a> by Krzysztof Cieślak, <a href="https://github.com/fable-compiler/fable-elmish">fable-elmish</a> by Eugene Tolmachev and <a href="http://fable.io/fable-arch/">fable-arch</a> by Tomas Jansson and Maxime Mangel, as well as Steffen Forkmann and François Nicaise work on React Native and Pixi.js respectively; and I'm sure there will be many other great projects coming with Fable 0.7. There's already work going on to improve editor support and Enrico Sada is bringing a surprise for the new <code>.fsproj</code> format, so there are exciting times ahead for Fable. Keep tuned!</p>
 
