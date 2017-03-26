@@ -131,7 +131,7 @@
 </code></pre></td></tr></table>
 <p>Still XML, not a fancy modern markup language, but with a glance we can see now our list of files, references and CLI tools, that can be easily edited without fear to break anything in the build. Did I say CLI tools? Yes, in addition to project and <a href="https://www.nuget.org/">nuget</a> references, the dotnet SDK accepts references for CLI tools. And this is how Fable will be distributed now, <strong>no more npm's fable-compiler</strong>. With a project file such as the one above after running <code>dotnet restore</code> we will be able to run Fable commands (from the project directory) prefixing them with <code>dotnet fable</code>. For example to start the Fable server you just need to type: <code>dotnet fable start</code>.</p>
 <blockquote>
-<p>At the moment, the only editor that supports the new .fsproj format is <a href="http://ionide.io/">Ionide</a> so you may need to wait a bit until it's supported in other IDEs. In principle, Fable 1.0 should still be compatible with the old format, but this has not been tested as the focus will now be in the new .fsproj. If you're interested please give it a try and let me know how it goes.</p>
+<p>At the moment, the only editor that supports the new .fsproj format is <a href="http://ionide.io/">Ionide</a> so you may need to wait a bit until it's supported in other IDEs. Also, if you have problems with Ionide recognizing the project references, try setting the environment variable <code>UseCommonOutputDirectory</code> to <code>true</code>.</p>
 </blockquote>
 <p>But what is that Fable server? Keep on reading to find the answer!</p>
 <h2><a name="Integration-with-Webpack" class="anchor" href="#Integration-with-Webpack">Integration with Webpack</a></h2>
