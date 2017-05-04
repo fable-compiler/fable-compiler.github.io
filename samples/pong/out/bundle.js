@@ -1654,7 +1654,7 @@ function fill(target, targetIndex, count, value) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ListClass__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Seq__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Map__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Map__ = __webpack_require__(8);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__ListClass__["b"]; });
 /* unused harmony export append */
 /* unused harmony export choose */
@@ -1779,97 +1779,385 @@ function groupBy(f, xs) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__build_fable_core_Set__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__build_fable_core_Comparer__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Win_fs__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__build_fable_core_Symbol__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__build_fable_core_Util__ = __webpack_require__(1);
-/* unused harmony export keysPressed */
-/* unused harmony export code */
-/* unused harmony export update */
-/* harmony export (immutable) */ __webpack_exports__["b"] = leftControlsPressed;
-/* harmony export (immutable) */ __webpack_exports__["c"] = rightControlsPressed;
-/* harmony export (immutable) */ __webpack_exports__["d"] = spacePressed;
-/* harmony export (immutable) */ __webpack_exports__["a"] = init;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Keyboard_fs__ = __webpack_require__(10);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return w; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return h; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return PongElement; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return BallElement; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return GameStatus; });
+/* harmony export (immutable) */ __webpack_exports__["f"] = canMove;
+/* harmony export (immutable) */ __webpack_exports__["g"] = move;
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return Collision; });
+/* harmony export (immutable) */ __webpack_exports__["i"] = checkCollision;
+/* harmony export (immutable) */ __webpack_exports__["j"] = calculateAngle;
+/* harmony export (immutable) */ __webpack_exports__["k"] = collision;
+/* harmony export (immutable) */ __webpack_exports__["l"] = moveBall;
+/* harmony export (immutable) */ __webpack_exports__["m"] = checkGameStatus;
+/* harmony export (immutable) */ __webpack_exports__["n"] = render;
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "o", function() { return initialLeftPaddle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "p", function() { return initialRightPaddle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "q", function() { return initialBall; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "r", function() { return initialGameStatus; });
+/* harmony export (immutable) */ __webpack_exports__["s"] = update;
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 
 
-var keysPressed = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__build_fable_core_Set__["a" /* create */])(null, new __WEBPACK_IMPORTED_MODULE_1__build_fable_core_Comparer__["a" /* default */](__WEBPACK_IMPORTED_MODULE_2__build_fable_core_Util__["e" /* comparePrimitives */]));
-function code(x) {
-    if (keysPressed.has(x)) {
-        return 1;
+
+
+
+var patternInput_18 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__Win_fs__["a" /* dimensions */])();
+var w = patternInput_18[0];
+var h = patternInput_18[1];
+var PongElement = function () {
+    function PongElement(x, y, width, height) {
+        _classCallCheck(this, PongElement);
+
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
+
+    _createClass(PongElement, [{
+        key: __WEBPACK_IMPORTED_MODULE_1__build_fable_core_Symbol__["a" /* default */].reflection,
+        value: function value() {
+            return {
+                type: "Pong.PongElement",
+                interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+                properties: {
+                    x: "number",
+                    y: "number",
+                    width: "number",
+                    height: "number"
+                }
+            };
+        }
+    }, {
+        key: "Equals",
+        value: function Equals(other) {
+            return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__build_fable_core_Util__["a" /* equalsRecords */])(this, other);
+        }
+    }, {
+        key: "CompareTo",
+        value: function CompareTo(other) {
+            return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__build_fable_core_Util__["b" /* compareRecords */])(this, other) | 0;
+        }
+    }]);
+
+    return PongElement;
+}();
+__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__build_fable_core_Symbol__["b" /* setType */])("Pong.PongElement", PongElement);
+var BallElement = function () {
+    function BallElement(element, speed, angle) {
+        _classCallCheck(this, BallElement);
+
+        this.element = element;
+        this.speed = speed;
+        this.angle = angle;
+    }
+
+    _createClass(BallElement, [{
+        key: __WEBPACK_IMPORTED_MODULE_1__build_fable_core_Symbol__["a" /* default */].reflection,
+        value: function value() {
+            return {
+                type: "Pong.BallElement",
+                interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+                properties: {
+                    element: PongElement,
+                    speed: "number",
+                    angle: "number"
+                }
+            };
+        }
+    }, {
+        key: "Equals",
+        value: function Equals(other) {
+            return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__build_fable_core_Util__["a" /* equalsRecords */])(this, other);
+        }
+    }, {
+        key: "CompareTo",
+        value: function CompareTo(other) {
+            return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__build_fable_core_Util__["b" /* compareRecords */])(this, other) | 0;
+        }
+    }]);
+
+    return BallElement;
+}();
+__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__build_fable_core_Symbol__["b" /* setType */])("Pong.BallElement", BallElement);
+var GameStatus = function () {
+    function GameStatus(scoreLeft, scoreRight, active) {
+        _classCallCheck(this, GameStatus);
+
+        this.scoreLeft = scoreLeft | 0;
+        this.scoreRight = scoreRight | 0;
+        this.active = active;
+    }
+
+    _createClass(GameStatus, [{
+        key: __WEBPACK_IMPORTED_MODULE_1__build_fable_core_Symbol__["a" /* default */].reflection,
+        value: function value() {
+            return {
+                type: "Pong.GameStatus",
+                interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+                properties: {
+                    scoreLeft: "number",
+                    scoreRight: "number",
+                    active: "boolean"
+                }
+            };
+        }
+    }, {
+        key: "Equals",
+        value: function Equals(other) {
+            return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__build_fable_core_Util__["a" /* equalsRecords */])(this, other);
+        }
+    }, {
+        key: "CompareTo",
+        value: function CompareTo(other) {
+            return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__build_fable_core_Util__["b" /* compareRecords */])(this, other) | 0;
+        }
+    }]);
+
+    return GameStatus;
+}();
+__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__build_fable_core_Symbol__["b" /* setType */])("Pong.GameStatus", GameStatus);
+function canMove(direction_0, direction_1, paddle) {
+    var direction = [direction_0, direction_1];
+
+    if (direction[0] === 1) {
+        return paddle.y > 0;
+    } else if (direction[1] === 1) {
+        return paddle.y + paddle.height < h;
     } else {
-        return 0;
+        return false;
     }
 }
-function update(e, pressed) {
-    var keyCode = ~~e.keyCode | 0;
-    var op = pressed ? function (value, set) {
-        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__build_fable_core_Set__["b" /* add */])(value, set);
-    } : function (value_1, set_1) {
-        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__build_fable_core_Set__["c" /* remove */])(value_1, set_1);
-    };
-    keysPressed = op(keyCode, keysPressed);
-    return null;
+function move(direction_0, direction_1, paddle) {
+    var direction = [direction_0, direction_1];
+
+    if (canMove(direction[0], direction[1], paddle)) {
+        if (direction[0] === 1) {
+            var y = paddle.y - 5;
+            return new PongElement(paddle.x, y, paddle.width, paddle.height);
+        } else if (direction[1] === 1) {
+            var y_1 = paddle.y + 5;
+            return new PongElement(paddle.x, y_1, paddle.width, paddle.height);
+        } else {
+            return paddle;
+        }
+    } else {
+        return paddle;
+    }
 }
-function leftControlsPressed() {
-    return [code(87), code(83)];
+var Collision = function () {
+    function Collision(tag, data) {
+        _classCallCheck(this, Collision);
+
+        this.tag = tag;
+        this.data = data;
+    }
+
+    _createClass(Collision, [{
+        key: __WEBPACK_IMPORTED_MODULE_1__build_fable_core_Symbol__["a" /* default */].reflection,
+        value: function value() {
+            return {
+                type: "Pong.Collision",
+                interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+                cases: [["None"], ["Top"], ["Bottom"], ["Left"], ["Right"], ["LeftPaddle"], ["RightPaddle"]]
+            };
+        }
+    }, {
+        key: "Equals",
+        value: function Equals(other) {
+            return this === other || this.tag === other.tag && __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__build_fable_core_Util__["c" /* equals */])(this.data, other.data);
+        }
+    }, {
+        key: "CompareTo",
+        value: function CompareTo(other) {
+            return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__build_fable_core_Util__["d" /* compareUnions */])(this, other) | 0;
+        }
+    }]);
+
+    return Collision;
+}();
+__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__build_fable_core_Symbol__["b" /* setType */])("Pong.Collision", Collision);
+function checkCollision(leftPaddle, rightPaddle, ball) {
+    var hitTop = ball.element.y <= 0;
+    var hitBottom = ball.element.y + ball.element.height >= h;
+    var hitLeft = ball.element.x <= leftPaddle.x ? !(ball.element.y >= leftPaddle.y ? ball.element.y <= leftPaddle.y + leftPaddle.height : false) : false;
+    var hitRight = ball.element.x + ball.element.width >= rightPaddle.x + rightPaddle.width ? !(ball.element.y >= rightPaddle.y ? ball.element.y <= rightPaddle.y + rightPaddle.height : false) : false;
+    var hitLeftPaddle = (ball.element.x <= leftPaddle.x + leftPaddle.width ? ball.element.y >= leftPaddle.y : false) ? ball.element.y <= leftPaddle.y + leftPaddle.height : false;
+    var hitRightPaddle = (ball.element.x + ball.element.width >= rightPaddle.x ? ball.element.y >= rightPaddle.y : false) ? ball.element.y <= rightPaddle.y + rightPaddle.height : false;
+    var matchValue = [hitTop, hitBottom, hitLeft, hitRight, hitLeftPaddle, hitRightPaddle];
+
+    if (matchValue[0]) {
+        return new Collision(1);
+    } else if (matchValue[1]) {
+        return new Collision(2);
+    } else if (matchValue[2]) {
+        return new Collision(3);
+    } else if (matchValue[3]) {
+        return new Collision(4);
+    } else if (matchValue[4]) {
+        return new Collision(5);
+    } else if (matchValue[5]) {
+        return new Collision(6);
+    } else {
+        return new Collision(0);
+    }
 }
-function rightControlsPressed() {
-    return [code(38), code(40)];
+function calculateAngle(paddle, hitRightPaddle, determineAngle, ball) {
+    var relativeIntersectY = paddle.y + paddle.height / 2 - ball.element.y;
+    var normalizedRelativeIntersectionY = relativeIntersectY / (paddle.height / 2);
+
+    if (normalizedRelativeIntersectionY === 0 ? hitRightPaddle : false) {
+        return 3.141592653589793;
+    } else {
+        return determineAngle(normalizedRelativeIntersectionY);
+    }
 }
-function spacePressed() {
-    return code(32) | 0;
+function collision(leftPaddle, rightPaddle, ball) {
+    var matchValue = function (ball_1) {
+        return checkCollision(leftPaddle, rightPaddle, ball_1);
+    }(ball);
+
+    var $var1 = matchValue.tag === 1 ? [1] : matchValue.tag === 2 ? [1] : matchValue.tag === 3 ? [2] : matchValue.tag === 4 ? [2] : matchValue.tag === 5 ? [3] : matchValue.tag === 6 ? [4] : [0];
+
+    switch ($var1[0]) {
+        case 0:
+            return ball.angle;
+
+        case 1:
+            return -ball.angle;
+
+        case 2:
+            return ball.angle;
+
+        case 3:
+            return function () {
+                var determineAngle = function determineAngle(intersection) {
+                    return intersection * (5 * 3.141592653589793 / 12);
+                };
+
+                return function (ball_2) {
+                    return calculateAngle(leftPaddle, false, determineAngle, ball_2);
+                };
+            }()(ball);
+
+        case 4:
+            return function () {
+                var determineAngle_1 = function determineAngle_1(intersection_1) {
+                    return 3.141592653589793 - intersection_1 * (5 * 3.141592653589793 / 12);
+                };
+
+                return function (ball_3) {
+                    return calculateAngle(rightPaddle, true, determineAngle_1, ball_3);
+                };
+            }()(ball);
+    }
 }
-function init() {
-    document.addEventListener("keydown", function (e) {
-        return update(e, true);
-    });
-    document.addEventListener("keyup", function (e_1) {
-        return update(e_1, false);
-    });
+function moveBall(angle, ball) {
+    return new BallElement(new PongElement(ball.element.x + ball.speed * Math.cos(angle), ball.element.y + ball.speed * -Math.sin(angle), ball.element.width, ball.element.height), ball.speed + 0.005, angle);
 }
+function checkGameStatus(leftPaddle, rightPaddle, ball, gameStatus) {
+    var matchValue = function (ball_1) {
+        return checkCollision(leftPaddle, rightPaddle, ball_1);
+    }(ball);
+
+    if (matchValue.tag === 3) {
+        var scoreRight = gameStatus.scoreRight + 1 | 0;
+        return new GameStatus(gameStatus.scoreLeft, scoreRight, false);
+    } else if (matchValue.tag === 4) {
+        var scoreLeft = gameStatus.scoreLeft + 1 | 0;
+        return new GameStatus(scoreLeft, gameStatus.scoreRight, false);
+    } else {
+        return gameStatus;
+    }
+}
+function render(w_1, h_1, leftPaddle, rightPaddle, ball, gameStatus) {
+    (function (tupledArg) {
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__Win_fs__["b" /* drawRect */])("black", tupledArg[0], tupledArg[1], tupledArg[2], tupledArg[3]);
+    })([0, 0, w_1, h_1]);
+
+    (function (tupledArg_1) {
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__Win_fs__["b" /* drawRect */])("white", tupledArg_1[0], tupledArg_1[1], tupledArg_1[2], tupledArg_1[3]);
+    })([leftPaddle.x, leftPaddle.y, leftPaddle.width, leftPaddle.height]);
+
+    (function (tupledArg_2) {
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__Win_fs__["b" /* drawRect */])("white", tupledArg_2[0], tupledArg_2[1], tupledArg_2[2], tupledArg_2[3]);
+    })([rightPaddle.x, rightPaddle.y, rightPaddle.width, rightPaddle.height]);
+
+    (function () {
+        var text = gameStatus.scoreLeft.toString();
+        return function (tupledArg_3) {
+            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__Win_fs__["c" /* drawText */])(text, "white", "30px Arial", tupledArg_3[0], tupledArg_3[1]);
+        };
+    })()([w_1 / 4, 40]);
+    (function () {
+        var text_1 = gameStatus.scoreRight.toString();
+        return function (tupledArg_4) {
+            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__Win_fs__["c" /* drawText */])(text_1, "white", "30px Arial", tupledArg_4[0], tupledArg_4[1]);
+        };
+    })()([w_1 / 1.25 - 30, 40]);
+
+    (function (tupledArg_5) {
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__Win_fs__["d" /* drawCircle */])("yellow", tupledArg_5[0], tupledArg_5[1], tupledArg_5[2], tupledArg_5[3], tupledArg_5[4]);
+    })([ball.element.x, ball.element.y, ball.element.width, 0, 2 * 3.141592653589793]);
+
+    if (!gameStatus.active) {
+        (function (tupledArg_6) {
+            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__Win_fs__["c" /* drawText */])("Press 'r' to start", "green", "40px Lucida Console", tupledArg_6[0], tupledArg_6[1]);
+        })([w_1 / 2 - 230, h_1 / 2 + 40]);
+    }
+}
+var initialLeftPaddle = new PongElement(10, h / 2 - 70 / 2, 15, 70);
+var initialRightPaddle = new PongElement(w - 15 - 10, h / 2 - 70 / 2, 15, 70);
+var initialBall = new BallElement(new PongElement(w / 2, h / 2, 5, 5), 3, 0);
+var initialGameStatus = new GameStatus(0, 0, false);
+__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__Keyboard_fs__["a" /* init */])();
+function update(leftPaddle, rightPaddle, ball, gameStatus, unitVar4) {
+    var leftPaddle_1 = gameStatus.active ? function () {
+        var tupledArg = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__Keyboard_fs__["b" /* leftControlsPressed */])();
+        return function (paddle) {
+            return move(tupledArg[0], tupledArg[1], paddle);
+        };
+    }()(leftPaddle) : initialLeftPaddle;
+    var rightPaddle_1 = gameStatus.active ? function () {
+        var tupledArg_1 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__Keyboard_fs__["c" /* rightControlsPressed */])();
+        return function (paddle_1) {
+            return move(tupledArg_1[0], tupledArg_1[1], paddle_1);
+        };
+    }()(rightPaddle) : initialRightPaddle;
+    var angle = gameStatus.active ? collision(leftPaddle_1, rightPaddle_1, ball) : ball.angle;
+    var ball_2 = void 0;
+
+    if (gameStatus.active) {
+        ball_2 = function (ball_1) {
+            return moveBall(angle, ball_1);
+        }(ball);
+    } else {
+        var angle_1 = angle === 0 ? 3.141592653589793 : 0;
+        ball_2 = new BallElement(initialBall.element, initialBall.speed, angle_1);
+    }
+
+    var gameStatus_2 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__Keyboard_fs__["d" /* rKeyPressed */])() === 1 ? new GameStatus(gameStatus.scoreLeft, gameStatus.scoreRight, true) : function (gameStatus_1) {
+        return checkGameStatus(leftPaddle_1, rightPaddle_1, ball_2, gameStatus_1);
+    }(gameStatus);
+    render(w, h, leftPaddle_1, rightPaddle_1, ball_2, gameStatus_2);
+    window.setTimeout(function () {
+        update(leftPaddle_1, rightPaddle_1, ball_2, gameStatus_2, null);
+    }, 1000 / 60);
+}
+update(initialLeftPaddle, initialRightPaddle, initialBall, initialGameStatus, null);
 
 /***/ }),
 /* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export canvas */
-/* unused harmony export context */
-/* harmony export (immutable) */ __webpack_exports__["b"] = drawRect;
-/* harmony export (immutable) */ __webpack_exports__["d"] = drawCircle;
-/* harmony export (immutable) */ __webpack_exports__["c"] = drawText;
-/* harmony export (immutable) */ __webpack_exports__["a"] = dimensions;
-var canvas = document.getElementsByTagName("canvas")[0];
-var context = canvas.getContext("2d");
-function drawRect(color, rect_0, rect_1, rect_2, rect_3) {
-    var rect = [rect_0, rect_1, rect_2, rect_3];
-    var ctx = context;
-    ctx.fillStyle = color;
-
-    (function (tupledArg) {
-        ctx.fillRect(tupledArg[0], tupledArg[1], tupledArg[2], tupledArg[3]);
-    })(rect);
-}
-function drawCircle(color, x, y, radius, startAngle, endAngle) {
-    var ctx = context;
-    ctx.beginPath();
-    ctx.arc(x, y, radius, startAngle, endAngle);
-    ctx.fillStyle = color;
-    ctx.fill();
-}
-function drawText(text, color, font, position_0, position_1) {
-    var position = [position_0, position_1];
-    var ctx = context;
-    ctx.fillStyle = color;
-    ctx.font = font;
-    ctx.fillText(text, position[0], position[1]);
-}
-function dimensions() {
-    return [canvas.width, canvas.height];
-}
-
-/***/ }),
-/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2457,7 +2745,7 @@ function tryPick(f, map) {
 }
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3334,387 +3622,126 @@ function maxElement(s) {
 }
 
 /***/ }),
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__build_fable_core_Set__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__build_fable_core_Comparer__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__build_fable_core_Util__ = __webpack_require__(1);
+/* unused harmony export keysPressed */
+/* unused harmony export code */
+/* unused harmony export update */
+/* harmony export (immutable) */ __webpack_exports__["b"] = leftControlsPressed;
+/* harmony export (immutable) */ __webpack_exports__["c"] = rightControlsPressed;
+/* harmony export (immutable) */ __webpack_exports__["d"] = rKeyPressed;
+/* harmony export (immutable) */ __webpack_exports__["a"] = init;
+
+
+
+var keysPressed = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__build_fable_core_Set__["a" /* create */])(null, new __WEBPACK_IMPORTED_MODULE_1__build_fable_core_Comparer__["a" /* default */](__WEBPACK_IMPORTED_MODULE_2__build_fable_core_Util__["e" /* comparePrimitives */]));
+function code(x) {
+    if (keysPressed.has(x)) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+function update(e, pressed) {
+    var keyCode = ~~e.keyCode | 0;
+    var op = pressed ? function (value, set) {
+        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__build_fable_core_Set__["b" /* add */])(value, set);
+    } : function (value_1, set_1) {
+        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__build_fable_core_Set__["c" /* remove */])(value_1, set_1);
+    };
+    keysPressed = op(keyCode, keysPressed);
+    return null;
+}
+function leftControlsPressed() {
+    return [code(87), code(83)];
+}
+function rightControlsPressed() {
+    return [code(79), code(76)];
+}
+function rKeyPressed() {
+    return code(82) | 0;
+}
+function init() {
+    document.addEventListener("keydown", function (e) {
+        return update(e, true);
+    });
+    document.addEventListener("keyup", function (e_1) {
+        return update(e_1, false);
+    });
+}
+
+/***/ }),
 /* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__win_fsx__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__build_fable_core_Symbol__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__build_fable_core_Util__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__keyboard_fsx__ = __webpack_require__(7);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "w", function() { return w; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return h; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PongElement", function() { return PongElement; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BallElement", function() { return BallElement; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GameStatus", function() { return GameStatus; });
-/* harmony export (immutable) */ __webpack_exports__["canMove"] = canMove;
-/* harmony export (immutable) */ __webpack_exports__["move"] = move;
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Collision", function() { return Collision; });
-/* harmony export (immutable) */ __webpack_exports__["checkCollision"] = checkCollision;
-/* harmony export (immutable) */ __webpack_exports__["calculateAngle"] = calculateAngle;
-/* harmony export (immutable) */ __webpack_exports__["collision"] = collision;
-/* harmony export (immutable) */ __webpack_exports__["moveBall"] = moveBall;
-/* harmony export (immutable) */ __webpack_exports__["checkGameStatus"] = checkGameStatus;
-/* harmony export (immutable) */ __webpack_exports__["render"] = render;
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initialLeftPaddle", function() { return initialLeftPaddle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initialRightPaddle", function() { return initialRightPaddle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initialBall", function() { return initialBall; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initialGameStatus", function() { return initialGameStatus; });
-/* harmony export (immutable) */ __webpack_exports__["update"] = update;
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Pong_fs__ = __webpack_require__(7);
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "w", function() { return __WEBPACK_IMPORTED_MODULE_0__Pong_fs__["a"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "h", function() { return __WEBPACK_IMPORTED_MODULE_0__Pong_fs__["b"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "PongElement", function() { return __WEBPACK_IMPORTED_MODULE_0__Pong_fs__["c"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "BallElement", function() { return __WEBPACK_IMPORTED_MODULE_0__Pong_fs__["d"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "GameStatus", function() { return __WEBPACK_IMPORTED_MODULE_0__Pong_fs__["e"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "canMove", function() { return __WEBPACK_IMPORTED_MODULE_0__Pong_fs__["f"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "move", function() { return __WEBPACK_IMPORTED_MODULE_0__Pong_fs__["g"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "Collision", function() { return __WEBPACK_IMPORTED_MODULE_0__Pong_fs__["h"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "checkCollision", function() { return __WEBPACK_IMPORTED_MODULE_0__Pong_fs__["i"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "calculateAngle", function() { return __WEBPACK_IMPORTED_MODULE_0__Pong_fs__["j"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "collision", function() { return __WEBPACK_IMPORTED_MODULE_0__Pong_fs__["k"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "moveBall", function() { return __WEBPACK_IMPORTED_MODULE_0__Pong_fs__["l"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "checkGameStatus", function() { return __WEBPACK_IMPORTED_MODULE_0__Pong_fs__["m"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "render", function() { return __WEBPACK_IMPORTED_MODULE_0__Pong_fs__["n"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "initialLeftPaddle", function() { return __WEBPACK_IMPORTED_MODULE_0__Pong_fs__["o"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "initialRightPaddle", function() { return __WEBPACK_IMPORTED_MODULE_0__Pong_fs__["p"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "initialBall", function() { return __WEBPACK_IMPORTED_MODULE_0__Pong_fs__["q"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "initialGameStatus", function() { return __WEBPACK_IMPORTED_MODULE_0__Pong_fs__["r"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "update", function() { return __WEBPACK_IMPORTED_MODULE_0__Pong_fs__["s"]; });
 
 
+/***/ }),
+/* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+/* unused harmony export canvas */
+/* unused harmony export context */
+/* harmony export (immutable) */ __webpack_exports__["b"] = drawRect;
+/* harmony export (immutable) */ __webpack_exports__["d"] = drawCircle;
+/* harmony export (immutable) */ __webpack_exports__["c"] = drawText;
+/* harmony export (immutable) */ __webpack_exports__["a"] = dimensions;
+var canvas = document.getElementsByTagName("canvas")[0];
+var context = canvas.getContext("2d");
+function drawRect(color, rect_0, rect_1, rect_2, rect_3) {
+    var rect = [rect_0, rect_1, rect_2, rect_3];
+    var ctx = context;
+    ctx.fillStyle = color;
 
-
-
-var patternInput_22 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__win_fsx__["a" /* dimensions */])();
-var w = patternInput_22[0];
-var h = patternInput_22[1];
-var PongElement = function () {
-    function PongElement(x, y, width, height) {
-        _classCallCheck(this, PongElement);
-
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-    }
-
-    _createClass(PongElement, [{
-        key: __WEBPACK_IMPORTED_MODULE_1__build_fable_core_Symbol__["a" /* default */].reflection,
-        value: function value() {
-            return {
-                type: "Pong.PongElement",
-                interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
-                properties: {
-                    x: "number",
-                    y: "number",
-                    width: "number",
-                    height: "number"
-                }
-            };
-        }
-    }, {
-        key: "Equals",
-        value: function Equals(other) {
-            return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__build_fable_core_Util__["a" /* equalsRecords */])(this, other);
-        }
-    }, {
-        key: "CompareTo",
-        value: function CompareTo(other) {
-            return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__build_fable_core_Util__["b" /* compareRecords */])(this, other) | 0;
-        }
-    }]);
-
-    return PongElement;
-}();
-__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__build_fable_core_Symbol__["b" /* setType */])("Pong.PongElement", PongElement);
-var BallElement = function () {
-    function BallElement(element, speed, angle) {
-        _classCallCheck(this, BallElement);
-
-        this.element = element;
-        this.speed = speed;
-        this.angle = angle;
-    }
-
-    _createClass(BallElement, [{
-        key: __WEBPACK_IMPORTED_MODULE_1__build_fable_core_Symbol__["a" /* default */].reflection,
-        value: function value() {
-            return {
-                type: "Pong.BallElement",
-                interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
-                properties: {
-                    element: PongElement,
-                    speed: "number",
-                    angle: "number"
-                }
-            };
-        }
-    }, {
-        key: "Equals",
-        value: function Equals(other) {
-            return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__build_fable_core_Util__["a" /* equalsRecords */])(this, other);
-        }
-    }, {
-        key: "CompareTo",
-        value: function CompareTo(other) {
-            return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__build_fable_core_Util__["b" /* compareRecords */])(this, other) | 0;
-        }
-    }]);
-
-    return BallElement;
-}();
-__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__build_fable_core_Symbol__["b" /* setType */])("Pong.BallElement", BallElement);
-var GameStatus = function () {
-    function GameStatus(scoreLeft, scoreRight, active) {
-        _classCallCheck(this, GameStatus);
-
-        this.scoreLeft = scoreLeft | 0;
-        this.scoreRight = scoreRight | 0;
-        this.active = active;
-    }
-
-    _createClass(GameStatus, [{
-        key: __WEBPACK_IMPORTED_MODULE_1__build_fable_core_Symbol__["a" /* default */].reflection,
-        value: function value() {
-            return {
-                type: "Pong.GameStatus",
-                interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
-                properties: {
-                    scoreLeft: "number",
-                    scoreRight: "number",
-                    active: "boolean"
-                }
-            };
-        }
-    }, {
-        key: "Equals",
-        value: function Equals(other) {
-            return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__build_fable_core_Util__["a" /* equalsRecords */])(this, other);
-        }
-    }, {
-        key: "CompareTo",
-        value: function CompareTo(other) {
-            return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__build_fable_core_Util__["b" /* compareRecords */])(this, other) | 0;
-        }
-    }]);
-
-    return GameStatus;
-}();
-__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__build_fable_core_Symbol__["b" /* setType */])("Pong.GameStatus", GameStatus);
-function canMove(direction_0, direction_1, paddle) {
-    var direction = [direction_0, direction_1];
-
-    if (direction[0] === 1) {
-        return paddle.y > 0;
-    } else if (direction[1] === 1) {
-        return paddle.y + paddle.height < h;
-    } else {
-        return false;
-    }
-}
-function move(direction_0, direction_1, paddle) {
-    var direction = [direction_0, direction_1];
-
-    if (canMove(direction[0], direction[1], paddle)) {
-        if (direction[0] === 1) {
-            var y = paddle.y - 5;
-            return new PongElement(paddle.x, y, paddle.width, paddle.height);
-        } else if (direction[1] === 1) {
-            var y_1 = paddle.y + 5;
-            return new PongElement(paddle.x, y_1, paddle.width, paddle.height);
-        } else {
-            return paddle;
-        }
-    } else {
-        return paddle;
-    }
-}
-var Collision = function () {
-    function Collision(tag, data) {
-        _classCallCheck(this, Collision);
-
-        this.tag = tag;
-        this.data = data;
-    }
-
-    _createClass(Collision, [{
-        key: __WEBPACK_IMPORTED_MODULE_1__build_fable_core_Symbol__["a" /* default */].reflection,
-        value: function value() {
-            return {
-                type: "Pong.Collision",
-                interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
-                cases: [["None"], ["Top"], ["Bottom"], ["Left"], ["Right"], ["LeftPaddle"], ["RightPaddle"]]
-            };
-        }
-    }, {
-        key: "Equals",
-        value: function Equals(other) {
-            return this === other || this.tag === other.tag && __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__build_fable_core_Util__["c" /* equals */])(this.data, other.data);
-        }
-    }, {
-        key: "CompareTo",
-        value: function CompareTo(other) {
-            return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__build_fable_core_Util__["d" /* compareUnions */])(this, other) | 0;
-        }
-    }]);
-
-    return Collision;
-}();
-__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__build_fable_core_Symbol__["b" /* setType */])("Pong.Collision", Collision);
-function checkCollision(leftPaddle, rightPaddle, ball) {
-    var hitTop = ball.element.y <= 0;
-    var hitBottom = ball.element.y + ball.element.height >= h;
-    var hitLeft = ball.element.x <= leftPaddle.x ? !(ball.element.y >= leftPaddle.y ? ball.element.y <= leftPaddle.y + leftPaddle.height : false) : false;
-    var hitRight = ball.element.x + ball.element.width >= rightPaddle.x + rightPaddle.width ? !(ball.element.y >= rightPaddle.y ? ball.element.y <= rightPaddle.y + rightPaddle.height : false) : false;
-    var hitLeftPaddle = (ball.element.x <= leftPaddle.x + leftPaddle.width ? ball.element.y >= leftPaddle.y : false) ? ball.element.y <= leftPaddle.y + leftPaddle.height : false;
-    var hitRightPaddle = (ball.element.x + ball.element.width >= rightPaddle.x ? ball.element.y >= rightPaddle.y : false) ? ball.element.y <= rightPaddle.y + rightPaddle.height : false;
-    var matchValue = [hitTop, hitBottom, hitLeft, hitRight, hitLeftPaddle, hitRightPaddle];
-
-    if (matchValue[0]) {
-        return new Collision(1);
-    } else if (matchValue[1]) {
-        return new Collision(2);
-    } else if (matchValue[2]) {
-        return new Collision(3);
-    } else if (matchValue[3]) {
-        return new Collision(4);
-    } else if (matchValue[4]) {
-        return new Collision(5);
-    } else if (matchValue[5]) {
-        return new Collision(6);
-    } else {
-        return new Collision(0);
-    }
-}
-function calculateAngle(paddle, hitRightPaddle, determineAngle, ball) {
-    var relativeIntersectY = paddle.y + paddle.height / 2 - ball.element.y;
-    var normalizedRelativeIntersectionY = relativeIntersectY / (paddle.height / 2);
-
-    if (normalizedRelativeIntersectionY === 0 ? hitRightPaddle : false) {
-        return 3.141592653589793;
-    } else {
-        return determineAngle(normalizedRelativeIntersectionY);
-    }
-}
-function collision(leftPaddle, rightPaddle, ball) {
-    var matchValue = function (ball_1) {
-        return checkCollision(leftPaddle, rightPaddle, ball_1);
-    }(ball);
-
-    var $var1 = matchValue.tag === 1 ? [1] : matchValue.tag === 2 ? [1] : matchValue.tag === 3 ? [2] : matchValue.tag === 4 ? [2] : matchValue.tag === 5 ? [3] : matchValue.tag === 6 ? [4] : [0];
-
-    switch ($var1[0]) {
-        case 0:
-            return ball.angle;
-
-        case 1:
-            return -ball.angle;
-
-        case 2:
-            return ball.angle;
-
-        case 3:
-            return function () {
-                var determineAngle = function determineAngle(intersection) {
-                    return intersection * (5 * 3.141592653589793 / 12);
-                };
-
-                return function (ball_2) {
-                    return calculateAngle(leftPaddle, false, determineAngle, ball_2);
-                };
-            }()(ball);
-
-        case 4:
-            return function () {
-                var determineAngle_1 = function determineAngle_1(intersection_1) {
-                    return 3.141592653589793 - intersection_1 * (5 * 3.141592653589793 / 12);
-                };
-
-                return function (ball_3) {
-                    return calculateAngle(rightPaddle, true, determineAngle_1, ball_3);
-                };
-            }()(ball);
-    }
-}
-function moveBall(angle, ball) {
-    return new BallElement(new PongElement(ball.element.x + ball.speed * Math.cos(angle), ball.element.y + ball.speed * -Math.sin(angle), ball.element.width, ball.element.height), ball.speed + 0.005, angle);
-}
-function checkGameStatus(leftPaddle, rightPaddle, ball, gameStatus) {
-    var matchValue = function (ball_1) {
-        return checkCollision(leftPaddle, rightPaddle, ball_1);
-    }(ball);
-
-    if (matchValue.tag === 3) {
-        var scoreRight = gameStatus.scoreRight + 1 | 0;
-        return new GameStatus(gameStatus.scoreLeft, scoreRight, false);
-    } else if (matchValue.tag === 4) {
-        var scoreLeft = gameStatus.scoreLeft + 1 | 0;
-        return new GameStatus(scoreLeft, gameStatus.scoreRight, false);
-    } else {
-        return gameStatus;
-    }
-}
-function render(w_1, h_1, leftPaddle, rightPaddle, ball, gameStatus) {
     (function (tupledArg) {
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__win_fsx__["b" /* drawRect */])("black", tupledArg[0], tupledArg[1], tupledArg[2], tupledArg[3]);
-    })([0, 0, w_1, h_1]);
-
-    (function (tupledArg_1) {
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__win_fsx__["b" /* drawRect */])("white", tupledArg_1[0], tupledArg_1[1], tupledArg_1[2], tupledArg_1[3]);
-    })([leftPaddle.x, leftPaddle.y, leftPaddle.width, leftPaddle.height]);
-
-    (function (tupledArg_2) {
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__win_fsx__["b" /* drawRect */])("white", tupledArg_2[0], tupledArg_2[1], tupledArg_2[2], tupledArg_2[3]);
-    })([rightPaddle.x, rightPaddle.y, rightPaddle.width, rightPaddle.height]);
-
-    (function () {
-        var text = gameStatus.scoreLeft.toString();
-        return function (tupledArg_3) {
-            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__win_fsx__["c" /* drawText */])(text, "white", "30px Arial", tupledArg_3[0], tupledArg_3[1]);
-        };
-    })()([w_1 / 4, 40]);
-    (function () {
-        var text_1 = gameStatus.scoreRight.toString();
-        return function (tupledArg_4) {
-            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__win_fsx__["c" /* drawText */])(text_1, "white", "30px Arial", tupledArg_4[0], tupledArg_4[1]);
-        };
-    })()([w_1 / 1.25 - 30, 40]);
-
-    (function (tupledArg_5) {
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__win_fsx__["d" /* drawCircle */])("yellow", tupledArg_5[0], tupledArg_5[1], tupledArg_5[2], tupledArg_5[3], tupledArg_5[4]);
-    })([ball.element.x, ball.element.y, ball.element.width, 0, 2 * 3.141592653589793]);
-
-    if (!gameStatus.active) {
-        (function (tupledArg_6) {
-            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__win_fsx__["c" /* drawText */])("Press space to start", "green", "40px Lucida Console", tupledArg_6[0], tupledArg_6[1]);
-        })([w_1 / 2 - 230, h_1 / 2 + 40]);
-    }
+        ctx.fillRect(tupledArg[0], tupledArg[1], tupledArg[2], tupledArg[3]);
+    })(rect);
 }
-var initialLeftPaddle = new PongElement(10, h / 2 - 70 / 2, 15, 70);
-var initialRightPaddle = new PongElement(w - 15 - 10, h / 2 - 70 / 2, 15, 70);
-var initialBall = new BallElement(new PongElement(w / 2, h / 2, 5, 5), 3, 0);
-var initialGameStatus = new GameStatus(0, 0, false);
-__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__keyboard_fsx__["a" /* init */])();
-function update(leftPaddle, rightPaddle, ball, gameStatus, unitVar4) {
-    var leftPaddle_1 = gameStatus.active ? function () {
-        var tupledArg = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__keyboard_fsx__["b" /* leftControlsPressed */])();
-        return function (paddle) {
-            return move(tupledArg[0], tupledArg[1], paddle);
-        };
-    }()(leftPaddle) : initialLeftPaddle;
-    var rightPaddle_1 = gameStatus.active ? function () {
-        var tupledArg_1 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__keyboard_fsx__["c" /* rightControlsPressed */])();
-        return function (paddle_1) {
-            return move(tupledArg_1[0], tupledArg_1[1], paddle_1);
-        };
-    }()(rightPaddle) : initialRightPaddle;
-    var angle = gameStatus.active ? collision(leftPaddle_1, rightPaddle_1, ball) : ball.angle;
-    var ball_2 = void 0;
-
-    if (gameStatus.active) {
-        ball_2 = function (ball_1) {
-            return moveBall(angle, ball_1);
-        }(ball);
-    } else {
-        var angle_1 = angle === 0 ? 3.141592653589793 : 0;
-        ball_2 = new BallElement(initialBall.element, initialBall.speed, angle_1);
-    }
-
-    var gameStatus_2 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__keyboard_fsx__["d" /* spacePressed */])() === 1 ? new GameStatus(gameStatus.scoreLeft, gameStatus.scoreRight, true) : function (gameStatus_1) {
-        return checkGameStatus(leftPaddle_1, rightPaddle_1, ball_2, gameStatus_1);
-    }(gameStatus);
-    render(w, h, leftPaddle_1, rightPaddle_1, ball_2, gameStatus_2);
-    window.setTimeout(function () {
-        update(leftPaddle_1, rightPaddle_1, ball_2, gameStatus_2, null);
-    }, 1000 / 60);
+function drawCircle(color, x, y, radius, startAngle, endAngle) {
+    var ctx = context;
+    ctx.beginPath();
+    ctx.arc(x, y, radius, startAngle, endAngle);
+    ctx.fillStyle = color;
+    ctx.fill();
 }
-update(initialLeftPaddle, initialRightPaddle, initialBall, initialGameStatus, null);
+function drawText(text, color, font, position_0, position_1) {
+    var position = [position_0, position_1];
+    var ctx = context;
+    ctx.fillStyle = color;
+    ctx.font = font;
+    ctx.fillText(text, position[0], position[1]);
+}
+function dimensions() {
+    return [canvas.width, canvas.height];
+}
 
 /***/ })
 /******/ ]);
