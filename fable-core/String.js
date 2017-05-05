@@ -1,8 +1,9 @@
-define(["require", "exports", "./Util", "./Util", "./RegExp", "./Date", "./Date", "./Date", "./Date", "./Date", "./Date"], function (require, exports, Util_1, Util_2, RegExp_1, Date_1, Date_2, Date_3, Date_4, Date_5, Date_6) {
+define(["require", "exports", "./Util", "./RegExp", "./Date", "./Date", "./Date", "./Date", "./Date", "./Date"], function (require, exports, Util_1, RegExp_1, Date_1, Date_2, Date_3, Date_4, Date_5, Date_6) {
     "use strict";
-    var fsFormatRegExp = /(^|[^%])%([0+ ]*)(-?\d+)?(?:\.(\d+))?(\w)/;
-    var formatRegExp = /\{(\d+)(,-?\d+)?(?:\:(.+?))?\}/g;
-    var StringComparison = {
+    Object.defineProperty(exports, "__esModule", { value: true });
+    const fsFormatRegExp = /(^|[^%])%([0+ ]*)(-?\d+)?(?:\.(\d+))?(\w)/;
+    const formatRegExp = /\{(\d+)(,-?\d+)?(?:\:(.+?))?\}/g;
+    const StringComparison = {
         CurrentCulture: 0,
         CurrentCultureIgnoreCase: 1,
         InvariantCulture: 2,
@@ -40,11 +41,7 @@ define(["require", "exports", "./Util", "./Util", "./RegExp", "./Date", "./Date"
             return x.localeCompare(y);
         }
     }
-    function compare() {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
+    function compare(...args) {
         switch (args.length) {
             case 2: return cmp(args[0], args[1], false);
             case 3: return cmp(args[0], args[1], args[2]);
@@ -67,11 +64,7 @@ define(["require", "exports", "./Util", "./Util", "./RegExp", "./Date", "./Date"
         return false;
     }
     exports.startsWith = startsWith;
-    function indexOfAny(str, anyOf) {
-        var args = [];
-        for (var _i = 2; _i < arguments.length; _i++) {
-            args[_i - 2] = arguments[_i];
-        }
+    function indexOfAny(str, anyOf, ...args) {
         if (str == null || str === "")
             return -1;
         var startIndex = (args.length > 0) ? args[0] : 0;
@@ -83,9 +76,8 @@ define(["require", "exports", "./Util", "./Util", "./RegExp", "./Date", "./Date"
         if (length > str.length - startIndex)
             throw new Error("String.indexOfAny: Invalid startIndex and length");
         str = str.substr(startIndex, length);
-        for (var _a = 0, anyOf_1 = anyOf; _a < anyOf_1.length; _a++) {
-            var c = anyOf_1[_a];
-            var index = str.indexOf(c);
+        for (let c of anyOf) {
+            let index = str.indexOf(c);
             if (index > -1)
                 return index + startIndex;
         }
@@ -97,14 +89,7 @@ define(["require", "exports", "./Util", "./Util", "./RegExp", "./Date", "./Date"
             ? "ff" + (16777215 - (Math.abs(value) - 1)).toString(16)
             : value.toString(16);
     }
-    function fsFormat(str) {
-        var args = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            args[_i - 1] = arguments[_i];
-        }
-        function isObject(x) {
-            return x !== null && typeof x === "object" && !(x instanceof Number) && !(x instanceof String) && !(x instanceof Boolean);
-        }
+    function fsFormat(str, ...args) {
         function formatOnce(str, rep) {
             return str.replace(fsFormatRegExp, function (_, prefix, flags, pad, precision, format) {
                 switch (format) {
@@ -124,15 +109,7 @@ define(["require", "exports", "./Util", "./Util", "./RegExp", "./Date", "./Date"
                         rep = Util_1.toString(rep);
                         break;
                     case "A":
-                        try {
-                            rep = JSON.stringify(rep, function (k, v) {
-                                return v && v[Symbol.iterator] && !Array.isArray(v) && isObject(v) ? Array.from(v)
-                                    : v && typeof v.ToString === "function" ? Util_1.toString(v) : v;
-                            });
-                        }
-                        catch (err) {
-                            rep = "{" + Object.getOwnPropertyNames(rep).map(function (k) { return k + ": " + String(rep[k]); }).join(", ") + "}";
-                        }
+                        rep = Util_1.toString(rep, true);
                         break;
                     case "x":
                         rep = toHex(Number(rep));
@@ -141,21 +118,21 @@ define(["require", "exports", "./Util", "./Util", "./RegExp", "./Date", "./Date"
                         rep = toHex(Number(rep)).toUpperCase();
                         break;
                 }
-                var plusPrefix = flags.indexOf("+") >= 0 && parseInt(rep) >= 0;
+                const plusPrefix = flags.indexOf("+") >= 0 && parseInt(rep) >= 0;
                 if (!isNaN(pad = parseInt(pad))) {
-                    var ch = pad >= 0 && flags.indexOf("0") >= 0 ? "0" : " ";
+                    const ch = pad >= 0 && flags.indexOf("0") >= 0 ? "0" : " ";
                     rep = padLeft(rep, Math.abs(pad) - (plusPrefix ? 1 : 0), ch, pad < 0);
                 }
-                var once = prefix + (plusPrefix ? "+" + rep : rep);
+                let once = prefix + (plusPrefix ? "+" + rep : rep);
                 return once.replace(/%/g, "%%");
             });
         }
         if (args.length === 0) {
-            return function (cont) {
+            return (cont) => {
                 if (fsFormatRegExp.test(str)) {
                     return function () {
                         var strCopy = str;
-                        for (var i = 0; i < arguments.length; i++) {
+                        for (let i = 0; i < arguments.length; i++) {
                             strCopy = formatOnce(strCopy, arguments[i]);
                         }
                         return cont(strCopy.replace(/%%/g, "%"));
@@ -167,20 +144,16 @@ define(["require", "exports", "./Util", "./Util", "./RegExp", "./Date", "./Date"
             };
         }
         else {
-            for (var i = 0; i < args.length; i++) {
+            for (let i = 0; i < args.length; i++) {
                 str = formatOnce(str, args[i]);
             }
             return str.replace(/%%/g, "%");
         }
     }
     exports.fsFormat = fsFormat;
-    function format(str) {
-        var args = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            args[_i - 1] = arguments[_i];
-        }
+    function format(str, ...args) {
         return str.replace(formatRegExp, function (match, idx, pad, format) {
-            var rep = args[idx], padSymbol = " ";
+            let rep = args[idx], padSymbol = " ";
             if (typeof rep === "number") {
                 switch ((format || "").substring(0, 1)) {
                     case "f":
@@ -206,9 +179,9 @@ define(["require", "exports", "./Util", "./Util", "./RegExp", "./Date", "./Date"
                         rep = toHex(Number(rep)).toUpperCase();
                         break;
                     default:
-                        var m = /^(0+)(\.0+)?$/.exec(format);
+                        const m = /^(0+)(\.0+)?$/.exec(format);
                         if (m != null) {
-                            var decs = 0;
+                            let decs = 0;
                             if (m[2] != null)
                                 rep = rep.toFixed(decs = m[2].length - 1);
                             pad = "," + (m[1].length + (decs ? decs + 1 : 0)).toString();
@@ -237,7 +210,7 @@ define(["require", "exports", "./Util", "./Util", "./RegExp", "./Date", "./Date"
                         case "o":
                         case "O":
                             if (rep.kind === 2) {
-                                var offset = rep.getTimezoneOffset() * -1;
+                                const offset = rep.getTimezoneOffset() * -1;
                                 rep = format("{0:yyyy-MM-dd}T{0:HH:mm}:{1:00.000}{2}{3:00}:{4:00}", rep, Date_1.second(rep), offset >= 0 ? "+" : "-", ~~(offset / 60), offset % 60);
                             }
                             else {
@@ -247,7 +220,7 @@ define(["require", "exports", "./Util", "./Util", "./RegExp", "./Date", "./Date"
                 }
                 else {
                     rep = format.replace(/\w+/g, function (match2) {
-                        var rep2 = match2;
+                        let rep2 = match2;
                         switch (match2.substring(0, 1)) {
                             case "y":
                                 rep2 = match2.length < 4 ? Date_6.year(rep) % 100 : Date_6.year(rep);
@@ -286,15 +259,15 @@ define(["require", "exports", "./Util", "./Util", "./RegExp", "./Date", "./Date"
     }
     exports.format = format;
     function endsWith(str, search) {
-        var idx = str.lastIndexOf(search);
+        const idx = str.lastIndexOf(search);
         return idx >= 0 && idx == str.length - search.length;
     }
     exports.endsWith = endsWith;
     function initialize(n, f) {
         if (n < 0)
             throw new Error("String length must be non-negative");
-        var xs = new Array(n);
-        for (var i = 0; i < n; i++)
+        const xs = new Array(n);
+        for (let i = 0; i < n; i++)
             xs[i] = f(i);
         return xs.join("");
     }
@@ -315,14 +288,23 @@ define(["require", "exports", "./Util", "./Util", "./RegExp", "./Date", "./Date"
     }
     exports.isNullOrWhiteSpace = isNullOrWhiteSpace;
     function join(delimiter, xs) {
-        xs = typeof xs == "string" ? Util_2.getRestParams(arguments, 1) : xs;
-        return (Array.isArray(xs) ? xs : Array.from(xs)).join(delimiter);
+        let xs2 = xs;
+        if (typeof xs === "string") {
+            const len = arguments.length;
+            xs2 = Array(len - 1);
+            for (let key = 1; key < len; key++)
+                xs2[key - 1] = arguments[key];
+        }
+        else if (!Array.isArray(xs)) {
+            xs2 = Array.from(xs);
+        }
+        return xs2.join(delimiter);
     }
     exports.join = join;
     function newGuid() {
-        var uuid = "";
-        for (var i = 0; i < 32; i++) {
-            var random = Math.random() * 16 | 0;
+        let uuid = "";
+        for (let i = 0; i < 32; i++) {
+            const random = Math.random() * 16 | 0;
             if (i === 8 || i === 12 || i === 16 || i === 20)
                 uuid += "-";
             uuid += (i === 12 ? 4 : i === 16 ? random & 3 | 8 : random).toString(16);
@@ -334,7 +316,7 @@ define(["require", "exports", "./Util", "./Util", "./RegExp", "./Date", "./Date"
         ch = ch || " ";
         str = String(str);
         len = len - str.length;
-        for (var i = -1; ++i < len;)
+        for (let i = -1; ++i < len;)
             str = isRight ? str + ch : ch + str;
         return str;
     }
@@ -358,9 +340,16 @@ define(["require", "exports", "./Util", "./Util", "./RegExp", "./Date", "./Date"
     }
     exports.replace = replace;
     function replicate(n, x) {
-        return initialize(n, function () { return x; });
+        return initialize(n, () => x);
     }
     exports.replicate = replicate;
+    function getCharAtIndex(input, index) {
+        if (index < 0 || index > input.length) {
+            throw new Error("System.IndexOutOfRangeException: Index was outside the bounds of the array.");
+        }
+        return input[index];
+    }
+    exports.getCharAtIndex = getCharAtIndex;
     function split(str, splitters, count, removeEmpty) {
         count = typeof count == "number" ? count : null;
         removeEmpty = typeof removeEmpty == "number" ? removeEmpty : null;
@@ -368,13 +357,19 @@ define(["require", "exports", "./Util", "./Util", "./RegExp", "./Date", "./Date"
             throw new Error("Count cannot be less than zero");
         if (count === 0)
             return [];
-        splitters = Array.isArray(splitters) ? splitters : Util_2.getRestParams(arguments, 1);
-        splitters = splitters.map(function (x) { return RegExp_1.escape(x); });
-        splitters = splitters.length > 0 ? splitters : [" "];
-        var m;
-        var i = 0;
-        var splits = [];
-        var reg = new RegExp(splitters.join("|"), "g");
+        let splitters2 = splitters;
+        if (!Array.isArray(splitters)) {
+            const len = arguments.length;
+            splitters2 = Array(len - 1);
+            for (let key = 1; key < len; key++)
+                splitters2[key - 1] = arguments[key];
+        }
+        splitters2 = splitters2.map(x => RegExp_1.escape(x));
+        splitters2 = splitters2.length > 0 ? splitters2 : [" "];
+        let m;
+        let i = 0;
+        const splits = [];
+        const reg = new RegExp(splitters2.join("|"), "g");
         while ((count == null || count > 1) && (m = reg.exec(str)) !== null) {
             if (!removeEmpty || (m.index - i) > 0) {
                 count = count != null ? count - 1 : count;
@@ -387,19 +382,15 @@ define(["require", "exports", "./Util", "./Util", "./RegExp", "./Date", "./Date"
         return splits;
     }
     exports.split = split;
-    function trim(str, side) {
-        var chars = [];
-        for (var _i = 2; _i < arguments.length; _i++) {
-            chars[_i - 2] = arguments[_i];
-        }
+    function trim(str, side, ...chars) {
         if (side == "both" && chars.length == 0)
             return str.trim();
         if (side == "start" || side == "both") {
-            var reg = chars.length == 0 ? /^\s+/ : new RegExp("^[" + RegExp_1.escape(chars.join("")) + "]+");
+            const reg = chars.length == 0 ? /^\s+/ : new RegExp("^[" + RegExp_1.escape(chars.join("")) + "]+");
             str = str.replace(reg, "");
         }
         if (side == "end" || side == "both") {
-            var reg = chars.length == 0 ? /\s+$/ : new RegExp("[" + RegExp_1.escape(chars.join("")) + "]+$");
+            const reg = chars.length == 0 ? /\s+$/ : new RegExp("[" + RegExp_1.escape(chars.join("")) + "]+$");
             str = str.replace(reg, "");
         }
         return str;

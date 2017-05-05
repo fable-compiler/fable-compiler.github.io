@@ -1,27 +1,23 @@
-define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], function (require, exports, Util_1, Util_2, Array_1, ListClass_1) {
+define(["require", "exports", "./Util", "./Util", "./Array", "./Array", "./ListClass"], function (require, exports, Util_1, Util_2, Array_1, Array_2, ListClass_1) {
     "use strict";
-    var Enumerator = (function () {
-        function Enumerator(iter) {
+    Object.defineProperty(exports, "__esModule", { value: true });
+    class Enumerator {
+        constructor(iter) {
             this.iter = iter;
         }
-        Enumerator.prototype.MoveNext = function () {
-            var cur = this.iter.next();
+        MoveNext() {
+            const cur = this.iter.next();
             this.current = cur.value;
             return !cur.done;
-        };
-        Object.defineProperty(Enumerator.prototype, "Current", {
-            get: function () {
-                return this.current;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Enumerator.prototype.Reset = function () {
+        }
+        get Current() {
+            return this.current;
+        }
+        Reset() {
             throw new Error("JS iterators cannot be reset");
-        };
-        Enumerator.prototype.Dispose = function () { };
-        return Enumerator;
-    }());
+        }
+        Dispose() { }
+    }
     exports.Enumerator = Enumerator;
     function getEnumerator(o) {
         return typeof o.GetEnumerator === "function"
@@ -30,7 +26,7 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
     exports.getEnumerator = getEnumerator;
     function toIterator(en) {
         return {
-            next: function () {
+            next() {
                 return en.MoveNext()
                     ? { done: false, value: en.Current }
                     : { done: true, value: null };
@@ -44,26 +40,24 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
         return res;
     }
     function toList(xs) {
-        return foldBack(function (x, acc) {
-            return new ListClass_1.default(x, acc);
-        }, xs, new ListClass_1.default());
+        return foldBack((x, acc) => new ListClass_1.default(x, acc), xs, new ListClass_1.default());
     }
     exports.toList = toList;
     function ofList(xs) {
-        return delay(function () { return unfold(function (x) { return x.tail != null ? [x.head, x.tail] : null; }, xs); });
+        return delay(() => unfold(x => x.tail != null ? [x.head, x.tail] : null, xs));
     }
     exports.ofList = ofList;
     function ofArray(xs) {
-        return delay(function () { return unfold(function (i) { return i < xs.length ? [xs[i], i + 1] : null; }, 0); });
+        return delay(() => unfold(i => i < xs.length ? [xs[i], i + 1] : null, 0));
     }
     exports.ofArray = ofArray;
     function append(xs, ys) {
-        return delay(function () {
-            var firstDone = false;
-            var i = xs[Symbol.iterator]();
-            var iters = [i, null];
-            return unfold(function () {
-                var cur;
+        return delay(() => {
+            let firstDone = false;
+            let i = xs[Symbol.iterator]();
+            let iters = [i, null];
+            return unfold(() => {
+                let cur;
                 if (!firstDone) {
                     cur = iters[0].next();
                     if (!cur.done) {
@@ -81,8 +75,8 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
     }
     exports.append = append;
     function average(xs) {
-        var count = 1;
-        var sum = reduce(function (acc, x) {
+        let count = 1;
+        const sum = reduce((acc, x) => {
             count++;
             return acc + x;
         }, xs);
@@ -90,8 +84,8 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
     }
     exports.average = average;
     function averageBy(f, xs) {
-        var count = 1;
-        var sum = reduce(function (acc, x) {
+        let count = 1;
+        const sum = reduce((acc, x) => {
             count++;
             return (count === 2 ? f(acc) : acc) + f(x);
         }, xs);
@@ -99,14 +93,14 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
     }
     exports.averageBy = averageBy;
     function concat(xs) {
-        return delay(function () {
-            var iter = xs[Symbol.iterator]();
-            var output = null;
-            return unfold(function (innerIter) {
-                var hasFinished = false;
+        return delay(() => {
+            let iter = xs[Symbol.iterator]();
+            let output = { value: null };
+            return unfold(innerIter => {
+                let hasFinished = false;
                 while (!hasFinished) {
                     if (innerIter == null) {
-                        var cur = iter.next();
+                        let cur = iter.next();
                         if (!cur.done) {
                             innerIter = cur.value[Symbol.iterator]();
                         }
@@ -115,9 +109,9 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
                         }
                     }
                     else {
-                        var cur = innerIter.next();
+                        let cur = innerIter.next();
                         if (!cur.done) {
-                            output = cur.value;
+                            output = { value: cur.value };
                             hasFinished = true;
                         }
                         else {
@@ -125,7 +119,7 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
                         }
                     }
                 }
-                return innerIter != null && output != null ? [output, innerIter] : null;
+                return innerIter != null && output != null ? [output.value, innerIter] : null;
             }, null);
         });
     }
@@ -135,44 +129,39 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
     }
     exports.collect = collect;
     function choose(f, xs) {
-        var trySkipToNext = function (iter) {
-            var cur = iter.next();
+        const trySkipToNext = (iter) => {
+            const cur = iter.next();
             if (!cur.done) {
-                var y = f(cur.value);
+                const y = f(cur.value);
                 return y != null ? [y, iter] : trySkipToNext(iter);
             }
             return void 0;
         };
-        return delay(function () {
-            return unfold(function (iter) {
-                return trySkipToNext(iter);
-            }, xs[Symbol.iterator]());
-        });
+        return delay(() => unfold(iter => trySkipToNext(iter), xs[Symbol.iterator]()));
     }
     exports.choose = choose;
     function compareWith(f, xs, ys) {
-        var nonZero = tryFind(function (i) { return i != 0; }, map2(function (x, y) { return f(x, y); }, xs, ys));
+        let nonZero = tryFind((i) => i != 0, map2((x, y) => f(x, y), xs, ys));
         return nonZero != null ? nonZero : count(xs) - count(ys);
     }
     exports.compareWith = compareWith;
     function delay(f) {
-        return _a = {},
-            _a[Symbol.iterator] = function () { return f()[Symbol.iterator](); },
-            _a;
-        var _a;
+        return {
+            [Symbol.iterator]: () => f()[Symbol.iterator]()
+        };
     }
     exports.delay = delay;
     function empty() {
-        return unfold(function () { return void 0; });
+        return unfold(() => { return void 0; });
     }
     exports.empty = empty;
     function enumerateWhile(cond, xs) {
-        return concat(unfold(function () { return cond() ? [xs, true] : null; }));
+        return concat(unfold(() => cond() ? [xs, true] : null));
     }
     exports.enumerateWhile = enumerateWhile;
     function enumerateThenFinally(xs, finalFn) {
-        return delay(function () {
-            var iter;
+        return delay(() => {
+            let iter;
             try {
                 iter = xs[Symbol.iterator]();
             }
@@ -182,9 +171,9 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
             finally {
                 finalFn();
             }
-            return unfold(function (iter) {
+            return unfold(iter => {
                 try {
-                    var cur = iter.next();
+                    const cur = iter.next();
                     return !cur.done ? [cur.value, iter] : null;
                 }
                 catch (err) {
@@ -198,8 +187,8 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
     }
     exports.enumerateThenFinally = enumerateThenFinally;
     function enumerateUsing(disp, work) {
-        var isDisposed = false;
-        var disposeOnce = function () {
+        let isDisposed = false;
+        const disposeOnce = () => {
             if (!isDisposed) {
                 isDisposed = true;
                 disp.Dispose();
@@ -217,25 +206,25 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
     }
     exports.enumerateUsing = enumerateUsing;
     function exactlyOne(xs) {
-        var iter = xs[Symbol.iterator]();
-        var fst = iter.next();
+        const iter = xs[Symbol.iterator]();
+        const fst = iter.next();
         if (fst.done)
             throw new Error("Seq was empty");
-        var snd = iter.next();
+        const snd = iter.next();
         if (!snd.done)
             throw new Error("Seq had multiple items");
         return fst.value;
     }
     exports.exactlyOne = exactlyOne;
     function except(itemsToExclude, source) {
-        var exclusionItems = Array.from(itemsToExclude);
-        var testIsNotInExclusionItems = function (element) { return !exclusionItems.some(function (excludedItem) { return Util_1.equals(excludedItem, element); }); };
+        const exclusionItems = Array.from(itemsToExclude);
+        const testIsNotInExclusionItems = (element) => !exclusionItems.some(excludedItem => Util_1.equals(excludedItem, element));
         return filter(testIsNotInExclusionItems, source);
     }
     exports.except = except;
     function exists(f, xs) {
         function aux(iter) {
-            var cur = iter.next();
+            const cur = iter.next();
             return !cur.done && (f(cur.value) || aux(iter));
         }
         return aux(xs[Symbol.iterator]());
@@ -243,7 +232,7 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
     exports.exists = exists;
     function exists2(f, xs, ys) {
         function aux(iter1, iter2) {
-            var cur1 = iter1.next(), cur2 = iter2.next();
+            const cur1 = iter1.next(), cur2 = iter2.next();
             return !cur1.done && !cur2.done && (f(cur1.value, cur2.value) || aux(iter1, iter2));
         }
         return aux(xs[Symbol.iterator](), ys[Symbol.iterator]());
@@ -251,7 +240,7 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
     exports.exists2 = exists2;
     function filter(f, xs) {
         function trySkipToNext(iter) {
-            var cur = iter.next();
+            let cur = iter.next();
             while (!cur.done) {
                 if (f(cur.value)) {
                     return [cur.value, iter];
@@ -260,7 +249,7 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
             }
             return void 0;
         }
-        return delay(function () { return unfold(trySkipToNext, xs[Symbol.iterator]()); });
+        return delay(() => unfold(trySkipToNext, xs[Symbol.iterator]()));
     }
     exports.filter = filter;
     function where(f, xs) {
@@ -272,8 +261,8 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
             return xs.reduce(f, acc);
         }
         else {
-            var cur = void 0;
-            for (var i = 0, iter = xs[Symbol.iterator]();; i++) {
+            let cur;
+            for (let i = 0, iter = xs[Symbol.iterator]();; i++) {
                 cur = iter.next();
                 if (cur.done)
                     break;
@@ -284,17 +273,17 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
     }
     exports.fold = fold;
     function foldBack(f, xs, acc) {
-        var arr = Array.isArray(xs) || ArrayBuffer.isView(xs) ? xs : Array.from(xs);
-        for (var i = arr.length - 1; i >= 0; i--) {
+        const arr = Array.isArray(xs) || ArrayBuffer.isView(xs) ? xs : Array.from(xs);
+        for (let i = arr.length - 1; i >= 0; i--) {
             acc = f(arr[i], acc, i);
         }
         return acc;
     }
     exports.foldBack = foldBack;
     function fold2(f, acc, xs, ys) {
-        var iter1 = xs[Symbol.iterator](), iter2 = ys[Symbol.iterator]();
-        var cur1, cur2;
-        for (var i = 0;; i++) {
+        const iter1 = xs[Symbol.iterator](), iter2 = ys[Symbol.iterator]();
+        let cur1, cur2;
+        for (let i = 0;; i++) {
             cur1 = iter1.next();
             cur2 = iter2.next();
             if (cur1.done || cur2.done) {
@@ -306,25 +295,25 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
     }
     exports.fold2 = fold2;
     function foldBack2(f, xs, ys, acc) {
-        var ar1 = Array.isArray(xs) || ArrayBuffer.isView(xs) ? xs : Array.from(xs);
-        var ar2 = Array.isArray(ys) || ArrayBuffer.isView(ys) ? ys : Array.from(ys);
-        for (var i = ar1.length - 1; i >= 0; i--) {
+        const ar1 = Array.isArray(xs) || ArrayBuffer.isView(xs) ? xs : Array.from(xs);
+        const ar2 = Array.isArray(ys) || ArrayBuffer.isView(ys) ? ys : Array.from(ys);
+        for (let i = ar1.length - 1; i >= 0; i--) {
             acc = f(ar1[i], ar2[i], acc, i);
         }
         return acc;
     }
     exports.foldBack2 = foldBack2;
     function forAll(f, xs) {
-        return fold(function (acc, x) { return acc && f(x); }, true, xs);
+        return fold((acc, x) => acc && f(x), true, xs);
     }
     exports.forAll = forAll;
     function forAll2(f, xs, ys) {
-        return fold2(function (acc, x, y) { return acc && f(x, y); }, true, xs, ys);
+        return fold2((acc, x, y) => acc && f(x, y), true, xs, ys);
     }
     exports.forAll2 = forAll2;
     function tryHead(xs) {
-        var iter = xs[Symbol.iterator]();
-        var cur = iter.next();
+        const iter = xs[Symbol.iterator]();
+        const cur = iter.next();
         return cur.done ? null : cur.value;
     }
     exports.tryHead = tryHead;
@@ -333,15 +322,11 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
     }
     exports.head = head;
     function initialize(n, f) {
-        return delay(function () {
-            return unfold(function (i) { return i < n ? [f(i), i + 1] : null; }, 0);
-        });
+        return delay(() => unfold(i => i < n ? [f(i), i + 1] : null, 0));
     }
     exports.initialize = initialize;
     function initializeInfinite(f) {
-        return delay(function () {
-            return unfold(function (i) { return [f(i), i + 1]; }, 0);
-        });
+        return delay(() => unfold(i => [f(i), i + 1], 0));
     }
     exports.initializeInfinite = initializeInfinite;
     function tryItem(i, xs) {
@@ -349,8 +334,8 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
             return null;
         if (Array.isArray(xs) || ArrayBuffer.isView(xs))
             return i < xs.length ? xs[i] : null;
-        for (var j = 0, iter = xs[Symbol.iterator]();; j++) {
-            var cur = iter.next();
+        for (let j = 0, iter = xs[Symbol.iterator]();; j++) {
+            const cur = iter.next();
             if (cur.done)
                 return null;
             if (j === i)
@@ -363,29 +348,29 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
     }
     exports.item = item;
     function iterate(f, xs) {
-        fold(function (_, x) { return f(x); }, null, xs);
+        fold((_, x) => f(x), null, xs);
     }
     exports.iterate = iterate;
     function iterate2(f, xs, ys) {
-        fold2(function (_, x, y) { return f(x, y); }, null, xs, ys);
+        fold2((_, x, y) => f(x, y), null, xs, ys);
     }
     exports.iterate2 = iterate2;
     function iterateIndexed(f, xs) {
-        fold(function (_, x, i) { return f(i, x); }, null, xs);
+        fold((_, x, i) => f(i, x), null, xs);
     }
     exports.iterateIndexed = iterateIndexed;
     function iterateIndexed2(f, xs, ys) {
-        fold2(function (_, x, y, i) { return f(i, x, y); }, null, xs, ys);
+        fold2((_, x, y, i) => f(i, x, y), null, xs, ys);
     }
     exports.iterateIndexed2 = iterateIndexed2;
     function isEmpty(xs) {
-        var i = xs[Symbol.iterator]();
+        const i = xs[Symbol.iterator]();
         return i.next().done;
     }
     exports.isEmpty = isEmpty;
     function tryLast(xs) {
         try {
-            return reduce(function (_, x) { return x; }, xs);
+            return reduce((_, x) => x, xs);
         }
         catch (err) {
             return null;
@@ -399,106 +384,109 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
     function count(xs) {
         return Array.isArray(xs) || ArrayBuffer.isView(xs)
             ? xs.length
-            : fold(function (acc, x) { return acc + 1; }, 0, xs);
+            : fold((acc, x) => acc + 1, 0, xs);
     }
     exports.count = count;
     function map(f, xs) {
-        return delay(function () { return unfold(function (iter) {
-            var cur = iter.next();
+        return delay(() => unfold(iter => {
+            const cur = iter.next();
             return !cur.done ? [f(cur.value), iter] : null;
-        }, xs[Symbol.iterator]()); });
+        }, xs[Symbol.iterator]()));
     }
     exports.map = map;
     function mapIndexed(f, xs) {
-        return delay(function () {
-            var i = 0;
-            return unfold(function (iter) {
-                var cur = iter.next();
+        return delay(() => {
+            let i = 0;
+            return unfold(iter => {
+                const cur = iter.next();
                 return !cur.done ? [f(i++, cur.value), iter] : null;
             }, xs[Symbol.iterator]());
         });
     }
     exports.mapIndexed = mapIndexed;
     function map2(f, xs, ys) {
-        return delay(function () {
-            var iter1 = xs[Symbol.iterator]();
-            var iter2 = ys[Symbol.iterator]();
-            return unfold(function () {
-                var cur1 = iter1.next(), cur2 = iter2.next();
+        return delay(() => {
+            const iter1 = xs[Symbol.iterator]();
+            const iter2 = ys[Symbol.iterator]();
+            return unfold(() => {
+                const cur1 = iter1.next(), cur2 = iter2.next();
                 return !cur1.done && !cur2.done ? [f(cur1.value, cur2.value), null] : null;
             });
         });
     }
     exports.map2 = map2;
     function mapIndexed2(f, xs, ys) {
-        return delay(function () {
-            var i = 0;
-            var iter1 = xs[Symbol.iterator]();
-            var iter2 = ys[Symbol.iterator]();
-            return unfold(function () {
-                var cur1 = iter1.next(), cur2 = iter2.next();
+        return delay(() => {
+            let i = 0;
+            const iter1 = xs[Symbol.iterator]();
+            const iter2 = ys[Symbol.iterator]();
+            return unfold(() => {
+                const cur1 = iter1.next(), cur2 = iter2.next();
                 return !cur1.done && !cur2.done ? [f(i++, cur1.value, cur2.value), null] : null;
             });
         });
     }
     exports.mapIndexed2 = mapIndexed2;
     function map3(f, xs, ys, zs) {
-        return delay(function () {
-            var iter1 = xs[Symbol.iterator]();
-            var iter2 = ys[Symbol.iterator]();
-            var iter3 = zs[Symbol.iterator]();
-            return unfold(function () {
-                var cur1 = iter1.next(), cur2 = iter2.next(), cur3 = iter3.next();
+        return delay(() => {
+            const iter1 = xs[Symbol.iterator]();
+            const iter2 = ys[Symbol.iterator]();
+            const iter3 = zs[Symbol.iterator]();
+            return unfold(() => {
+                const cur1 = iter1.next(), cur2 = iter2.next(), cur3 = iter3.next();
                 return !cur1.done && !cur2.done && !cur3.done ? [f(cur1.value, cur2.value, cur3.value), null] : null;
             });
         });
     }
     exports.map3 = map3;
-    function mapFold(f, acc, xs) {
-        var result = [];
-        var r;
-        var cur;
-        for (var i = 0, iter = xs[Symbol.iterator]();; i++) {
+    function chunkBySize(size, xs) {
+        var result = Array_2.chunkBySize(size, Array.from(xs));
+        return ofArray(result.map(ofArray));
+    }
+    exports.chunkBySize = chunkBySize;
+    function mapFold(f, acc, xs, transform) {
+        let result = [];
+        let r;
+        let cur;
+        for (let i = 0, iter = xs[Symbol.iterator]();; i++) {
             cur = iter.next();
             if (cur.done)
                 break;
-            _a = f(acc, cur.value), r = _a[0], acc = _a[1];
+            [r, acc] = f(acc, cur.value);
             result.push(r);
         }
-        return [result, acc];
-        var _a;
+        return transform !== void 0 ? [transform(result), acc] : [result, acc];
     }
     exports.mapFold = mapFold;
-    function mapFoldBack(f, xs, acc) {
-        var arr = Array.isArray(xs) || ArrayBuffer.isView(xs) ? xs : Array.from(xs);
-        var result = [];
-        var r;
-        for (var i = arr.length - 1; i >= 0; i--) {
-            _a = f(arr[i], acc), r = _a[0], acc = _a[1];
+    function mapFoldBack(f, xs, acc, transform) {
+        const arr = Array.isArray(xs) || ArrayBuffer.isView(xs) ? xs : Array.from(xs);
+        let result = [];
+        let r;
+        for (let i = arr.length - 1; i >= 0; i--) {
+            [r, acc] = f(arr[i], acc);
             result.push(r);
         }
-        return [result, acc];
-        var _a;
+        return transform !== void 0 ? [transform(result), acc] : [result, acc];
     }
     exports.mapFoldBack = mapFoldBack;
     function max(xs) {
-        return reduce(function (acc, x) { return Util_2.compare(acc, x) === 1 ? acc : x; }, xs);
+        return reduce((acc, x) => Util_2.compare(acc, x) === 1 ? acc : x, xs);
     }
     exports.max = max;
     function maxBy(f, xs) {
-        return reduce(function (acc, x) { return Util_2.compare(f(acc), f(x)) === 1 ? acc : x; }, xs);
+        return reduce((acc, x) => Util_2.compare(f(acc), f(x)) === 1 ? acc : x, xs);
     }
     exports.maxBy = maxBy;
     function min(xs) {
-        return reduce(function (acc, x) { return Util_2.compare(acc, x) === -1 ? acc : x; }, xs);
+        return reduce((acc, x) => Util_2.compare(acc, x) === -1 ? acc : x, xs);
     }
     exports.min = min;
     function minBy(f, xs) {
-        return reduce(function (acc, x) { return Util_2.compare(f(acc), f(x)) === -1 ? acc : x; }, xs);
+        return reduce((acc, x) => Util_2.compare(f(acc), f(x)) === -1 ? acc : x, xs);
     }
     exports.minBy = minBy;
     function pairwise(xs) {
-        return skip(2, scan(function (last, next) { return [last[1], next]; }, [0, 0], xs));
+        return skip(2, scan((last, next) => [last[1], next], [0, 0], xs));
     }
     exports.pairwise = pairwise;
     function permute(f, xs) {
@@ -508,11 +496,11 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
     function rangeStep(first, step, last) {
         if (step === 0)
             throw new Error("Step cannot be 0");
-        return delay(function () { return unfold(function (x) { return step > 0 && x <= last || step < 0 && x >= last ? [x, x + step] : null; }, first); });
+        return delay(() => unfold(x => step > 0 && x <= last || step < 0 && x >= last ? [x, x + step] : null, first));
     }
     exports.rangeStep = rangeStep;
     function rangeChar(first, last) {
-        return delay(function () { return unfold(function (x) { return x <= last ? [x, String.fromCharCode(x.charCodeAt(0) + 1)] : null; }, first); });
+        return delay(() => unfold(x => x <= last ? [x, String.fromCharCode(x.charCodeAt(0) + 1)] : null, first));
     }
     exports.rangeChar = rangeChar;
     function range(first, last) {
@@ -520,17 +508,17 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
     }
     exports.range = range;
     function readOnly(xs) {
-        return map(function (x) { return x; }, xs);
+        return map(x => x, xs);
     }
     exports.readOnly = readOnly;
     function reduce(f, xs) {
         if (Array.isArray(xs) || ArrayBuffer.isView(xs))
             return xs.reduce(f);
-        var iter = xs[Symbol.iterator]();
-        var cur = iter.next();
+        const iter = xs[Symbol.iterator]();
+        let cur = iter.next();
         if (cur.done)
             throw new Error("Seq was empty");
-        var acc = cur.value;
+        let acc = cur.value;
         for (;;) {
             cur = iter.next();
             if (cur.done)
@@ -541,31 +529,31 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
     }
     exports.reduce = reduce;
     function reduceBack(f, xs) {
-        var ar = Array.isArray(xs) || ArrayBuffer.isView(xs) ? xs : Array.from(xs);
+        const ar = Array.isArray(xs) || ArrayBuffer.isView(xs) ? xs : Array.from(xs);
         if (ar.length === 0)
             throw new Error("Seq was empty");
-        var acc = ar[ar.length - 1];
-        for (var i = ar.length - 2; i >= 0; i--)
+        let acc = ar[ar.length - 1];
+        for (let i = ar.length - 2; i >= 0; i--)
             acc = f(ar[i], acc, i);
         return acc;
     }
     exports.reduceBack = reduceBack;
     function replicate(n, x) {
-        return initialize(n, function () { return x; });
+        return initialize(n, () => x);
     }
     exports.replicate = replicate;
     function reverse(xs) {
-        var ar = Array.isArray(xs) || ArrayBuffer.isView(xs) ? xs.slice(0) : Array.from(xs);
+        const ar = Array.isArray(xs) || ArrayBuffer.isView(xs) ? xs.slice(0) : Array.from(xs);
         return ofArray(ar.reverse());
     }
     exports.reverse = reverse;
     function scan(f, seed, xs) {
-        return delay(function () {
-            var iter = xs[Symbol.iterator]();
-            return unfold(function (acc) {
+        return delay(() => {
+            const iter = xs[Symbol.iterator]();
+            return unfold(acc => {
                 if (acc == null)
                     return [seed, seed];
-                var cur = iter.next();
+                const cur = iter.next();
                 if (!cur.done) {
                     acc = f(acc, cur.value);
                     return [acc, acc];
@@ -576,64 +564,61 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
     }
     exports.scan = scan;
     function scanBack(f, xs, seed) {
-        return reverse(scan(function (acc, x) { return f(x, acc); }, seed, reverse(xs)));
+        return reverse(scan((acc, x) => f(x, acc), seed, reverse(xs)));
     }
     exports.scanBack = scanBack;
     function singleton(x) {
-        return unfold(function (x) { return x != null ? [x, null] : null; }, x);
+        return unfold(x => x != null ? [x, null] : null, x);
     }
     exports.singleton = singleton;
     function skip(n, xs) {
-        return _a = {},
-            _a[Symbol.iterator] = function () {
-                var iter = xs[Symbol.iterator]();
-                for (var i = 1; i <= n; i++)
+        return {
+            [Symbol.iterator]: () => {
+                const iter = xs[Symbol.iterator]();
+                for (let i = 1; i <= n; i++)
                     if (iter.next().done)
                         throw new Error("Seq has not enough elements");
                 return iter;
-            },
-            _a;
-        var _a;
+            }
+        };
     }
     exports.skip = skip;
     function skipWhile(f, xs) {
-        return delay(function () {
-            var hasPassed = false;
-            return filter(function (x) { return hasPassed || (hasPassed = !f(x)); }, xs);
+        return delay(() => {
+            let hasPassed = false;
+            return filter((x) => hasPassed || (hasPassed = !f(x)), xs);
         });
     }
     exports.skipWhile = skipWhile;
     function sortWith(f, xs) {
-        var ys = Array.from(xs);
+        const ys = Array.from(xs);
         return ofArray(ys.sort(f));
     }
     exports.sortWith = sortWith;
     function sum(xs) {
-        return fold(function (acc, x) { return acc + x; }, 0, xs);
+        return fold((acc, x) => acc + x, 0, xs);
     }
     exports.sum = sum;
     function sumBy(f, xs) {
-        return fold(function (acc, x) { return acc + f(x); }, 0, xs);
+        return fold((acc, x) => acc + f(x), 0, xs);
     }
     exports.sumBy = sumBy;
     function tail(xs) {
-        var iter = xs[Symbol.iterator]();
-        var cur = iter.next();
+        const iter = xs[Symbol.iterator]();
+        const cur = iter.next();
         if (cur.done)
             throw new Error("Seq was empty");
-        return _a = {},
-            _a[Symbol.iterator] = function () { return iter; },
-            _a;
-        var _a;
+        return {
+            [Symbol.iterator]: () => iter
+        };
     }
     exports.tail = tail;
-    function take(n, xs, truncate) {
-        if (truncate === void 0) { truncate = false; }
-        return delay(function () {
-            var iter = xs[Symbol.iterator]();
-            return unfold(function (i) {
+    function take(n, xs, truncate = false) {
+        return delay(() => {
+            const iter = xs[Symbol.iterator]();
+            return unfold(i => {
                 if (i < n) {
-                    var cur = iter.next();
+                    const cur = iter.next();
                     if (!cur.done)
                         return [cur.value, i + 1];
                     if (!truncate)
@@ -649,10 +634,10 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
     }
     exports.truncate = truncate;
     function takeWhile(f, xs) {
-        return delay(function () {
-            var iter = xs[Symbol.iterator]();
-            return unfold(function (i) {
-                var cur = iter.next();
+        return delay(() => {
+            const iter = xs[Symbol.iterator]();
+            return unfold(i => {
+                const cur = iter.next();
                 if (!cur.done && f(cur.value))
                     return [cur.value, null];
                 return void 0;
@@ -661,8 +646,8 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
     }
     exports.takeWhile = takeWhile;
     function tryFind(f, xs, defaultValue) {
-        for (var i = 0, iter = xs[Symbol.iterator]();; i++) {
-            var cur = iter.next();
+        for (let i = 0, iter = xs[Symbol.iterator]();; i++) {
+            const cur = iter.next();
             if (cur.done)
                 return defaultValue === void 0 ? null : defaultValue;
             if (f(cur.value, i))
@@ -675,9 +660,9 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
     }
     exports.find = find;
     function tryFindBack(f, xs, defaultValue) {
-        var match = null;
-        for (var i = 0, iter = xs[Symbol.iterator]();; i++) {
-            var cur = iter.next();
+        let match = null;
+        for (let i = 0, iter = xs[Symbol.iterator]();; i++) {
+            const cur = iter.next();
             if (cur.done)
                 return match === null ? (defaultValue === void 0 ? null : defaultValue) : match;
             if (f(cur.value, i))
@@ -690,8 +675,8 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
     }
     exports.findBack = findBack;
     function tryFindIndex(f, xs) {
-        for (var i = 0, iter = xs[Symbol.iterator]();; i++) {
-            var cur = iter.next();
+        for (let i = 0, iter = xs[Symbol.iterator]();; i++) {
+            const cur = iter.next();
             if (cur.done)
                 return null;
             if (f(cur.value, i))
@@ -704,9 +689,9 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
     }
     exports.findIndex = findIndex;
     function tryFindIndexBack(f, xs) {
-        var match = -1;
-        for (var i = 0, iter = xs[Symbol.iterator]();; i++) {
-            var cur = iter.next();
+        let match = -1;
+        for (let i = 0, iter = xs[Symbol.iterator]();; i++) {
+            const cur = iter.next();
             if (cur.done)
                 return match === -1 ? null : match;
             if (f(cur.value, i))
@@ -719,11 +704,11 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
     }
     exports.findIndexBack = findIndexBack;
     function tryPick(f, xs) {
-        for (var i = 0, iter = xs[Symbol.iterator]();; i++) {
-            var cur = iter.next();
+        for (let i = 0, iter = xs[Symbol.iterator]();; i++) {
+            const cur = iter.next();
             if (cur.done)
                 break;
-            var y = f(cur.value, i);
+            const y = f(cur.value, i);
             if (y != null)
                 return y;
         }
@@ -735,11 +720,11 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
     }
     exports.pick = pick;
     function unfold(f, acc) {
-        return _a = {},
-            _a[Symbol.iterator] = function () {
+        return {
+            [Symbol.iterator]: () => {
                 return {
-                    next: function () {
-                        var res = f(acc);
+                    next: () => {
+                        const res = f(acc);
                         if (res != null) {
                             acc = res[1];
                             return { done: false, value: res[0] };
@@ -747,17 +732,16 @@ define(["require", "exports", "./Util", "./Util", "./Array", "./ListClass"], fun
                         return { done: true };
                     }
                 };
-            },
-            _a;
-        var _a;
+            }
+        };
     }
     exports.unfold = unfold;
     function zip(xs, ys) {
-        return map2(function (x, y) { return [x, y]; }, xs, ys);
+        return map2((x, y) => [x, y], xs, ys);
     }
     exports.zip = zip;
     function zip3(xs, ys, zs) {
-        return map3(function (x, y, z) { return [x, y, z]; }, xs, ys, zs);
+        return map3((x, y, z) => [x, y, z], xs, ys, zs);
     }
     exports.zip3 = zip3;
 });

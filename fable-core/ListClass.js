@@ -1,29 +1,30 @@
 define(["require", "exports", "./Symbol", "./Util", "./Util", "./Util"], function (require, exports, Symbol_1, Util_1, Util_2, Util_3) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     function ofArray(args, base) {
-        var acc = base || new List();
-        for (var i = args.length - 1; i >= 0; i--) {
+        let acc = base || new List();
+        for (let i = args.length - 1; i >= 0; i--) {
             acc = new List(args[i], acc);
         }
         return acc;
     }
     exports.ofArray = ofArray;
-    var List = (function () {
-        function List(head, tail) {
+    class List {
+        constructor(head, tail) {
             this.head = head;
             this.tail = tail;
         }
-        List.prototype.ToString = function () {
-            return "[" + Array.from(this).map(Util_1.toString).join("; ") + "]";
-        };
-        List.prototype.Equals = function (x) {
+        ToString() {
+            return "[" + Array.from(this).map(x => Util_1.toString(x)).join("; ") + "]";
+        }
+        Equals(x) {
             if (this === x) {
                 return true;
             }
             else {
-                var iter1 = this[Symbol.iterator](), iter2 = x[Symbol.iterator]();
+                const iter1 = this[Symbol.iterator](), iter2 = x[Symbol.iterator]();
                 for (;;) {
-                    var cur1 = iter1.next(), cur2 = iter2.next();
+                    let cur1 = iter1.next(), cur2 = iter2.next();
                     if (cur1.done)
                         return cur2.done ? true : false;
                     else if (cur2.done)
@@ -32,16 +33,16 @@ define(["require", "exports", "./Symbol", "./Util", "./Util", "./Util"], functio
                         return false;
                 }
             }
-        };
-        List.prototype.CompareTo = function (x) {
+        }
+        CompareTo(x) {
             if (this === x) {
                 return 0;
             }
             else {
-                var acc = 0;
-                var iter1 = this[Symbol.iterator](), iter2 = x[Symbol.iterator]();
+                let acc = 0;
+                const iter1 = this[Symbol.iterator](), iter2 = x[Symbol.iterator]();
                 for (;;) {
-                    var cur1 = iter1.next(), cur2 = iter2.next();
+                    let cur1 = iter1.next(), cur2 = iter2.next();
                     if (cur1.done)
                         return cur2.done ? acc : -1;
                     else if (cur2.done)
@@ -53,37 +54,31 @@ define(["require", "exports", "./Symbol", "./Util", "./Util", "./Util"], functio
                     }
                 }
             }
-        };
-        Object.defineProperty(List.prototype, "length", {
-            get: function () {
-                var cur = this, acc = 0;
-                while (cur.tail != null) {
-                    cur = cur.tail;
-                    acc++;
-                }
-                return acc;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        List.prototype[Symbol.iterator] = function () {
-            var cur = this;
+        }
+        get length() {
+            let cur = this, acc = 0;
+            while (cur.tail != null) {
+                cur = cur.tail;
+                acc++;
+            }
+            return acc;
+        }
+        [Symbol.iterator]() {
+            let cur = this;
             return {
-                next: function () {
-                    var tmp = cur;
+                next: () => {
+                    const tmp = cur;
                     cur = cur.tail;
                     return { done: tmp.tail == null, value: tmp.head };
                 }
             };
-        };
-        List.prototype[Symbol_1.default.reflection] = function () {
+        }
+        [Symbol_1.default.reflection]() {
             return {
                 type: "Microsoft.FSharp.Collections.FSharpList",
                 interfaces: ["System.IEquatable", "System.IComparable"]
             };
-        };
-        return List;
-    }());
-    Object.defineProperty(exports, "__esModule", { value: true });
+        }
+    }
     exports.default = List;
 });

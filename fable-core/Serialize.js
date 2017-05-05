@@ -1,5 +1,6 @@
 define(["require", "exports", "./Symbol", "./Symbol", "./List", "./List", "./Set", "./Map", "./Map", "./Set", "./Util", "./Seq", "./Reflection", "./Date", "./String"], function (require, exports, Symbol_1, Symbol_2, List_1, List_2, Set_1, Map_1, Map_2, Set_2, Util_1, Seq_1, Reflection_1, Date_1, String_1) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     function deflate(v) {
         if (ArrayBuffer.isView(v)) {
             return Array.from(v);
@@ -9,40 +10,36 @@ define(["require", "exports", "./Symbol", "./Symbol", "./List", "./List", "./Set
                 return Array.from(v);
             }
             else if (v instanceof Map_1.default || v instanceof Map) {
-                var stringKeys_1 = null;
-                return Seq_1.fold(function (o, kv) {
-                    if (stringKeys_1 === null) {
-                        stringKeys_1 = typeof kv[0] === "string";
+                let stringKeys = null;
+                return Seq_1.fold((o, kv) => {
+                    if (stringKeys === null) {
+                        stringKeys = typeof kv[0] === "string";
                     }
-                    o[stringKeys_1 ? kv[0] : toJson(kv[0])] = kv[1];
+                    o[stringKeys ? kv[0] : toJson(kv[0])] = kv[1];
                     return o;
                 }, {}, v);
             }
-            var reflectionInfo = typeof v[Symbol_1.default.reflection] === "function" ? v[Symbol_1.default.reflection]() : {};
+            const reflectionInfo = typeof v[Symbol_1.default.reflection] === "function" ? v[Symbol_1.default.reflection]() : {};
             if (reflectionInfo.properties) {
-                return Seq_1.fold(function (o, prop) {
+                return Seq_1.fold((o, prop) => {
                     return o[prop] = v[prop], o;
                 }, {}, Object.getOwnPropertyNames(reflectionInfo.properties));
             }
             else if (reflectionInfo.cases) {
-                var caseInfo = reflectionInfo.cases[v.tag], caseName = caseInfo[0], fieldsLength = caseInfo.length - 1;
+                const caseInfo = reflectionInfo.cases[v.tag], caseName = caseInfo[0], fieldsLength = caseInfo.length - 1;
                 if (fieldsLength === 0) {
                     return caseName;
                 }
-                else if (fieldsLength === 1) {
-                    var fieldValue = typeof v.a === 'undefined' ? null : v.a;
-                    return _a = {}, _a[caseName] = fieldValue, _a;
-                }
                 else {
-                    return _b = {}, _b[caseName] = Util_1.getUnionFields(v), _b;
+                    return { [caseName]: (v.data !== void 0 ? v.data : null) };
                 }
             }
         }
         return v;
-        var _a, _b;
     }
+    exports.deflate = deflate;
     function toJson(o) {
-        return JSON.stringify(o, function (k, v) { return deflate(v); });
+        return JSON.stringify(o, (k, v) => deflate(v));
     }
     exports.toJson = toJson;
     function combine(path1, path2) {
@@ -58,16 +55,16 @@ define(["require", "exports", "./Symbol", "./Symbol", "./List", "./List", "./Set
             return typ.kind !== "Array" && typ.kind !== "Tuple";
         }
         else {
-            var info = typeof typ.prototype[Symbol_1.default.reflection] === "function"
+            const info = typeof typ.prototype[Symbol_1.default.reflection] === "function"
                 ? typ.prototype[Symbol_1.default.reflection]() : null;
             return info ? info.nullable : true;
         }
     }
     function invalidate(val, typ, path) {
-        throw new Error(String_1.fsFormat("%A", val) + " " + (path ? "(" + path + ")" : "") + " is not of type " + Reflection_1.getTypeFullName(typ));
+        throw new Error(`${String_1.fsFormat("%A", val)} ${path ? "(" + path + ")" : ""} is not of type ${Reflection_1.getTypeFullName(typ)}`);
     }
     function needsInflate(enclosing) {
-        var typ = enclosing.head;
+        const typ = enclosing.head;
         if (typeof typ === "string") {
             return false;
         }
@@ -75,11 +72,11 @@ define(["require", "exports", "./Symbol", "./Symbol", "./List", "./List", "./Set
             switch (typ.kind) {
                 case "Option":
                 case "Array":
-                    return typ.definition != null || needsInflate(new List_1.default(typ.generics, enclosing));
+                    return typ.definition != null || needsInflate(new List_1.default(typ.generics[0], enclosing));
                 case "Tuple":
-                    return typ.generics.some(function (x) {
-                        return needsInflate(new List_1.default(x, enclosing));
-                    });
+                    return typ.generics.some(x => needsInflate(new List_1.default(x, enclosing)));
+                case "Function":
+                    return false;
                 case "GenericParam":
                     return needsInflate(Reflection_1.resolveGeneric(typ.definition, enclosing.tail));
                 case "GenericType":
@@ -95,37 +92,36 @@ define(["require", "exports", "./Symbol", "./Symbol", "./List", "./List", "./Set
             invalidate(arr, "array", path);
         }
         return needsInflate(enclosing)
-            ? arr.map(function (x, i) { return inflate(x, enclosing, combine(path, i)); })
+            ? arr.map((x, i) => inflate(x, enclosing, combine(path, i)))
             : arr;
     }
     function inflateMap(obj, keyEnclosing, valEnclosing, path) {
-        var inflateKey = keyEnclosing.head !== "string";
-        var inflateVal = needsInflate(valEnclosing);
+        const inflateKey = keyEnclosing.head !== "string";
+        const inflateVal = needsInflate(valEnclosing);
         return Object
             .getOwnPropertyNames(obj)
-            .map(function (k) {
-            var key = inflateKey ? inflate(JSON.parse(k), keyEnclosing, combine(path, k)) : k;
-            var val = inflateVal ? inflate(obj[k], valEnclosing, combine(path, k)) : obj[k];
+            .map(k => {
+            const key = inflateKey ? inflate(JSON.parse(k), keyEnclosing, combine(path, k)) : k;
+            const val = inflateVal ? inflate(obj[k], valEnclosing, combine(path, k)) : obj[k];
             return [key, val];
         });
     }
     function inflateList(val, enclosing, path) {
-        var ar = [], li = new List_1.default(), cur = val, inf = needsInflate(enclosing);
+        let ar = [], li = new List_1.default(), cur = val, inf = needsInflate(enclosing);
         while (cur.tail != null) {
             ar.push(inf ? inflate(cur.head, enclosing, path) : cur.head);
             cur = cur.tail;
         }
         ar.reverse();
-        for (var i = 0; i < ar.length; i++) {
+        for (let i = 0; i < ar.length; i++) {
             li = new List_1.default(ar[i], li);
         }
         return li;
     }
     function inflateUnion(val, typ, info, path, inflateField) {
-        var newVal, caseName;
+        let caseName;
         if (typeof val.tag === "number") {
-            newVal = new typ();
-            return Object.assign(newVal, val);
+            return Object.assign(new typ(), val);
         }
         else if (typeof val === "string") {
             caseName = val;
@@ -133,7 +129,7 @@ define(["require", "exports", "./Symbol", "./Symbol", "./List", "./List", "./Set
         else {
             caseName = Object.getOwnPropertyNames(val)[0];
         }
-        var tag = -1, i = -1;
+        let tag = -1, i = -1;
         while (info.cases[++i] != null) {
             if (info.cases[i][0] === caseName) {
                 tag = i;
@@ -143,21 +139,26 @@ define(["require", "exports", "./Symbol", "./Symbol", "./List", "./List", "./Set
         if (tag === -1) {
             invalidate(val, typ, path);
         }
-        newVal = new typ(tag);
-        var caseInfo = info.cases[tag];
-        if (caseInfo.length > 1) {
-            var fields = caseInfo.length > 2 ? val[caseName] : [val[caseName]];
+        let caseInfo = info.cases[tag], inflatedData = void 0;
+        if (caseInfo.length > 2) {
+            inflatedData = [];
+            const data = val[caseName];
             path = combine(path, caseName);
-            newVal.size = fields.length;
-            for (var i_1 = 0; i_1 < fields.length; i_1++) {
-                newVal[String.fromCharCode(97 + i_1)] =
-                    inflateField ? inflateField(fields[i_1], caseInfo[i_1 + 1], combine(path, i_1)) : fields[i_1];
+            for (let i = 0; i < data.length; i++) {
+                inflatedData.push(inflateField
+                    ? inflateField(data[i], caseInfo[i + 1], combine(path, i))
+                    : data[i]);
             }
         }
-        return newVal;
+        else if (caseInfo.length > 1) {
+            inflatedData = inflateField
+                ? inflateField(val[caseName], caseInfo[1], combine(path, caseName))
+                : val[caseName];
+        }
+        return new typ(tag, inflatedData);
     }
     function inflate(val, typ, path) {
-        var enclosing = null;
+        let enclosing = null;
         if (typ instanceof List_1.default) {
             enclosing = typ;
             typ = typ.head;
@@ -182,22 +183,22 @@ define(["require", "exports", "./Symbol", "./Symbol", "./List", "./List", "./Set
                 case "Unit":
                     return null;
                 case "Option":
-                    return inflate(val, new List_1.default(typ.generics, enclosing), path);
+                    return inflate(val, new List_1.default(typ.generics[0], enclosing), path);
                 case "Array":
                     if (typ.definition != null) {
                         return new typ.definition(val);
                     }
                     else {
-                        return inflateArray(val, new List_1.default(typ.generics, enclosing), path);
+                        return inflateArray(val, new List_1.default(typ.generics[0], enclosing), path);
                     }
                 case "Tuple":
-                    return typ.generics.map(function (x, i) {
-                        return inflate(val[i], new List_1.default(x, enclosing), combine(path, i));
-                    });
+                    return typ.generics.map((x, i) => inflate(val[i], new List_1.default(x, enclosing), combine(path, i)));
+                case "Function":
+                    return val;
                 case "GenericParam":
                     return inflate(val, Reflection_1.resolveGeneric(typ.definition, enclosing.tail), path);
                 case "GenericType":
-                    var def = typ.definition;
+                    const def = typ.definition;
                     if (def === List_1.default) {
                         return Array.isArray(val)
                             ? List_2.ofArray(inflateArray(val, Reflection_1.resolveGeneric(0, enclosing), path))
@@ -224,16 +225,16 @@ define(["require", "exports", "./Symbol", "./Symbol", "./List", "./List", "./Set
             if (typ === Date) {
                 return Date_1.parse(val);
             }
-            var info = typeof typ.prototype[Symbol_1.default.reflection] === "function" ? typ.prototype[Symbol_1.default.reflection]() : {};
+            const info = typeof typ.prototype[Symbol_1.default.reflection] === "function" ? typ.prototype[Symbol_1.default.reflection]() : {};
             if (info.cases) {
-                return inflateUnion(val, typ, info, path, function (fi, t, p) { return inflate(fi, new List_1.default(t, enclosing), path); });
+                return inflateUnion(val, typ, info, path, (fi, t, p) => inflate(fi, new List_1.default(t, enclosing), path));
             }
             if (info.properties) {
-                var newObj = new typ();
-                var properties = info.properties;
-                var ks = Object.getOwnPropertyNames(properties);
-                for (var i = 0; i < ks.length; i++) {
-                    var k = ks[i];
+                let newObj = new typ();
+                const properties = info.properties;
+                const ks = Object.getOwnPropertyNames(properties);
+                for (let i = 0; i < ks.length; i++) {
+                    let k = ks[i];
                     newObj[k] = inflate(val[k], new List_1.default(properties[k], enclosing), combine(path, k));
                 }
                 return newObj;
@@ -251,12 +252,12 @@ define(["require", "exports", "./Symbol", "./Symbol", "./List", "./List", "./Set
     }
     exports.ofJson = ofJson;
     function toJsonWithTypeInfo(o) {
-        return JSON.stringify(o, function (k, v) {
+        return JSON.stringify(o, (k, v) => {
             if (ArrayBuffer.isView(v)) {
                 return Array.from(v);
             }
             else if (v != null && typeof v === "object") {
-                var info = typeof v[Symbol_1.default.reflection] === "function" ? v[Symbol_1.default.reflection]() : {};
+                const info = typeof v[Symbol_1.default.reflection] === "function" ? v[Symbol_1.default.reflection]() : {};
                 if (v instanceof List_1.default || v instanceof Set_1.default || v instanceof Set) {
                     return {
                         $type: info.type || "System.Collections.Generic.HashSet",
@@ -264,32 +265,31 @@ define(["require", "exports", "./Symbol", "./Symbol", "./List", "./List", "./Set
                     };
                 }
                 else if (v instanceof Map_1.default || v instanceof Map) {
-                    return Seq_1.fold(function (o, kv) { o[kv[0]] = kv[1]; return o; }, { $type: info.type || "System.Collections.Generic.Dictionary" }, v);
+                    return Seq_1.fold((o, kv) => { o[kv[0]] = kv[1]; return o; }, { $type: info.type || "System.Collections.Generic.Dictionary" }, v);
                 }
                 else if (info.properties) {
-                    return Seq_1.fold(function (o, prop) {
+                    return Seq_1.fold((o, prop) => {
                         return o[prop] = v[prop], o;
                     }, { $type: info.type }, Object.getOwnPropertyNames(info.properties));
                 }
                 else if (info.cases) {
-                    var uci = info.cases[v.tag], fields = Util_1.getUnionFields(v);
-                    return _a = {},
-                        _a[uci[0]] = uci.length <= 2 ? fields[0] : fields,
-                        _a.$type = info.type,
-                        _a;
+                    const uci = info.cases[v.tag];
+                    return {
+                        [uci[0]]: (v.data !== void 0 ? v.data : null),
+                        $type: info.type
+                    };
                 }
             }
             return v;
-            var _a;
         });
     }
     exports.toJsonWithTypeInfo = toJsonWithTypeInfo;
     function ofJsonWithTypeInfo(json, genArgs) {
-        var parsed = JSON.parse(json, function (k, v) {
+        const parsed = JSON.parse(json, (k, v) => {
             if (v == null)
                 return v;
             else if (typeof v === "object" && typeof v.$type === "string") {
-                var type = v.$type.replace('+', '.'), i = type.indexOf('`');
+                let type = v.$type.replace('+', '.'), i = type.indexOf('`');
                 delete v.$type;
                 if (i > -1) {
                     type = type.substr(0, i);
@@ -312,16 +312,16 @@ define(["require", "exports", "./Symbol", "./Symbol", "./List", "./List", "./Set
                 }
                 else if (type == "Microsoft.FSharp.Collections.FSharpMap") {
                     return Map_2.create(Object.getOwnPropertyNames(v)
-                        .map(function (k) { return [k, v[k]]; }));
+                        .map(k => [k, v[k]]));
                 }
                 else if (type == "System.Collections.Generic.Dictionary") {
                     return new Map(Object.getOwnPropertyNames(v)
-                        .map(function (k) { return [k, v[k]]; }));
+                        .map(k => [k, v[k]]));
                 }
                 else {
-                    var typ = Symbol_2.getType(type);
+                    const typ = Symbol_2.getType(type);
                     if (typ) {
-                        var info = typeof typ.prototype[Symbol_1.default.reflection] === "function" ? typ.prototype[Symbol_1.default.reflection]() : {};
+                        const info = typeof typ.prototype[Symbol_1.default.reflection] === "function" ? typ.prototype[Symbol_1.default.reflection]() : {};
                         if (info.cases) {
                             return inflateUnion(v, typ, info, k);
                         }
@@ -334,7 +334,7 @@ define(["require", "exports", "./Symbol", "./Symbol", "./List", "./List", "./Set
             else
                 return v;
         });
-        var expected = genArgs ? genArgs.T : null;
+        const expected = genArgs ? genArgs.T : null;
         if (parsed != null && typeof expected === "function"
             && !(parsed instanceof Util_1.getDefinition(expected))) {
             throw new Error("JSON is not of type " + expected.name + ": " + json);

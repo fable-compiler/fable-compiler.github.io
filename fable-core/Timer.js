@@ -1,79 +1,69 @@
 define(["require", "exports", "./Event", "./Symbol"], function (require, exports, Event_1, Symbol_1) {
     "use strict";
-    var Timer = (function () {
-        function Timer(interval) {
+    Object.defineProperty(exports, "__esModule", { value: true });
+    class Timer {
+        constructor(interval) {
             this.Interval = interval > 0 ? interval : 100;
             this.AutoReset = true;
             this._elapsed = new Event_1.default();
         }
-        Object.defineProperty(Timer.prototype, "Elapsed", {
-            get: function () {
-                return this._elapsed;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Timer.prototype, "Enabled", {
-            get: function () {
-                return this._enabled;
-            },
-            set: function (x) {
-                var _this = this;
-                if (!this._isDisposed && this._enabled != x) {
-                    if (this._enabled = x) {
-                        if (this.AutoReset) {
-                            this._intervalId = setInterval(function () {
-                                if (!_this.AutoReset)
-                                    _this.Enabled = false;
-                                _this._elapsed.Trigger(new Date());
-                            }, this.Interval);
-                        }
-                        else {
-                            this._timeoutId = setTimeout(function () {
-                                _this.Enabled = false;
-                                _this._timeoutId = 0;
-                                if (_this.AutoReset)
-                                    _this.Enabled = true;
-                                _this._elapsed.Trigger(new Date());
-                            }, this.Interval);
-                        }
+        get Elapsed() {
+            return this._elapsed;
+        }
+        get Enabled() {
+            return this._enabled;
+        }
+        set Enabled(x) {
+            if (!this._isDisposed && this._enabled != x) {
+                if (this._enabled = x) {
+                    if (this.AutoReset) {
+                        this._intervalId = setInterval(() => {
+                            if (!this.AutoReset)
+                                this.Enabled = false;
+                            this._elapsed.Trigger(new Date());
+                        }, this.Interval);
                     }
                     else {
-                        if (this._timeoutId) {
-                            clearTimeout(this._timeoutId);
+                        this._timeoutId = setTimeout(() => {
+                            this.Enabled = false;
                             this._timeoutId = 0;
-                        }
-                        if (this._intervalId) {
-                            clearInterval(this._intervalId);
-                            this._intervalId = 0;
-                        }
+                            if (this.AutoReset)
+                                this.Enabled = true;
+                            this._elapsed.Trigger(new Date());
+                        }, this.Interval);
                     }
                 }
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Timer.prototype.Dispose = function () {
+                else {
+                    if (this._timeoutId) {
+                        clearTimeout(this._timeoutId);
+                        this._timeoutId = 0;
+                    }
+                    if (this._intervalId) {
+                        clearInterval(this._intervalId);
+                        this._intervalId = 0;
+                    }
+                }
+            }
+        }
+        Dispose() {
             this.Enabled = false;
             this._isDisposed = true;
-        };
-        Timer.prototype.Close = function () {
+        }
+        Close() {
             this.Dispose();
-        };
-        Timer.prototype.Start = function () {
+        }
+        Start() {
             this.Enabled = true;
-        };
-        Timer.prototype.Stop = function () {
+        }
+        Stop() {
             this.Enabled = false;
-        };
-        Timer.prototype[Symbol_1.default.reflection] = function () {
+        }
+        [Symbol_1.default.reflection]() {
             return {
                 type: "System.Timers.Timer",
                 interfaces: ["System.IDisposable"]
             };
-        };
-        return Timer;
-    }());
-    Object.defineProperty(exports, "__esModule", { value: true });
+        }
+    }
     exports.default = Timer;
 });

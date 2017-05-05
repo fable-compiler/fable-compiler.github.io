@@ -1,6 +1,7 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
-    var types = new Map();
+    Object.defineProperty(exports, "__esModule", { value: true });
+    const types = new Map();
     function setType(fullName, cons) {
         types.set(fullName, cons);
     }
@@ -9,7 +10,6 @@ define(["require", "exports"], function (require, exports) {
         return types.get(fullName);
     }
     exports.getType = getType;
-    Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = {
         reflection: Symbol("reflection")
     };

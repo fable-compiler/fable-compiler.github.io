@@ -1,15 +1,14 @@
 define(["require", "exports", "./Util", "./Symbol"], function (require, exports, Util_1, Symbol_1) {
     "use strict";
-    var Comparer = (function () {
-        function Comparer(f) {
+    Object.defineProperty(exports, "__esModule", { value: true });
+    class Comparer {
+        constructor(f) {
             this.Compare = f || Util_1.compare;
         }
-        Comparer.prototype[Symbol_1.default.reflection] = function () {
+        [Symbol_1.default.reflection]() {
             return { interfaces: ["System.IComparer"] };
-        };
-        return Comparer;
-    }());
-    Object.defineProperty(exports, "__esModule", { value: true });
+        }
+    }
     exports.default = Comparer;
     function fromEqualityComparer(comparer) {
         if (typeof comparer.Compare === "function") {

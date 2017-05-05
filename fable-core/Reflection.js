@@ -1,30 +1,29 @@
 define(["require", "exports", "./Util", "./List", "./Symbol"], function (require, exports, Util_1, List_1, Symbol_1) {
     "use strict";
-    var MemberInfo = (function () {
-        function MemberInfo(name, index, declaringType, propertyType, unionFields) {
+    Object.defineProperty(exports, "__esModule", { value: true });
+    class MemberInfo {
+        constructor(name, index, declaringType, propertyType, unionFields) {
             this.name = name;
             this.index = index;
             this.declaringType = declaringType;
             this.propertyType = propertyType;
             this.unionFields = unionFields;
         }
-        MemberInfo.prototype.getUnionFields = function () {
-            var _this = this;
-            return this.unionFields.map(function (fi, i) { return new MemberInfo("unknown", i, _this.declaringType, fi); });
-        };
-        return MemberInfo;
-    }());
+        getUnionFields() {
+            return this.unionFields.map((fi, i) => new MemberInfo("unknown", i, this.declaringType, fi));
+        }
+    }
     exports.MemberInfo = MemberInfo;
     function resolveGeneric(idx, enclosing) {
         try {
-            var t = enclosing.head;
+            const t = enclosing.head;
             if (t.generics == null) {
                 return resolveGeneric(idx, enclosing.tail);
             }
             else {
-                var name_1 = typeof idx === "string"
+                const name = typeof idx === "string"
                     ? idx : Object.getOwnPropertyNames(t.generics)[idx];
-                var resolved = t.generics[name_1];
+                const resolved = t.generics[name];
                 if (resolved == null) {
                     return resolveGeneric(idx, enclosing.tail);
                 }
@@ -37,12 +36,12 @@ define(["require", "exports", "./Util", "./List", "./Symbol"], function (require
             }
         }
         catch (err) {
-            throw new Error("Cannot resolve generic argument " + idx + ": " + err);
+            throw new Error(`Cannot resolve generic argument ${idx}: ${err}`);
         }
     }
     exports.resolveGeneric = resolveGeneric;
     function getType(obj) {
-        var t = typeof obj;
+        const t = typeof obj;
         switch (t) {
             case "boolean":
             case "number":
@@ -60,11 +59,11 @@ define(["require", "exports", "./Util", "./List", "./Symbol"], function (require
                 return "unknown";
             }
             if (option === "name") {
-                var i = fullName.lastIndexOf('.');
+                const i = fullName.lastIndexOf('.');
                 return fullName.substr(i + 1);
             }
             if (option === "namespace") {
-                var i = fullName.lastIndexOf('.');
+                const i = fullName.lastIndexOf('.');
                 return i > -1 ? fullName.substr(0, i) : "";
             }
             return fullName;
@@ -77,11 +76,13 @@ define(["require", "exports", "./Util", "./List", "./Symbol"], function (require
                 case "Unit":
                     return "unit";
                 case "Option":
-                    return getTypeFullName(typ.generics, option) + " option";
+                    return getTypeFullName(typ.generics[0], option) + " option";
                 case "Array":
-                    return getTypeFullName(typ.generics, option) + "[]";
+                    return getTypeFullName(typ.generics[0], option) + "[]";
                 case "Tuple":
-                    return typ.generics.map(function (x) { return getTypeFullName(x, option); }).join(" * ");
+                    return typ.generics.map(x => getTypeFullName(x, option)).join(" * ");
+                case "Function":
+                    return "Func<" + typ.generics.map(x => getTypeFullName(x, option)).join(", ") + ">";
                 case "GenericParam":
                 case "Interface":
                     return typ.definition;
@@ -93,7 +94,7 @@ define(["require", "exports", "./Util", "./List", "./Symbol"], function (require
             }
         }
         else {
-            var proto = typ.prototype;
+            const proto = typ.prototype;
             return trim(typeof proto[Symbol_1.default.reflection] === "function"
                 ? proto[Symbol_1.default.reflection]().type : null, option);
         }
@@ -119,39 +120,40 @@ define(["require", "exports", "./Util", "./List", "./Symbol"], function (require
     }
     exports.getPrototypeOfType = getPrototypeOfType;
     function getProperties(typ) {
-        var proto = getPrototypeOfType(typ);
+        const proto = getPrototypeOfType(typ);
         if (proto != null && typeof proto[Symbol_1.default.reflection] === "function") {
-            var info_1 = proto[Symbol_1.default.reflection]();
-            if (info_1.properties) {
-                return Object.getOwnPropertyNames(info_1.properties)
-                    .map(function (k, i) { return new MemberInfo(k, i, typ, info_1.properties[k]); });
+            const info = proto[Symbol_1.default.reflection]();
+            if (info.properties) {
+                return Object.getOwnPropertyNames(info.properties)
+                    .map((k, i) => new MemberInfo(k, i, typ, info.properties[k]));
             }
         }
         throw new Error("Type " + getTypeFullName(typ) + " doesn't contain property info.");
     }
     exports.getProperties = getProperties;
     function getUnionCases(typ) {
-        var proto = getPrototypeOfType(typ);
+        const proto = getPrototypeOfType(typ);
         if (proto != null && typeof proto[Symbol_1.default.reflection] === "function") {
-            var info = proto[Symbol_1.default.reflection]();
+            const info = proto[Symbol_1.default.reflection]();
             if (info.cases) {
-                return info.cases.map(function (uci, i) { return new MemberInfo(uci[0], i, typ, null, uci.slice(1)); });
+                return info.cases.map((uci, i) => new MemberInfo(uci[0], i, typ, null, uci.slice(1)));
             }
         }
         throw new Error("Type " + getTypeFullName(typ) + " doesn't contain union case info.");
     }
     exports.getUnionCases = getUnionCases;
     function getPropertyValues(obj) {
-        return Util_1.getPropertyNames(obj).map(function (k) { return obj[k]; });
+        return Util_1.getPropertyNames(obj).map(k => obj[k]);
     }
     exports.getPropertyValues = getPropertyValues;
     function getUnionFields(obj, typ) {
         if (obj != null && typeof obj[Symbol_1.default.reflection] === "function") {
-            var info = obj[Symbol_1.default.reflection]();
+            const info = obj[Symbol_1.default.reflection]();
             if (info.cases) {
-                var uci = info.cases[obj.tag];
+                const uci = info.cases[obj.tag];
                 if (uci != null) {
-                    return [new MemberInfo(uci[0], obj.tag, typ, null, uci.slice(1)), Util_1.getUnionFields(obj)];
+                    const fields = uci.length > 2 ? obj.data : (uci.length > 1 ? [obj.data] : []);
+                    return [new MemberInfo(uci[0], obj.tag, typ, null, uci.slice(1)), fields];
                 }
             }
         }
@@ -159,8 +161,15 @@ define(["require", "exports", "./Util", "./List", "./Symbol"], function (require
     }
     exports.getUnionFields = getUnionFields;
     function makeUnion(caseInfo, args) {
-        var Cons = Util_1.getDefinition(caseInfo.declaringType);
-        return new (Cons.bind.apply(Cons, [void 0, caseInfo.index].concat(args)))();
+        const Cons = Util_1.getDefinition(caseInfo.declaringType);
+        switch (args.length) {
+            case 0:
+                return new Cons(caseInfo.index);
+            case 1:
+                return new Cons(caseInfo.index, args[0]);
+            default:
+                return new Cons(caseInfo.index, args);
+        }
     }
     exports.makeUnion = makeUnion;
     function getTupleElements(typ) {
@@ -177,4 +186,31 @@ define(["require", "exports", "./Util", "./List", "./Symbol"], function (require
         return false;
     }
     exports.isTupleType = isTupleType;
+    function getFunctionElements(typ) {
+        if (typ === "function") {
+            throw new Error("The type of the function must be known at compile time to get the elements.");
+        }
+        if (typ instanceof Util_1.NonDeclaredType && typ.kind === "Function") {
+            return typ.generics;
+        }
+        throw new Error("Type " + getTypeFullName(typ) + " is not a function type.");
+    }
+    exports.getFunctionElements = getFunctionElements;
+    function isFunctionType(typ) {
+        return typ === "function" || (typ instanceof Util_1.NonDeclaredType && typ.kind === "Function");
+    }
+    exports.isFunctionType = isFunctionType;
+    function getGenericArguments(typ) {
+        if (typ instanceof Util_1.NonDeclaredType) {
+            if (Array.isArray(typ.generics)) {
+                return typ.generics;
+            }
+            else {
+                const dic = typ.generics;
+                return Object.keys(dic).map(k => dic[k]);
+            }
+        }
+        return [];
+    }
+    exports.getGenericArguments = getGenericArguments;
 });

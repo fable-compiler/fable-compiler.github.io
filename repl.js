@@ -159,7 +159,7 @@
     this.session = this.editor.getSession();
     this.document = this.session.getDocument();
 
-    this.editor.setTheme('ace/theme/tomorrow');
+    this.editor.setTheme('ace/theme/tomorrow_night_bright');
     this.editor.setShowPrintMargin(false);
     this.editor.commands.removeCommands(['gotoline', 'find']);
     this.$el.css({
@@ -167,7 +167,11 @@
       lineHeight: 'inherit'
     });
 
-    this.session.setMode('ace/mode/javascript');
+    if (selector.indexOf('-repl-input') >= 0) {
+      this.session.setMode('ace/mode/ocaml'); //todo: mode/fsharp
+    } else {
+      this.session.setMode('ace/mode/javascript');
+    }
     this.session.setUseSoftTabs(true);
     this.session.setTabSize(2);
     this.session.setUseWorker(false);
@@ -264,7 +268,7 @@
         }
 
         var startTime = performance.now();
-        var ast = JSON.parse(data.json);
+        var ast = JSON.parse(data.jsonAst);
         var transformed = babel.transformFromAst(ast, null, options);
         var elapsed = performance.now() - startTime;
 
@@ -273,9 +277,10 @@
         this.runOutput();
 
         // print elapsed time
-        var elapsedMessage =
-            "FSharp compile time: " + Math.round(data.elapsed) + " ms, " +
-            "Babel compile time: " + Math.round(elapsed) + " ms";
+        var elapsedMessage = "Compile times - " +
+            "FCS: " + Math.round(data.fsharpTime) + " ms, " +
+            "Fable: " + Math.round(data.fableTime) + " ms, " +
+            "Babel: " + Math.round(elapsed) + " ms";
         this.printError(elapsedMessage);
       } catch (err) {
         //this.printError(err.message);

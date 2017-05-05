@@ -1,27 +1,22 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     function createFromValue(v) {
-        return new Lazy(function () { return v; });
+        return new Lazy(() => v);
     }
     exports.createFromValue = createFromValue;
-    var Lazy = (function () {
-        function Lazy(factory) {
+    class Lazy {
+        constructor(factory) {
             this.factory = factory;
             this.isValueCreated = false;
         }
-        Object.defineProperty(Lazy.prototype, "value", {
-            get: function () {
-                if (!this.isValueCreated) {
-                    this.createdValue = this.factory();
-                    this.isValueCreated = true;
-                }
-                return this.createdValue;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        return Lazy;
-    }());
-    Object.defineProperty(exports, "__esModule", { value: true });
+        get value() {
+            if (!this.isValueCreated) {
+                this.createdValue = this.factory();
+                this.isValueCreated = true;
+            }
+            return this.createdValue;
+        }
+    }
     exports.default = Lazy;
 });

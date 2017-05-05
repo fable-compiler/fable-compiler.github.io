@@ -1,10 +1,11 @@
 define(["require", "exports", "./ListClass", "./ListClass", "./Util", "./Util", "./Util", "./Comparer", "./Symbol", "./Seq", "./Seq", "./Seq", "./Seq", "./Seq"], function (require, exports, ListClass_1, ListClass_2, Util_1, Util_2, Util_3, Comparer_1, Symbol_1, Seq_1, Seq_2, Seq_3, Seq_4, Seq_5) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     function groupBy(f, xs) {
-        var keys = [], iter = xs[Symbol.iterator]();
-        var acc = create(), cur = iter.next();
+        const keys = [], iter = xs[Symbol.iterator]();
+        let acc = create(), cur = iter.next();
         while (!cur.done) {
-            var k = f(cur.value), vs = tryFind(k, acc);
+            const k = f(cur.value), vs = tryFind(k, acc);
             if (vs == null) {
                 keys.push(k);
                 acc = add(k, [cur.value], acc);
@@ -14,25 +15,19 @@ define(["require", "exports", "./ListClass", "./ListClass", "./Util", "./Util", 
             }
             cur = iter.next();
         }
-        return keys.map(function (k) { return [k, acc.get(k)]; });
+        return keys.map(k => [k, acc.get(k)]);
     }
     exports.groupBy = groupBy;
     function countBy(f, xs) {
-        return groupBy(f, xs).map(function (kv) { return [kv[0], kv[1].length]; });
+        return groupBy(f, xs).map(kv => [kv[0], kv[1].length]);
     }
     exports.countBy = countBy;
-    var MapTree = (function () {
-        function MapTree(tag, a, b, c, d, e) {
-            this.size = arguments.length - 1 | 0;
+    class MapTree {
+        constructor(tag, data) {
             this.tag = tag | 0;
-            this.a = a;
-            this.b = b;
-            this.c = c;
-            this.d = d;
-            this.e = e;
+            this.data = data;
         }
-        return MapTree;
-    }());
+    }
     exports.MapTree = MapTree;
     function tree_sizeAux(acc, m) {
         sizeAux: while (true) {
@@ -40,8 +35,8 @@ define(["require", "exports", "./ListClass", "./ListClass", "./Util", "./Util", 
                 return acc + 1 | 0;
             }
             else if (m.tag === 2) {
-                acc = tree_sizeAux(acc + 1, m.c);
-                m = m.d;
+                acc = tree_sizeAux(acc + 1, m.data[2]);
+                m = m.data[3];
                 continue sizeAux;
             }
             else {
@@ -56,21 +51,21 @@ define(["require", "exports", "./ListClass", "./ListClass", "./Util", "./Util", 
         return new MapTree(0);
     }
     function tree_height(_arg1) {
-        return _arg1.tag === 1 ? 1 : _arg1.tag === 2 ? _arg1.e : 0;
+        return _arg1.tag === 1 ? 1 : _arg1.tag === 2 ? _arg1.data[4] : 0;
     }
     function tree_isEmpty(m) {
         return m.tag === 0 ? true : false;
     }
     function tree_mk(l, k, v, r) {
-        var matchValue = l.tag === 0 ? r.tag === 0 ? 0 : 1 : 1;
+        const matchValue = l.tag === 0 ? r.tag === 0 ? 0 : 1 : 1;
         switch (matchValue) {
             case 0:
-                return new MapTree(1, k, v);
+                return new MapTree(1, [k, v]);
             case 1:
-                var hl = tree_height(l) | 0;
-                var hr = tree_height(r) | 0;
-                var m = (hl < hr ? hr : hl) | 0;
-                return new MapTree(2, k, v, l, r, m + 1);
+                const hl = tree_height(l) | 0;
+                const hr = tree_height(r) | 0;
+                const m = (hl < hr ? hr : hl) | 0;
+                return new MapTree(2, [k, v, l, r, m + 1]);
         }
         throw new Error("internal error: Map.tree_mk");
     }
@@ -80,16 +75,16 @@ define(["require", "exports", "./ListClass", "./ListClass", "./Util", "./Util", 
         var t2h = tree_height(t2);
         if (t2h > t1h + 2) {
             if (t2.tag === 2) {
-                if (tree_height(t2.c) > t1h + 1) {
-                    if (t2.c.tag === 2) {
-                        return tree_mk(tree_mk(t1, k, v, t2.c.c), t2.c.a, t2.c.b, tree_mk(t2.c.d, t2.a, t2.b, t2.d));
+                if (tree_height(t2.data[2]) > t1h + 1) {
+                    if (t2.data[2].tag === 2) {
+                        return tree_mk(tree_mk(t1, k, v, t2.data[2].data[2]), t2.data[2].data[0], t2.data[2].data[1], tree_mk(t2.data[2].data[3], t2.data[0], t2.data[1], t2.data[3]));
                     }
                     else {
                         throw new Error("rebalance");
                     }
                 }
                 else {
-                    return tree_mk(tree_mk(t1, k, v, t2.c), t2.a, t2.b, t2.d);
+                    return tree_mk(tree_mk(t1, k, v, t2.data[2]), t2.data[0], t2.data[1], t2.data[3]);
                 }
             }
             else {
@@ -99,16 +94,16 @@ define(["require", "exports", "./ListClass", "./ListClass", "./Util", "./Util", 
         else {
             if (t1h > t2h + 2) {
                 if (t1.tag === 2) {
-                    if (tree_height(t1.d) > t2h + 1) {
-                        if (t1.d.tag === 2) {
-                            return tree_mk(tree_mk(t1.c, t1.a, t1.b, t1.d.c), t1.d.a, t1.d.b, tree_mk(t1.d.d, k, v, t2));
+                    if (tree_height(t1.data[3]) > t2h + 1) {
+                        if (t1.data[3].tag === 2) {
+                            return tree_mk(tree_mk(t1.data[2], t1.data[0], t1.data[1], t1.data[3].data[2]), t1.data[3].data[0], t1.data[3].data[1], tree_mk(t1.data[3].data[3], k, v, t2));
                         }
                         else {
                             throw new Error("rebalance");
                         }
                     }
                     else {
-                        return tree_mk(t1.c, t1.a, t1.b, tree_mk(t1.d, k, v, t2));
+                        return tree_mk(t1.data[2], t1.data[0], t1.data[1], tree_mk(t1.data[3], k, v, t2));
                     }
                 }
                 else {
@@ -122,29 +117,29 @@ define(["require", "exports", "./ListClass", "./ListClass", "./Util", "./Util", 
     }
     function tree_add(comparer, k, v, m) {
         if (m.tag === 1) {
-            var c = comparer.Compare(k, m.a);
+            const c = comparer.Compare(k, m.data[0]);
             if (c < 0) {
-                return new MapTree(2, k, v, new MapTree(0), m, 2);
+                return new MapTree(2, [k, v, new MapTree(0), m, 2]);
             }
             else if (c === 0) {
-                return new MapTree(1, k, v);
+                return new MapTree(1, [k, v]);
             }
-            return new MapTree(2, k, v, m, new MapTree(0), 2);
+            return new MapTree(2, [k, v, m, new MapTree(0), 2]);
         }
         else if (m.tag === 2) {
-            var c = comparer.Compare(k, m.a);
+            const c = comparer.Compare(k, m.data[0]);
             if (c < 0) {
-                return tree_rebalance(tree_add(comparer, k, v, m.c), m.a, m.b, m.d);
+                return tree_rebalance(tree_add(comparer, k, v, m.data[2]), m.data[0], m.data[1], m.data[3]);
             }
             else if (c === 0) {
-                return new MapTree(2, k, v, m.c, m.d, m.e);
+                return new MapTree(2, [k, v, m.data[2], m.data[3], m.data[4]]);
             }
-            return tree_rebalance(m.c, m.a, m.b, tree_add(comparer, k, v, m.d));
+            return tree_rebalance(m.data[2], m.data[0], m.data[1], tree_add(comparer, k, v, m.data[3]));
         }
-        return new MapTree(1, k, v);
+        return new MapTree(1, [k, v]);
     }
     function tree_find(comparer, k, m) {
-        var res = tree_tryFind(comparer, k, m);
+        const res = tree_tryFind(comparer, k, m);
         if (res != null)
             return res;
         throw new Error("key not found");
@@ -152,29 +147,29 @@ define(["require", "exports", "./ListClass", "./ListClass", "./Util", "./Util", 
     function tree_tryFind(comparer, k, m) {
         tryFind: while (true) {
             if (m.tag === 1) {
-                var c = comparer.Compare(k, m.a) | 0;
+                const c = comparer.Compare(k, m.data[0]) | 0;
                 if (c === 0) {
-                    return m.b;
+                    return m.data[1];
                 }
                 else {
                     return null;
                 }
             }
             else if (m.tag === 2) {
-                var c_1 = comparer.Compare(k, m.a) | 0;
+                const c_1 = comparer.Compare(k, m.data[0]) | 0;
                 if (c_1 < 0) {
                     comparer = comparer;
                     k = k;
-                    m = m.c;
+                    m = m.data[2];
                     continue tryFind;
                 }
                 else if (c_1 === 0) {
-                    return m.b;
+                    return m.data[1];
                 }
                 else {
                     comparer = comparer;
                     k = k;
-                    m = m.d;
+                    m = m.data[3];
                     continue tryFind;
                 }
             }
@@ -187,14 +182,14 @@ define(["require", "exports", "./ListClass", "./ListClass", "./Util", "./Util", 
         return f(k, v) ? [tree_add(comparer, k, v, acc1), acc2] : [acc1, tree_add(comparer, k, v, acc2)];
     }
     function tree_partitionAux(comparer, f, s, acc_0, acc_1) {
-        var acc = [acc_0, acc_1];
+        const acc = [acc_0, acc_1];
         if (s.tag === 1) {
-            return tree_partition1(comparer, f, s.a, s.b, acc[0], acc[1]);
+            return tree_partition1(comparer, f, s.data[0], s.data[1], acc[0], acc[1]);
         }
         else if (s.tag === 2) {
-            var acc_2 = tree_partitionAux(comparer, f, s.d, acc[0], acc[1]);
-            var acc_3 = tree_partition1(comparer, f, s.a, s.b, acc_2[0], acc_2[1]);
-            return tree_partitionAux(comparer, f, s.c, acc_3[0], acc_3[1]);
+            const acc_2 = tree_partitionAux(comparer, f, s.data[3], acc[0], acc[1]);
+            const acc_3 = tree_partition1(comparer, f, s.data[0], s.data[1], acc_2[0], acc_2[1]);
+            return tree_partitionAux(comparer, f, s.data[2], acc_3[0], acc_3[1]);
         }
         return acc;
     }
@@ -205,29 +200,29 @@ define(["require", "exports", "./ListClass", "./ListClass", "./Util", "./Util", 
         return f(k, v) ? tree_add(comparer, k, v, acc) : acc;
     }
     function tree_filterAux(comparer, f, s, acc) {
-        return s.tag === 1 ? tree_filter1(comparer, f, s.a, s.b, acc) : s.tag === 2 ? tree_filterAux(comparer, f, s.d, tree_filter1(comparer, f, s.a, s.b, tree_filterAux(comparer, f, s.c, acc))) : acc;
+        return s.tag === 1 ? tree_filter1(comparer, f, s.data[0], s.data[1], acc) : s.tag === 2 ? tree_filterAux(comparer, f, s.data[3], tree_filter1(comparer, f, s.data[0], s.data[1], tree_filterAux(comparer, f, s.data[2], acc))) : acc;
     }
     function tree_filter(comparer, f, s) {
         return tree_filterAux(comparer, f, s, tree_empty());
     }
     function tree_spliceOutSuccessor(m) {
         if (m.tag === 1) {
-            return [m.a, m.b, new MapTree(0)];
+            return [m.data[0], m.data[1], new MapTree(0)];
         }
         else if (m.tag === 2) {
-            if (m.c.tag === 0) {
-                return [m.a, m.b, m.d];
+            if (m.data[2].tag === 0) {
+                return [m.data[0], m.data[1], m.data[3]];
             }
             else {
-                var kvl = tree_spliceOutSuccessor(m.c);
-                return [kvl[0], kvl[1], tree_mk(kvl[2], m.a, m.b, m.d)];
+                const kvl = tree_spliceOutSuccessor(m.data[2]);
+                return [kvl[0], kvl[1], tree_mk(kvl[2], m.data[0], m.data[1], m.data[3])];
             }
         }
         throw new Error("internal error: Map.spliceOutSuccessor");
     }
     function tree_remove(comparer, k, m) {
         if (m.tag === 1) {
-            var c = comparer.Compare(k, m.a);
+            const c = comparer.Compare(k, m.data[0]);
             if (c === 0) {
                 return new MapTree(0);
             }
@@ -236,26 +231,26 @@ define(["require", "exports", "./ListClass", "./ListClass", "./Util", "./Util", 
             }
         }
         else if (m.tag === 2) {
-            var c = comparer.Compare(k, m.a);
+            const c = comparer.Compare(k, m.data[0]);
             if (c < 0) {
-                return tree_rebalance(tree_remove(comparer, k, m.c), m.a, m.b, m.d);
+                return tree_rebalance(tree_remove(comparer, k, m.data[2]), m.data[0], m.data[1], m.data[3]);
             }
             else if (c === 0) {
-                if (m.c.tag === 0) {
-                    return m.d;
+                if (m.data[2].tag === 0) {
+                    return m.data[3];
                 }
                 else {
-                    if (m.d.tag === 0) {
-                        return m.c;
+                    if (m.data[3].tag === 0) {
+                        return m.data[2];
                     }
                     else {
-                        var input = tree_spliceOutSuccessor(m.d);
-                        return tree_mk(m.c, input[0], input[1], input[2]);
+                        const input = tree_spliceOutSuccessor(m.data[3]);
+                        return tree_mk(m.data[2], input[0], input[1], input[2]);
                     }
                 }
             }
             else {
-                return tree_rebalance(m.c, m.a, m.b, tree_remove(comparer, k, m.d));
+                return tree_rebalance(m.data[2], m.data[0], m.data[1], tree_remove(comparer, k, m.data[3]));
             }
         }
         else {
@@ -265,14 +260,14 @@ define(["require", "exports", "./ListClass", "./ListClass", "./Util", "./Util", 
     function tree_mem(comparer, k, m) {
         mem: while (true) {
             if (m.tag === 1) {
-                return comparer.Compare(k, m.a) === 0;
+                return comparer.Compare(k, m.data[0]) === 0;
             }
             else if (m.tag === 2) {
-                var c = comparer.Compare(k, m.a) | 0;
+                const c = comparer.Compare(k, m.data[0]) | 0;
                 if (c < 0) {
                     comparer = comparer;
                     k = k;
-                    m = m.c;
+                    m = m.data[2];
                     continue mem;
                 }
                 else if (c === 0) {
@@ -281,7 +276,7 @@ define(["require", "exports", "./ListClass", "./ListClass", "./Util", "./Util", 
                 else {
                     comparer = comparer;
                     k = k;
-                    m = m.d;
+                    m = m.data[3];
                     continue mem;
                 }
             }
@@ -292,24 +287,24 @@ define(["require", "exports", "./ListClass", "./ListClass", "./Util", "./Util", 
     }
     function tree_iter(f, m) {
         if (m.tag === 1) {
-            f(m.a, m.b);
+            f(m.data[0], m.data[1]);
         }
         else if (m.tag === 2) {
-            tree_iter(f, m.c);
-            f(m.a, m.b);
-            tree_iter(f, m.d);
+            tree_iter(f, m.data[2]);
+            f(m.data[0], m.data[1]);
+            tree_iter(f, m.data[3]);
         }
     }
     function tree_tryPick(f, m) {
         if (m.tag === 1) {
-            return f(m.a, m.b);
+            return f(m.data[0], m.data[1]);
         }
         else if (m.tag === 2) {
-            var matchValue = tree_tryPick(f, m.c);
+            var matchValue = tree_tryPick(f, m.data[2]);
             if (matchValue == null) {
-                var matchValue_1 = f(m.a, m.b);
+                var matchValue_1 = f(m.data[0], m.data[1]);
                 if (matchValue_1 == null) {
-                    return tree_tryPick(f, m.d);
+                    return tree_tryPick(f, m.data[3]);
                 }
                 else {
                     var res = matchValue_1;
@@ -325,22 +320,22 @@ define(["require", "exports", "./ListClass", "./ListClass", "./Util", "./Util", 
         }
     }
     function tree_exists(f, m) {
-        return m.tag === 1 ? f(m.a, m.b) : m.tag === 2 ? (tree_exists(f, m.c) ? true : f(m.a, m.b)) ? true : tree_exists(f, m.d) : false;
+        return m.tag === 1 ? f(m.data[0], m.data[1]) : m.tag === 2 ? (tree_exists(f, m.data[2]) ? true : f(m.data[0], m.data[1])) ? true : tree_exists(f, m.data[3]) : false;
     }
     function tree_forall(f, m) {
-        return m.tag === 1 ? f(m.a, m.b) : m.tag === 2 ? (tree_forall(f, m.c) ? f(m.a, m.b) : false) ? tree_forall(f, m.d) : false : true;
+        return m.tag === 1 ? f(m.data[0], m.data[1]) : m.tag === 2 ? (tree_forall(f, m.data[2]) ? f(m.data[0], m.data[1]) : false) ? tree_forall(f, m.data[3]) : false : true;
     }
     function tree_mapi(f, m) {
-        return m.tag === 1 ? new MapTree(1, m.a, f(m.a, m.b)) : m.tag === 2 ? new MapTree(2, m.a, f(m.a, m.b), tree_mapi(f, m.c), tree_mapi(f, m.d), m.e) : tree_empty();
+        return m.tag === 1 ? new MapTree(1, [m.data[0], f(m.data[0], m.data[1])]) : m.tag === 2 ? new MapTree(2, [m.data[0], f(m.data[0], m.data[1]), tree_mapi(f, m.data[2]), tree_mapi(f, m.data[3]), m.data[4]]) : tree_empty();
     }
     function tree_foldBack(f, m, x) {
-        return m.tag === 1 ? f(m.a, m.b, x) : m.tag === 2 ? tree_foldBack(f, m.c, f(m.a, m.b, tree_foldBack(f, m.d, x))) : x;
+        return m.tag === 1 ? f(m.data[0], m.data[1], x) : m.tag === 2 ? tree_foldBack(f, m.data[2], f(m.data[0], m.data[1], tree_foldBack(f, m.data[3], x))) : x;
     }
     function tree_fold(f, x, m) {
-        return m.tag === 1 ? f(x, m.a, m.b) : m.tag === 2 ? tree_fold(f, f(tree_fold(f, x, m.c), m.a, m.b), m.d) : x;
+        return m.tag === 1 ? f(x, m.data[0], m.data[1]) : m.tag === 2 ? tree_fold(f, f(tree_fold(f, x, m.data[2]), m.data[0], m.data[1]), m.data[3]) : x;
     }
     function tree_mkFromEnumerator(comparer, acc, e) {
-        var cur = e.next();
+        let cur = e.next();
         while (!cur.done) {
             acc = tree_add(comparer, cur.value[0], cur.value[1], acc);
             cur = e.next();
@@ -358,9 +353,9 @@ define(["require", "exports", "./ListClass", "./ListClass", "./Util", "./Util", 
             }
             else if (stack.head.tag === 2) {
                 return tree_collapseLHS(ListClass_2.ofArray([
-                    stack.head.c,
-                    new MapTree(1, stack.head.a, stack.head.b),
-                    stack.head.d
+                    stack.head.data[2],
+                    new MapTree(1, [stack.head.data[0], stack.head.data[1]]),
+                    stack.head.data[3]
                 ], stack.tail));
             }
             else {
@@ -380,7 +375,7 @@ define(["require", "exports", "./ListClass", "./ListClass", "./Util", "./Util", 
                 return null;
             }
             else if (i.stack.head.tag === 1) {
-                return [i.stack.head.a, i.stack.head.b];
+                return [i.stack.head.data[0], i.stack.head.data[1]];
             }
             throw new Error("Please report error: Map iterator, unexpected stack for current");
         }
@@ -410,73 +405,65 @@ define(["require", "exports", "./ListClass", "./ListClass", "./Util", "./Util", 
         }
         ;
     }
-    var FableMap = (function () {
-        function FableMap() {
+    class FableMap {
+        constructor() { }
+        ToString() {
+            return "map [" + Array.from(this).map(x => Util_1.toString(x)).join("; ") + "]";
         }
-        FableMap.prototype.ToString = function () {
-            return "map [" + Array.from(this).map(Util_1.toString).join("; ") + "]";
-        };
-        FableMap.prototype.Equals = function (m2) {
+        Equals(m2) {
             return this.CompareTo(m2) === 0;
-        };
-        FableMap.prototype.CompareTo = function (m2) {
-            var _this = this;
-            return this === m2 ? 0 : Seq_5.compareWith(function (kvp1, kvp2) {
-                var c = _this.comparer.Compare(kvp1[0], kvp2[0]);
+        }
+        CompareTo(m2) {
+            return this === m2 ? 0 : Seq_5.compareWith((kvp1, kvp2) => {
+                var c = this.comparer.Compare(kvp1[0], kvp2[0]);
                 return c !== 0 ? c : Util_3.compare(kvp1[1], kvp2[1]);
             }, this, m2);
-        };
-        FableMap.prototype[Symbol.iterator] = function () {
-            var i = tree_mkIterator(this.tree);
+        }
+        [Symbol.iterator]() {
+            let i = tree_mkIterator(this.tree);
             return {
-                next: function () { return tree_moveNext(i); }
+                next: () => tree_moveNext(i)
             };
-        };
-        FableMap.prototype.entries = function () {
+        }
+        entries() {
             return this[Symbol.iterator]();
-        };
-        FableMap.prototype.keys = function () {
-            return Seq_1.map(function (kv) { return kv[0]; }, this);
-        };
-        FableMap.prototype.values = function () {
-            return Seq_1.map(function (kv) { return kv[1]; }, this);
-        };
-        FableMap.prototype.get = function (k) {
+        }
+        keys() {
+            return Seq_1.map(kv => kv[0], this);
+        }
+        values() {
+            return Seq_1.map(kv => kv[1], this);
+        }
+        get(k) {
             return tree_find(this.comparer, k, this.tree);
-        };
-        FableMap.prototype.has = function (k) {
+        }
+        has(k) {
             return tree_mem(this.comparer, k, this.tree);
-        };
-        FableMap.prototype.set = function (k, v) {
+        }
+        set(k, v) {
             this.tree = tree_add(this.comparer, k, v, this.tree);
-        };
-        FableMap.prototype.delete = function (k) {
-            var oldSize = tree_size(this.tree);
+        }
+        delete(k) {
+            const oldSize = tree_size(this.tree);
             this.tree = tree_remove(this.comparer, k, this.tree);
             return oldSize > tree_size(this.tree);
-        };
-        FableMap.prototype.clear = function () {
+        }
+        clear() {
             this.tree = tree_empty();
-        };
-        Object.defineProperty(FableMap.prototype, "size", {
-            get: function () {
-                return tree_size(this.tree);
-            },
-            enumerable: true,
-            configurable: true
-        });
-        FableMap.prototype[Symbol_1.default.reflection] = function () {
+        }
+        get size() {
+            return tree_size(this.tree);
+        }
+        [Symbol_1.default.reflection]() {
             return {
                 type: "Microsoft.FSharp.Collections.FSharpMap",
                 interfaces: ["System.IEquatable", "System.IComparable", "System.Collections.Generic.IDictionary"]
             };
-        };
-        return FableMap;
-    }());
-    Object.defineProperty(exports, "__esModule", { value: true });
+        }
+    }
     exports.default = FableMap;
     function from(comparer, tree) {
-        var map = new FableMap();
+        let map = new FableMap();
         map.tree = tree;
         map.comparer = comparer || new Comparer_1.default();
         return map;
@@ -495,7 +482,7 @@ define(["require", "exports", "./ListClass", "./ListClass", "./Util", "./Util", 
     }
     exports.remove = remove;
     function containsValue(v, map) {
-        return Seq_2.fold(function (acc, k) { return acc || Util_2.equals(map.get(k), v); }, false, map.keys());
+        return Seq_2.fold((acc, k) => acc || Util_2.equals(map.get(k), v), false, map.keys());
     }
     exports.containsValue = containsValue;
     function tryGetValue(map, key, defaultValue) {
@@ -543,20 +530,20 @@ define(["require", "exports", "./ListClass", "./ListClass", "./Util", "./Util", 
     }
     exports.map = map;
     function partition(f, map) {
-        var rs = tree_partition(map.comparer, f, map.tree);
+        const rs = tree_partition(map.comparer, f, map.tree);
         return [from(map.comparer, rs[0]), from(map.comparer, rs[1])];
     }
     exports.partition = partition;
     function findKey(f, map) {
-        return Seq_3.pick(function (kv) { return f(kv[0], kv[1]) ? kv[0] : null; }, map);
+        return Seq_3.pick(kv => f(kv[0], kv[1]) ? kv[0] : null, map);
     }
     exports.findKey = findKey;
     function tryFindKey(f, map) {
-        return Seq_4.tryPick(function (kv) { return f(kv[0], kv[1]) ? kv[0] : null; }, map);
+        return Seq_4.tryPick(kv => f(kv[0], kv[1]) ? kv[0] : null, map);
     }
     exports.tryFindKey = tryFindKey;
     function pick(f, map) {
-        var res = tryPick(f, map);
+        const res = tryPick(f, map);
         if (res != null)
             return res;
         throw new Error("key not found");

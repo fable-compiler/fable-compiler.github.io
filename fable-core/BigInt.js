@@ -1,11 +1,8 @@
 define(["require", "exports", "./Symbol", "./Symbol", "./Util", "./BigInt/BigNat", "./BigInt/BigNat", "./Seq", "./Long", "./String"], function (require, exports, Symbol_1, Symbol_2, Util_1, BigNat_1, BigNat_2, Seq_1, Long_1, String_1) {
     "use strict";
-    var BigInteger = (function () {
-        function BigInteger(signInt, v) {
-            this.signInt = signInt;
-            this.v = v;
-        }
-        BigInteger.prototype[Symbol_2.default.reflection] = function () {
+    Object.defineProperty(exports, "__esModule", { value: true });
+    class BigInteger {
+        [Symbol_2.default.reflection]() {
             return {
                 type: "System.Numerics.BigInteger",
                 interfaces: ["FSharpRecord", "System.IComparable"],
@@ -14,112 +11,80 @@ define(["require", "exports", "./Symbol", "./Symbol", "./Util", "./BigInt/BigNat
                     v: BigNat_2.default
                 }
             };
-        };
-        Object.defineProperty(BigInteger.prototype, "Sign", {
-            get: function () {
-                if (this.IsZero) {
-                    return 0;
-                }
-                else {
-                    return this.signInt;
-                }
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BigInteger.prototype, "SignInt", {
-            get: function () {
+        }
+        constructor(signInt, v) {
+            this.signInt = signInt;
+            this.v = v;
+        }
+        get Sign() {
+            if (this.IsZero) {
+                return 0;
+            }
+            else {
                 return this.signInt;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BigInteger.prototype, "V", {
-            get: function () {
-                return this.v;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BigInteger.prototype, "IsZero", {
-            get: function () {
-                if (this.SignInt === 0) {
-                    return true;
-                }
-                else {
-                    return BigNat_1.isZero(this.V);
-                }
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BigInteger.prototype, "IsOne", {
-            get: function () {
-                if (this.SignInt === 1) {
-                    return BigNat_1.isOne(this.V);
-                }
-                else {
-                    return false;
-                }
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BigInteger.prototype, "StructuredDisplayString", {
-            get: function () {
-                return Util_1.toString(this);
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BigInteger.prototype, "IsSmall", {
-            get: function () {
-                if (this.IsZero) {
-                    return true;
-                }
-                else {
-                    return BigNat_1.isSmall(this.V);
-                }
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BigInteger.prototype, "IsNegative", {
-            get: function () {
-                if (this.SignInt === -1) {
-                    return !this.IsZero;
-                }
-                else {
-                    return false;
-                }
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(BigInteger.prototype, "IsPositive", {
-            get: function () {
-                if (this.SignInt === 1) {
-                    return !this.IsZero;
-                }
-                else {
-                    return false;
-                }
-            },
-            enumerable: true,
-            configurable: true
-        });
-        BigInteger.prototype.CompareTo = function (obj) {
+            }
+        }
+        get SignInt() {
+            return this.signInt;
+        }
+        get V() {
+            return this.v;
+        }
+        get IsZero() {
+            if (this.SignInt === 0) {
+                return true;
+            }
+            else {
+                return BigNat_1.isZero(this.V);
+            }
+        }
+        get IsOne() {
+            if (this.SignInt === 1) {
+                return BigNat_1.isOne(this.V);
+            }
+            else {
+                return false;
+            }
+        }
+        get StructuredDisplayString() {
+            return Util_1.toString(this);
+        }
+        get IsSmall() {
+            if (this.IsZero) {
+                return true;
+            }
+            else {
+                return BigNat_1.isSmall(this.V);
+            }
+        }
+        get IsNegative() {
+            if (this.SignInt === -1) {
+                return !this.IsZero;
+            }
+            else {
+                return false;
+            }
+        }
+        get IsPositive() {
+            if (this.SignInt === 1) {
+                return !this.IsZero;
+            }
+            else {
+                return false;
+            }
+        }
+        CompareTo(obj) {
             if (obj instanceof BigInteger) {
-                var that = obj;
+                const that = obj;
                 return compare(this, that);
             }
             else {
                 throw new Error("the objects are not comparable" + '\nParameter name: ' + "obj");
             }
-        };
-        BigInteger.prototype.ToString = function () {
-            var matchValue = this.SignInt;
-            var $var19 = null;
+        }
+        ToString() {
+            const matchValue = this.SignInt;
+            let $var19 = null;
             switch (matchValue) {
                 case 1:
                     $var19 = BigNat_1.toString(this.V);
@@ -139,26 +104,24 @@ define(["require", "exports", "./Symbol", "./Symbol", "./Util", "./BigInt/BigNat
                     throw new Error("signs should be +/- 1 or 0");
             }
             return $var19;
-        };
-        BigInteger.prototype.Equals = function (obj) {
+        }
+        Equals(obj) {
             if (obj instanceof BigInteger) {
-                var that = obj;
+                const that = obj;
                 return op_Equality(this, that);
             }
             else {
                 return false;
             }
-        };
-        BigInteger.prototype.GetHashCode = function () {
+        }
+        GetHashCode() {
             return hash(this);
-        };
-        return BigInteger;
-    }());
-    Object.defineProperty(exports, "__esModule", { value: true });
+        }
+    }
     exports.default = BigInteger;
     Symbol_1.setType("System.Numerics.BigInteger", BigInteger);
-    var smallLim = 4096;
-    var smallPosTab = Array.from(Seq_1.initialize(smallLim, function (n) { return BigNat_1.ofInt32(n); }));
+    const smallLim = 4096;
+    const smallPosTab = Array.from(Seq_1.initialize(smallLim, n => BigNat_1.ofInt32(n)));
     exports.one = fromInt32(1);
     exports.two = fromInt32(2);
     exports.zero = fromInt32(0);
@@ -208,7 +171,7 @@ define(["require", "exports", "./Symbol", "./Symbol", "./Util", "./BigInt/BigNat
     }
     exports.negn = negn;
     function op_Equality(x, y) {
-        var matchValue = [x.SignInt, y.SignInt];
+        const matchValue = [x.SignInt, y.SignInt];
         if (matchValue[0] === -1) {
             if (matchValue[1] === -1) {
                 return BigNat_1.equal(x.V, y.V);
@@ -271,7 +234,7 @@ define(["require", "exports", "./Symbol", "./Symbol", "./Util", "./BigInt/BigNat
     }
     exports.op_Inequality = op_Inequality;
     function op_LessThan(x, y) {
-        var matchValue = [x.SignInt, y.SignInt];
+        const matchValue = [x.SignInt, y.SignInt];
         if (matchValue[0] === -1) {
             if (matchValue[1] === -1) {
                 return BigNat_1.lt(y.V, x.V);
@@ -325,7 +288,7 @@ define(["require", "exports", "./Symbol", "./Symbol", "./Util", "./BigInt/BigNat
     }
     exports.op_LessThan = op_LessThan;
     function op_GreaterThan(x, y) {
-        var matchValue = [x.SignInt, y.SignInt];
+        const matchValue = [x.SignInt, y.SignInt];
         if (matchValue[0] === -1) {
             if (matchValue[1] === -1) {
                 return BigNat_1.gt(y.V, x.V);
@@ -400,7 +363,7 @@ define(["require", "exports", "./Symbol", "./Symbol", "./Util", "./BigInt/BigNat
     }
     exports.hash = hash;
     function op_UnaryNegation(z) {
-        var matchValue = z.SignInt;
+        const matchValue = z.SignInt;
         if (matchValue === 0) {
             return exports.zero;
         }
@@ -442,7 +405,7 @@ define(["require", "exports", "./Symbol", "./Symbol", "./Util", "./BigInt/BigNat
             return y;
         }
         else {
-            var matchValue = [x.SignInt, y.SignInt];
+            const matchValue = [x.SignInt, y.SignInt];
             if (matchValue[0] === -1) {
                 if (matchValue[1] === -1) {
                     return op_UnaryNegation(addnn(x.V, y.V));
@@ -479,7 +442,7 @@ define(["require", "exports", "./Symbol", "./Symbol", "./Util", "./BigInt/BigNat
             return op_UnaryNegation(y);
         }
         else {
-            var matchValue = [x.SignInt, y.SignInt];
+            const matchValue = [x.SignInt, y.SignInt];
             if (matchValue[0] === -1) {
                 if (matchValue[1] === -1) {
                     return subnn(y.V, x.V);
@@ -522,7 +485,7 @@ define(["require", "exports", "./Symbol", "./Symbol", "./Util", "./BigInt/BigNat
             return x;
         }
         else {
-            var m = BigNat_1.mul(x.V, y.V);
+            const m = BigNat_1.mul(x.V, y.V);
             return create(x.SignInt * y.SignInt, m);
         }
     }
@@ -535,8 +498,8 @@ define(["require", "exports", "./Symbol", "./Symbol", "./Util", "./BigInt/BigNat
             return [exports.zero, exports.zero];
         }
         else {
-            var patternInput = BigNat_1.divmod(x.V, y.V);
-            var matchValue = [x.SignInt, y.SignInt];
+            const patternInput = BigNat_1.divmod(x.V, y.V);
+            const matchValue = [x.SignInt, y.SignInt];
             if (matchValue[0] === -1) {
                 if (matchValue[1] === -1) {
                     return [posn(patternInput[0]), negn(patternInput[1])];
@@ -590,7 +553,7 @@ define(["require", "exports", "./Symbol", "./Symbol", "./Util", "./BigInt/BigNat
     }
     exports.op_BitwiseOr = op_BitwiseOr;
     function greatestCommonDivisor(x, y) {
-        var matchValue = [x.SignInt, y.SignInt];
+        const matchValue = [x.SignInt, y.SignInt];
         if (matchValue[0] === 0) {
             if (matchValue[1] === 0) {
                 return exports.zero;
@@ -617,7 +580,7 @@ define(["require", "exports", "./Symbol", "./Symbol", "./Util", "./BigInt/BigNat
     }
     exports.abs = abs;
     function op_LessThanOrEqual(x, y) {
-        var matchValue = [x.SignInt, y.SignInt];
+        const matchValue = [x.SignInt, y.SignInt];
         if (matchValue[0] === -1) {
             if (matchValue[1] === -1) {
                 return BigNat_1.lte(y.V, x.V);
@@ -671,7 +634,7 @@ define(["require", "exports", "./Symbol", "./Symbol", "./Util", "./BigInt/BigNat
     }
     exports.op_LessThanOrEqual = op_LessThanOrEqual;
     function op_GreaterThanOrEqual(x, y) {
-        var matchValue = [x.SignInt, y.SignInt];
+        const matchValue = [x.SignInt, y.SignInt];
         if (matchValue[0] === -1) {
             if (matchValue[1] === -1) {
                 return BigNat_1.gte(y.V, x.V);
@@ -745,7 +708,7 @@ define(["require", "exports", "./Symbol", "./Symbol", "./Util", "./BigInt/BigNat
             return 0;
         }
         else {
-            var u = BigNat_1.toUInt32(x.V);
+            const u = BigNat_1.toUInt32(x.V);
             if (u <= 2147483647 >>> 0) {
                 return x.SignInt * ~~u;
             }
@@ -772,7 +735,7 @@ define(["require", "exports", "./Symbol", "./Symbol", "./Util", "./BigInt/BigNat
             return Long_1.fromBits(0, 0, false);
         }
         else {
-            var u = BigNat_1.toUInt64(x.V);
+            const u = BigNat_1.toUInt64(x.V);
             if (u.CompareTo(Long_1.fromBits(4294967295, 2147483647, false)) <= 0) {
                 return Long_1.fromNumber(x.SignInt, false).mul(u);
             }
@@ -795,8 +758,8 @@ define(["require", "exports", "./Symbol", "./Symbol", "./Util", "./BigInt/BigNat
     }
     exports.toUInt64 = toUInt64;
     function toDouble(x) {
-        var matchValue = x.SignInt;
-        var $var20 = null;
+        const matchValue = x.SignInt;
+        let $var20 = null;
         switch (matchValue) {
             case 1:
                 $var20 = BigNat_1.toFloat(x.V);
@@ -825,12 +788,12 @@ define(["require", "exports", "./Symbol", "./Symbol", "./Util", "./BigInt/BigNat
         if (text == null) {
             throw new Error("text");
         }
-        var text_1 = String_1.trim(text, "both");
-        var len = text_1.length;
+        const text_1 = String_1.trim(text, "both");
+        const len = text_1.length;
         if (len === 0) {
             throw new Error();
         }
-        var matchValue = [text_1[0], len];
+        const matchValue = [text_1[0], len];
         if (matchValue[0] === "+") {
             if (matchValue[1] === 1) {
                 throw new Error();
@@ -872,7 +835,7 @@ define(["require", "exports", "./Symbol", "./Symbol", "./Util", "./BigInt/BigNat
         if (y < 0) {
             throw new Error("y");
         }
-        var matchValue = [x.IsZero, y];
+        const matchValue = [x.IsZero, y];
         if (matchValue[0]) {
             if (matchValue[1] === 0) {
                 return exports.one;
@@ -882,7 +845,7 @@ define(["require", "exports", "./Symbol", "./Symbol", "./Util", "./BigInt/BigNat
             }
         }
         else {
-            var yval = fromInt32(y);
+            const yval = fromInt32(y);
             return create(BigNat_1.isZero(BigNat_1.rem(yval.V, BigNat_1.two)) ? 1 : x.SignInt, BigNat_1.pow(x.V, yval.V));
         }
     }
