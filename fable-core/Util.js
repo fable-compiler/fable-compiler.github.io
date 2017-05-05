@@ -1,44 +1,47 @@
 define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1) {
     "use strict";
-    var NonDeclaredType = (function () {
-        function NonDeclaredType(kind, definition, generics) {
+    Object.defineProperty(exports, "__esModule", { value: true });
+    class NonDeclaredType {
+        constructor(kind, definition, generics) {
             this.kind = kind;
             this.definition = definition;
             this.generics = generics;
         }
-        NonDeclaredType.prototype.Equals = function (other) {
+        Equals(other) {
             if (this.kind === other.kind && this.definition === other.definition) {
                 return typeof this.generics === "object"
                     ? equalsRecords(this.generics, other.generics)
                     : this.generics === other.generics;
             }
             return false;
-        };
-        return NonDeclaredType;
-    }());
+        }
+    }
     exports.NonDeclaredType = NonDeclaredType;
     exports.Any = new NonDeclaredType("Any");
     exports.Unit = new NonDeclaredType("Unit");
     function Option(t) {
-        return new NonDeclaredType("Option", null, t);
+        return new NonDeclaredType("Option", null, [t]);
     }
     exports.Option = Option;
-    function FableArray(t, isTypedArray) {
-        if (isTypedArray === void 0) { isTypedArray = false; }
-        var def = null, genArg = null;
+    function FableArray(t, isTypedArray = false) {
+        let def = null, genArg = null;
         if (isTypedArray) {
             def = t;
         }
         else {
             genArg = t;
         }
-        return new NonDeclaredType("Array", def, genArg);
+        return new NonDeclaredType("Array", def, [genArg]);
     }
     exports.Array = FableArray;
-    function Tuple(ts) {
-        return new NonDeclaredType("Tuple", null, ts);
+    function Tuple(types) {
+        return new NonDeclaredType("Tuple", null, types);
     }
     exports.Tuple = Tuple;
+    function FableFunction(types) {
+        return new NonDeclaredType("Function", null, types);
+    }
+    exports.Function = FableFunction;
     function GenericParam(definition) {
         return new NonDeclaredType("GenericParam", definition);
     }
@@ -60,21 +63,21 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
     }
     exports.getDefinition = getDefinition;
     function extendInfo(cons, info) {
-        var parent = Object.getPrototypeOf(cons.prototype);
+        const parent = Object.getPrototypeOf(cons.prototype);
         if (typeof parent[Symbol_1.default.reflection] === "function") {
-            var newInfo_1 = {}, parentInfo_1 = parent[Symbol_1.default.reflection]();
-            Object.getOwnPropertyNames(info).forEach(function (k) {
-                var i = info[k];
+            const newInfo = {}, parentInfo = parent[Symbol_1.default.reflection]();
+            Object.getOwnPropertyNames(info).forEach(k => {
+                const i = info[k];
                 if (typeof i === "object") {
-                    newInfo_1[k] = Array.isArray(i)
-                        ? (parentInfo_1[k] || []).concat(i)
-                        : Object.assign(parentInfo_1[k] || {}, i);
+                    newInfo[k] = Array.isArray(i)
+                        ? (parentInfo[k] || []).concat(i)
+                        : Object.assign(parentInfo[k] || {}, i);
                 }
                 else {
-                    newInfo_1[k] = i;
+                    newInfo[k] = i;
                 }
             });
-            return newInfo_1;
+            return newInfo;
         }
         return info;
     }
@@ -84,7 +87,7 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
             return typeof obj[Symbol.iterator] === "function";
         }
         else if (typeof obj[Symbol_1.default.reflection] === "function") {
-            var interfaces = obj[Symbol_1.default.reflection]().interfaces;
+            const interfaces = obj[Symbol_1.default.reflection]().interfaces;
             return Array.isArray(interfaces) && interfaces.indexOf(interfaceName) > -1;
         }
         return false;
@@ -94,31 +97,48 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
         if (obj == null) {
             return [];
         }
-        var propertyMap = typeof obj[Symbol_1.default.reflection] === "function" ? obj[Symbol_1.default.reflection]().properties || [] : obj;
+        const propertyMap = typeof obj[Symbol_1.default.reflection] === "function" ? obj[Symbol_1.default.reflection]().properties || [] : obj;
         return Object.getOwnPropertyNames(propertyMap);
     }
     exports.getPropertyNames = getPropertyNames;
-    function getUnionFields(obj) {
-        var fields = [];
-        for (var i = 97, j = void 0; i < 97 + (obj.size | 0); i++) {
-            var j_1 = String.fromCharCode(i);
-            fields.push(obj[j_1]);
-        }
-        return fields;
-    }
-    exports.getUnionFields = getUnionFields;
     function isArray(obj) {
         return Array.isArray(obj) || ArrayBuffer.isView(obj);
     }
     exports.isArray = isArray;
-    function getRestParams(args, idx) {
-        for (var _len = args.length, restArgs = Array(_len > idx ? _len - idx : 0), _key = idx; _key < _len; _key++)
-            restArgs[_key - idx] = args[_key];
-        return restArgs;
-    }
-    exports.getRestParams = getRestParams;
-    function toString(o) {
-        return o != null && typeof o.ToString == "function" ? o.ToString() : String(o);
+    function toString(obj, quoteStrings = false) {
+        function isObject(x) {
+            return x !== null && typeof x === "object" && !(x instanceof Number) && !(x instanceof String) && !(x instanceof Boolean);
+        }
+        if (obj == null || typeof obj === "number") {
+            return String(obj);
+        }
+        if (typeof obj === "string") {
+            return quoteStrings ? JSON.stringify(obj) : obj;
+        }
+        if (typeof obj.ToString == "function") {
+            return obj.ToString();
+        }
+        if (hasInterface(obj, "FSharpUnion")) {
+            const info = obj[Symbol_1.default.reflection]();
+            const uci = info.cases[obj.tag];
+            switch (uci.length) {
+                case 1:
+                    return uci[0];
+                case 2:
+                    return uci[0] + " (" + toString(obj.data, true) + ")";
+                default:
+                    return uci[0] + " (" + obj.data.map((x) => toString(x, true)).join(",") + ")";
+            }
+        }
+        try {
+            return JSON.stringify(obj, function (k, v) {
+                return v && v[Symbol.iterator] && !Array.isArray(v) && isObject(v) ? Array.from(v)
+                    : v && typeof v.ToString === "function" ? toString(v) : v;
+            });
+        }
+        catch (err) {
+            return "{" + Object.getOwnPropertyNames(obj).map(k => k + ": " + String(obj[k])).join(", ") + "}";
+        }
     }
     exports.toString = toString;
     function hash(x) {
@@ -126,8 +146,8 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
             return x.GetHashCode();
         }
         else {
-            var s = JSON.stringify(x);
-            var h = 5381, i = 0, len = s.length;
+            let s = JSON.stringify(x);
+            let h = 5381, i = 0, len = s.length;
             while (i < len) {
                 h = (h * 33) ^ s.charCodeAt(i++);
             }
@@ -149,7 +169,7 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
         else if (Array.isArray(x)) {
             if (x.length != y.length)
                 return false;
-            for (var i = 0; i < x.length; i++)
+            for (let i = 0; i < x.length; i++)
                 if (!equals(x[i], y[i]))
                     return false;
             return true;
@@ -157,8 +177,8 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
         else if (ArrayBuffer.isView(x)) {
             if (x.byteLength !== y.byteLength)
                 return false;
-            var dv1 = new DataView(x.buffer), dv2 = new DataView(y.buffer);
-            for (var i = 0; i < x.byteLength; i++)
+            const dv1 = new DataView(x.buffer), dv2 = new DataView(y.buffer);
+            for (let i = 0; i < x.byteLength; i++)
                 if (dv1.getUint8(i) !== dv2.getUint8(i))
                     return false;
             return true;
@@ -187,7 +207,7 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
         else if (Array.isArray(x)) {
             if (x.length != y.length)
                 return x.length < y.length ? -1 : 1;
-            for (var i = 0, j = 0; i < x.length; i++)
+            for (let i = 0, j = 0; i < x.length; i++)
                 if ((j = compare(x[i], y[i])) !== 0)
                     return j;
             return 0;
@@ -195,8 +215,8 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
         else if (ArrayBuffer.isView(x)) {
             if (x.byteLength != y.byteLength)
                 return x.byteLength < y.byteLength ? -1 : 1;
-            var dv1 = new DataView(x.buffer), dv2 = new DataView(y.buffer);
-            for (var i = 0, b1 = 0, b2 = 0; i < x.byteLength; i++) {
+            const dv1 = new DataView(x.buffer), dv2 = new DataView(y.buffer);
+            for (let i = 0, b1 = 0, b2 = 0; i < x.byteLength; i++) {
                 b1 = dv1.getUint8(i), b2 = dv2.getUint8(i);
                 if (b1 < b2)
                     return -1;
@@ -206,11 +226,11 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
             return 0;
         }
         else if (x instanceof Date) {
-            var xtime = x.getTime(), ytime = y.getTime();
+            let xtime = x.getTime(), ytime = y.getTime();
             return xtime === ytime ? 0 : (xtime < ytime ? -1 : 1);
         }
         else if (typeof x === "object") {
-            var xhash = hash(x), yhash = hash(y);
+            let xhash = hash(x), yhash = hash(y);
             if (xhash === yhash) {
                 return equals(x, y) ? 0 : -1;
             }
@@ -227,8 +247,8 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
             return true;
         }
         else {
-            var keys = getPropertyNames(x);
-            for (var i = 0; i < keys.length; i++) {
+            const keys = getPropertyNames(x);
+            for (let i = 0; i < keys.length; i++) {
                 if (!equals(x[keys[i]], y[keys[i]]))
                     return false;
             }
@@ -241,9 +261,9 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
             return 0;
         }
         else {
-            var keys = getPropertyNames(x);
-            for (var i = 0; i < keys.length; i++) {
-                var res = compare(x[keys[i]], y[keys[i]]);
+            const keys = getPropertyNames(x);
+            for (let i = 0; i < keys.length; i++) {
+                let res = compare(x[keys[i]], y[keys[i]]);
                 if (res !== 0)
                     return res;
             }
@@ -252,20 +272,7 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
     }
     exports.compareRecords = compareRecords;
     function equalsUnions(x, y) {
-        if (x === y) {
-            return true;
-        }
-        else if (x.tag !== y.tag) {
-            return false;
-        }
-        else {
-            for (var i = 97, j = void 0; i < 97 + x.size; i++) {
-                j = String.fromCharCode(i);
-                if (!equals(x[j], y[j]))
-                    return false;
-            }
-            return true;
-        }
+        return x === y || (x.tag === y.tag && equals(x.data, y.data));
     }
     exports.equalsUnions = equalsUnions;
     function compareUnions(x, y) {
@@ -273,33 +280,51 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
             return 0;
         }
         else {
-            var res = x.tag < y.tag ? -1 : (x.tag > y.tag ? 1 : 0);
-            if (res !== 0)
-                return res;
-            for (var i = 97, j = void 0; i < 97 + x.size; i++) {
-                j = String.fromCharCode(i);
-                res = compare(x[j], y[j]);
-                if (res !== 0)
-                    return res;
-            }
-            return 0;
+            let res = x.tag < y.tag ? -1 : (x.tag > y.tag ? 1 : 0);
+            return res !== 0 ? res : compare(x.data, y.data);
         }
     }
     exports.compareUnions = compareUnions;
     function createDisposable(f) {
-        return _a = {
-                Dispose: f
-            },
-            _a[Symbol_1.default.reflection] = function () { return { interfaces: ["System.IDisposable"] }; },
-            _a;
-        var _a;
+        return {
+            Dispose: f,
+            [Symbol_1.default.reflection]() { return { interfaces: ["System.IDisposable"] }; }
+        };
     }
     exports.createDisposable = createDisposable;
-    function createObj(fields) {
-        var iter = fields[Symbol.iterator]();
-        var cur = iter.next(), o = {};
+    const CaseRules = {
+        None: 0,
+        LowerFirst: 1,
+    };
+    function createObj(fields, caseRule = CaseRules.None) {
+        const iter = fields[Symbol.iterator]();
+        let cur = iter.next(), o = {}, casesCache = null;
         while (!cur.done) {
-            o[cur.value[0]] = cur.value[1];
+            let value = cur.value;
+            if (Array.isArray(value)) {
+                o[value[0]] = value[1];
+            }
+            else {
+                casesCache = casesCache || new Map();
+                let proto = Object.getPrototypeOf(value);
+                let cases = casesCache.get(proto), caseInfo = null;
+                if (cases == null) {
+                    if (typeof proto[Symbol_1.default.reflection] === "function") {
+                        cases = proto[Symbol_1.default.reflection]().cases;
+                        casesCache.set(proto, cases);
+                    }
+                }
+                if (cases != null && Array.isArray(caseInfo = cases[value.tag])) {
+                    let key = caseInfo[0];
+                    if (caseRule === CaseRules.LowerFirst) {
+                        key = key[0].toLowerCase() + key.substr(1);
+                    }
+                    o[key] = caseInfo.length === 1 ? true : value.data;
+                }
+                else {
+                    throw new Error("Cannot infer key and value of " + value);
+                }
+            }
             cur = iter.next();
         }
         return o;
@@ -307,16 +332,16 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
     exports.createObj = createObj;
     function toPlainJsObj(source) {
         if (source != null && source.constructor != Object) {
-            var target = {};
-            var props = Object.getOwnPropertyNames(source);
-            for (var i = 0; i < props.length; i++) {
+            let target = {};
+            let props = Object.getOwnPropertyNames(source);
+            for (let i = 0; i < props.length; i++) {
                 target[props[i]] = source[props[i]];
             }
-            var proto = Object.getPrototypeOf(source);
+            const proto = Object.getPrototypeOf(source);
             if (proto != null) {
                 props = Object.getOwnPropertyNames(proto);
-                for (var i = 0; i < props.length; i++) {
-                    var prop = Object.getOwnPropertyDescriptor(proto, props[i]);
+                for (let i = 0; i < props.length; i++) {
+                    const prop = Object.getOwnPropertyDescriptor(proto, props[i]);
                     if (prop.value) {
                         target[props[i]] = prop.value;
                     }
@@ -332,13 +357,12 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
         }
     }
     exports.toPlainJsObj = toPlainJsObj;
-    function round(value, digits) {
-        if (digits === void 0) { digits = 0; }
-        var m = Math.pow(10, digits);
-        var n = +(digits ? value * m : value).toFixed(8);
-        var i = Math.floor(n), f = n - i;
-        var e = 1e-8;
-        var r = (f > 0.5 - e && f < 0.5 + e) ? ((i % 2 == 0) ? i : i + 1) : Math.round(n);
+    function round(value, digits = 0) {
+        const m = Math.pow(10, digits);
+        const n = +(digits ? value * m : value).toFixed(8);
+        const i = Math.floor(n), f = n - i;
+        const e = 1e-8;
+        const r = (f > 0.5 - e && f < 0.5 + e) ? ((i % 2 == 0) ? i : i + 1) : Math.round(n);
         return digits ? r / m : r;
     }
     exports.round = round;
@@ -353,14 +377,14 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
     function applyOperator(x, y, operator) {
         function getMethod(obj) {
             if (typeof obj === "object") {
-                var cons = Object.getPrototypeOf(obj).constructor;
+                const cons = Object.getPrototypeOf(obj).constructor;
                 if (typeof cons[operator] === "function") {
                     return cons[operator];
                 }
             }
             return null;
         }
-        var meth = getMethod(x);
+        let meth = getMethod(x);
         if (meth != null) {
             return meth(x, y);
         }
@@ -402,4 +426,28 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
         }
     }
     exports.applyOperator = applyOperator;
+    function parseNumber(v) {
+        return +v;
+    }
+    exports.parseNumber = parseNumber;
+    function tryParse(v, initial, parser, fn) {
+        if (v != null) {
+            const a = parser.exec(v);
+            if (a !== null) {
+                return [true, fn(a[1])];
+            }
+        }
+        return [false, initial];
+    }
+    exports.tryParse = tryParse;
+    function parse(v, initial, parser, fn) {
+        const a = tryParse(v, initial, parser, fn);
+        if (a[0]) {
+            return a[1];
+        }
+        else {
+            throw new Error("Input string was not in a correct format.");
+        }
+    }
+    exports.parse = parse;
 });

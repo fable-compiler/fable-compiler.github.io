@@ -1,7 +1,8 @@
 define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1) {
     "use strict";
-    var Long = (function () {
-        function Long(low, high, unsigned) {
+    Object.defineProperty(exports, "__esModule", { value: true });
+    class Long {
+        constructor(low, high, unsigned) {
             this.eq = this.equals;
             this.neq = this.notEquals;
             this.lt = this.lessThan;
@@ -25,16 +26,15 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
             this.high = high | 0;
             this.unsigned = !!unsigned;
         }
-        Long.prototype.toInt = function () {
+        toInt() {
             return this.unsigned ? this.low >>> 0 : this.low;
-        };
-        Long.prototype.toNumber = function () {
+        }
+        toNumber() {
             if (this.unsigned)
                 return ((this.high >>> 0) * TWO_PWR_32_DBL) + (this.low >>> 0);
             return this.high * TWO_PWR_32_DBL + (this.low >>> 0);
-        };
-        Long.prototype.toString = function (radix) {
-            if (radix === void 0) { radix = 10; }
+        }
+        toString(radix = 10) {
             radix = radix || 10;
             if (radix < 2 || 36 < radix)
                 throw RangeError('radix');
@@ -61,20 +61,20 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
                     result = '' + digits + result;
                 }
             }
-        };
-        Long.prototype.getHighBits = function () {
+        }
+        getHighBits() {
             return this.high;
-        };
-        Long.prototype.getHighBitsUnsigned = function () {
+        }
+        getHighBitsUnsigned() {
             return this.high >>> 0;
-        };
-        Long.prototype.getLowBits = function () {
+        }
+        getLowBits() {
             return this.low;
-        };
-        Long.prototype.getLowBitsUnsigned = function () {
+        }
+        getLowBitsUnsigned() {
             return this.low >>> 0;
-        };
-        Long.prototype.getNumBitsAbs = function () {
+        }
+        getNumBitsAbs() {
             if (this.isNegative())
                 return this.eq(exports.MIN_VALUE) ? 64 : this.neg().getNumBitsAbs();
             var val = this.high != 0 ? this.high : this.low;
@@ -82,45 +82,45 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
                 if ((val & (1 << bit)) != 0)
                     break;
             return this.high != 0 ? bit + 33 : bit + 1;
-        };
-        Long.prototype.isZero = function () {
+        }
+        isZero() {
             return this.high === 0 && this.low === 0;
-        };
-        Long.prototype.isNegative = function () {
+        }
+        isNegative() {
             return !this.unsigned && this.high < 0;
-        };
-        Long.prototype.isPositive = function () {
+        }
+        isPositive() {
             return this.unsigned || this.high >= 0;
-        };
-        Long.prototype.isOdd = function () {
+        }
+        isOdd() {
             return (this.low & 1) === 1;
-        };
-        Long.prototype.isEven = function () {
+        }
+        isEven() {
             return (this.low & 1) === 0;
-        };
-        Long.prototype.equals = function (other) {
+        }
+        equals(other) {
             if (!isLong(other))
                 other = fromValue(other);
             if (this.unsigned !== other.unsigned && (this.high >>> 31) === 1 && (other.high >>> 31) === 1)
                 return false;
             return this.high === other.high && this.low === other.low;
-        };
-        Long.prototype.notEquals = function (other) {
+        }
+        notEquals(other) {
             return !this.eq(other);
-        };
-        Long.prototype.lessThan = function (other) {
+        }
+        lessThan(other) {
             return this.comp(other) < 0;
-        };
-        Long.prototype.lessThanOrEqual = function (other) {
+        }
+        lessThanOrEqual(other) {
             return this.comp(other) <= 0;
-        };
-        Long.prototype.greaterThan = function (other) {
+        }
+        greaterThan(other) {
             return this.comp(other) > 0;
-        };
-        Long.prototype.greaterThanOrEqual = function (other) {
+        }
+        greaterThanOrEqual(other) {
             return this.comp(other) >= 0;
-        };
-        Long.prototype.compare = function (other) {
+        }
+        compare(other) {
             if (!isLong(other))
                 other = fromValue(other);
             if (this.eq(other))
@@ -133,19 +133,19 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
             if (!this.unsigned)
                 return this.sub(other).isNegative() ? -1 : 1;
             return (other.high >>> 0) > (this.high >>> 0) || (other.high === this.high && (other.low >>> 0) > (this.low >>> 0)) ? -1 : 1;
-        };
-        Long.prototype.negate = function () {
+        }
+        negate() {
             if (!this.unsigned && this.eq(exports.MIN_VALUE))
                 return exports.MIN_VALUE;
             return this.not().add(exports.ONE);
-        };
-        Long.prototype.absolute = function () {
+        }
+        absolute() {
             if (!this.unsigned && this.isNegative())
                 return this.negate();
             else
                 return this;
-        };
-        Long.prototype.add = function (addend) {
+        }
+        add(addend) {
             if (!isLong(addend))
                 addend = fromValue(addend);
             var a48 = this.high >>> 16;
@@ -169,13 +169,13 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
             c48 += a48 + b48;
             c48 &= 0xFFFF;
             return fromBits((c16 << 16) | c00, (c48 << 16) | c32, this.unsigned);
-        };
-        Long.prototype.subtract = function (subtrahend) {
+        }
+        subtract(subtrahend) {
             if (!isLong(subtrahend))
                 subtrahend = fromValue(subtrahend);
             return this.add(subtrahend.neg());
-        };
-        Long.prototype.multiply = function (multiplier) {
+        }
+        multiply(multiplier) {
             if (this.isZero())
                 return exports.ZERO;
             if (!isLong(multiplier))
@@ -226,8 +226,8 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
             c48 += a48 * b00 + a32 * b16 + a16 * b32 + a00 * b48;
             c48 &= 0xFFFF;
             return fromBits((c16 << 16) | c00, (c48 << 16) | c32, this.unsigned);
-        };
-        Long.prototype.divide = function (divisor) {
+        }
+        divide(divisor) {
             if (!isLong(divisor))
                 divisor = fromValue(divisor);
             if (divisor.isZero())
@@ -243,13 +243,13 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
                         return exports.ONE;
                     else {
                         var halfThis = this.shr(1);
-                        var approx_1 = halfThis.div(divisor).shl(1);
-                        if (approx_1.eq(exports.ZERO)) {
+                        let approx = halfThis.div(divisor).shl(1);
+                        if (approx.eq(exports.ZERO)) {
                             return divisor.isNegative() ? exports.ONE : exports.NEG_ONE;
                         }
                         else {
-                            rem = this.sub(divisor.mul(approx_1));
-                            res = approx_1.add(rem.div(divisor));
+                            rem = this.sub(divisor.mul(approx));
+                            res = approx.add(rem.div(divisor));
                             return res;
                         }
                     }
@@ -289,33 +289,33 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
                 rem = rem.sub(approxRem);
             }
             return res;
-        };
-        Long.prototype.modulo = function (divisor) {
+        }
+        modulo(divisor) {
             if (!isLong(divisor))
                 divisor = fromValue(divisor);
             return this.sub(this.div(divisor).mul(divisor));
-        };
+        }
         ;
-        Long.prototype.not = function () {
+        not() {
             return fromBits(~this.low, ~this.high, this.unsigned);
-        };
+        }
         ;
-        Long.prototype.and = function (other) {
+        and(other) {
             if (!isLong(other))
                 other = fromValue(other);
             return fromBits(this.low & other.low, this.high & other.high, this.unsigned);
-        };
-        Long.prototype.or = function (other) {
+        }
+        or(other) {
             if (!isLong(other))
                 other = fromValue(other);
             return fromBits(this.low | other.low, this.high | other.high, this.unsigned);
-        };
-        Long.prototype.xor = function (other) {
+        }
+        xor(other) {
             if (!isLong(other))
                 other = fromValue(other);
             return fromBits(this.low ^ other.low, this.high ^ other.high, this.unsigned);
-        };
-        Long.prototype.shiftLeft = function (numBits) {
+        }
+        shiftLeft(numBits) {
             if (isLong(numBits))
                 numBits = numBits.toInt();
             numBits = numBits & 63;
@@ -325,8 +325,8 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
                 return fromBits(this.low << numBits, (this.high << numBits) | (this.low >>> (32 - numBits)), this.unsigned);
             else
                 return fromBits(0, this.low << (numBits - 32), this.unsigned);
-        };
-        Long.prototype.shiftRight = function (numBits) {
+        }
+        shiftRight(numBits) {
             if (isLong(numBits))
                 numBits = numBits.toInt();
             numBits = numBits & 63;
@@ -336,8 +336,8 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
                 return fromBits((this.low >>> numBits) | (this.high << (32 - numBits)), this.high >> numBits, this.unsigned);
             else
                 return fromBits(this.high >> (numBits - 32), this.high >= 0 ? 0 : -1, this.unsigned);
-        };
-        Long.prototype.shiftRightUnsigned = function (numBits) {
+        }
+        shiftRightUnsigned(numBits) {
             if (isLong(numBits))
                 numBits = numBits.toInt();
             numBits = numBits & 63;
@@ -354,21 +354,21 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
                 else
                     return fromBits(high >>> (numBits - 32), 0, this.unsigned);
             }
-        };
-        Long.prototype.toSigned = function () {
+        }
+        toSigned() {
             if (!this.unsigned)
                 return this;
             return fromBits(this.low, this.high, false);
-        };
-        Long.prototype.toUnsigned = function () {
+        }
+        toUnsigned() {
             if (this.unsigned)
                 return this;
             return fromBits(this.low, this.high, true);
-        };
-        Long.prototype.toBytes = function (le) {
+        }
+        toBytes(le) {
             return le ? this.toBytesLE() : this.toBytesBE();
-        };
-        Long.prototype.toBytesLE = function () {
+        }
+        toBytesLE() {
             var hi = this.high, lo = this.low;
             return [
                 lo & 0xff,
@@ -380,8 +380,8 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
                 (hi >>> 16) & 0xff,
                 (hi >>> 24) & 0xff
             ];
-        };
-        Long.prototype.toBytesBE = function () {
+        }
+        toBytesBE() {
             var hi = this.high, lo = this.low;
             return [
                 (hi >>> 24) & 0xff,
@@ -393,8 +393,8 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
                 (lo >>> 8) & 0xff,
                 lo & 0xff
             ];
-        };
-        Long.prototype[Symbol_1.default.reflection] = function () {
+        }
+        [Symbol_1.default.reflection]() {
             return {
                 type: "System.Int64",
                 interfaces: ["FSharpRecord", "System.IComparable"],
@@ -404,9 +404,8 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
                     unsigned: "boolean"
                 }
             };
-        };
-        return Long;
-    }());
+        }
+    }
     exports.Long = Long;
     var INT_CACHE = {};
     var UINT_CACHE = {};
@@ -414,8 +413,7 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
         return (obj && obj instanceof Long);
     }
     exports.isLong = isLong;
-    function fromInt(value, unsigned) {
-        if (unsigned === void 0) { unsigned = false; }
+    function fromInt(value, unsigned = false) {
         var obj, cachedObj, cache;
         if (unsigned) {
             value >>>= 0;
@@ -443,8 +441,7 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
         }
     }
     exports.fromInt = fromInt;
-    function fromNumber(value, unsigned) {
-        if (unsigned === void 0) { unsigned = false; }
+    function fromNumber(value, unsigned = false) {
         if (isNaN(value) || !isFinite(value))
             return unsigned ? exports.UZERO : exports.ZERO;
         if (unsigned) {
@@ -469,9 +466,7 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
     }
     exports.fromBits = fromBits;
     var pow_dbl = Math.pow;
-    function fromString(str, unsigned, radix) {
-        if (unsigned === void 0) { unsigned = false; }
-        if (radix === void 0) { radix = 10; }
+    function fromString(str, unsigned = false, radix = 10) {
         if (str.length === 0)
             throw Error('empty string');
         if (str === "NaN" || str === "Infinity" || str === "+Infinity" || str === "-Infinity")
@@ -486,7 +481,7 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
         radix = radix || 10;
         if (radix < 2 || 36 < radix)
             throw RangeError('radix');
-        var p = str.indexOf('-');
+        let p = str.indexOf('-');
         if (p > 0)
             throw Error('interior hyphen');
         else if (p === 0) {
@@ -519,12 +514,12 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
         return fromBits(val.low, val.high, val.unsigned);
     }
     exports.fromValue = fromValue;
-    var TWO_PWR_16_DBL = 1 << 16;
-    var TWO_PWR_24_DBL = 1 << 24;
-    var TWO_PWR_32_DBL = TWO_PWR_16_DBL * TWO_PWR_16_DBL;
-    var TWO_PWR_64_DBL = TWO_PWR_32_DBL * TWO_PWR_32_DBL;
-    var TWO_PWR_63_DBL = TWO_PWR_64_DBL / 2;
-    var TWO_PWR_24 = fromInt(TWO_PWR_24_DBL);
+    const TWO_PWR_16_DBL = 1 << 16;
+    const TWO_PWR_24_DBL = 1 << 24;
+    const TWO_PWR_32_DBL = TWO_PWR_16_DBL * TWO_PWR_16_DBL;
+    const TWO_PWR_64_DBL = TWO_PWR_32_DBL * TWO_PWR_32_DBL;
+    const TWO_PWR_63_DBL = TWO_PWR_64_DBL / 2;
+    const TWO_PWR_24 = fromInt(TWO_PWR_24_DBL);
     exports.ZERO = fromInt(0);
     exports.UZERO = fromInt(0, true);
     exports.ONE = fromInt(1);

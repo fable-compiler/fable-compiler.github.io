@@ -1,11 +1,7 @@
 define(["require", "exports", "./Util", "./Long"], function (require, exports, Util_1, Long) {
     "use strict";
-    function create(d, h, m, s, ms) {
-        if (d === void 0) { d = 0; }
-        if (h === void 0) { h = 0; }
-        if (m === void 0) { m = 0; }
-        if (s === void 0) { s = 0; }
-        if (ms === void 0) { ms = 0; }
+    Object.defineProperty(exports, "__esModule", { value: true });
+    function create(d = 0, h = 0, m = 0, s = 0, ms = 0) {
         switch (arguments.length) {
             case 1:
                 return fromTicks(arguments[0]);
@@ -13,7 +9,7 @@ define(["require", "exports", "./Util", "./Long"], function (require, exports, U
                 d = 0, h = arguments[0], m = arguments[1], s = arguments[2], ms = 0;
                 break;
             default:
-                d = arguments[0], h = arguments[1], m = arguments[2], s = arguments[3], ms = arguments[4] || 0;
+                d = arguments[0], h = arguments[1], m = arguments[2], s = arguments[3], ms = arguments[4] | 0;
                 break;
         }
         return d * 86400000 + h * 3600000 + m * 60000 + s * 1000 + ms;

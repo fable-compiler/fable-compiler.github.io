@@ -1,17 +1,19 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
-    function CurriedLambda(arities, f, _this) {
+    Object.defineProperty(exports, "__esModule", { value: true });
+    function CurriedLambda(f, _this, expectedArgsLength) {
         return function () {
             _this = _this || this;
-            var args = [];
-            for (var i = 0; i < arguments.length; i++) {
+            let args = [];
+            expectedArgsLength = expectedArgsLength || f.length;
+            for (let i = 0; i < arguments.length; i++) {
                 args.push(arguments[i]);
             }
-            if (args.length >= arities[0]) {
-                var restArgs = args.splice(arities[0]);
-                var res = f.apply(_this, args);
-                if (arities.length > 1) {
-                    var newLambda = CurriedLambda(arities.slice(1), res, _this);
+            if (args.length >= expectedArgsLength) {
+                let restArgs = args.splice(expectedArgsLength);
+                let res = f.apply(_this, args);
+                if (typeof res === "function") {
+                    let newLambda = CurriedLambda(res, _this);
                     return restArgs.length === 0 ? newLambda : newLambda.apply(_this, restArgs);
                 }
                 else {
@@ -19,16 +21,14 @@ define(["require", "exports"], function (require, exports) {
                 }
             }
             else {
-                arities[0] -= args.length;
-                return CurriedLambda(arities, function () {
-                    for (var i = 0; i < arguments.length; i++) {
+                return CurriedLambda(function () {
+                    for (let i = 0; i < arguments.length; i++) {
                         args.push(arguments[i]);
                     }
                     return f.apply(_this, args);
-                }, _this);
+                }, _this, expectedArgsLength - args.length);
             }
         };
     }
-    Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = CurriedLambda;
 });

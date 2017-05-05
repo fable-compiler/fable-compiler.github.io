@@ -1,5 +1,6 @@
 define(["require", "exports", "./TimeSpan", "./Util", "./Long"], function (require, exports, TimeSpan_1, Util_1, Long) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     function minValue() {
         return parse(-8640000000000000, 1);
     }
@@ -12,7 +13,7 @@ define(["require", "exports", "./TimeSpan", "./Util", "./Long"], function (requi
         if (kind == null) {
             kind = typeof v == "string" && v.slice(-1) == "Z" ? 1 : 2;
         }
-        var date = (v == null) ? new Date() : new Date(v);
+        let date = (v == null) ? new Date() : new Date(v);
         if (kind === 2) {
             date.kind = kind;
         }
@@ -31,13 +32,8 @@ define(["require", "exports", "./TimeSpan", "./Util", "./Long"], function (requi
         }
     }
     exports.tryParse = tryParse;
-    function create(year, month, day, h, m, s, ms, kind) {
-        if (h === void 0) { h = 0; }
-        if (m === void 0) { m = 0; }
-        if (s === void 0) { s = 0; }
-        if (ms === void 0) { ms = 0; }
-        if (kind === void 0) { kind = 2; }
-        var date;
+    function create(year, month, day, h = 0, m = 0, s = 0, ms = 0, kind = 2) {
+        let date;
         if (kind === 2) {
             date = new Date(year, month - 1, day, h, m, s, ms);
             date.kind = kind;
@@ -82,7 +78,7 @@ define(["require", "exports", "./TimeSpan", "./Util", "./Long"], function (requi
             return d;
         }
         else {
-            var d2 = new Date(d.getTime());
+            let d2 = new Date(d.getTime());
             d2.kind = 2;
             return d2;
         }
@@ -144,10 +140,10 @@ define(["require", "exports", "./TimeSpan", "./Util", "./Long"], function (requi
     }
     exports.toBinary = toBinary;
     function dayOfYear(d) {
-        var _year = year(d);
-        var _month = month(d);
-        var _day = day(d);
-        for (var i = 1; i < _month; i++)
+        const _year = year(d);
+        const _month = month(d);
+        let _day = day(d);
+        for (let i = 1; i < _month; i++)
             _day += daysInMonth(_year, i);
         return _day;
     }
@@ -181,17 +177,17 @@ define(["require", "exports", "./TimeSpan", "./Util", "./Long"], function (requi
     }
     exports.addTicks = addTicks;
     function addYears(d, v) {
-        var newMonth = month(d);
-        var newYear = year(d) + v;
-        var _daysInMonth = daysInMonth(newYear, newMonth);
-        var newDay = Math.min(_daysInMonth, day(d));
+        const newMonth = month(d);
+        const newYear = year(d) + v;
+        const _daysInMonth = daysInMonth(newYear, newMonth);
+        const newDay = Math.min(_daysInMonth, day(d));
         return create(newYear, newMonth, newDay, hour(d), minute(d), second(d), millisecond(d), d.kind || 1);
     }
     exports.addYears = addYears;
     function addMonths(d, v) {
-        var newMonth = month(d) + v;
-        var newMonth_ = 0;
-        var yearOffset = 0;
+        let newMonth = month(d) + v;
+        let newMonth_ = 0;
+        let yearOffset = 0;
         if (newMonth > 12) {
             newMonth_ = newMonth % 12;
             yearOffset = Math.floor(newMonth / 12);
@@ -202,9 +198,9 @@ define(["require", "exports", "./TimeSpan", "./Util", "./Long"], function (requi
             yearOffset = Math.floor(newMonth / 12) + (newMonth_ == 12 ? -1 : 0);
             newMonth = newMonth_;
         }
-        var newYear = year(d) + yearOffset;
-        var _daysInMonth = daysInMonth(newYear, newMonth);
-        var newDay = Math.min(_daysInMonth, day(d));
+        const newYear = year(d) + yearOffset;
+        const _daysInMonth = daysInMonth(newYear, newMonth);
+        const newDay = Math.min(_daysInMonth, day(d));
         return create(newYear, newMonth, newDay, hour(d), minute(d), second(d), millisecond(d), d.kind || 1);
     }
     exports.addMonths = addMonths;

@@ -1,5 +1,6 @@
 define(["require", "exports", "../Long", "../Seq"], function (require, exports, Long_1, Seq_1) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     function pow32(x, n) {
         if (n === 0) {
             return 1;
@@ -13,14 +14,14 @@ define(["require", "exports", "../Long", "../Seq"], function (require, exports, 
     }
     exports.pow32 = pow32;
     function leastBounding2Power(b) {
-        var findBounding2Power = function (b_1) { return function (tp) { return function (i) {
+        const findBounding2Power = b_1 => tp => i => {
             if (b_1 <= tp) {
                 return [tp, i];
             }
             else {
                 return findBounding2Power(b_1)(tp * 2)(i + 1);
             }
-        }; }; };
+        };
         return findBounding2Power(b)(1)(0);
     }
     exports.leastBounding2Power = leastBounding2Power;
@@ -80,15 +81,15 @@ define(["require", "exports", "../Long", "../Seq"], function (require, exports, 
             res[offset] = u[mu];
         }
         else {
-            var halfN = ~~(n / 2);
-            var ww = Long_1.fromNumber(w_1, true).mul(Long_1.fromNumber(w_1, true)).mod(exports.p64).toNumber() >>> 0;
-            var offsetHalfN = offset + halfN;
+            const halfN = ~~(n / 2);
+            const ww = Long_1.fromNumber(w_1, true).mul(Long_1.fromNumber(w_1, true)).mod(exports.p64).toNumber() >>> 0;
+            const offsetHalfN = offset + halfN;
             computeFFT(lambda * 2, mu, halfN, ww, u, res, offset);
             computeFFT(lambda * 2, lambda + mu, halfN, ww, u, res, offsetHalfN);
-            var wj = exports.mone;
-            for (var j = 0; j <= halfN - 1; j++) {
-                var even = res[offset + j];
-                var odd = res[offsetHalfN + j];
+            let wj = exports.mone;
+            for (let j = 0; j <= halfN - 1; j++) {
+                const even = res[offset + j];
+                const odd = res[offsetHalfN + j];
                 res[offset + j] = (even + (Long_1.fromNumber(wj, true).mul(Long_1.fromNumber(odd, true)).mod(exports.p64).toNumber() >>> 0)) % exports.p;
                 res[offsetHalfN + j] = (even + exports.p - (Long_1.fromNumber(wj, true).mul(Long_1.fromNumber(odd, true)).mod(exports.p64).toNumber() >>> 0)) % exports.p;
                 wj = Long_1.fromNumber(w_1, true).mul(Long_1.fromNumber(wj, true)).mod(exports.p64).toNumber() >>> 0;
@@ -97,33 +98,33 @@ define(["require", "exports", "../Long", "../Seq"], function (require, exports, 
     }
     exports.computeFFT = computeFFT;
     function computFftInPlace(n, w_1, u) {
-        var lambda = 1;
-        var mu = 0;
-        var res = Uint32Array.from(Seq_1.replicate(n, exports.mzero));
-        var offset = 0;
+        const lambda = 1;
+        const mu = 0;
+        const res = Uint32Array.from(Seq_1.replicate(n, exports.mzero));
+        const offset = 0;
         computeFFT(lambda, mu, n, w_1, u, res, offset);
         return res;
     }
     exports.computFftInPlace = computFftInPlace;
     function computeInverseFftInPlace(n, w_1, uT) {
-        var bigKInv = minv(n >>> 0);
-        return computFftInPlace(n, minv(w_1), uT).map(function (y) { return Long_1.fromNumber(bigKInv, true).mul(Long_1.fromNumber(y, true)).mod(exports.p64).toNumber() >>> 0; });
+        const bigKInv = minv(n >>> 0);
+        return computFftInPlace(n, minv(w_1), uT).map(y => Long_1.fromNumber(bigKInv, true).mul(Long_1.fromNumber(y, true)).mod(exports.p64).toNumber() >>> 0);
     }
     exports.computeInverseFftInPlace = computeInverseFftInPlace;
     exports.maxTwoPower = 29;
-    exports.twoPowerTable = Int32Array.from(Seq_1.initialize(exports.maxTwoPower - 1, function (i) { return pow32(2, i); }));
+    exports.twoPowerTable = Int32Array.from(Seq_1.initialize(exports.maxTwoPower - 1, i => pow32(2, i)));
     function computeFftPaddedPolynomialProduct(bigK, k_1, u, v) {
-        var w_1 = m2PowNthRoot(k_1);
-        var uT = computFftInPlace(bigK, w_1, u);
-        var vT = computFftInPlace(bigK, w_1, v);
-        var rT = Uint32Array.from(Seq_1.initialize(bigK, function (i) { return Long_1.fromNumber(uT[i], true).mul(Long_1.fromNumber(vT[i], true)).mod(exports.p64).toNumber() >>> 0; }));
-        var r = computeInverseFftInPlace(bigK, w_1, rT);
+        const w_1 = m2PowNthRoot(k_1);
+        const uT = computFftInPlace(bigK, w_1, u);
+        const vT = computFftInPlace(bigK, w_1, v);
+        const rT = Uint32Array.from(Seq_1.initialize(bigK, i => Long_1.fromNumber(uT[i], true).mul(Long_1.fromNumber(vT[i], true)).mod(exports.p64).toNumber() >>> 0));
+        const r = computeInverseFftInPlace(bigK, w_1, rT);
         return r;
     }
     exports.computeFftPaddedPolynomialProduct = computeFftPaddedPolynomialProduct;
     function padTo(n, u) {
-        var uBound = u.length;
-        return Uint32Array.from(Seq_1.initialize(n, function (i) {
+        const uBound = u.length;
+        return Uint32Array.from(Seq_1.initialize(n, i => {
             if (i < uBound) {
                 return ofInt32(u[i]);
             }
@@ -134,17 +135,17 @@ define(["require", "exports", "../Long", "../Seq"], function (require, exports, 
     }
     exports.padTo = padTo;
     function computeFftPolynomialProduct(degu, u, degv, v) {
-        var deguv = degu + degv;
-        var bound = deguv + 1;
-        var patternInput = leastBounding2Power(bound);
-        var w_1 = m2PowNthRoot(patternInput[1]);
-        var u_1 = padTo(patternInput[0], u);
-        var v_1 = padTo(patternInput[0], v);
-        var uT = computFftInPlace(patternInput[0], w_1, u_1);
-        var vT = computFftInPlace(patternInput[0], w_1, v_1);
-        var rT = Uint32Array.from(Seq_1.initialize(patternInput[0], function (i) { return Long_1.fromNumber(uT[i], true).mul(Long_1.fromNumber(vT[i], true)).mod(exports.p64).toNumber() >>> 0; }));
-        var r = computeInverseFftInPlace(patternInput[0], w_1, rT);
-        return Int32Array.from(Seq_1.map(function (x) { return toInt(x); }, r));
+        const deguv = degu + degv;
+        const bound = deguv + 1;
+        const patternInput = leastBounding2Power(bound);
+        const w_1 = m2PowNthRoot(patternInput[1]);
+        const u_1 = padTo(patternInput[0], u);
+        const v_1 = padTo(patternInput[0], v);
+        const uT = computFftInPlace(patternInput[0], w_1, u_1);
+        const vT = computFftInPlace(patternInput[0], w_1, v_1);
+        const rT = Uint32Array.from(Seq_1.initialize(patternInput[0], i => Long_1.fromNumber(uT[i], true).mul(Long_1.fromNumber(vT[i], true)).mod(exports.p64).toNumber() >>> 0));
+        const r = computeInverseFftInPlace(patternInput[0], w_1, rT);
+        return Int32Array.from(Seq_1.map(x => toInt(x), r));
     }
     exports.computeFftPolynomialProduct = computeFftPolynomialProduct;
     exports.maxFp = (exports.p + exports.p - exports.mone) % exports.p;
