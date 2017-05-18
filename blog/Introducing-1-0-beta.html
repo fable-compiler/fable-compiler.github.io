@@ -133,12 +133,12 @@
 <blockquote>
 <p>At the moment, the only editor that supports the new .fsproj format is <a href="http://ionide.io/">Ionide</a> so you may need to wait a bit until it's supported in other IDEs. Also, if you have problems with Ionide recognizing the project references, try setting the environment variable <code>UseCommonOutputDirectory</code> to <code>true</code>.</p>
 </blockquote>
-<p>But what is that Fable server? Keep on reading to find the answer!</p>
+<p>But what about Fable server? Keep on reading to find the answer!</p>
 <h2><a name="Integration-with-Webpack" class="anchor" href="#Integration-with-Webpack">Integration with Webpack</a></h2>
 <p>Under the hood Fable compiler is a hybrid of .NET and a <a href="https://nodejs.org/">node</a> app. So far this has been transparent to the users, but now the distinction is made obvious as the .NET part is distributed through nuget (see above) while the JS part becomes a <a href="https://webpack.js.org/concepts/loaders/">Webpack loader</a> available through <a href="https://www.npmjs.com/package/fable-loader">npm</a>.</p>
 <p>Webpack is a JS bundler with many powerful features that has become the standard build tool of choice for a vast majority of JS developers, though many (I among them) have been drawn back by its complexity. Luckily with Webpack 2 this is being addressed with a much better <a href="https://webpack.js.org">documentation site</a> and great community support thanks to its widespread use. Tying Fable to Webpack may seem risky, but <a href="https://twitter.com/FableCompiler/status/829372278878126080">most of the users are already using Webpack</a> anyways and the integration offers several advantages, like:</p>
 <ul>
-<li>Only one configuration file. You read well, <strong>no more fableconfig.json</strong>, the config options can be passed now to the Fable loader.</li>
+<li>Only one configuration file. You read correctly, <strong>no more fableconfig.json</strong>, the config options can be passed now to the Fable loader.</li>
 <li>Better interaction with other languages like JS or Typescript. Just add the necessary loaders and Webpack will take care of merging everything into a single bundle.</li>
 <li>Management of tasks like file watching. This frees development resources for Fable so we can focus on improving the code generation.</li>
 </ul>
@@ -218,6 +218,17 @@ npm install
 <blockquote>
 <p>At the moment Fable cannot resolve transitive dependencies so it's necessary to list them all.</p>
 </blockquote>
+<h4><a name="Important-Note" class="anchor" href="#Important-Note">Important Note</a></h4>
+<p>When adding new dependencies and making changes to the project file, it is often necessary to run the following commands again.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip"><code lang="shell"> dotnet restore
+ dotnet build
+ dotnet fable npm-run build
+</code></pre></td></tr></table>
+<p>A key indicator that you need to run these commands is that Intellisense stops working.  Also, be sure you are setting the environment variable correctly as mentioned above.</p>
 <br />
 <p>It's been a long way to get here, but I hope Fable 1.0 will meet most of the user needs and provide better stability for the project so we can focus on expanding the ecosystem, writing tutorials and such. Please give Fable 1.0 beta (codename <code>narumi</code>) a try and provide feedback either through the <a href="https://gitter.im/fable-compiler/Fable">Gitter channel</a> or <a href="https://github.com/fable-compiler/Fable/issues/new">Fable Github repo</a> to help make the final Fable 1.0 stable release as polished as possible. And don't forget to follow us <a href="https://twitter.com/FableCompiler">on Twitter</a> to get all Fable news first-hand!</p>
 
