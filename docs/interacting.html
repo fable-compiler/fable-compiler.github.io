@@ -818,11 +818,40 @@ the server side.
 <code>DateTime</code> will always be serialized in UTC format and any string matching the <a href="https://www.w3.org/TR/NOTE-datetime">DateTime ISO Format</a>
 will be deserialized as a string.
 </li>
+<li>Be aware when using type attrbitues like <code>[&lt;PoJo&gt;]</code> that they are applied at both sides serialising and deserialising. Otherwise you will see unexpected runtime behaviour.</li>
 <li>
 Json.NET doesn't serialize type info for F# unions even when using the <code>TypeNameHandling.All</code> setting,
-but you can use the following converter:
+but <code>Fable.JsonConverter</code> overcomes this limitation.
 </li>
 </ul>
+<p>Fable.JsonConverter:</p>
+<p>You can install directly via <a href="https://www.nuget.org/packages/Fable.JsonConverter/1.0.0-narumi-908">nuget</a> if your project is a dotnet core project by simply adding it as a dependency to you <code>paket.dependencies</code> file:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">nuget</span> <span class="i">Fable</span><span class="o">.</span><span class="i">JsonConverter</span> <span class="i">prerelease</span>
+</code></pre></td>
+</tr>
+</table>
+<p>If you are not using dotnet core you can add it as file dependency to your <code>paket.dependencies</code>:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">github</span> <span class="i">fable</span><span class="o">-</span><span class="i">compiler</span><span class="o">/</span><span class="i">Fable</span> <span class="i">src</span><span class="o">/</span><span class="i">dotnet</span><span class="o">/</span><span class="i">Fable</span><span class="o">.</span><span class="i">JsonConverter</span><span class="o">/</span><span class="i">Fable</span><span class="o">.</span><span class="i">JsonConverter</span><span class="o">.</span><span class="i">fs</span>
+<span class="i">nuget</span> <span class="i">Newtonsoft</span><span class="o">.</span><span class="i">Json</span> <span class="i">prerelease</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Make sure you also include <code>Newtonsoft.Json</code>.</p>
+<p>And in your projects <code>paket.references</code> file add:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Newtonsoft</span><span class="o">.</span><span class="i">Json</span>
+<span class="i">File</span><span class="o">:</span> <span class="i">Fable</span><span class="o">.</span><span class="i">JsonConverter</span><span class="o">.</span><span class="i">fs</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Now you can use the converter directly in your code by passing it to the <code>JsonConvert.SerializeObject</code> method.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -837,65 +866,21 @@ but you can use the following converter:
 <span class="l">12: </span>
 <span class="l">13: </span>
 <span class="l">14: </span>
-<span class="l">15: </span>
-<span class="l">16: </span>
-<span class="l">17: </span>
-<span class="l">18: </span>
-<span class="l">19: </span>
-<span class="l">20: </span>
-<span class="l">21: </span>
-<span class="l">22: </span>
-<span class="l">23: </span>
-<span class="l">24: </span>
-<span class="l">25: </span>
-<span class="l">26: </span>
-<span class="l">27: </span>
-<span class="l">28: </span>
-<span class="l">29: </span>
-<span class="l">30: </span>
-<span class="l">31: </span>
-<span class="l">32: </span>
-<span class="l">33: </span>
-<span class="l">34: </span>
-<span class="l">35: </span>
-<span class="l">36: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span onmouseout="hideTip(event, 'fs27', 77)" onmouseover="showTip(event, 'fs27', 77)" class="i">FSharp</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs28', 78)" onmouseover="showTip(event, 'fs28', 78)" class="i">Reflection</span>
-<span class="k">open</span> <span class="i">Newtonsoft</span><span class="o">.</span><span class="i">Json</span>
-<span class="k">open</span> <span class="i">Newtonsoft</span><span class="o">.</span><span class="i">Json</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs29', 79)" onmouseover="showTip(event, 'fs29', 79)" class="i">Linq</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="i">Newtonsoft</span><span class="o">.</span><span class="i">Json</span>
 
-<span class="k">type</span> <span class="i">UnionTypeInfoConverter</span>() <span class="o">=</span>
-    <span class="k">inherit</span> <span class="i">JsonConverter</span>()
-    <span class="k">override</span> <span class="i">x</span><span class="o">.</span><span class="i">CanConvert</span> <span class="i">t</span> <span class="o">=</span> <span class="i">FSharpType</span><span class="o">.</span><span class="i">IsUnion</span> <span class="i">t</span>
-    <span class="k">override</span> <span class="i">x</span><span class="o">.</span><span class="i">ReadJson</span>(<span class="i">reader</span>, <span class="i">t</span>, _, <span class="i">serializer</span>) <span class="o">=</span>
-        <span class="k">let</span> <span class="i">token</span> <span class="o">=</span> <span class="i">JObject</span>()
-        <span class="k">for</span> <span class="i">prop</span> <span class="k">in</span> <span class="i">JToken</span><span class="o">.</span><span class="i">ReadFrom</span>(<span class="i">reader</span>)<span class="o">.</span><span class="i">Children</span><span class="o">&lt;</span><span class="i">JProperty</span><span class="o">&gt;</span>() <span class="k">do</span>
-            <span class="k">if</span> <span class="i">prop</span><span class="o">.</span><span class="i">Name</span> <span class="o">&lt;&gt;</span> <span class="s">&quot;$type&quot;</span> <span class="k">then</span>
-                <span class="i">token</span><span class="o">.</span><span class="i">Add</span>(<span class="i">prop</span>)
-        <span class="i">token</span><span class="o">.</span><span class="i">ToObject</span>(<span class="i">t</span>)
-    <span class="k">override</span> <span class="i">x</span><span class="o">.</span><span class="i">WriteJson</span>(<span class="i">writer</span>, <span class="i">v</span>, <span class="i">serializer</span>) <span class="o">=</span>
-        <span class="k">let</span> <span class="i">t</span> <span class="o">=</span> <span class="i">v</span><span class="o">.</span><span class="i">GetType</span>()
-        <span class="k">let</span> <span class="i">typeFulName</span> <span class="o">=</span> <span class="i">t</span><span class="o">.</span><span class="i">FullName</span><span class="o">.</span><span class="i">Substring</span>(<span class="n">0</span>, <span class="i">t</span><span class="o">.</span><span class="i">FullName</span><span class="o">.</span><span class="i">LastIndexOf</span>(<span class="s">&quot;+&quot;</span>))
-        <span class="k">let</span> <span class="i">uci</span>, <span class="i">fields</span> <span class="o">=</span> <span class="i">FSharpValue</span><span class="o">.</span><span class="i">GetUnionFields</span>(<span class="i">v</span>, <span class="i">t</span>)
-        <span class="i">writer</span><span class="o">.</span><span class="i">WriteStartObject</span>()
-        <span class="i">writer</span><span class="o">.</span><span class="i">WritePropertyName</span>(<span class="s">&quot;$type&quot;</span>)
-        <span class="i">writer</span><span class="o">.</span><span class="i">WriteValue</span>(<span class="i">typeFulName</span>)
-        <span class="i">writer</span><span class="o">.</span><span class="i">WritePropertyName</span>(<span class="s">&quot;Case&quot;</span>)
-        <span class="i">writer</span><span class="o">.</span><span class="i">WriteValue</span>(<span class="i">uci</span><span class="o">.</span><span class="i">Name</span>)
-        <span class="i">writer</span><span class="o">.</span><span class="i">WritePropertyName</span>(<span class="s">&quot;Fields&quot;</span>)
-        <span class="i">writer</span><span class="o">.</span><span class="i">WriteStartArray</span>()
-        <span class="k">for</span> <span class="i">field</span> <span class="k">in</span> <span class="i">fields</span> <span class="k">do</span> <span class="i">writer</span><span class="o">.</span><span class="i">WriteValue</span>(<span class="i">field</span>)
-        <span class="i">writer</span><span class="o">.</span><span class="i">WriteEndArray</span>()
-        <span class="i">writer</span><span class="o">.</span><span class="i">WriteEndObject</span>()
+<span class="k">let</span> <span class="i">jsonConverter</span> <span class="o">=</span> <span class="i">Fable</span><span class="o">.</span><span class="i">JsonConverter</span>() <span class="o">:&gt;</span> <span class="i">JsonConverter</span>
 
-<span class="k">let</span> <span class="i">settings</span> <span class="o">=</span>
-    <span class="i">JsonSerializerSettings</span>(
-        <span class="i">Converters</span> <span class="o">=</span> [|<span class="i">UnionTypeInfoConverter</span>()|],
-        <span class="i">TypeNameHandling</span> <span class="o">=</span> <span class="i">TypeNameHandling</span><span class="o">.</span><span class="i">All</span>)
+<span class="k">let</span> <span class="i">toJson</span> <span class="i">value</span> <span class="o">=</span>
+    <span class="i">JsonConvert</span><span class="o">.</span><span class="i">SerializeObject</span>(<span class="i">value</span>, [|<span class="i">jsonConverter</span>|])
 
-<span class="k">type</span> <span class="i">U</span> <span class="o">=</span> <span class="i">A</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs10', 80)" onmouseover="showTip(event, 'fs10', 80)" class="i">int</span> | <span class="i">B</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs11', 81)" onmouseover="showTip(event, 'fs11', 81)" class="i">string</span> <span class="o">*</span> <span onmouseout="hideTip(event, 'fs9', 82)" onmouseover="showTip(event, 'fs9', 82)" class="i">float</span>
-<span class="i">JsonConvert</span><span class="o">.</span><span class="i">SerializeObject</span>(<span class="i">A</span> <span class="n">4</span>, <span class="i">settings</span>)
-<span class="i">JsonConvert</span><span class="o">.</span><span class="i">SerializeObject</span>(<span class="i">B</span>(<span class="s">&quot;hi&quot;</span>,<span class="n">5.6</span>), <span class="i">settings</span>)
+<span class="k">type</span> <span class="i">U</span> <span class="o">=</span> <span class="i">A</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs10', 77)" onmouseover="showTip(event, 'fs10', 77)" class="i">int</span> | <span class="i">B</span> <span class="k">of</span> <span onmouseout="hideTip(event, 'fs11', 78)" onmouseover="showTip(event, 'fs11', 78)" class="i">string</span> <span class="o">*</span> <span onmouseout="hideTip(event, 'fs9', 79)" onmouseover="showTip(event, 'fs9', 79)" class="i">float</span>
+
+<span class="k">let</span> <span class="i">a</span> <span class="o">=</span> <span class="i">A</span> <span class="n">4</span>
+<span class="i">toJson</span> <span class="i">a</span>
+
+<span class="k">let</span> <span class="i">b</span> <span class="o">=</span> <span class="i">B</span>(<span class="s">&quot;hi&quot;</span>,<span class="n">5.6</span>)
+<span class="i">toJson</span> <span class="i">b</span>
 </code></pre></td>
 </tr>
 </table>
@@ -929,9 +914,6 @@ but you can use the following converter:
 <div class="tip" id="fs24">val map : mapping:(&#39;T -&gt; &#39;U) -&gt; source:seq&lt;&#39;T&gt; -&gt; seq&lt;&#39;U&gt;<br /><br />Full name: Microsoft.FSharp.Collections.Seq.map</div>
 <div class="tip" id="fs25">val sum : source:seq&lt;&#39;T&gt; -&gt; &#39;T (requires member ( + ) and member get_Zero)<br /><br />Full name: Microsoft.FSharp.Collections.Seq.sum</div>
 <div class="tip" id="fs26">val box : value:&#39;T -&gt; obj<br /><br />Full name: Microsoft.FSharp.Core.Operators.box</div>
-<div class="tip" id="fs27">namespace Microsoft.FSharp</div>
-<div class="tip" id="fs28">namespace Microsoft.FSharp.Reflection</div>
-<div class="tip" id="fs29">namespace Microsoft.FSharp.Linq</div>
 
     </div>
     <div class="col-md-1 col-lg-2"></div>
