@@ -335,18 +335,18 @@ base implementation from outside by casting the object. Example:</p>
 <span class="l">11: </span>
 <span class="l">12: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">type</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="t">A</span>() <span class="o">=</span>
-    <span class="k">member</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">x</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="f">Foo</span>() <span class="o">=</span> <span class="s">&quot;Hello&quot;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">type</span> <span class="i">A</span>() <span class="o">=</span>
+    <span class="k">member</span> <span class="i">x</span><span class="o">.</span><span class="i">Foo</span>() <span class="o">=</span> <span class="s">&quot;Hello&quot;</span>
 
-<span class="k">type</span> <span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="t">B</span>() <span class="o">=</span>
-    <span class="k">inherit</span> <span onmouseout="hideTip(event, 'fs5', 5)" onmouseover="showTip(event, 'fs5', 5)" class="t">A</span>()
-    <span class="k">member</span> <span onmouseout="hideTip(event, 'fs6', 6)" onmouseover="showTip(event, 'fs6', 6)" class="i">x</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs7', 7)" onmouseover="showTip(event, 'fs7', 7)" class="f">Foo</span>() <span class="o">=</span> <span class="k">base</span><span class="o">.</span><span class="f">Foo</span>() <span class="o">+</span> <span class="s">&quot; World!&quot;</span>
+<span class="k">type</span> <span class="i">B</span>() <span class="o">=</span>
+    <span class="k">inherit</span> <span class="i">A</span>()
+    <span class="k">member</span> <span class="i">x</span><span class="o">.</span><span class="i">Foo</span>() <span class="o">=</span> <span class="k">base</span><span class="o">.</span><span class="i">Foo</span>() <span class="o">+</span> <span class="s">&quot; World!&quot;</span>
 
 <span class="c">// This prints &quot;Hello World!&quot; both in .NET and JS</span>
-<span onmouseout="hideTip(event, 'fs8', 8)" onmouseover="showTip(event, 'fs8', 8)" class="t">B</span>()<span class="o">.</span><span class="f">Foo</span>() <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs9', 9)" onmouseover="showTip(event, 'fs9', 9)" class="f">printfn</span> <span class="s">&quot;</span><span class="pf">%s</span><span class="s">&quot;</span>
+<span class="i">B</span>()<span class="o">.</span><span class="i">Foo</span>() <span class="o">|&gt;</span> <span class="i">printfn</span> <span class="s">&quot;%s&quot;</span>
 
 <span class="c">// This prints &quot;Hello&quot; in .NET and &quot;Hello World!&quot; in JS</span>
-(<span onmouseout="hideTip(event, 'fs8', 10)" onmouseover="showTip(event, 'fs8', 10)" class="t">B</span>() <span class="o">:&gt;</span> <span onmouseout="hideTip(event, 'fs1', 11)" onmouseover="showTip(event, 'fs1', 11)" class="t">A</span>)<span class="o">.</span><span class="f">Foo</span>() <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs9', 12)" onmouseover="showTip(event, 'fs9', 12)" class="f">printfn</span> <span class="s">&quot;</span><span class="pf">%s</span><span class="s">&quot;</span>
+(<span class="i">B</span>() <span class="o">:&gt;</span> <span class="i">A</span>)<span class="o">.</span><span class="i">Foo</span>() <span class="o">|&gt;</span> <span class="i">printfn</span> <span class="s">&quot;%s&quot;</span>
 </code></pre></td>
 </tr>
 </table>
@@ -367,15 +367,6 @@ types or with generics in <em>inline</em> functions.</p>
 <a href="interacting.html">foreign interfaces</a>.</p>
 
 
-<div class="tip" id="fs1">type A =<br />&#160;&#160;new : unit -&gt; A<br />&#160;&#160;member Foo : unit -&gt; string<br /><br />Full name: compatibility.A</div>
-<div class="tip" id="fs2">val x : A</div>
-<div class="tip" id="fs3">member A.Foo : unit -&gt; string<br /><br />Full name: compatibility.A.Foo</div>
-<div class="tip" id="fs4">type B =<br />&#160;&#160;inherit A<br />&#160;&#160;new : unit -&gt; B<br />&#160;&#160;member Foo : unit -&gt; string<br /><br />Full name: compatibility.B</div>
-<div class="tip" id="fs5">Multiple items<br />new : unit -&gt; A<br /><br />--------------------<br />type A =<br />&#160;&#160;new : unit -&gt; A<br />&#160;&#160;member Foo : unit -&gt; string<br /><br />Full name: compatibility.A</div>
-<div class="tip" id="fs6">val x : B</div>
-<div class="tip" id="fs7">member B.Foo : unit -&gt; string<br /><br />Full name: compatibility.B.Foo</div>
-<div class="tip" id="fs8">new : unit -&gt; B</div>
-<div class="tip" id="fs9">val printfn : format:Printf.TextWriterFormat&lt;&#39;T&gt; -&gt; &#39;T<br /><br />Full name: Microsoft.FSharp.Core.ExtraTopLevelOperators.printfn</div>
 
     </div>
     <div class="col-md-1 col-lg-2"></div>
