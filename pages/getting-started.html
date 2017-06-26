@@ -86,9 +86,15 @@
     <div class="col-sm-12 col-md-10 col-lg-8">
       <p>When you have installed all the <a href="prerequisites.html">prerequisites</a> you are good to go.</p>
 <p>Start by installing the Simple Fable template:</p>
+<p><strong>.NET Core less than v2</strong> (you can find this by typing <code>dotnet --version</code> in your terminal)</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip"><code lang="shell">dotnet new -i "Fable.Template::*"
+</code></pre></td></tr></table>
+<p><strong>.NET Core v2+</strong></p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip"><code lang="shell">dotnet new -i Fable.Template
 </code></pre></td></tr></table>
 <p>Scaffold a Fable app from the template:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
