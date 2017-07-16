@@ -88,7 +88,12 @@
 <ul>
 <li>Node</li>
 <li>Yarn</li>
-<li>Dotnet SDK</li>
+<li>
+Dotnet SDK
+<ul>
+<li>Recommended version: 1.0.4</li>
+</ul>
+</li>
 <li>IDE</li>
 </ul>
 <h2><a name="Node" class="anchor" href="#Node">Node</a></h2>
@@ -96,6 +101,7 @@
 <h2><a name="Yarn" class="anchor" href="#Yarn">Yarn</a></h2>
 <p>Although npm (Node Package Manager) is the default dependency manager for JavaScript, we recommend (and use) <a href="https://yarnpkg.com/lang/en/docs/install/">yarn</a> instead. The difference between yarn and npm is that yarn uses lock files when installing dependencies. When someone else is installing dependencies with that same lock file present, yarn makes sure the exact same versions of the libraries and their (transitive) dependencies are installed, leading to reproducible builds on different machines.</p>
 <h2><a name="Dotnet-SDK" class="anchor" href="#Dotnet-SDK">Dotnet SDK</a></h2>
+<p><strong>Recommended version: 1.0.4</strong></p>
 <p>Fable integrates with the latest dotnet project format provided by the <a href="https://www.microsoft.com/net/core">dotnet sdk</a>. You will use the dotnet CLI for Fable project management (referencing projects, adding projects to a solution etc.) and for Fable library management as facilitated by Paket to manage your dependencies and to build and publish Fable libraries yourself.</p>
 <blockquote>
 <p>Although is not a Fable requirement, on macOS and Linux you'll need <a href="http://www.mono-project.com/">Mono</a> for other F# tooling like Paket or editor support.</p>
