@@ -43,16 +43,12 @@ let renderSamples (samplesRepoPath: string) =
         ]
       ]
     ) |> Seq.toList
-  let markdownP str =
-    p [setMarkdown str] []
   let samples =
     Path.join(samplesRepoPath, "public/samples.json5")
     |> readFile |> parseJson5<JsObj<JsObj<SampleInfo>>>
   div [Class "columns"] [
     div [Class "column"] []
     div [Class "column is-two-thirds samples-browser"] [
-      div [Class "content fable-introduction"]
-        (List.map markdownP samplesIntroParagraphs)
       div [Class "fable-samples"] [
         h1 [Class "title is-2"] [str "Fun and Games"]
         ul [] (samplesToList samples.["games"])
@@ -71,5 +67,6 @@ let renderSamples (samplesRepoPath: string) =
 let renderBody (samplesRepoPath: string) (info: PageInfo) =
   div [] [
     Header.render "Samples" "Learn by playing!"
+    renderIntro samplesIntroParagraphs
     renderSamples samplesRepoPath
   ]

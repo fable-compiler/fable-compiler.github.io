@@ -62,6 +62,7 @@ let readFile (path: string) =
     Fs.readFileSync(path).toString()
 
 // React helpers
+open Fable.Helpers.React
 open Fable.Helpers.React.Props
 
 let inline Class x = ClassName x
@@ -71,3 +72,16 @@ type [<Pojo>] InnerHtml =
 
 let setMarkdown (markdown: string) =
   DangerouslySetInnerHTML { __html = parseMarkdown markdown }
+
+let markdownP (text: string) =
+  p [setMarkdown text] []
+
+let renderIntro (markdownParagraphs: string list): React.ReactElement =
+  div [Class "columns fable-introduction"] [
+    div [Class "column"] []
+    div [Class "column is-two-thirds"]
+        (List.map markdownP markdownParagraphs)
+    div [Class "column"] []
+  ]
+
+

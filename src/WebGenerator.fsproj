@@ -8,6 +8,7 @@
     <Compile Include="helpers/Types.fs" />
     <Compile Include="components/Navbar.fs" />
     <Compile Include="components/Header.fs" />
+    <Compile Include="components/HomePage.fs" />
     <Compile Include="components/SamplesPage.fs" />
     <Compile Include="Main.fs" />
   </ItemGroup>

@@ -44,13 +44,21 @@ html, body
   color: $black !important // Override bulma
   border-color: $black
 
+.fable-home-card
+  background-color: lighten($fable-blue, 40%)
+  margin-bottom: 10px
+  // min-height: 300px
+
 .flex-1
   flex: 1
 
-.fable-header
-  padding: 20px
+.flex-horizontal
   display: flex
   align-items: center
+
+.fable-header
+  @extend .flex-horizontal
+  padding: 20px
   background: linear-gradient(to left, lighten($fable-blue, 20%), white)
   .fable-logo
     max-height: 200px
@@ -63,8 +71,11 @@ html, body
   //   font-weight: normal
 
 .fable-introduction
-  font-size: 1.2em
-  margin: 0 5px
+  @extend .has-text-centered
+  font-size: 1.3em
+  margin: 20px 5px
+  .column
+    padding: 0
 
 .fable-samples
   margin: 0 5px
