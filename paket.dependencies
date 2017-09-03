@@ -1,0 +1,11 @@
+source https://nuget.org/api/v2
+version 5.92.3
+storage:none
+
+clitool dotnet-fable prerelease
+nuget Fable.Core prerelease
+nuget Fable.PowerPack prerelease
+nuget Fable.React prerelease
+nuget Fable.Import.Browser
+nuget Fable.Import.Node
+nuget Fulma prerelease

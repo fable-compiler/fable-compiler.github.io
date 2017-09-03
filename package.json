@@ -1,0 +1,24 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "fable-splitter -c splitter.config.js",
+    "start": "fable-splitter -c splitter.config.js -w",
+    "server": "cd public && reload -b",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "node-sass files/styles.sass public/css/bulma.custom.css"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "bulma": "^0.5.1",
+    "fable-splitter": "^0.1.10",
+    "fable-utils": "^1.0.2",
+    "gh-pages": "^1.0.0",
+    "handlebars": "^4.0.10",
+    "marked": "^0.3.6",
+    "node-sass": "^4.5.3",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "reload": "^2.2.2"
+  }
+}
