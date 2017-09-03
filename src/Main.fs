@@ -20,11 +20,24 @@ let render (info: PageInfo) =
     [ "title" ==> info.Title
       // "root" ==> Path.dirname(Path.relative(Paths.PublicDir, info.TargetPath))
       "navbar" ==> (Navbar.root info.NavbarActivePage |> parseReactStatic)
-      "body" ==> (SamplesPage.renderBody samplesRepoPath |> parseReactStatic) ]
+      "body" ==> (info.RenderBody(info) |> parseReactStatic) ]
     |> parseTemplate Paths.Template
     |> writeFile info.TargetPath
 
-{ Title = "Fable Browser Samples"
-  TargetPath = Path.join(Paths.PublicDir, "index.html") // TODO
-  NavbarActivePage = Literals.Navbar.Samples }
-|> render
+let renderHomeBody (info: PageInfo) =
+  div [Class "content"] [
+    Header.render "F# |> Babel" "The compiler that emits JavaScript you can be proud of!"
+    h1 [] [str "Hello Fable!"]
+  ]
+
+[
+  { Title = "Fable: The compiler that emits JavaScript you can be proud of!"
+    TargetPath = Path.join(Paths.PublicDir, "index.html")
+    NavbarActivePage = Literals.Navbar.Home
+    RenderBody = renderHomeBody }
+  // { Title = "Fable Browser Samples"
+  //   TargetPath = Path.join(Paths.PublicDir, "index.html") // TODO
+  //   NavbarActivePage = Literals.Navbar.Samples
+  //   RenderBody = SamplesPage.renderBody samplesRepoPath }
+]
+|> List.iter render

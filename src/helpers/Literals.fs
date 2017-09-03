@@ -3,7 +3,7 @@ namespace WebGenerator.Literals
 open WebGenerator.Helpers
 
 module Fable =
-  let [<Literal>] Root = "http://fable.io/"
+  let [<Literal>] Root = "/" //"http://fable.io/"
 
 module Navbar =
   let [<Literal>] Home = Fable.Root

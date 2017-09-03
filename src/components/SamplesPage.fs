@@ -68,20 +68,8 @@ let renderSamples (samplesRepoPath: string) =
     div [Class "column"] []
   ]
 
-let renderHeader() =
-  section [Class "fable-header"] [
-    img [
-      Class "fable-logo"
-      Src WebAssets.FableLogo
-    ]
-    div [Class "flex-1 has-text-right"] [
-      h1 [Class "title is-1"] [str "Samples"]
-      h1 [Class "subtitle is-4"] [str "Learn by playing!"]
-    ]
-  ]
-
-let renderBody (samplesRepoPath: string) =
+let renderBody (samplesRepoPath: string) (info: PageInfo) =
   div [] [
-    renderHeader()
+    Header.render "Samples" "Learn by playing!"
     renderSamples samplesRepoPath
   ]

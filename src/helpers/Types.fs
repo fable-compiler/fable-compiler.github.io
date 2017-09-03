@@ -2,11 +2,13 @@ module WebGenerator.Types
 
 open System
 open Fable.Core
+open Fable.Import
 
 type PageInfo =
   { Title: string
     TargetPath: string
-    NavbarActivePage: string }
+    NavbarActivePage: string
+    RenderBody: PageInfo -> React.ReactElement }
 
 type SampleInfo =
   abstract entry: string
