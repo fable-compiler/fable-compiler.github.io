@@ -21,3 +21,6 @@ module Paths =
   let PublicDir = resolve "${entryDir}/../public"
   let FableRepo = resolve "${entryDir}/../../Fable"
   let SamplesRepo = resolve "${entryDir}/../../samples-browser"
+
+module WebAssets =
+  let FableLogo = "/img/fable_logo.png"

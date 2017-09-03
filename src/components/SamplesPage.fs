@@ -72,7 +72,7 @@ let renderHeader() =
   section [Class "fable-header"] [
     img [
       Class "fable-logo"
-      Src "./img/fable_logo.png"
+      Src WebAssets.FableLogo
     ]
     div [Class "flex-1 has-text-right"] [
       h1 [Class "title is-1"] [str "Samples"]

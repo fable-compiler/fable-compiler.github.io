@@ -18,7 +18,7 @@ let samplesRepoPath = Paths.SamplesRepo
 
 let render (info: PageInfo) =
     [ "title" ==> info.Title
-      "root" ==> Path.dirname(Path.relative(Paths.PublicDir, info.TargetPath))
+      // "root" ==> Path.dirname(Path.relative(Paths.PublicDir, info.TargetPath))
       "navbar" ==> (Navbar.root info.NavbarActivePage |> parseReactStatic)
       "body" ==> (SamplesPage.renderBody samplesRepoPath |> parseReactStatic) ]
     |> parseTemplate Paths.Template
