@@ -77,11 +77,13 @@ let markdownP (text: string) =
   p [setMarkdown text] []
 
 let renderIntro (markdownParagraphs: string list): React.ReactElement =
-  div [Class "columns fable-introduction"] [
-    div [Class "column"] []
-    div [Class "column is-two-thirds"]
+  div [Class "columns"; Style [MarginTop "10px"]] [
+    div [Class "column"; Style [Padding 0]] []
+    div [Class "column is-two-thirds"] [
+      div [Class "fable-introduction"]
         (List.map markdownP markdownParagraphs)
-    div [Class "column"] []
+    ]
+    div [Class "column"; Style [Padding 0]] []
   ]
 
 

@@ -56,6 +56,11 @@ html, body
   display: flex
   align-items: center
 
+.flex-wrap
+  display: flex
+  flex-wrap: wrap
+  justify-content: center
+
 .fable-header
   @extend .flex-horizontal
   padding: 20px
@@ -73,9 +78,7 @@ html, body
 .fable-introduction
   @extend .has-text-centered
   font-size: 1.3em
-  margin: 20px 5px
-  .column
-    padding: 0
+  // margin: 20px 5px
 
 .fable-samples
   margin: 0 5px
