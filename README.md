@@ -1,20 +1,42 @@
-# Fable samples
+# [Fable website](http://fable.io) generator
 
-## Building and running the samples
+This project generates the static web pages for [Fable website](http://fable.io) using several resources, among them:
 
-- Restore NPM dependencies: `yarn install`
-- Restore Nuget dependencies: `dotnet restore`
-- **Move to src folder**: `cd src`
-- Start Fable and Webpack dev server: `dotnet fable yarn-start`
-- In your browser, open `localhost:8080/[EXAMPLE]` (e.g. `http://localhost:8080/ozmo`)
+- [Markdown docs in Fable repo](https://github.com/fable-compiler/Fable/tree/master/docs)
+- [Samples in samples-browser repo](https://github.com/fable-compiler/samples-browser)
+- React components built with [Fable.React](https://github.com/fable-compiler/fable-react)
+- [Handlebars templates](http://handlebarsjs.com/)
 
-Any modification you do to the F# code will be reflected in the web page after saving.
-If you want to write JS files to disk instead of using the development server,
-run `dotnet fable yarn-build`.
+The F# project in `src` is compiled to a node app using Fable and then executed to generate the static pages. To run app the app in development mode (with live reload of the server whenever F# sources change) run the following commands.
 
-## Adding a new sample
+> Requirements are the same as for other Fable projects. [yarn](https://yarnpkg.com/) is used as the JS package manager.
 
-- Take one of the existing samples as a reference.
-- Add the information about your sample to `public/samples.json5`: id, entry file (usually the .fsproj), title and description; in one of the three categories: "games", "visual" or "productivity".
-- Add one folder named after the id of the sample to `src` directory and another one to `public`. The first one will contain the F# (and maybe JS) source files, while the second contains the public assets for the sample (like index.html, images, etc).
-- Add the project to the `Fable.Samples.sln` solution: `dotnet sln add src/my-sample/My.Sample.fsproj`
+Install JS and F# dependencies (only first time or whenever dependencies change):
+
+```shell
+yarn install
+dotnet restore src
+```
+
+To execute Fable in watch mode ([fable-splitter](https://www.npmjs.com/package/fable-splitter) is used as the JS client), run:
+
+```shell
+cd src
+dotnet fable yarn-start
+```
+
+> If you only want to build the node app and run it once, type `dotnet fable yarn-build` instead.
+
+The web pages will be output to `public` directory. To start a local server with live reloading capabilities to visualize them, in a **new terminal**, type:
+
+```shell
+yarn run server
+```
+
+The web uses a customized version of the [Bulma CSS framework](http://bulma.io/documentation/overview/customize/). The [SASS file](http://sass-lang.com/) for the customization can be found in `files/styles.sass`. To compile it to CSS use:
+
+```shell
+yarn run sass -- -w
+```
+
+> The `-w` argument activates the watch mode of the SASS compiler. You can omit it if you only want to compile the file once.
