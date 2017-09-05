@@ -20,24 +20,24 @@ NUGET
       System.Reflection.Metadata (>= 1.5) - restriction: >= netstandard1.6
       System.Runtime.Loader (>= 4.3) - restriction: >= netstandard1.6
       System.ValueTuple (>= 4.4) - restriction: >= netstandard1.6
-    Fable.Core (1.2.0-beta-003)
+    Fable.Core (1.2.0-beta-004)
       FSharp.Core (>= 4.2.3) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
       System.ValueTuple (>= 4.4) - restriction: >= netstandard1.6
     Fable.Import.Browser (0.1)
       Fable.Core (>= 1.0.8) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.2.1) - restriction: >= netstandard1.6
-    Fable.Import.Node (0.1.4)
+    Fable.Import.Node (0.1.5)
       Fable.Core (>= 1.1.15) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.2.3) - restriction: >= netstandard1.6
     Fable.PowerPack (1.3.0-beta-001)
       Fable.Core (>= 1.2.0-beta-003) - restriction: >= netstandard1.6
       Fable.Import.Browser (>= 0.1) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.2.3) - restriction: >= netstandard1.6
-    Fable.React (1.2.0-beta-002)
-      Fable.Core (>= 1.1.2) - restriction: >= netstandard1.6
+    Fable.React (1.2.0-beta-003)
+      Fable.Core (>= 1.1.15) - restriction: >= netstandard1.6
       Fable.Import.Browser (>= 0.1) - restriction: >= netstandard1.6
-      FSharp.Core (>= 4.2.1) - restriction: >= netstandard1.6
+      FSharp.Core (>= 4.2.3) - restriction: >= netstandard1.6
     FSharp.Compiler.Service (14.0.2) - restriction: >= netcoreapp2.0
       FSharp.Core (>= 4.1.18) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
@@ -74,8 +74,8 @@ NUGET
       System.Threading.Thread (>= 4.0) - restriction: >= netstandard1.6
       System.Threading.ThreadPool (>= 4.0.10) - restriction: >= netstandard1.6
       System.Threading.Timer (>= 4.0.1) - restriction: >= netstandard1.6
-    Fulma (0.2.0-beta-002)
-      Fable.Core (>= 1.2.0-beta-002) - restriction: >= netstandard1.6
+    Fulma (0.2.0-beta-003)
+      Fable.Core (>= 1.2.0-beta-003) - restriction: >= netstandard1.6
       Fable.React (>= 1.2.0-beta-002) - restriction: >= netstandard1.6
     Microsoft.CSharp (4.4) - restriction: >= netcoreapp2.0
     Microsoft.NETCore.App (2.0) - restriction: >= netcoreapp2.0

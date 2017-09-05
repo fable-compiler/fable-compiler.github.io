@@ -1,5 +1,4 @@
 source https://nuget.org/api/v2
-version 5.92.3
 storage:none
 
 clitool dotnet-fable prerelease

@@ -65,7 +65,7 @@ let renderSamples (samplesRepoPath: string) =
   ]
 
 let renderBody (samplesRepoPath: string) (info: PageInfo) =
-  div [] [
+  div [Style [OverflowY "hidden"]] [
     Header.render "Samples" "Learn by playing!"
     renderIntro samplesIntroParagraphs
     renderSamples samplesRepoPath
