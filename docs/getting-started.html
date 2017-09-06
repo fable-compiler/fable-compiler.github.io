@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Fable Docs</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,300,600,700|Roboto+Mono">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/bulma.custom.css">
+  <link rel="shortcut icon" href="/img/fable.ico" />
+  <script src="https://cdn.polyfill.io/v2/polyfill.js?features=default,fetch"></script>
+</head>
+
+<body>
+  <nav class="navbar"><div class="navbar-brand"><div class="navbar-item title is-4">Fable</div><div class="navbar-burger" data-target="navMenu"><span></span><span></span><span></span></div></div><div id="navMenu" class=" navbar-menu"><div class="navbar-start"><a class=" navbar-item" href="/">Home</a><a class=" navbar-item" href="/repl">REPL</a><a class=" navbar-item is-active" href="/docs">Docs</a><a class=" navbar-item" href="/samples-browser">Samples</a><a class=" navbar-item" href="/fableconf">FableConf</a></div><div class="navbar-end"><div class="navbar-item"><div class="field is-grouped"><p class="control"><a class="button twitter" href="https://twitter.com/FableCompiler"><span class="icon"><i class="fa fa-twitter"></i></span><span>Share the love!</span></a></p><p class="control"><a class="button github" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class="fa fa-comments"></i></span><span>Chat</span></a></p><p class="control"><a class="button github" href="https://github.com/fable-compiler/Fable"><span class="icon"><i class="fa fa-github"></i></span><span>Contribute</span></a></p></div></div></div></div></nav>
+  <div style="overflow-y:hidden;"><section class="fable-header"><img class="fable-logo" src="/img/fable_logo.png"/><div class="flex-1 has-text-right"><h1 class="title is-1">Docs</h1><h1 class="subtitle is-4">Straight to the point!</h1></div></section><div class="columns"><div class="column"></div><div class="column is-two-thirds samples-browser"><div class="content"><p><h1 id="getting-started">Getting Started</h1></p>
+<p><h2 id="requirements">Requirements</h2></p>
+<p><p>First of all, you need a couple of things installed on your computer for F# &amp; Fable development.</p></p>
+<p><ul></p>
+<p><li><a href="https://www.microsoft.com/net/download/core">dotnet SDK</a> 2.0 or higher</li></p>
+<p><li><a href="https://nodejs.org">node.js</a> 6.11 or higher</li></p>
+<p><li>A JS package manager: <a href="https://yarnpkg.com">yarn</a> or <a href="http://npmjs.com/">npm</a></li></p>
+<p><li>An F# editor like like VS Code or Atom with <a href="http://ionide.io/">Ionide</a>, <a href="https://www.visualstudio.com/">Visual Studio</a> for Windows or macOS, Emacs with <a href="https://github.com/fsharp/emacs-fsharp-mode">fsharp-mode</a> or <a href="https://www.jetbrains.com/rider/">Rider</a></li>
+</ul></p>
+<blockquote>
+<p>npm comes bundled with node.js, but we recommend at least version 5. If necessary, upgrade it by running <code>npm install -g npm</code>. For F# dependencies, <a href="https://fsprojects.github.io/Paket/">Paket</a> will be automatically installed by a bootstraper in Fable templates.</p>
+<p>Although is not a Fable requirement, on macOS and Linux you will need <a href="http://www.mono-project.com/">Mono</a> for other F# tooling like Paket or editor support.</p>
+<p>At the time of writing Visual Studio for Windows is not compatible yet with Fable projects.</p>
+</blockquote>
+<h2 id="tl-dr">TL;DR</h2>
+<p>After installing the requirements, the easiest way to get up and running is to use a Fable template. Below we will see how to install and run the basic <a href="https://www.nuget.org/packages/Fable.Template/">Fable.Template</a> to create a simple web app.</p>
+<p>Install the template (the same command can be used to update the template to latest version):</p>
+<pre><code class="lang-shell">dotnet new -i Fable.Template
+</code></pre>
+<p>After that, if you type <code>dotnet new -h</code> you should see &quot;fable&quot; among the list of available templates. Let&#39;s call it to scaffold a Fable app:</p>
+<pre><code class="lang-shell">dotnet new fable -n FableApp
+cd FableApp
+</code></pre>
+<p>This will create Fable project in a directory with the given name. Below we will see the steps to run the app, but <strong>always check the README file</strong> in case instructions change in future versions of the template.</p>
+<p>After scaffolding the project, install JS and F# dependencies. This is only needed once or whenever dependencies change.</p>
+<blockquote>
+<p>In the samples below, yarn is the tool of choice. If you want to use npm, just replace <code>yarn</code> by <code>npm</code> in the commands.</p>
+</blockquote>
+<pre><code class="lang-shell">yarn install
+dotnet restore
+</code></pre>
+<p>Install Fable and dotnet dependencies using Paket:</p>
+<pre><code class="lang-shell">cd src
+dotnet restore
+</code></pre>
+<p>Start Fable and <a href="https://webpack.js.org/">Webpack</a> dev server:</p>
+<pre><code class="lang-shell">dotnet fable yarn-start
+</code></pre>
+<blockquote>
+<p>This command is used to start the Fable daemon and run a script in package.json concurrently. It&#39;s a shortcut of <code>dotnet fable yarn-run [SCRIPT_NAME]</code>.</p>
+</blockquote>
+<p>Navigate to <code><a href="http://localhost:8080/">http://localhost:8080/</a></code> URL in your browser to see the (dead simple) web app in action. Any modification you do to the F# code will be reflected in the web page after saving. When you want to output the JS code to disk, run <code>dotnet fable yarn-build</code> and you&#39;ll get an optimized JS bundle in the <code>public</code> folder.</p>
+<blockquote>
+<p>You can learn more about the structure of the project generated in the README file.</p>
+</blockquote>
+<p>Now you are a Fable developer! This is all you need to start writing web apps in F#: go on and experiment for yourself.</p>
+<h2 id="a-bit-longer-explanation">A bit longer explanation</h2>
+<p>Fable has two &quot;hearts&quot; or sides: the .NET side is a daemon (a lightweight TCP server listening by default on port 61225) that waits for messages containing the F# source (.fs) or project (.fsproj) file to parse together with other options, and returns its contents in the form of a <a href="https://github.com/babel/babylon/blob/master/ast/spec.md">Babel compliant AST</a>.</p>
+<p>On the other side, there is a JS client that takes care of watching the files, communicating with the Fable daemon, resolving npm dependencies and outputting the actual JS code. At the time of writing there are three JS clients for Fable available:</p>
+<ul>
+<li><a href="https://www.npmjs.com/package/fable-loader">fable-loader</a> is a plugin for <a href="https://webpack.js.org/">Webpack</a>, a powerful JS bundler with many handy features for development, like live reloading.</li>
+<li><a href="https://www.npmjs.com/package/rollup-plugin-fable">rollup-plugin-fable</a> for <a href="https://rollupjs.org/">Rollup</a>, another bundler focused on tree shaking.</li>
+<li><a href="https://www.npmjs.com/package/fable-splitter">fable-splitter</a> is a standalone tool which, unlike the previous ones, outputs separated files instead of a single bundle.</li>
+</ul>
+<p>All the clients need a configuration file, click the links above for more details. Also note that, unlike most JS projects, Fable will reference files outside the local folder (like the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-nuget-locals">Nuget cache</a>). To prevent conflicts, be sure to resolve all paths in the configuration <a href="https://github.com/fable-compiler/fable-templates/blob/213bf4027e512751c44d6a0a6114701ae7f3343f/simple/Content/webpack.config.js#L9-L12">as well as Babel options</a>.</p>
+<p>The usual way to run a JS tool is a <a href="https://docs.npmjs.com/misc/scripts">package.json script</a>, so when you type <code>yarn run build</code> this will invoke a command named &quot;build&quot; within the &quot;scripts&quot; property of the package.json file.</p>
+<p>It is actually possible to fun the Fable daemon and the JS clients separately:</p>
+<pre><code class="lang-shell">dotnet fable start
+
+# In a different shell
+yarn run start
+</code></pre>
+<blockquote>
+<p>The Fable daemon must be invoked in a directory with an .fsproj including a reference to the <code>dotnet-fable</code> package, while the JS script is to be called from the folder containing the <code>package.json</code> file.</p>
+</blockquote>
+<p>For convenience it is possible to tell Fable to automatically start the package.json script and stop whenever it finishes. The commands above can be also executed as:</p>
+<pre><code class="lang-shell">dotnet fable yarn-run start
+</code></pre>
+<blockquote>
+<p>Run <code>dotnet fable --help</code> to know more about the Fable daemon specific options.</p>
+</blockquote>
+</div></div><div class="column"></div></div></div>
+  <script>
+    // Activate navbar burget button
+    document.addEventListener('DOMContentLoaded', function () {
+      var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+      if ($navbarBurgers.length > 0) {
+        $navbarBurgers.forEach(function ($el) {
+          $el.addEventListener('click', function () {
+            var target = $el.dataset.target;
+            var $target = document.getElementById(target);
+            $el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>
