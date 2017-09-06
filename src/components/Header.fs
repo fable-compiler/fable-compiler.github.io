@@ -7,18 +7,22 @@ open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma.Elements
 open Fulma.Components
+open Fulma.BulmaClasses
+open Fulma.Layout
+open Fulma.Grids
 open WebGenerator.Helpers
 open WebGenerator.Literals
 open WebGenerator.Types
 
 let render title subtitle =
-  section [Class "fable-header"] [
-    img [
-      Class "fable-logo"
-      Src WebAssets.FableLogo
-    ]
-    div [Class "flex-1 has-text-right"] [
-      h1 [Class "title is-1"] [str title]
-      h1 [Class "subtitle is-4"] [str subtitle]
-    ]
-  ]
+  Hero.hero [ Hero.customClass "fable-header" ]
+    [ Hero.body [ ]
+        [ div [ ClassName "container" ]
+            [ Columns.columns [ Columns.isVCentered ]
+                [ Column.column [ ]
+                    [ img [ ClassName "fable-logo"
+                            Src WebAssets.FableLogo ] ]
+                  Column.column [ Column.customClass Bulma.Properties.Alignment.HasTextRight ]
+                    [ Heading.h1 [ Heading.is1 ] [ str title ]
+                      Heading.h1 [ Heading.isSubtitle
+                                   Heading.is4 ] [ str subtitle ] ] ] ] ] ]
