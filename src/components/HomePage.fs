@@ -23,7 +23,7 @@ let cardTexts =
    "Easy integration", None, "Fable produces readable JavaScript code compatible with ES2015 standards, like modules, classes or iterables, so it plays very well with either native libraries like [React](https://facebook.github.io/react/) or development tools like [Webpack](https://webpack.js.org/). Don't give up the benefits of the ecosystem just because of your language choice."]
 
 let whereToText =
-  "Try Fable online, check the docs to learn how to get started on your computer, [play with the samples](http://fable.io/samples-browser), visit [fable-awesome](https://github.com/kunjee17/awesome-fable) for a list of Fable resources, join the community at [FableConf](http://fable.io/fableconf) or watch the Channel9 interview with Seth Juarez."
+  "[Try Fable online](/repl), [check the docs](/docs) to learn how to [get started](/docs/getting-started.html) on your computer, [play with the samples](/samples-browser), visit [fable-awesome](https://github.com/kunjee17/awesome-fable) for a curated list of Fable resources, join the community at [FableConf](http://fable.io/fableconf) or watch the [Channel9 interview with Seth Juarez](https://channel9.msdn.com/events/NDC/NDC-Oslo-2017/C9L13?term=fable)."
 
 let linkImage src href =
   a [Href href] [

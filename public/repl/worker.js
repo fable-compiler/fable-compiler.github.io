@@ -1,4 +1,4 @@
-importScripts('repl/bundle.min.js');
+importScripts('bundle.min.js');
 
 // performance polyfill for Safari (see #902) from
 // https://gist.github.com/paulirish/5438650
@@ -58,7 +58,7 @@ function getFileBlob(key, url) {
 };
 
 references.map(function(fileName){
-    getFileBlob(fileName, '/repl/metadata/' + fileName);
+    getFileBlob(fileName, 'metadata/' + fileName);
 });
 
 function compile(source) {

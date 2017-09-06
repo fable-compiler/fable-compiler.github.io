@@ -25,10 +25,10 @@ let navButtons =
           navButton "github" "https://github.com/fable-compiler/Fable" "fa-github" "Contribute" ] ]
 
 let menuItem label page currentPage =
-    a [
-      classList ["navbar-item", true; "is-active", page = currentPage]
-      Href page
-    ] [str label]
+  a [
+    classList ["navbar-item", true; "is-active", page = currentPage]
+    Href page
+  ] [str label]
 
 let root currentPage =
   nav [Class "navbar"] [
