@@ -41,7 +41,7 @@ let paragraph text =
 
 let renderBody (info: PageInfo) =
   // This fixes the problem with the double scrollbar on Windows
-  div [Style [OverflowY "hidden"]] [
+  div [Style [Overflow "hidden"]] [
     Header.render "F# |> BABEL" "JavaScript you can be proud of!"
     renderIntro [introText]
     div [Style [Margin "20px 10px 0 10px"]] [
