@@ -8,17 +8,16 @@
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,300,600,700|Roboto+Mono">
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="/css/bulma.custom.css">
+  <link rel="stylesheet" type="text/css" href="/css/highlight.css">
   <link rel="shortcut icon" href="/img/fable.ico" />
   <script src="https://cdn.polyfill.io/v2/polyfill.js?features=default,fetch"></script>
 </head>
 
 <body>
   <nav class="navbar"><div class="navbar-brand"><div class="navbar-item title is-4">Fable</div><div class="navbar-burger" data-target="navMenu"><span></span><span></span><span></span></div></div><div id="navMenu" class=" navbar-menu"><div class="navbar-start"><a class=" navbar-item" href="/">Home</a><a class=" navbar-item" href="/repl">REPL</a><a class=" navbar-item is-active" href="/docs">Docs</a><a class=" navbar-item" href="/samples-browser">Samples</a><a class=" navbar-item" href="/fableconf">FableConf</a></div><div class="navbar-end"><div class="navbar-item"><div class="field is-grouped"><p class="control"><a class="button twitter" href="https://twitter.com/FableCompiler"><span class="icon"><i class="fa fa-twitter"></i></span><span>Share the love!</span></a></p><p class="control"><a class="button github" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class="fa fa-comments"></i></span><span>Chat</span></a></p><p class="control"><a class="button github" href="https://github.com/fable-compiler/Fable"><span class="icon"><i class="fa fa-github"></i></span><span>Contribute</span></a></p></div></div></div></div></nav>
-  <div style="overflow-y:hidden;"><section class="fable-header"><img class="fable-logo" src="/img/fable_logo.png"/><div class="flex-1 has-text-right"><h1 class="title is-1">Docs</h1><h1 class="subtitle is-4">Straight to the point!</h1></div></section><div class="columns"><div class="column"></div><div class="column is-two-thirds samples-browser"><div class="content" style="margin:5px;"><p><h1 id="-net-and-f-compatibility">.NET and F# Compatibility</h1></p>
-<p>Fable provides support for some classes of .NET BCL (Base Class Library) and most of
+  <div style="overflow-y:hidden;"><section class="fable-header"><img class="fable-logo" src="/img/fable_logo.png"/><div class="flex-1 has-text-right"><h1 class="title is-1">Docs</h1><h1 class="subtitle is-4">Straight to the point!</h1></div></section><div class="columns"><div class="column"></div><div class="column is-two-thirds samples-browser"><div class="content" style="margin:5px;"><h1><a name="-net-and-f-compatibility" class="anchor" href="#-net-and-f-compatibility">.NET and F# Compatibility</a></h1><p>Fable provides support for some classes of .NET BCL (Base Class Library) and most of
 FSharp.Core library. When possible, Fable translates .NET types and methods to native JavaScript APIs for minimum overhead.</p>
-<h2 id="-net-base-class-library">.NET Base Class Library</h2>
-<p>The following classes are translated to JS and most of their methods
+<h2><a name="-net-base-class-library" class="anchor" href="#-net-base-class-library">.NET Base Class Library</a></h2><p>The following classes are translated to JS and most of their methods
 (static and instance) should be available in Fable.</p>
 <table>
 <thead>
@@ -106,15 +105,13 @@ FSharp.Core library. When possible, Fable translates .NET types and methods to n
 <li><code>System.Diagnostics.Debugger.Break()</code></li>
 <li><code>System.Activator.CreateInstance&lt;&#39;T&gt;()</code></li>
 </ul>
-<h3 id="caveats">Caveats</h3>
-<ul>
+<h3><a name="caveats" class="anchor" href="#caveats">Caveats</a></h3><ul>
 <li>All numeric types including <code>decimal</code> become JS <code>number</code> (64-bit floating type), except for <code>int64</code>, <code>uint64</code> and <code>bigint</code>.</li>
 <li>Numeric arrays are compiled to <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray">Typed Arrays</a> when possible.</li>
 <li>No bound checks for numeric types (unless you do explicit conversions like <code>byte 500</code>) nor for array indices.</li>
 <li><code>Regex</code> will always behave as if passed <code>RegexOptions.ECMAScript</code> flag (e.g., no negative look-behind or named groups).</li>
 </ul>
-<h2 id="fsharp-core">FSharp.Core</h2>
-<p>Most of FSharp.Core operators are supported, as well as formatting with
+<h2><a name="fsharp-core" class="anchor" href="#fsharp-core">FSharp.Core</a></h2><p>Most of FSharp.Core operators are supported, as well as formatting with
 <code>sprintf</code>, <code>printfn</code> or <code>failwithf</code> (<code>String.Format</code> is also available).
 The following types and/or corresponding modules from FSharp.Core lib will
 likewise translate to JS:</p>
@@ -195,8 +192,7 @@ likewise translate to JS:</p>
 <li>Object Expressions</li>
 <li>Units of measure</li>
 </ul>
-<h3 id="caveats">Caveats</h3>
-<ul>
+<h3><a name="caveats" class="anchor" href="#caveats">Caveats</a></h3><ul>
 <li>Options are <strong>erased</strong> in JS (<code>Some 5</code> becomes just <code>5</code> in JS and <code>None</code> translates to <code>null</code>).
 This is needed for example, to represent TypeScript <a href="https://www.typescriptlang.org/docs/handbook/interfaces.html#optional-properties">optional properties</a>.</li>
 <li><code>Async.RunSynchronously</code> is not supported.</li>
@@ -204,30 +200,27 @@ This is needed for example, to represent TypeScript <a href="https://www.typescr
 <code>Start</code>, <code>Receive</code>, <code>Post</code> and <code>PostAndAsyncReply</code> are implemented
 (<code>cancellationToken</code> or <code>timeout</code> optional arguments are not supported).</li>
 </ul>
-<h2 id="object-oriented-programming">Object Oriented Programming</h2>
-<p><strong>Classes</strong> translate to <a href="https://github.com/lukehoban/es6features#classes">ES6 classes</a> and most of their .NET/F# characteristics are available: properties, overloads, secondary constructors, custom operators, etc.</p>
+<h2><a name="object-oriented-programming" class="anchor" href="#object-oriented-programming">Object Oriented Programming</a></h2><p><strong>Classes</strong> translate to <a href="https://github.com/lukehoban/es6features#classes">ES6 classes</a> and most of their .NET/F# characteristics are available: properties, overloads, secondary constructors, custom operators, etc.</p>
 <p><strong>Inheritance</strong> is possible and conforms to <a href="https://github.com/lukehoban/es6features#classes">ES2015 inheritance</a> but must be done by calling the <em>primary constructor</em> of the base class. Methods can be overridden and call the base implementation. Just note it won&#39;t be possible to access the base implementation from outside by casting the object. Example:</p>
-<pre><code class="lang-fsharp">type A() =
-    member x.Foo() = &quot;Hello&quot;
+<pre><code class="lang-fsharp"><span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">A</span></span>() =
+    <span class="hljs-keyword">member</span> x.Foo() = <span class="hljs-string">"Hello"</span>
 
-type B() =
-    inherit A()
-    member x.Foo() = base.Foo() + &quot; World!&quot;
+<span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">B</span></span>() =
+    <span class="hljs-keyword">inherit</span> A()
+    <span class="hljs-keyword">member</span> x.Foo() = <span class="hljs-keyword">base</span>.Foo() + <span class="hljs-string">" World!"</span>
 
-// This prints &quot;Hello World!&quot; both in .NET and JS
-B().Foo() |&gt; printfn &quot;%s&quot;
+<span class="hljs-comment">// This prints "Hello World!" both in .NET and JS</span>
+B().Foo() |&gt; printfn <span class="hljs-string">"%s"</span>
 
-// This prints &quot;Hello&quot; in .NET and &quot;Hello World!&quot; in JS
-(B() :&gt; A).Foo() |&gt; printfn &quot;%s&quot;
+<span class="hljs-comment">// This prints "Hello" in .NET and "Hello World!" in JS</span>
+(B() :&gt; A).Foo() |&gt; printfn <span class="hljs-string">"%s"</span>
 </code></pre>
 <p><strong>Interface</strong> methods are compiled as normal object methods and it&#39;s possible to test against an interface (e.g. <code>x :? IComparable</code>) for types defined in F# code.</p>
-<h2 id="generics">Generics</h2>
-<p>Generics are erased by default in generated code. However, it is still possible to access generic information in <em>inline</em> functions (like <code>typeof&lt;&#39;T&gt;</code>) or methods decorated with <code>PassGenerics</code> attribute.</p>
+<h2><a name="generics" class="anchor" href="#generics">Generics</a></h2><p>Generics are erased by default in generated code. However, it is still possible to access generic information in <em>inline</em> functions (like <code>typeof&lt;&#39;T&gt;</code>) or methods decorated with <code>PassGenerics</code> attribute.</p>
 <blockquote>
 <p><strong>Caveat</strong>: Functions decorated with <code>PassGenericsAttribute</code> may work unexpectedly if called from external JS code.</p>
 </blockquote>
-<h2 id="reflection">Reflection</h2>
-<p>Fable keeps metadata information in the declared types to allow limited support for .NET/F# reflection. Please check the <a href="https://github.com/fable-compiler/Fable/blob/master/tests/Main/ReflectionTests.fs">Fable reflection tests</a> to see which methods are available in latest versions.</p>
+<h2><a name="reflection" class="anchor" href="#reflection">Reflection</a></h2><p>Fable keeps metadata information in the declared types to allow limited support for .NET/F# reflection. Please check the <a href="https://github.com/fable-compiler/Fable/blob/master/tests/Main/ReflectionTests.fs">Fable reflection tests</a> to see which methods are available in latest versions.</p>
 </div></div><div class="column"></div></div></div>
   <script>
     // Activate navbar burget button
