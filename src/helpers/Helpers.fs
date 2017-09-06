@@ -64,6 +64,10 @@ let readFile (path: string) =
 // React helpers
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
+open Fulma.Common
+open Fulma.Elements
+open Fulma.Components
+open Fulma.Extra.FontAwesome
 
 let inline Class x = ClassName x
 
@@ -86,4 +90,23 @@ let renderIntro (markdownParagraphs: string list): React.ReactElement =
     div [Class "column"; Style [Padding 0]] []
   ]
 
+type ImgOrFa = Img of string | FaIcon of Fa.FontAwesomeIcons
 
+let renderCard icon title link text =
+  let icon =
+    match icon with
+    | Img src -> Image.image [Image.is64x64] [img [Src src]]
+    | FaIcon fa -> Icon.faIcon [ Icon.isLarge ] fa
+  let header =
+    match link with
+     | None -> span [Class "title is-4"] [str title]
+     | Some link -> a [Href link] [span [Class "title is-4"] [str title]]
+  Card.card [CustomClass "fable-home-card"] [
+    Card.header [] [Card.Header.title [] [header]]
+    Card.content [] [
+      Media.media [] [
+        Media.left [] [icon]
+        Media.content [] [p [setMarkdown text] []]
+      ]
+    ]
+  ]

@@ -25,10 +25,14 @@ let render (info: PageInfo) =
     |> writeFile info.TargetPath
 
 [
-  { Title = "Fable: The compiler that emits JavaScript you can be proud of!"
+  { Title = "Fable: JavaScript you can be proud of!"
     TargetPath = Path.join(Paths.PublicDir, "index.html")
     NavbarActivePage = Literals.Navbar.Home
     RenderBody = HomePage.renderBody }
+  { Title = "Fable Docs"
+    TargetPath = Path.join(Paths.PublicDir, "docs", "index.html")
+    NavbarActivePage = Literals.Navbar.Docs
+    RenderBody = DocsPage.renderBody }
   // { Title = "Fable Browser Samples"
   //   TargetPath = Path.join(Paths.PublicDir, "index.html") // TODO
   //   NavbarActivePage = Literals.Navbar.Samples
