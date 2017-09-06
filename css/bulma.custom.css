@@ -5775,7 +5775,8 @@ html, body {
 .flex-wrap {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; }
+  justify-content: center;
+  align-items: center; }
 
 .fable-header {
   padding: 20px;
