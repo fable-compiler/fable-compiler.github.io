@@ -2,6 +2,7 @@ temp
 public/**/*.*
 !public/img/*.*
 !public/repl/**/*.*
+!public/css/highlight.css
 !public/CNAME
 !public/README.md
 **/.DS_Store

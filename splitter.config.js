@@ -12,7 +12,12 @@ function runScript(scriptPath) {
     if (key.startsWith(scriptDir))
       delete require.cache[key]
   })
-  require(scriptPath);
+  try {
+    require(scriptPath);
+  }
+  catch (err) {
+    console.error(err);
+  }
 }
 
 var outFile = resolve("build/Main.js");

@@ -6,6 +6,7 @@ open Fable.Import
 open Fable.Import.Node.Exports
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
+open Fable.PowerPack
 open Fulma.Elements
 open Fulma.Components
 open WebGenerator.Components
@@ -32,24 +33,27 @@ let renderDocs() =
     let fullPath = Path.join(Paths.FableRepo, "docs", doc)
     let targetPath = Path.join(Paths.PublicDir, "docs", doc.Replace(".md", ".html"))
     let content = parseMarkdownDocFile fullPath
-    { Title = "Fable Docs"
-      TargetPath = targetPath
-      NavbarActivePage = Literals.Navbar.Docs
-      RenderBody = fun _ ->
-        div [Style [OverflowY "hidden"]] [
-          Header.render "Docs" "Straight to the point!"
-          div [Class "columns"] [
-            div [Class "column"] []
-            div [Class "column is-two-thirds samples-browser"] [
-              div [
-                Class "content"
-                Style [Margin "5px"]
-                setMarkdown content] []
-            ]
-            div [Class "column"] []
+    let body =
+      div [Style [OverflowY "hidden"]] [
+        Header.render "Docs" "Straight to the point!"
+        div [Class "columns"] [
+          div [Class "column"] []
+          div [Class "column is-two-thirds samples-browser"] [
+            div [
+              Class "content"
+              Style [Margin "5px"]
+              DangerouslySetInnerHTML { __html = content }] []
           ]
+          div [Class "column"] []
         ]
-    } |> render
+      ]
+    [ "title" ==> "Fable Docs"
+      "extraCss" ==> [| "/css/highlight.css" |]
+      // "extraCss" ==> [| createObj [ "href" ==> "/css/highlight.css"] |]
+      "navbar" ==> (Navbar.root Literals.Navbar.Docs |> parseReactStatic)
+      "body" ==> parseReactStatic body ]
+    |> parseTemplate Paths.Template
+    |> writeFile targetPath
 
 let renderMainPages() =
   [
