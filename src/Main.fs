@@ -13,6 +13,8 @@ open WebGenerator.Literals
 open Helpers
 open Types
 
+let parseMarkdownDocFile(path: string): string = importMember "./helpers/Util.js"
+
 // TODO: Let user decide paths of Fable and samples-browser repos through arguments
 let samplesRepoPath = Paths.SamplesRepo
 
@@ -29,7 +31,7 @@ let renderDocs() =
   for doc in docFiles |> Seq.filter (fun x -> x.EndsWith(".md")) do
     let fullPath = Path.join(Paths.FableRepo, "docs", doc)
     let targetPath = Path.join(Paths.PublicDir, "docs", doc.Replace(".md", ".html"))
-    let content = parseMarkdownFile fullPath
+    let content = parseMarkdownDocFile fullPath
     { Title = "Fable Docs"
       TargetPath = targetPath
       NavbarActivePage = Literals.Navbar.Docs
