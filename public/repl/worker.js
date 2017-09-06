@@ -1,4 +1,4 @@
-importScripts('bundle.min.js');
+importScripts('build/bundle.min.js');
 
 // performance polyfill for Safari (see #902) from
 // https://gist.github.com/paulirish/5438650

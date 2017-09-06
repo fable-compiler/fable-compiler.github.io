@@ -48,18 +48,18 @@
                     }
                     macro = macro
                         .replace(/\$(\d+)\.\.\./, function (m, i) {
-                        var rep = [], j = parseInt(i);
+                        var rep = [], j = parseInt(i, 10);
                         for (; j < args.length; j++) {
                             rep.push("$" + j);
                         }
                         return rep.join(",");
                     })
                         .replace(/\{\{\$(\d+)\?(.*?)\:(.*?)\}\}/g, function (_, g1, g2, g3) {
-                        var i = parseInt(g1);
+                        var i = parseInt(g1, 10);
                         return i < args.length && args[i].value ? g2 : g3;
                     })
                         .replace(/\{\{([^\}]*\$(\d+).*?)\}\}/g, function (_, g1, g2) {
-                        var i = parseInt(g2);
+                        var i = parseInt(g2, 10);
                         return i < args.length ? g1 : "";
                     });
                     var buildMacro = template(macro);
@@ -182,7 +182,11 @@
   var REPL = (function () {
     function REPL () {
       this.storage = new StorageService();
-      var state = this.storage.get('replState') || { code: 'printfn "Hello World!"' };
+      var state = this.storage.get('replState');
+      if (state == null) {
+        state = { code: '' };
+        downloadFile("samples/readme.fs", this.setSource.bind(this))
+      }
       Object.assign(state, UriUtils.parseQuery());
 
       this.options = Object.assign({}, state);
@@ -379,7 +383,7 @@
         $label.tabIndex = -1;
         $label.addEventListener(
           'click',
-          () => downloadFile("/repl_samples/" + sampleName + ".fs", repl.setSource.bind(repl)),
+          () => downloadFile("samples/" + sampleName + ".fs", repl.setSource.bind(repl)),
           false
         );
 
