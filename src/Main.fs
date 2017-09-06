@@ -65,7 +65,10 @@ let renderMainPages() =
       TargetPath = Path.join(Paths.PublicDir, "docs", "index.html")
       NavbarActivePage = Literals.Navbar.Docs
       RenderBody = DocsPage.renderBody }
-    // { Title = "Fable Browser Ssdy samplesRepoPath }
+    // { Title = "Fable Browser Samples"
+    //   TargetPath = Path.join(Paths.PublicDir, "index.html") // TODO
+    //   NavbarActivePage = Literals.Navbar.Samples
+    //   RenderBody = SamplesPage.renderBody samplesRepoPath }
   ]
   |> List.iter render
 
