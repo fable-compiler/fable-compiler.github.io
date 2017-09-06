@@ -6,12 +6,14 @@
     "server": "cd public && reload -b",
     "publish": "gh-pages -d public -b master",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "sass": "node-sass files/styles.sass public/css/bulma.custom.css"
+    "sass": "node-sass files/styles.sass public/css/bulma.custom.css",
+    "dev-mode": "concurrently -k \"cd src && dotnet fable yarn-start\" \"yarn run server\" \"yarn run sass -- -w\""
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "bulma": "^0.5.1",
+    "concurrently": "^3.5.0",
     "fable-splitter": "^0.1.10",
     "fable-utils": "^1.0.2",
     "gh-pages": "^1.0.0",

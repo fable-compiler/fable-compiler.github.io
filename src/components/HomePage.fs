@@ -28,7 +28,7 @@ let whereToText =
 let linkImage src href =
   a [Href href] [
     img [
-      Style [Height "150px"]
+      Style [MaxHeight "150px"]
       Src ("img/" + src)
     ]
   ]
@@ -70,5 +70,6 @@ let renderBody (info: PageInfo) =
       linkImage "ionide.png" "http://ionide.io/"
       linkImage "prolucid.jpg" "http://prolucid.ca/"
       linkImage "casquenoir.jpg" "http://casquenoir.com/"
+      linkImage "danpower.png" "https://www.danpower-gruppe.de/"
     ]
   ]

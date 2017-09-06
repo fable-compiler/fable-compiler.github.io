@@ -41,7 +41,7 @@ let renderDocs() =
             div [Class "column is-two-thirds samples-browser"] [
               div [
                 Class "content"
-                // Style [Margin "20px"]
+                Style [Margin "5px"]
                 setMarkdown content] []
             ]
             div [Class "column"] []
