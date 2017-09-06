@@ -8,6 +8,7 @@ open Fable.Helpers.React.Props
 open Fulma.Common
 open Fulma.Elements
 open Fulma.Components
+open Fulma.Grids
 open Fulma.Extra.FontAwesome
 open WebGenerator.Helpers
 open WebGenerator.Literals
@@ -44,21 +45,24 @@ let renderBody (info: PageInfo) =
     Header.render "F# |> BABEL" "JavaScript you can be proud of!"
     renderIntro [introText]
     div [Style [Margin "20px 10px 0 10px"]] [
-      div [Class "columns"] [
-        div [Class "column"] [cardTexts.[0] |||> renderCard (Img "./img/fsharp.png")]
-        div [Class "column"] [cardTexts.[1] |||> renderCard (FaIcon Fa.BatteryFull)]
+      Columns.columns []
+        [ Column.column [] [cardTexts.[0] |||> renderCard (Img "./img/fsharp.png")]
+          Column.column [] [cardTexts.[1] |||> renderCard (FaIcon Fa.BatteryFull)]
       ]
-      div [Class "columns"] [
-        div [Class "column"] [cardTexts.[2] |||> renderCard (FaIcon Fa.Wrench)]
-        div [Class "column"] [cardTexts.[3] |||> renderCard (FaIcon Fa.PuzzlePiece)]
+      Columns.columns []
+        [ Column.column [] [cardTexts.[2] |||> renderCard (FaIcon Fa.Wrench)]
+          Column.column []  [cardTexts.[3] |||> renderCard (FaIcon Fa.PuzzlePiece)]
       ]
     ]
     br []
     h1 [ClassName "title is-2 has-text-centered"] [str "Where to go from here"]
     paragraph whereToText
-    a [Href "https://channel9.msdn.com/events/NDC/NDC-Oslo-2017/C9L13?term=fable"] [
-      img [Src "img/channel9.png"
-           Style [Margin "20px auto"; MaxHeight "600px"]]
+    Columns.columns [ ]
+      [ Column.column [ Column.Width.is6
+                        Column.Offset.is3 ]
+                      [ a [ Href "https://channel9.msdn.com/events/NDC/NDC-Oslo-2017/C9L13?term=fable"]
+                          [ img [ Src "img/channel9.png"
+                                  Style [Margin "20px auto"; MaxHeight "600px"] ] ] ]
     ]
     h1 [ClassName "title is-2 has-text-centered"] [str "You are in good company"]
     paragraph "These are some of the projects and companies using Fable. Send us a message to include yours!"
