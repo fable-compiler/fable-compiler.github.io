@@ -40,3 +40,7 @@ yarn run sass -- -w
 ```
 
 > The `-w` argument activates the watch mode of the SASS compiler. You can omit it if you only want to compile the file once.
+
+## Other repositories
+
+At the moment, the tool expects the [Fable](https://github.com/fable-compiler/Fable) and [samples-browser](https://github.com/fable-compiler/samples-browser) repositories to be cloned on the same directory level as this one. In the future it'll be possible to change that behaviour through arguments.

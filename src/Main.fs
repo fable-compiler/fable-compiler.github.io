@@ -24,18 +24,47 @@ let render (info: PageInfo) =
     |> parseTemplate Paths.Template
     |> writeFile info.TargetPath
 
-[
-  { Title = "Fable: JavaScript you can be proud of!"
-    TargetPath = Path.join(Paths.PublicDir, "index.html")
-    NavbarActivePage = Literals.Navbar.Home
-    RenderBody = HomePage.renderBody }
-  { Title = "Fable Docs"
-    TargetPath = Path.join(Paths.PublicDir, "docs", "index.html")
-    NavbarActivePage = Literals.Navbar.Docs
-    RenderBody = DocsPage.renderBody }
-  // { Title = "Fable Browser Samples"
-  //   TargetPath = Path.join(Paths.PublicDir, "index.html") // TODO
-  //   NavbarActivePage = Literals.Navbar.Samples
-  //   RenderBody = SamplesPage.renderBody samplesRepoPath }
-]
-|> List.iter render
+let renderDocs() =
+  let docFiles = Fs.readdirSync(!^Path.join(Paths.FableRepo, "docs"))
+  for doc in docFiles |> Seq.filter (fun x -> x.EndsWith(".md")) do
+    let fullPath = Path.join(Paths.FableRepo, "docs", doc)
+    let targetPath = Path.join(Paths.PublicDir, "docs", doc.Replace(".md", ".html"))
+    let content = parseMarkdownFile fullPath
+    { Title = "Fable Docs"
+      TargetPath = targetPath
+      NavbarActivePage = Literals.Navbar.Docs
+      RenderBody = fun _ ->
+        div [Style [OverflowY "hidden"]] [
+          Header.render "Docs" "Straight to the point!"
+          div [Class "columns"] [
+            div [Class "column"] []
+            div [Class "column is-two-thirds samples-browser"] [
+              div [
+                Class "content"
+                // Style [Margin "20px"]
+                setMarkdown content] []
+            ]
+            div [Class "column"] []
+          ]
+        ]
+    } |> render
+
+let renderMainPages() =
+  [
+    { Title = "Fable: JavaScript you can be proud of!"
+      TargetPath = Path.join(Paths.PublicDir, "index.html")
+      NavbarActivePage = Literals.Navbar.Home
+      RenderBody = HomePage.renderBody }
+    { Title = "Fable Docs"
+      TargetPath = Path.join(Paths.PublicDir, "docs", "index.html")
+      NavbarActivePage = Literals.Navbar.Docs
+      RenderBody = DocsPage.renderBody }
+    // { Title = "Fable Browser Samples"
+    //   TargetPath = Path.join(Paths.PublicDir, "index.html") // TODO
+    //   NavbarActivePage = Literals.Navbar.Samples
+    //   RenderBody = SamplesPage.renderBody samplesRepoPath }
+  ]
+  |> List.iter render
+
+renderMainPages()
+renderDocs()
