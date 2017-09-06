@@ -4,6 +4,7 @@
     "build": "fable-splitter -c splitter.config.js",
     "start": "fable-splitter -c splitter.config.js -w",
     "server": "cd public && reload -b",
+    "publish": "gh-pages -d public -b master",
     "test": "echo \"Error: no test specified\" && exit 1",
     "sass": "node-sass files/styles.sass public/css/bulma.custom.css"
   },
