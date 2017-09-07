@@ -23,4 +23,4 @@ module Paths =
   let SamplesRepo = resolve "${entryDir}/../../samples-browser"
 
 module WebAssets =
-  let FableLogo = "/img/fable_logo.png"
+  let FableLogo = "/img/shared/fable_logo.png"

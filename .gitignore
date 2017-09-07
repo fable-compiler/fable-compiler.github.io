@@ -1,6 +1,6 @@
 temp
 public/**/*.*
-!public/img/*.*
+!public/img/**/*.*
 !public/repl/**/*.*
 !public/css/highlight.css
 !public/CNAME

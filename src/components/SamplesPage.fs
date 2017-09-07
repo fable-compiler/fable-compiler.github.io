@@ -48,7 +48,7 @@ let renderSamples (samplesRepoPath: string) =
     |> readFile |> parseJson5<JsObj<JsObj<SampleInfo>>>
   div [Class "columns"] [
     div [Class "column"] []
-    div [Class "column is-two-thirds samples-browser"] [
+    div [Class "column is-two-thirds"] [
       div [Class "fable-samples"] [
         h1 [Class "title is-2"] [str "Fun and Games"]
         ul [] (samplesToList samples.["games"])

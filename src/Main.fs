@@ -16,9 +16,6 @@ open Types
 
 let parseMarkdownDocFile(path: string): string = importMember "./helpers/Util.js"
 
-// TODO: Let user decide paths of Fable and samples-browser repos through arguments
-let samplesRepoPath = Paths.SamplesRepo
-
 let render (info: PageInfo) =
     [ "title" ==> info.Title
       // "root" ==> Path.dirname(Path.relative(Paths.PublicDir, info.TargetPath))
@@ -28,6 +25,13 @@ let render (info: PageInfo) =
     |> writeFile info.TargetPath
 
 let renderDocs() =
+  // Main docs page
+  render
+    { Title = "Fable Docs"
+      TargetPath = Path.join(Paths.PublicDir, "docs", "index.html")
+      NavbarActivePage = Literals.Navbar.Docs
+      RenderBody = DocsPage.renderBody }
+  // Docs translated from markdown files in Fable repo
   let docFiles = Fs.readdirSync(!^Path.join(Paths.FableRepo, "docs"))
   for doc in docFiles |> Seq.filter (fun x -> x.EndsWith(".md")) do
     let fullPath = Path.join(Paths.FableRepo, "docs", doc)
@@ -38,7 +42,7 @@ let renderDocs() =
         Header.render "Docs" "Straight to the point!"
         div [Class "columns"] [
           div [Class "column"] []
-          div [Class "column is-two-thirds samples-browser"] [
+          div [Class "column is-two-thirds"] [
             div [
               Class "content"
               Style [Margin "5px"]
@@ -55,22 +59,21 @@ let renderDocs() =
     |> parseTemplate Paths.Template
     |> writeFile targetPath
 
-let renderMainPages() =
-  [
+let renderHomePage() =
+  render
     { Title = "Fable: JavaScript you can be proud of!"
       TargetPath = Path.join(Paths.PublicDir, "index.html")
       NavbarActivePage = Literals.Navbar.Home
       RenderBody = HomePage.renderBody }
-    { Title = "Fable Docs"
-      TargetPath = Path.join(Paths.PublicDir, "docs", "index.html")
-      NavbarActivePage = Literals.Navbar.Docs
-      RenderBody = DocsPage.renderBody }
-    // { Title = "Fable Browser Samples"
-    //   TargetPath = Path.join(Paths.PublicDir, "index.html") // TODO
-    //   NavbarActivePage = Literals.Navbar.Samples
-    //   RenderBody = SamplesPage.renderBody samplesRepoPath }
-  ]
-  |> List.iter render
 
-renderMainPages()
+let renderSamples() =
+  // TODO: Copy styles (css) and shared images (img/shared)
+  render
+    { Title = "Fable Browser Samples"
+      TargetPath = Path.join(Paths.SamplesRepo, "public", "index.html")
+      NavbarActivePage = Literals.Navbar.Samples
+      RenderBody = SamplesPage.renderBody Paths.SamplesRepo }
+
+renderHomePage()
 renderDocs()
+renderSamples()

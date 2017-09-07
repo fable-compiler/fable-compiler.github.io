@@ -23,8 +23,9 @@ let cardTexts =
    "Cutting-edge tools", None, "F# has first-class support across a wide range of editors for all tastes: including [Visual Studio](https://www.visualstudio.com/) (for macOS and Windows), VS Code and Atom with [Ionide](http://ionide.io/), [Emacs](https://github.com/fsharp/emacs-fsharp-mode) or [Rider by JetBrains](https://www.jetbrains.com/rider/). All of them providing autocompletion, documentation tooltips, error checking on-the-fly, navigation and refactoring tools as well as interactive scripting."
    "Easy integration", None, "Fable produces readable JavaScript code compatible with ES2015 standards, like modules, classes or iterables, so it plays very well with either native libraries like [React](https://facebook.github.io/react/) or development tools like [Webpack](https://webpack.js.org/). Don't give up the benefits of the ecosystem just because of your language choice."]
 
-let whereToText =
-  "[Try Fable online](/repl), [check the docs](/docs) to learn how to [get started](/docs/getting-started.html) on your computer, [play with the samples](/samples-browser), visit [fable-awesome](https://github.com/kunjee17/awesome-fable) for a curated list of Fable resources, join the community at [FableConf](http://fable.io/fableconf) or watch the [Channel9 interview with Seth Juarez](https://channel9.msdn.com/events/NDC/NDC-Oslo-2017/C9L13?term=fable)."
+let whereToText: string =
+  sprintf "[Try Fable online](/repl), [check the docs](%s) to learn how to [get started](%s/getting-started.html) on your computer, [play with the samples](%s), visit [fable-awesome](https://github.com/kunjee17/awesome-fable) for a curated list of Fable resources, join the community at [FableConf](%s) or watch the [Channel9 interview with Seth Juarez](https://channel9.msdn.com/events/NDC/NDC-Oslo-2017/C9L13?term=fable)."
+    Navbar.Docs Navbar.Docs Navbar.Samples Navbar.FableConf
 
 let linkImage src href =
   a [Href href] [
