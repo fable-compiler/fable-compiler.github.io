@@ -25,12 +25,13 @@ let render (info: PageInfo) =
     |> writeFile info.TargetPath
 
 let renderDocs() =
+  let title, subtitle = "Documentation", "Learn how Fable works & how to use it"
   // Main docs page
   render
     { Title = "Fable Docs"
       TargetPath = Path.join(Paths.PublicDir, "docs", "index.html")
       NavbarActivePage = Literals.Navbar.Docs
-      RenderBody = DocsPage.renderBody }
+      RenderBody = DocsPage.renderBody title subtitle }
   // Docs translated from markdown files in Fable repo
   let docFiles = Fs.readdirSync(!^Path.join(Paths.FableRepo, "docs"))
   for doc in docFiles |> Seq.filter (fun x -> x.EndsWith(".md")) do
@@ -39,7 +40,7 @@ let renderDocs() =
     let content = parseMarkdownDocFile fullPath
     let body =
       div [Style [OverflowY "hidden"]] [
-        Header.render "Docs" "Straight to the point!"
+        Header.render title subtitle
         div [Class "columns"] [
           div [Class "column"] []
           div [Class "column is-two-thirds"] [
@@ -67,7 +68,10 @@ let renderHomePage() =
       RenderBody = HomePage.renderBody }
 
 let renderSamples() =
-  // TODO: Copy styles (css) and shared images (img/shared)
+  // Copy styles (css) and shared images (img/shared)
+  copy (Path.join(Paths.PublicDir, "css")) (Path.join(Paths.SamplesRepo, "public/css"))
+  copy (Path.join(Paths.PublicDir, "img/shared")) (Path.join(Paths.SamplesRepo, "public/img/shared"))
+
   render
     { Title = "Fable Browser Samples"
       TargetPath = Path.join(Paths.SamplesRepo, "public", "index.html")

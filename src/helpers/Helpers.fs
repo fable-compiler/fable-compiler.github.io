@@ -7,10 +7,12 @@ open Fable.Core.JsInterop
 open Fable.Import
 open Fable.Import.Node.Globals
 open Fable.Import.Node.Exports
+open Fable.PowerPack
 
 let private templateCache = Dictionary<string, obj->string>()
 let private handleBarsCompile (templateString: string): obj->string = import "compile" "handlebars"
 let private marked (markdown: string): string = importDefault "marked"
+let private fsExtra: obj = importAll "fs-extra"
 
 /// Resolves a path using the location of the target JS file
 /// Note the function is inline so `__dirname` will belong to the calling file
@@ -58,6 +60,11 @@ let writeFile (path: string) (content: string) =
     ensureDirExists (Path.dirname path) None
     Fs.writeFileSync(path, content)
 
+/// Copy a file or directory. The directory can have contents. Like cp -r.
+/// Overwrites target files
+let copy (source: string) (target: string): unit =
+    !!fsExtra?copySync(source, target, createObj["overwrite" ==> true])
+
 let readFile (path: string) =
     Fs.readFileSync(path).toString()
 
@@ -80,7 +87,6 @@ let setInnerHtml (html: string) =
 let renderIntro (markdownParagraphs: string list): React.ReactElement =
   let paragraphs =
     Seq.map parseMarkdown markdownParagraphs |> String.concat ""
-  printfn "%s" paragraphs
   div [Class "columns"; Style [MarginTop "10px"]] [
     div [Class "column"; Style [Padding 0]] []
     div [Class "column is-two-thirds"] [

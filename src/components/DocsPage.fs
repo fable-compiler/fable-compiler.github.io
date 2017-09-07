@@ -25,9 +25,9 @@ let cardTexts =
 
    "Community", Some "https://github.com/kunjee17/awesome-fable#learn", "Learning about Fable doesn't end here, there are many great tutorials and videos created by Fable community members. The list grows every day so make sure to check [fable-awesome](https://github.com/kunjee17/awesome-fable) regularly and follow [our Twitter account](https://twitter.com/FableCompiler) for the latest news."]
 
-let renderBody (info: PageInfo) =
+let renderBody title subtitle (info: PageInfo) =
   div [Style [Overflow "hidden"]] [
-    Header.render "Documentation" "Learn how Fable works & how to use it"
+    Header.render title subtitle
     renderIntro [introText]
     div [Style [Margin "20px 10px 0 10px"]] [
       div [Class "columns"] [
