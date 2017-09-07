@@ -61,6 +61,8 @@ html, body
 
 .fable-header
   background: linear-gradient(to left, lighten($fable-blue, 20%), white)
+  .hero-body
+    padding: 2rem 0
   .fable-logo
     max-height: 150px
     @media screen and (max-width: 600px)
@@ -74,7 +76,8 @@ html, body
 .fable-introduction
   @extend .has-text-centered
   font-size: 1.3em
-  // margin: 20px 5px
+  p:not(:last-child)
+    margin-bottom: 20px
 
 .fable-samples
   margin: 0 5px

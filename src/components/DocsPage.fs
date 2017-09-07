@@ -27,7 +27,7 @@ let cardTexts =
 
 let renderBody (info: PageInfo) =
   div [Style [Overflow "hidden"]] [
-    Header.render "Docs" "Straight to the point!"
+    Header.render "Documentation" "Learn how Fable works & how to use it"
     renderIntro [introText]
     div [Style [Margin "20px 10px 0 10px"]] [
       div [Class "columns"] [

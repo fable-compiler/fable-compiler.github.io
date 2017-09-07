@@ -36,14 +36,13 @@ let linkImage src href =
   ]
 
 let paragraph text =
-  div [Class "fable-introduction"] [
-    markdownP text
-  ]
+  div [Class "fable-introduction"
+       setInnerHtml (parseMarkdown text)] []
 
 let renderBody (info: PageInfo) =
   // This fixes the problem with the double scrollbar on Windows
   div [Style [Overflow "hidden"]] [
-    Header.render "F# |> BABEL" "JavaScript you can be proud of!"
+    Header.render "F# |> BABEL" "The compiler that emits JavaScript you can be proud of!"
     renderIntro [introText]
     div [Style [Margin "20px 10px 0 10px"]] [
       Columns.columns []
@@ -59,8 +58,8 @@ let renderBody (info: PageInfo) =
     h1 [ClassName "title is-2 has-text-centered"] [str "Where to go from here"]
     paragraph whereToText
     Columns.columns [ ]
-      [ Column.column [ Column.Width.is6
-                        Column.Offset.is3 ]
+      [ Column.column [ Column.Width.is8
+                        Column.Offset.is2 ]
                       [ a [ Href "https://channel9.msdn.com/events/NDC/NDC-Oslo-2017/C9L13?term=fable"]
                           [ img [ Src "img/channel9.png"
                                   Style [Margin "20px auto"; MaxHeight "600px"] ] ] ]

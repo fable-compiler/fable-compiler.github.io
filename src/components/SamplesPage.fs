@@ -37,7 +37,7 @@ let renderSamples (samplesRepoPath: string) =
             ]
             Media.content [] [
               h1 [Class "title is-4"] [a [Href k] [str v.title]]
-              p [setMarkdown v.desc] []
+              p [setInnerHtml (parseMarkdown v.desc)] []
             ]
           ]
         ]
@@ -53,9 +53,8 @@ let renderSamples (samplesRepoPath: string) =
         h1 [Class "title is-2"] [str "Fun and Games"]
         ul [] (samplesToList samples.["games"])
         h1 [Class "title is-2"] [str "Productivity"]
-        div [Class "content fable-introduction"] [
-          markdownP productivityParagraph
-        ]
+        div [Class "content fable-introduction"
+             setInnerHtml (parseMarkdown productivityParagraph)] []
         ul [] (samplesToList samples.["productivity"])
         h1 [Class "title is-2"] [str "Visualizations"]
         ul [] (samplesToList samples.["visual"])
@@ -66,7 +65,7 @@ let renderSamples (samplesRepoPath: string) =
 
 let renderBody (samplesRepoPath: string) (info: PageInfo) =
   div [Style [Overflow "hidden"]] [
-    Header.render "Samples" "Learn by playing!"
+    Header.render "Browser Samples" "Explore Fable through fun demos!"
     renderIntro samplesIntroParagraphs
     renderSamples samplesRepoPath
   ]

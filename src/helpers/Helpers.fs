@@ -74,18 +74,17 @@ let inline Class x = ClassName x
 type [<Pojo>] InnerHtml =
   { __html: string }
 
-let setMarkdown (markdown: string) =
-  DangerouslySetInnerHTML { __html = parseMarkdown markdown }
-
-let markdownP (text: string) =
-  p [setMarkdown text] []
+let setInnerHtml (html: string) =
+  DangerouslySetInnerHTML { __html = html }
 
 let renderIntro (markdownParagraphs: string list): React.ReactElement =
+  let paragraphs =
+    Seq.map parseMarkdown markdownParagraphs |> String.concat ""
+  printfn "%s" paragraphs
   div [Class "columns"; Style [MarginTop "10px"]] [
     div [Class "column"; Style [Padding 0]] []
     div [Class "column is-two-thirds"] [
-      div [Class "fable-introduction"]
-        (List.map markdownP markdownParagraphs)
+      div [Class "fable-introduction"; setInnerHtml paragraphs] []
     ]
     div [Class "column"; Style [Padding 0]] []
   ]
@@ -106,7 +105,7 @@ let renderCard icon title link text =
     Card.content [] [
       Media.media [] [
         Media.left [] [icon]
-        Media.content [] [p [setMarkdown text] []]
+        Media.content [] [p [setInnerHtml (parseMarkdown text)] []]
       ]
     ]
   ]
