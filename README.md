@@ -44,7 +44,7 @@ yarn run sass -- -w
 Alternatively, you can run the following to run the three processes (Fable, server and SASS compiler) at once concurrently:
 
 ```shell
-yarn run dev-mode
+yarn run start-all
 ```
 
 ## Other repositories

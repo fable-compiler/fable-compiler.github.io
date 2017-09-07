@@ -28,12 +28,7 @@ let whereToText: string =
     Navbar.Docs Navbar.Docs Navbar.Samples Navbar.FableConf
 
 let linkImage src href =
-  a [Href href] [
-    img [
-      Style [MaxHeight "150px"]
-      Src ("img/" + src)
-    ]
-  ]
+  a [Href href] [img [Src ("img/" + src)]]
 
 let paragraph text =
   div [Class "fable-introduction"
@@ -67,7 +62,7 @@ let renderBody (info: PageInfo) =
     h1 [ClassName "title is-2 has-text-centered"] [str "You are in good company"]
     paragraph "These are some of the projects and companies using Fable. Send us a message to include yours!"
     br []
-    div [ClassName "flex-wrap"] [
+    div [ClassName "flex-wrap fable-friends"] [
       linkImage "nsynk.png" "http://nsynk.de/"
       linkImage "thegamma.png" "https://thegamma.net/"
       linkImage "msu.jpg" "https://www.msu-solutions.de/"
@@ -75,5 +70,6 @@ let renderBody (info: PageInfo) =
       linkImage "prolucid.jpg" "http://prolucid.ca/"
       linkImage "casquenoir.jpg" "http://casquenoir.com/"
       linkImage "danpower.png" "https://www.danpower-gruppe.de/"
+      linkImage "tachyus.png" "http://www.tachyus.com/"
     ]
   ]
