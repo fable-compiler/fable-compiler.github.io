@@ -18,6 +18,7 @@ module Paths =
   // Check fable-splitter README for info about ${entryDir} macro
 
   let Template = resolve "${entryDir}/../files/template.hbs"
+  let TemplateRedirect = resolve "${entryDir}/../files/redirect.hbs"
   let PublicDir = resolve "${entryDir}/../public"
   let FableRepo = resolve "${entryDir}/../../Fable"
   let SamplesRepo = resolve "${entryDir}/../../samples-browser"

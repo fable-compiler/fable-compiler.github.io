@@ -78,6 +78,17 @@ let renderSamples() =
       NavbarActivePage = Literals.Navbar.Samples
       RenderBody = SamplesPage.renderBody Paths.SamplesRepo }
 
+let redirects() =
+  let redirect oldUrl newUrl =
+    [ "url" ==> newUrl ]
+    |> parseTemplate Paths.TemplateRedirect
+    |> writeFile (Path.join(Paths.PublicDir, oldUrl))
+  redirect "samples.html" "/samples-browser"
+  redirect "docs.html" "/docs"
+  redirect "repl.html" "/repl"
+
+// Run
 renderHomePage()
 renderDocs()
 renderSamples()
+redirects()
