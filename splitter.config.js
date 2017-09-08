@@ -1,5 +1,6 @@
 /// @ts-check
 const path = require("path");
+const fableUtils = require("fable-utils");
 
 function resolve(filePath) {
   return path.resolve(__dirname, filePath)
@@ -25,7 +26,9 @@ var outFile = resolve("build/Main.js");
 module.exports = {
   entry: resolve("src/WebGenerator.fsproj"),
   outDir: path.dirname(outFile),
-  babel: { plugins: ["transform-es2015-modules-commonjs"] },
+  babel: fableUtils.resolveBabelOptions({
+    plugins: ["transform-es2015-modules-commonjs"]
+  }),
   fable: { define: ["DEBUG"] },
   postbuild() { runScript(outFile) }
 };

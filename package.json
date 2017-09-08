@@ -8,7 +8,6 @@
     "sass": "node-sass files/styles.sass public/css/bulma.custom.css",
     "start-all": "concurrently -k \"cd src && dotnet fable yarn-start --port free\" \"yarn run server\" \"yarn run sass -- -w\"",
     "build-all": "concurrently \"cd src && dotnet fable yarn-build --port free\" \"yarn run sass\"",
-    "prepublish": "yarn run build-all",
     "publish": "gh-pages -d public -b master"
   },
   "devDependencies": {
@@ -16,8 +15,8 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "bulma": "^0.5.1",
     "concurrently": "^3.5.0",
-    "fable-splitter": "^0.1.10",
-    "fable-utils": "^1.0.2",
+    "fable-splitter": "^0.1.14",
+    "fable-utils": "^1.0.4",
     "fs-extra": "^4.0.1",
     "gh-pages": "^1.0.0",
     "handlebars": "^4.0.10",
