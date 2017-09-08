@@ -91,4 +91,6 @@ let redirects() =
 renderHomePage()
 renderDocs()
 renderSamples()
-redirects()
+// Redirections are not working correctly, needs a fix
+// See https://github.com/fable-compiler/fable-compiler.github.io/issues/8#issuecomment-328045038
+// redirects()
