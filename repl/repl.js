@@ -241,8 +241,15 @@
       this.onSourceChange();
     };
 
+    var firsCompilation = true;
+
     REPL.prototype.onSourceChange = function () {
-      this.compile();
+      var opts = {};
+      if (firsCompilation) {
+        firsCompilation = false;
+        opts.msg = "Loading, please wait...";
+      }
+      this.compile(opts);
       var code = this.getSource();
       var state = Object.assign(this.options, {
         code: code
@@ -294,67 +301,35 @@
       }
     }
 
-    REPL.prototype.compile = function () {
+    REPL.prototype.compile = function (options) {
       // this.output.session.setUseWrapMode(this.options.lineWrap);
 
       var transformed;
       this.clearOutput();
 
       var source = this.getSource();
-      this.setOutput("Compiling, please wait...");
-      fableWorker.postMessage(source);
+      var msg = options && typeof options.msg === "string" ? options.msg : "Compiling...";
+      this.setOutput(msg);
+      fableWorker.postMessage({
+        source: source,
+        printReplacement: "replLog($0)"
+      });
     };
 
-    var capturingConsole;
     REPL.prototype.evaluate = function(code) {
-      capturingConsole = Object.create(console);
       var $consoleReporter = this.$consoleReporter;
-      var buffer = [];
-      var error;
-      var done = false;
-
-      function flush() {
-        $consoleReporter.text(buffer.join('\n'));
-      }
-
-      function write(data) {
-        buffer.push(data);
-        if (done) flush();
-      }
-
-      function capture() {
-        if (this !== capturingConsole) { return; }
-
-        var logs = []
-        for (var i=0; i<arguments.length; i++) {
-          logs.push(window.prettyFormat(arguments[i]));
-        }
-
-        write(logs.join(' '));
-      }
-
-      capturingConsole.clear = function() {
-        buffer = [];
-        flush();
-        console.clear();
-      };
-
-      ['error', 'log', 'info', 'debug'].forEach(function(key) {
-        capturingConsole[key] = function() {
-          Function.prototype.apply.call(console[key], console, arguments);
-          capture.apply(this, arguments);
-        };
-      });
-
+      $consoleReporter.text('');
       try {
-        new Function('console', code)(capturingConsole);
+        new Function('replLog', code)(function(printFormat) {
+          return printFormat.cont(function(txt) {
+            var oldText = $consoleReporter.text();
+            var newText = oldText ? oldText + '\n' + txt : txt;
+            $consoleReporter.text(newText);
+          })
+        });
       } catch (err) {
-        error = err;
-        buffer.push(err.message);
+        this.$errorReporter.text(err.message);
       }
-
-      done = true;
-      flush();
     };
 
     REPL.prototype.persistState = function (state) {

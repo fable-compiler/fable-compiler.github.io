@@ -8,6 +8,29 @@ define(["require", "exports", "./AsyncBuilder", "./AsyncBuilder", "./AsyncBuilde
     function emptyContinuation(x) {
         // NOP
     }
+    function createCancellationToken(arg) {
+        const token = { isCancelled: false };
+        if (typeof arg === "number") {
+            setTimeout(() => { token.isCancelled = true; }, arg);
+        }
+        else if (typeof arg === "boolean") {
+            token.isCancelled = arg;
+        }
+        return token;
+    }
+    exports.createCancellationToken = createCancellationToken;
+    function cancel(token) {
+        token.isCancelled = true;
+    }
+    exports.cancel = cancel;
+    function cancelAfter(token, ms) {
+        setTimeout(() => { token.isCancelled = true; }, ms);
+    }
+    exports.cancelAfter = cancelAfter;
+    function isCancellationRequested(token) {
+        return token != null && token.isCancelled;
+    }
+    exports.isCancellationRequested = isCancellationRequested;
     function awaitPromise(p) {
         return fromContinuations((conts) => p.then(conts[0]).catch((err) => (err === "cancelled" ? conts[2] : conts[1])(err)));
     }

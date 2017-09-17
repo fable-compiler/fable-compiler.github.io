@@ -61,18 +61,21 @@ references.map(function(fileName){
     getFileBlob(fileName, 'metadata/' + fileName);
 });
 
-function compile(source) {
+function compile(source, printReplacement) {
     try {
         if (checker === null) {
             if (Object.getOwnPropertyNames(metadata).length < references.length) {
-                setTimeout(() => compile(source), 200);
+                setTimeout(() => compile(source, printReplacement), 200);
                 return;
             }
             var readAllBytes = function (fileName) { return metadata[fileName]; }
             var references2 = references.filter(x => !isSigdata(x)).map(x => x.replace(".dll", ""));
             checker = Fable.createChecker(readAllBytes, references2);
         }
-        var com = Fable.makeCompiler();
+        let replacements = [
+            ["Microsoft.FSharp.Core.ExtraTopLevelOperators.PrintFormatLine", printReplacement]
+        ];
+        var com = Fable.makeCompiler(replacements);
 
         // FSharp AST
         var startTime1 = performance.now();
@@ -94,5 +97,5 @@ function compile(source) {
 }
 
 onmessage = function (e) {
-    compile(e.data);
+    compile(e.data.source, e.data.printReplacement);
 }

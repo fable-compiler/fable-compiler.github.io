@@ -3,6 +3,8 @@ define(["require", "exports", "./Date", "./Date", "./Date", "./Date", "./Date", 
     Object.defineProperty(exports, "__esModule", { value: true });
     const fsFormatRegExp = /(^|[^%])%([0+ ]*)(-?\d+)?(?:\.(\d+))?(\w)/;
     const formatRegExp = /\{(\d+)(,-?\d+)?(?:\:(.+?))?\}/g;
+    // From https://stackoverflow.com/a/13653180/3922220
+    const guidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
     const StringComparison = {
         CurrentCulture: 0,
         CurrentCultureIgnoreCase: 1,
@@ -96,6 +98,25 @@ define(["require", "exports", "./Date", "./Date", "./Date", "./Date", "./Date", 
             ? "ff" + (16777215 - (Math.abs(value) - 1)).toString(16)
             : value.toString(16);
     }
+    function printf(input, ...args) {
+        return {
+            input,
+            cont: fsFormat(input, ...args),
+        };
+    }
+    exports.printf = printf;
+    function toConsole(arg) {
+        return arg.cont((x) => { console.log(x); });
+    }
+    exports.toConsole = toConsole;
+    function toText(arg) {
+        return arg.cont((x) => x);
+    }
+    exports.toText = toText;
+    function toFail(arg) {
+        return arg.cont((x) => { throw new Error(x); });
+    }
+    exports.toFail = toFail;
     function fsFormat(str, ...args) {
         function formatOnce(str2, rep) {
             return str2.replace(fsFormatRegExp, (_, prefix, flags, pad, precision, format) => {
@@ -315,18 +336,106 @@ define(["require", "exports", "./Date", "./Date", "./Date", "./Date", "./Date", 
         return xs2.map((x) => Util_1.toString(x)).join(delimiter);
     }
     exports.join = join;
-    function newGuid() {
-        let uuid = "";
-        for (let i = 0; i < 32; i++) {
-            const random = Math.random() * 16 | 0;
-            if (i === 8 || i === 12 || i === 16 || i === 20) {
-                uuid += "-";
-            }
-            uuid += (i === 12 ? 4 : i === 16 ? random & 3 | 8 : random).toString(16);
+    /** Validates UUID as specified in RFC4122 (versions 1-5). Trims braces. */
+    function validateGuid(str, doNotThrow) {
+        const trimmed = trim(str, "both", "{", "}");
+        if (guidRegex.test(trimmed)) {
+            return doNotThrow ? [true, trimmed] : trimmed;
         }
-        return uuid;
+        else if (doNotThrow) {
+            return [false, "00000000-0000-0000-0000-000000000000"];
+        }
+        throw new Error("Guid should contain 32 digits with 4 dashes: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
+    }
+    exports.validateGuid = validateGuid;
+    /* tslint:disable */
+    // From https://gist.github.com/LeverOne/1308368
+    function newGuid() {
+        let b = '';
+        for (let a = 0; a++ < 36; b += a * 51 & 52
+            ? (a ^ 15 ? 8 ^ Math.random() * (a ^ 20 ? 16 : 4) : 4).toString(16)
+            : '-')
+            ;
+        return b;
     }
     exports.newGuid = newGuid;
+    // Maps for number <-> hex string conversion
+    let _convertMapsInitialized = false;
+    let _byteToHex;
+    let _hexToByte;
+    function initConvertMaps() {
+        _byteToHex = new Array(256);
+        _hexToByte = {};
+        for (var i = 0; i < 256; i++) {
+            _byteToHex[i] = (i + 0x100).toString(16).substr(1);
+            _hexToByte[_byteToHex[i]] = i;
+        }
+        _convertMapsInitialized = true;
+    }
+    /** Parse a UUID into it's component bytes */
+    // Adapted from https://github.com/zefferus/uuid-parse
+    function guidToArray(s) {
+        if (!_convertMapsInitialized) {
+            initConvertMaps();
+        }
+        let i = 0;
+        const buf = new Uint8Array(16);
+        s.toLowerCase().replace(/[0-9a-f]{2}/g, (function (oct) {
+            switch (i) {
+                // .NET saves first three byte groups with differten endianness
+                // See https://stackoverflow.com/a/16722909/3922220
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                    buf[3 - i++] = _hexToByte[oct];
+                    break;
+                case 4:
+                case 5:
+                    buf[9 - i++] = _hexToByte[oct];
+                    break;
+                case 6:
+                case 7:
+                    buf[13 - i++] = _hexToByte[oct];
+                    break;
+                case 8:
+                case 9:
+                case 10:
+                case 11:
+                case 12:
+                case 13:
+                case 14:
+                case 15:
+                    buf[i++] = _hexToByte[oct];
+                    break;
+            }
+        }));
+        // Zero out remaining bytes if string was short
+        while (i < 16) {
+            buf[i++] = 0;
+        }
+        return buf;
+    }
+    exports.guidToArray = guidToArray;
+    /** Convert UUID byte array into a string */
+    function arrayToGuid(buf) {
+        if (buf.length !== 16) {
+            throw new Error("Byte array for GUID must be exactly 16 bytes long");
+        }
+        if (!_convertMapsInitialized) {
+            initConvertMaps();
+        }
+        return _byteToHex[buf[3]] + _byteToHex[buf[2]] +
+            _byteToHex[buf[1]] + _byteToHex[buf[0]] + '-' +
+            _byteToHex[buf[5]] + _byteToHex[buf[4]] + '-' +
+            _byteToHex[buf[7]] + _byteToHex[buf[6]] + '-' +
+            _byteToHex[buf[8]] + _byteToHex[buf[9]] + '-' +
+            _byteToHex[buf[10]] + _byteToHex[buf[11]] +
+            _byteToHex[buf[12]] + _byteToHex[buf[13]] +
+            _byteToHex[buf[14]] + _byteToHex[buf[15]];
+    }
+    exports.arrayToGuid = arrayToGuid;
+    /* tslint:enable */
     function toBase64String(inArray) {
         let str = "";
         for (let i = 0; i < inArray.length; i++) {

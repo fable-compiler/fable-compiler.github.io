@@ -1,22 +1,24 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    function map(f, source, target) {
+    function map(f, source, TargetCons) {
+        const target = new TargetCons(source.length);
         for (let i = 0; i < source.length; i++) {
             target[i] = f(source[i]);
         }
         return target;
     }
     exports.map = map;
-    function mapIndexed(f, source, target) {
+    function mapIndexed(f, source, TargetCons) {
+        const target = new TargetCons(source.length);
         for (let i = 0; i < source.length; i++) {
             target[i] = f(i, source[i]);
         }
         return target;
     }
     exports.mapIndexed = mapIndexed;
-    function indexed(source, target) {
-        return mapIndexed((i, x) => [i, x], source, target);
+    function indexed(source) {
+        return mapIndexed((i, x) => [i, x], source, Array);
     }
     exports.indexed = indexed;
     function addRangeInPlace(range, xs) {
