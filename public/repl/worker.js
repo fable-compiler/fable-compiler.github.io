@@ -32,11 +32,14 @@ var references = [
     "System.IO.dll",
     "System.Xml.dll",
     "System.Numerics.dll",
-    "System.ValueTuple.dll",
     "FSharp.Core.sigdata",
     "FSharp.Core.dll",
     "Fable.Core.dll",
     "Fable.Import.Browser.dll"
+    // When loading the REPL the browser console always shows: "Cannot find type System.ValueTuple`1"
+    // However, adding the following reference prevents opening System namespace
+    // See https://github.com/fable-compiler/Fable/issues/1152#issuecomment-330315250
+    // "System.ValueTuple.dll",
 ];
 
 function isSigdata(ref) {
