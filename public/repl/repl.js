@@ -312,7 +312,9 @@
       this.setOutput(msg);
       fableWorker.postMessage({
         source: source,
-        printReplacement: "replLog($0)"
+        replacements: [
+          ["Microsoft.FSharp.Core.ExtraTopLevelOperators.PrintFormatLine", "replLog($0)"]
+        ]
       });
     };
 
