@@ -32,9 +32,11 @@ var references = [
     "System.IO.dll",
     "System.Xml.dll",
     "System.Numerics.dll",
+    "System.ValueTuple.dll",
     "FSharp.Core.sigdata",
     "FSharp.Core.dll",
-    "Fable.Core.dll"
+    "Fable.Core.dll",
+    "Fable.Import.Browser.dll"
 ];
 
 function isSigdata(ref) {
@@ -61,20 +63,17 @@ references.map(function(fileName){
     getFileBlob(fileName, 'metadata/' + fileName);
 });
 
-function compile(source, printReplacement) {
+function compile(source, replacements) {
     try {
         if (checker === null) {
             if (Object.getOwnPropertyNames(metadata).length < references.length) {
-                setTimeout(() => compile(source, printReplacement), 200);
+                setTimeout(() => compile(source, replacements), 200);
                 return;
             }
             var readAllBytes = function (fileName) { return metadata[fileName]; }
             var references2 = references.filter(x => !isSigdata(x)).map(x => x.replace(".dll", ""));
             checker = Fable.createChecker(readAllBytes, references2);
         }
-        let replacements = [
-            ["Microsoft.FSharp.Core.ExtraTopLevelOperators.PrintFormatLine", printReplacement]
-        ];
         var com = Fable.makeCompiler(replacements);
 
         // FSharp AST
@@ -97,5 +96,5 @@ function compile(source, printReplacement) {
 }
 
 onmessage = function (e) {
-    compile(e.data.source, e.data.printReplacement);
+    compile(e.data.source, e.data.replacements);
 }

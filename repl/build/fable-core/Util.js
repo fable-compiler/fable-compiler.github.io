@@ -23,6 +23,11 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
         return new NonDeclaredType("Option", null, [t]);
     }
     exports.Option = Option;
+    // HACK: For unit values use a truthy empty object (see #478, #1135, #1136)
+    function some(value) {
+        return value == null ? {} : value;
+    }
+    exports.some = some;
     function FableArray(t, isTypedArray = false) {
         let def = null;
         let genArg = null;
