@@ -13,6 +13,9 @@
   {{/each}}
   <link rel="shortcut icon" href="/img/shared/fable.ico" />
   <script src="https://cdn.polyfill.io/v2/polyfill.js?features=default,fetch"></script>
+  {{#each extraJs}}
+  <script src="{{this}}"></script>
+  {{/each}}
 </head>
 
 <body>

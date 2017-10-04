@@ -8,3 +8,12 @@ nuget Fable.React prerelease
 nuget Fable.Import.Browser
 nuget Fable.Import.Node
 nuget Fulma prerelease
+
+group Build
+  source https://nuget.org/api/v2
+  storage: packages
+
+  nuget FAKE
+  nuget FSharp.Formatting 3.0.0-beta01
+
+  github fsharp/FAKE modules/Octokit/Octokit.fsx

@@ -45,6 +45,7 @@ let root currentPage =
         menuItem "Home" Navbar.Home currentPage
         menuItem "REPL" Navbar.Repl currentPage
         menuItem "Docs" Navbar.Docs currentPage
+        menuItem "API" Navbar.API currentPage
         menuItem "Samples" Navbar.Samples currentPage
         menuItem "FableConf" Navbar.FableConf currentPage
       ]
