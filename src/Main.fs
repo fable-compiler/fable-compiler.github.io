@@ -39,17 +39,19 @@ let renderDocs() =
     let targetPath = Path.join(Paths.PublicDir, "docs", doc.Replace(".md", ".html"))
     let content = parseMarkdownDocFile fullPath
     let body =
-      div [Style [OverflowY "hidden"]] [
+      div [Style [Overflow "hidden"]] [
         Header.render title subtitle
-        div [Class "columns"] [
-          div [Class "column"] []
-          div [Class "column is-two-thirds"] [
-            div [
-              Class "content"
-              Style [Margin "5px"]
-              DangerouslySetInnerHTML { __html = content }] []
+        div [Style [MarginTop "1.6rem"]] [
+          div [Class "columns"] [
+            div [Class "column"] []
+            div [Class "column is-two-thirds"] [
+              div [
+                Class "content"
+                Style [Margin "5px"]
+                DangerouslySetInnerHTML { __html = content }] []
+            ]
+            div [Class "column"] []
           ]
-          div [Class "column"] []
         ]
       ]
     [ "title" ==> "Fable Docs"
@@ -78,6 +80,71 @@ let renderSamples() =
       NavbarActivePage = Literals.Navbar.Samples
       RenderBody = SamplesPage.renderBody Paths.SamplesRepo }
 
+module Globals = Node.Globals
+
+let runWithFake file =
+  let fakePath = Path.join(Globals.__dirname, "../packages/build/FAKE/tools/FAKE.exe")
+  let isWin = Globals.``process``.platform = Node.Base.NodeJS.Platform.Win32
+  let p =
+    if isWin then
+      ChildProcess.spawnSync(
+        fakePath,
+        ResizeArray([file]),
+        createObj ["encoding" ==> "utf-8"])
+    else
+      ChildProcess.spawnSync(
+        "mono",
+        ResizeArray([fakePath; file]),
+        createObj ["encoding" ==> "utf-8"])
+  if (!!p?status) <> 0 then
+    failwithf "runWithFake failed: %s" (JS.String.Invoke (!!p?stderr))
+
+let renderAPI() =
+  let targetPath = Path.join(Globals.__dirname, "..", "tools", "templates", "template.cshtml")
+  let title = "API Reference"
+  let subtitle = "Exploring API reference of built-in libraries."
+
+  render
+    { Title = title
+      TargetPath = Path.join(Paths.PublicDir, "api", "index.html")
+      NavbarActivePage = Literals.Navbar.API
+      RenderBody = APIPage.renderBody title subtitle }
+
+  let renderRazorTpl () =
+    let body =
+      div [Style [OverflowY "hidden"]] [
+        Header.render title subtitle
+        div [Style [MarginTop "1.6rem"]] [
+          div [Class "columns"] [
+            div [Class "column"] []
+            div [Class "column is-two-thirds"] [
+              div [
+                Class "content"
+                Style [Margin "5px"]
+                DangerouslySetInnerHTML { __html = " @RenderBody() " }] []
+            ]
+            div [Class "column"] []
+          ]
+        ]
+      ]
+    [ "title" ==> title
+      "navbar" ==> (Navbar.root Literals.Navbar.API |> parseReactStatic)
+      "body" ==> parseReactStatic body
+      "extraJs" ==> [| "/js/tips.js" |] ]
+    |> parseTemplate Paths.Template
+    |> writeFile targetPath
+
+  let renderReference() =
+    printfn "Start generating API reference, this might take some minutes, please waiting...\n\nIf this takes too long, you can comment `renderReference()`  in Main.fs and generate API via manually executing `fsharpi ./tools/generate.fsx`"
+    Path.join (Globals.__dirname, "../tools/generate.fsx")
+    |> runWithFake
+    |> ignore
+    printfn "Generating API reference finished with success!"
+
+  renderRazorTpl()
+  renderReference()
+
+
 let redirects() =
   let redirect oldUrl newUrl =
     [ "url" ==> newUrl ]
@@ -91,6 +158,7 @@ let redirects() =
 renderHomePage()
 renderDocs()
 renderSamples()
+renderAPI()
 // Redirections are not working correctly, needs a fix
 // See https://github.com/fable-compiler/fable-compiler.github.io/issues/8#issuecomment-328045038
 // redirects()

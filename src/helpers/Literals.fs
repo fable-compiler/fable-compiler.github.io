@@ -10,6 +10,8 @@ module Navbar =
   let [<Literal>] Repl = Fable.Root + "repl"
   let [<Literal>] Samples = Fable.Root + "samples-browser"
   let [<Literal>] Docs = Fable.Root + "docs"
+
+  let [<Literal>] API = Fable.Root + "api"
   let [<Literal>] FableConf = Fable.Root + "fableconf"
   let [<Literal>] MenuId = "navMenu"
 

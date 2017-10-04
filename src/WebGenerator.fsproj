@@ -10,6 +10,7 @@
     <Compile Include="components/Header.fs" />
     <Compile Include="components/HomePage.fs" />
     <Compile Include="components/DocsPage.fs" />
+    <Compile Include="components/APIPage.fs" />
     <Compile Include="components/SamplesPage.fs" />
     <Compile Include="Main.fs" />
   </ItemGroup>
