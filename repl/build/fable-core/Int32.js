@@ -1,17 +1,40 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    // TODO verify that this matches the behavior of .NET
-    const parseRadix10 = /^ *([\+\-]?[0-9]+) *$/;
-    // TODO verify that this matches the behavior of .NET
-    const parseRadix16 = /^ *([\+\-]?[0-9a-fA-F]+) *$/;
+    const parseRadix = /^\s*([\+\-])?(0[xob])?([0-9a-fA-F]+)\s*$/;
+    const invalidRadix2 = /[^01]/;
+    const invalidRadix8 = /[^0-7]/;
+    const invalidRadix10 = /[^0-9]/;
     function isValid(s, radix) {
-        if (s != null) {
-            if (radix === 16) {
-                return parseRadix16.exec(s);
+        const res = parseRadix.exec(s);
+        if (res != null) {
+            if (radix == null) {
+                switch (res[2]) {
+                    case "0b":
+                        radix = 2;
+                        break;
+                    case "0o":
+                        radix = 8;
+                        break;
+                    case "0x":
+                        radix = 16;
+                        break;
+                    default:
+                        radix = 10;
+                        break;
+                }
             }
-            else if (radix <= 10) {
-                return parseRadix10.exec(s);
+            switch (radix) {
+                case 2:
+                    return invalidRadix2.test(res[3]) ? null : [res, 2];
+                case 8:
+                    return invalidRadix8.test(res[3]) ? null : [res, 8];
+                case 10:
+                    return invalidRadix10.test(res[3]) ? null : [res, 10];
+                case 16:
+                    return [res, 16];
+                default:
+                    throw new Error("Invalid Base.");
             }
         }
         return null;
@@ -21,7 +44,8 @@ define(["require", "exports"], function (require, exports) {
     function tryParse(s, radix, initial) {
         const a = isValid(s, radix);
         if (a !== null) {
-            const v = parseInt(a[1], radix);
+            const [[, prefix, , digits], radix_] = a;
+            const v = parseInt((prefix || "") + digits, radix_);
             if (!Number.isNaN(v)) {
                 return [true, v];
             }
@@ -29,13 +53,12 @@ define(["require", "exports"], function (require, exports) {
         return [false, initial];
     }
     exports.tryParse = tryParse;
-    function parse(s, radix = 10) {
+    function parse(s, radix) {
         const a = tryParse(s, radix, 0);
         if (a[0]) {
             return a[1];
         }
         else {
-            // TODO FormatException ?
             throw new Error("Input string was not in a correct format.");
         }
     }

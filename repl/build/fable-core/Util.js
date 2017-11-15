@@ -1,4 +1,4 @@
-define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1) {
+define(["require", "exports", "./Date", "./Symbol"], function (require, exports, Date_1, Symbol_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     class NonDeclaredType {
@@ -10,6 +10,7 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
         Equals(other) {
             if (this.kind === other.kind && this.definition === other.definition) {
                 return typeof this.generics === "object"
+                    // equalsRecords should also work for Type[] (tuples)
                     ? equalsRecords(this.generics, other.generics)
                     : this.generics === other.generics;
             }
@@ -23,11 +24,6 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
         return new NonDeclaredType("Option", null, [t]);
     }
     exports.Option = Option;
-    // HACK: For unit values use a truthy empty object (see #478, #1135, #1136)
-    function some(value) {
-        return value == null ? {} : value;
-    }
-    exports.some = some;
     function FableArray(t, isTypedArray = false) {
         let def = null;
         let genArg = null;
@@ -134,6 +130,9 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
         if (typeof obj === "string") {
             return quoteStrings ? JSON.stringify(obj) : obj;
         }
+        if (obj instanceof Date) {
+            return Date_1.toString(obj);
+        }
         if (typeof obj.ToString === "function") {
             return obj.ToString();
         }
@@ -167,7 +166,7 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
             return x.GetHashCode();
         }
         else {
-            const s = JSON.stringify(x);
+            const s = toString(x);
             let h = 5381;
             let i = 0;
             const len = s.length;
@@ -188,13 +187,16 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
         }
         else if (y == null) {
             return false;
-        }
-        else if (Object.getPrototypeOf(x) !== Object.getPrototypeOf(y)) {
-            return false;
             // Equals override or IEquatable implementation
         }
         else if (typeof x.Equals === "function") {
             return x.Equals(y);
+        }
+        else if (typeof y.Equals === "function") {
+            return y.Equals(x);
+        }
+        else if (Object.getPrototypeOf(x) !== Object.getPrototypeOf(y)) {
+            return false;
         }
         else if (Array.isArray(x)) {
             if (x.length !== y.length) {
@@ -242,14 +244,17 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
         }
         else if (y == null) {
             return 1; // everything is bigger than null
-        }
-        else if (Object.getPrototypeOf(x) !== Object.getPrototypeOf(y)) {
-            return -1;
             // Some types (see Long.ts) may just implement the function and not the interface
             // else if (hasInterface(x, "System.IComparable"))
         }
         else if (typeof x.CompareTo === "function") {
             return x.CompareTo(y);
+        }
+        else if (typeof y.CompareTo === "function") {
+            return y.CompareTo(x) * -1;
+        }
+        else if (Object.getPrototypeOf(x) !== Object.getPrototypeOf(y)) {
+            return -1;
         }
         else if (Array.isArray(x)) {
             if (x.length !== y.length) {
@@ -281,9 +286,7 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
             return 0;
         }
         else if (x instanceof Date) {
-            const xtime = x.getTime();
-            const ytime = y.getTime();
-            return xtime === ytime ? 0 : (xtime < ytime ? -1 : 1);
+            return Date_1.compare(x, y);
         }
         else if (typeof x === "object") {
             const xhash = hash(x);
@@ -445,6 +448,12 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
         }
     }
     exports.toPlainJsObj = toPlainJsObj;
+    function jsOptions(mutator) {
+        const opts = {};
+        mutator(opts);
+        return opts;
+    }
+    exports.jsOptions = jsOptions;
     function round(value, digits = 0) {
         const m = Math.pow(10, digits);
         const n = +(digits ? value * m : value).toFixed(8);
@@ -459,14 +468,6 @@ define(["require", "exports", "./Symbol"], function (require, exports, Symbol_1)
         return Math.floor(Math.random() * (max - min)) + min;
     }
     exports.randomNext = randomNext;
-    function defaultArg(arg, defaultValue, f) {
-        return arg == null ? defaultValue : (f != null ? f(arg) : arg);
-    }
-    exports.defaultArg = defaultArg;
-    function defaultArgWith(arg, defThunk) {
-        return arg == null ? defThunk() : arg;
-    }
-    exports.defaultArgWith = defaultArgWith;
     function applyOperator(x, y, operator) {
         function getMethod(obj) {
             if (typeof obj === "object") {

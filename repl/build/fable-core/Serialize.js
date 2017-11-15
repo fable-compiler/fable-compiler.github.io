@@ -1,13 +1,22 @@
-define(["require", "exports", "./Date", "./List", "./List", "./Map", "./Map", "./Reflection", "./Seq", "./Set", "./Set", "./String", "./Symbol", "./Symbol", "./Util"], function (require, exports, Date_1, List_1, List_2, Map_1, Map_2, Reflection_1, Seq_1, Set_1, Set_2, String_1, Symbol_1, Symbol_2, Util_1) {
+define(["require", "exports", "./Date", "./DateOffset", "./List", "./List", "./Map", "./Map", "./Reflection", "./Seq", "./Set", "./Set", "./String", "./Symbol", "./Symbol", "./Util"], function (require, exports, Date_1, DateOffset_1, List_1, List_2, Map_1, Map_2, Reflection_1, Seq_1, Set_1, Set_2, String_1, Symbol_1, Symbol_2, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    function deflateValue(v) {
+        if (v instanceof Date) {
+            return Date_1.toString(v, "O");
+        }
+        return v;
+    }
     function deflate(v) {
-        if (ArrayBuffer.isView(v)) {
-            return Array.from(v);
+        if (Array.isArray(v)) {
+            return v.map(deflateValue);
+        }
+        else if (ArrayBuffer.isView(v)) {
+            return Array.from(v).map(deflateValue);
         }
         else if (v != null && typeof v === "object") {
             if (v instanceof List_1.default || v instanceof Set_1.default || v instanceof Set) {
-                return Array.from(v);
+                return Array.from(v).map(deflateValue);
             }
             else if (v instanceof Map_2.default || v instanceof Map) {
                 let stringKeys = null;
@@ -15,14 +24,14 @@ define(["require", "exports", "./Date", "./List", "./List", "./Map", "./Map", ".
                     if (stringKeys === null) {
                         stringKeys = typeof kv[0] === "string";
                     }
-                    o[stringKeys ? kv[0] : toJson(kv[0])] = kv[1];
+                    o[stringKeys ? kv[0] : toJson(kv[0])] = deflateValue(kv[1]);
                     return o;
                 }, {}, v);
             }
             const reflectionInfo = typeof v[Symbol_2.default.reflection] === "function" ? v[Symbol_2.default.reflection]() : {};
             if (reflectionInfo.properties) {
                 return Seq_1.fold((o, prop) => {
-                    return o[prop] = v[prop], o;
+                    return o[prop] = deflateValue(v[prop]), o;
                 }, {}, Object.getOwnPropertyNames(reflectionInfo.properties));
             }
             else if (reflectionInfo.cases) {
@@ -34,15 +43,20 @@ define(["require", "exports", "./Date", "./List", "./List", "./Map", "./Map", ".
                 }
                 else {
                     // Prevent undefined assignment from removing case property; see #611:
-                    return { [caseName]: (v.data !== void 0 ? v.data : null) };
+                    return { [caseName]: (v.data !== void 0 ? deflate(v.data) : null) };
                 }
+            }
+            else {
+                return Seq_1.fold((o, prop) => {
+                    return o[prop] = deflateValue(v[prop]), o;
+                }, {}, Object.getOwnPropertyNames(v));
             }
         }
         return v;
     }
     exports.deflate = deflate;
     function toJson(o) {
-        return JSON.stringify(o, (k, v) => deflate(v));
+        return JSON.stringify(deflateValue(o), (k, v) => deflate(v));
     }
     exports.toJson = toJson;
     function combine(path1, path2) {
@@ -64,7 +78,8 @@ define(["require", "exports", "./Date", "./List", "./List", "./Map", "./Map", ".
         }
     }
     function invalidate(val, typ, path) {
-        throw new Error(`${String_1.fsFormat("%A", val)} ${path ? "(" + path + ")" : ""} is not of type ${Reflection_1.getTypeFullName(typ)}`);
+        const str = String_1.toText(String_1.printf("%A"))(val);
+        throw new Error(`${str} ${path ? "(" + path + ")" : ""} is not of type ${Reflection_1.getTypeFullName(typ)}`);
     }
     function needsInflate(enclosing) {
         const typ = enclosing.head;
@@ -231,13 +246,16 @@ define(["require", "exports", "./Date", "./List", "./List", "./Map", "./Map", ".
                         return new Map(inflateMap(val, Reflection_1.resolveGeneric(0, enclosing), Reflection_1.resolveGeneric(1, enclosing), path));
                     }
                     return inflate(val, new List_1.default(typ.definition, enclosing), path);
+                case "Interface":
+                    return typ.definition === "System.DateTimeOffset"
+                        ? DateOffset_1.parse(val) : val;
                 default:// case "Interface": // case "Any":
                     return val;
             }
         }
         else if (typeof typ === "function") {
             if (typ === Date) {
-                return Date_1.parse(val);
+                return Date_1.parse(val, true);
             }
             if (typeof typ.ofJSON === "function") {
                 return typ.ofJSON(val);
@@ -357,7 +375,7 @@ define(["require", "exports", "./Date", "./List", "./List", "./Map", "./Map", ".
                 }
             }
             else if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:[+-]\d{2}:\d{2}|Z)$/.test(v)) {
-                return Date_1.parse(v);
+                return Date_1.parse(v, true);
             }
             else {
                 return v;

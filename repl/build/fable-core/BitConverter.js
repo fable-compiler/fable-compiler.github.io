@@ -1,4 +1,4 @@
-define(["require", "exports", "./Long"], function (require, exports, Long) {
+define(["require", "exports", "./Long"], function (require, exports, Long_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     const littleEndian = true;
@@ -80,7 +80,7 @@ define(["require", "exports", "./Long"], function (require, exports, Long) {
         new DataView(buffer).setFloat64(0, value, littleEndian);
         const lowBits = new DataView(buffer).getInt32(littleEndian ? 0 : 4, littleEndian);
         const highBits = new DataView(buffer).getInt32(littleEndian ? 4 : 0, littleEndian);
-        return Long.fromBits(lowBits, highBits, false);
+        return Long_1.fromBits(lowBits, highBits, false);
     }
     exports.doubleToInt64Bits = doubleToInt64Bits;
     function toBoolean(bytes, offset) {
@@ -103,7 +103,7 @@ define(["require", "exports", "./Long"], function (require, exports, Long) {
     function toInt64(bytes, offset) {
         const lowBits = new DataView(bytes.buffer).getInt32(offset + (littleEndian ? 0 : 4), littleEndian);
         const highBits = new DataView(bytes.buffer).getInt32(offset + (littleEndian ? 4 : 0), littleEndian);
-        return Long.fromBits(lowBits, highBits, false);
+        return Long_1.fromBits(lowBits, highBits, false);
     }
     exports.toInt64 = toInt64;
     function toUInt16(bytes, offset) {
@@ -117,7 +117,7 @@ define(["require", "exports", "./Long"], function (require, exports, Long) {
     function toUInt64(bytes, offset) {
         const lowBits = new DataView(bytes.buffer).getUint32(offset + (littleEndian ? 0 : 4), littleEndian);
         const highBits = new DataView(bytes.buffer).getUint32(offset + (littleEndian ? 4 : 0), littleEndian);
-        return Long.fromBits(lowBits, highBits, true);
+        return Long_1.fromBits(lowBits, highBits, true);
     }
     exports.toUInt64 = toUInt64;
     function toSingle(bytes, offset) {

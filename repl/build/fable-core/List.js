@@ -1,8 +1,8 @@
-define(["require", "exports", "./ListClass", "./Map", "./Seq", "./Seq", "./Seq", "./Seq", "./ListClass"], function (require, exports, ListClass_1, Map_1, Seq_1, Seq_2, Seq_3, Seq_4, ListClass_2) {
+define(["require", "exports", "./ListClass", "./ListClass", "./Map", "./Option", "./Seq", "./Seq", "./Seq", "./Seq"], function (require, exports, ListClass_1, ListClass_2, Map_1, Option_1, Seq_1, Seq_2, Seq_3, Seq_4) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.default = ListClass_1.default;
     exports.ofArray = ListClass_2.ofArray;
+    exports.default = ListClass_1.default;
     function append(xs, ys) {
         return Seq_2.fold((acc, x) => new ListClass_1.default(x, acc), ys, reverse(xs));
     }
@@ -10,7 +10,7 @@ define(["require", "exports", "./ListClass", "./Map", "./Seq", "./Seq", "./Seq",
     function choose(f, xs) {
         const r = Seq_2.fold((acc, x) => {
             const y = f(x);
-            return y != null ? new ListClass_1.default(y, acc) : acc;
+            return y != null ? new ListClass_1.default(Option_1.getValue(y), acc) : acc;
         }, new ListClass_1.default(), xs);
         return reverse(r);
     }
@@ -97,4 +97,22 @@ define(["require", "exports", "./ListClass", "./Map", "./Seq", "./Seq", "./Seq",
         return Seq_4.toList(Seq_1.map((k) => [k[0], Seq_4.toList(k[1])], Map_1.groupBy(f, xs)));
     }
     exports.groupBy = groupBy;
+    function splitAt(index, xs) {
+        if (index < 0) {
+            throw new Error("The input must be non-negative.");
+        }
+        let i = 0;
+        let last = xs;
+        const first = new Array(index);
+        while (i < index) {
+            if (last.tail == null) {
+                throw new Error("The input sequence has an insufficient number of elements.");
+            }
+            first[i] = last.head;
+            last = last.tail;
+            i++;
+        }
+        return [ListClass_2.ofArray(first), last];
+    }
+    exports.splitAt = splitAt;
 });
