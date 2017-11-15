@@ -31,8 +31,16 @@ define(["require", "exports", "./AsyncBuilder", "./AsyncBuilder", "./AsyncBuilde
         return token != null && token.isCancelled;
     }
     exports.isCancellationRequested = isCancellationRequested;
+    function startChild(computation) {
+        const promise = startAsPromise(computation);
+        // JS Promises are hot, computation has already started
+        // but we delay returning the result
+        return AsyncBuilder_2.protectedCont((ctx) => AsyncBuilder_4.protectedReturn(awaitPromise(promise))(ctx));
+    }
+    exports.startChild = startChild;
     function awaitPromise(p) {
-        return fromContinuations((conts) => p.then(conts[0]).catch((err) => (err === "cancelled" ? conts[2] : conts[1])(err)));
+        return fromContinuations((conts) => p.then(conts[0]).catch((err) => (err instanceof AsyncBuilder_1.OperationCanceledError
+            ? conts[2] : conts[1])(err)));
     }
     exports.awaitPromise = awaitPromise;
     function cancellationToken() {
@@ -66,8 +74,9 @@ define(["require", "exports", "./AsyncBuilder", "./AsyncBuilder", "./AsyncBuilde
     exports.parallel = parallel;
     function sleep(millisecondsDueTime) {
         return AsyncBuilder_2.protectedCont((ctx) => {
-            setTimeout(() => ctx.cancelToken.isCancelled ?
-                ctx.onCancel("cancelled") : ctx.onSuccess(void 0), millisecondsDueTime);
+            setTimeout(() => ctx.cancelToken.isCancelled
+                ? ctx.onCancel(new AsyncBuilder_1.OperationCanceledError())
+                : ctx.onSuccess(void 0), millisecondsDueTime);
         });
     }
     exports.sleep = sleep;

@@ -1,4 +1,4 @@
-define(["require", "exports", "./Observable", "./Observable", "./Seq", "./Util"], function (require, exports, Observable_1, Observable_2, Seq_1, Util_1) {
+define(["require", "exports", "./Observable", "./Option", "./Seq", "./Util"], function (require, exports, Observable_1, Option_1, Seq_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     class Event {
@@ -69,8 +69,8 @@ define(["require", "exports", "./Observable", "./Observable", "./Seq", "./Util"]
     exports.add = add;
     function choose(chooser, sourceEvent) {
         const source = sourceEvent;
-        return new Event((observer) => source.Subscribe(new Observable_1.Observer((t) => Observable_2.protect(() => chooser(t), (u) => { if (u != null) {
-            observer.OnNext(u);
+        return new Event((observer) => source.Subscribe(new Observable_1.Observer((t) => Observable_1.protect(() => chooser(t), (u) => { if (u != null) {
+            observer.OnNext(Option_1.getValue(u));
         } }, observer.OnError), observer.OnError, observer.OnCompleted)), source.delegates);
     }
     exports.choose = choose;
@@ -80,7 +80,7 @@ define(["require", "exports", "./Observable", "./Observable", "./Seq", "./Util"]
     exports.filter = filter;
     function map(mapping, sourceEvent) {
         const source = sourceEvent;
-        return new Event((observer) => source.Subscribe(new Observable_1.Observer((t) => Observable_2.protect(() => mapping(t), observer.OnNext, observer.OnError), observer.OnError, observer.OnCompleted)), source.delegates);
+        return new Event((observer) => source.Subscribe(new Observable_1.Observer((t) => Observable_1.protect(() => mapping(t), observer.OnNext, observer.OnError), observer.OnError, observer.OnCompleted)), source.delegates);
     }
     exports.map = map;
     function merge(event1, event2) {
@@ -150,7 +150,7 @@ define(["require", "exports", "./Observable", "./Observable", "./Seq", "./Util"]
         const source = sourceEvent;
         return new Event((observer) => {
             return source.Subscribe(new Observable_1.Observer((t) => {
-                Observable_2.protect(() => collector(state, t), (u) => { state = u; observer.OnNext(u); }, observer.OnError);
+                Observable_1.protect(() => collector(state, t), (u) => { state = u; observer.OnNext(u); }, observer.OnError);
             }, observer.OnError, observer.OnCompleted));
         }, source.delegates);
     }

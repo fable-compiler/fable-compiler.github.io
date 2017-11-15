@@ -148,4 +148,14 @@ define(["require", "exports"], function (require, exports) {
         target.fill(value, targetIndex, targetIndex + count);
     }
     exports.fill = fill;
+    function splitAt(index, xs) {
+        if (index < 0) {
+            throw new Error("The input must be non-negative.");
+        }
+        if (index > xs.length) {
+            throw new Error("The input sequence has an insufficient number of elements.");
+        }
+        return [xs.slice(0, index), xs.slice(index)];
+    }
+    exports.splitAt = splitAt;
 });
