@@ -21,13 +21,11 @@ let render (info: PageInfo) =
     |> parseTemplate Paths.Template
     |> writeFile info.TargetPath
 
-let renderMarkdown pageTitle navbar header targetFullPath content =
+let renderMarkdown pageTitle navbar header subheader targetFullPath content =
     let body =
       div [ClassName "markdown"; Style [Overflow "hidden"]] [
-        match header with
-        | Some(header, subheader) -> yield Header.render header subheader
-        | None -> ()
-        yield div [Style [MarginTop "1.6rem"]] [
+        Header.render header subheader
+        div [Style [MarginTop "1.6rem"]] [
           div [Class "columns"] [
             div [Class "column"] []
             div [Class "column is-two-thirds"] [
@@ -47,9 +45,9 @@ let renderMarkdown pageTitle navbar header targetFullPath content =
     |> parseTemplate Paths.Template
     |> writeFile targetFullPath
 
-let renderMarkdownFrom pageTitle navbar header fileFullPath targetFullPath =
+let renderMarkdownFrom pageTitle navbar header subheader fileFullPath targetFullPath =
   let content = Fs.readFileSync(fileFullPath).toString()
-  renderMarkdown pageTitle navbar header targetFullPath content
+  renderMarkdown pageTitle navbar header subheader targetFullPath content
 
 let renderDocs() =
   let pageTitle, header, subheader = "Fable Docs", "Documentation", "Learn how Fable works & how to use it"
@@ -64,23 +62,23 @@ let renderDocs() =
   for doc in docFiles |> Seq.filter (fun x -> x.EndsWith(".md")) do
     let fullPath = Path.join(Paths.FableRepo, "docs", doc)
     let targetPath = Path.join(Paths.PublicDir, "docs", doc.Replace(".md", ".html"))
-    renderMarkdownFrom pageTitle Literals.Navbar.Docs (Some(header, subheader)) fullPath targetPath
+    renderMarkdownFrom pageTitle Literals.Navbar.Docs header subheader fullPath targetPath
 
 let renderBlog() =
   let reg = Regex(@"^\s*-\s*title\s*:(.+)\n\s*-\s*subtitle\s*:(.+)\n")
   let pageTitle, header, subheader = "Fable Blog", "Blog", "Read about latest Fable news"
-  renderMarkdownFrom pageTitle Literals.Navbar.Blog (Some(header, subheader))
-    (Path.join(Paths.BlogDir, "blog.md")) (Path.join(Paths.PublicDir, "blog", "index.html"))
+  renderMarkdownFrom pageTitle Literals.Navbar.Blog header subheader
+    (Path.join(Paths.BlogDir, "index.md")) (Path.join(Paths.PublicDir, "blog", "index.html"))
   let blogFiles = Fs.readdirSync(!^Paths.BlogDir)
   for blog in blogFiles |> Seq.filter (fun x -> x.EndsWith(".md")) do
     let text = Fs.readFileSync(Path.join(Paths.BlogDir, blog)).toString()
     let m = reg.Match(text)
-    let header, text =
+    let header, subheader, text =
       if m.Success
-      then Some(m.Groups.[1].Value.Trim(), m.Groups.[2].Value.Trim()), text.Substring(m.Index + m.Length)
-      else None, text
+      then m.Groups.[1].Value.Trim(), m.Groups.[2].Value.Trim(), text.Substring(m.Index + m.Length)
+      else header, subheader, text
     let targetPath = Path.join(Paths.PublicDir, "blog", blog.Replace(".md", ".html"))
-    renderMarkdown pageTitle Literals.Navbar.Blog header targetPath text
+    renderMarkdown pageTitle Literals.Navbar.Blog header subheader targetPath text
 
 let renderHomePage() =
   render

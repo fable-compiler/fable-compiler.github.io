@@ -1,3 +1,7 @@
+Check our blog to be up-to-date with recent developments in Fable community and if you have cool stuff to share (and we're sure you do) [send us a PR](https://github.com/fable-compiler/fable-compiler.github.io/tree/dev/blog) with your post or a link to your personal web.
+
+-------------------------------------------------------------------
+
 ## [Casque Noir: Raising awareness on Haïti social and environmental issues](Development-For-Haiti.html)
 
 > By [François Nicaise](https://twitter.com/thewhitetigle) on June 20, 2017
