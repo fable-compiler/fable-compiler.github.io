@@ -1,13 +1,6 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    class OperationCanceledError extends Error {
-        constructor() {
-            super("The operation was canceled");
-            Object.setPrototypeOf(this, OperationCanceledError.prototype);
-        }
-    }
-    exports.OperationCanceledError = OperationCanceledError;
     class Trampoline {
         static get maxTrampolineCallCount() {
             return 2000;
@@ -27,7 +20,7 @@ define(["require", "exports"], function (require, exports) {
     function protectedCont(f) {
         return (ctx) => {
             if (ctx.cancelToken.isCancelled) {
-                ctx.onCancel(new OperationCanceledError());
+                ctx.onCancel("cancelled");
             }
             else if (ctx.trampoline.incrementAndCheck()) {
                 ctx.trampoline.hijack(() => {

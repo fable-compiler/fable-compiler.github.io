@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Fable Blog</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,300,600,700|Roboto+Mono">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/bulma.custom.css">
+  <link rel="stylesheet" type="text/css" href="/css/highlight.css">
+  <link rel="shortcut icon" href="/img/shared/fable.ico" />
+  <script src="https://cdn.polyfill.io/v2/polyfill.js?features=default,fetch"></script>
+</head>
+
+<body>
+  <nav class="navbar"><div class="navbar-brand"><div class="navbar-item title is-4">Fable</div><div class="navbar-burger" data-target="navMenu"><span></span><span></span><span></span></div></div><div id="navMenu" class=" navbar-menu"><div class="navbar-start"><a class=" navbar-item" href="/">Home</a><a class=" navbar-item" href="/repl">REPL</a><a class=" navbar-item is-active" href="/blog">Blog</a><a class=" navbar-item" href="/docs">Docs</a><a class=" navbar-item" href="/api">API</a><a class=" navbar-item" href="/samples-browser">Samples</a><a class=" navbar-item" href="/fableconf">FableConf</a></div><div class="navbar-end"><div class="navbar-item"><div class="field is-grouped"><p class="control"><a class="button twitter" href="https://twitter.com/FableCompiler"><span class="icon"><i class="fa fa-twitter"></i></span><span>Share the love!</span></a></p><p class="control"><a class="button github" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class="fa fa-comments"></i></span><span>Chat</span></a></p><p class="control"><a class="button github" href="https://github.com/fable-compiler/Fable"><span class="icon"><i class="fa fa-github"></i></span><span>Contribute</span></a></p></div></div></div></div></nav>
+  <div class="markdown" style="overflow:hidden;"><section class="hero fable-header"><div class="hero-body"><div class="container"><div class="columns is-vcentered"><div class="column"><img class="fable-logo" src="/img/shared/fable_logo.png"/></div><div class="column has-text-right"><h1 class="title is-1">Introducing Fable 1.0 beta (codename narumi)</h1><h1 class="subtitle is-4">Welcome dotnet SDK!</h1></div></div></div></div></section><div style="margin-top:1.6rem;"><div class="columns"><div class="column"></div><div class="column is-two-thirds"><div class="content" style="margin:5px;"><p>One year after the release of fable-compiler 0.0.1 to npm, I&#39;m very glad to announce the availability of Fable 1.0 beta and I&#39;m also tremendously happy to see how during this time the project has become a very important part of the F# ecosystem and even for some the main reason to write F#. I realize Fable must live up to the high standards of the F# experience, because of this, the main efforts for this new major version have been put into improving the workflow and make it as easy as possible for app and library developers to author Fable programs. If the keyword of Fable 0.7 was <em>community</em> this time we can say it is <em>integration</em>: keeping the original spirit of bringing together the best of F#/.NET and JS worlds, Fable 1.0 integrates now in the pipeline of the best build tools in both ecosystems.</p>
+<blockquote>
+<p>Disclaimer: This is the announcements of a <strong>beta</strong> release so please expect some rough edges. If you have a critical project in Fable you may want to wait for the stable version, but it would be really helpful if you could take the time to go through this document, upgrade your project and provide feedback to help make sure the final Fable 1.0 will work for everybody.</p>
+</blockquote>
+<h2><a name="integration-with-dotnet-sdk-and-the-new-fsproj-format" class="anchor" href="#integration-with-dotnet-sdk-and-the-new-fsproj-format">Integration with dotnet SDK and the new .fsproj format</a></h2><p>Fable 1.0 coincides in time with the release of the new <a href="https://www.microsoft.com/net/download/core">dotnet SDK</a>. Even if some are still skeptical (considering the time it&#39;s taken to get here I cannot blame them) I&#39;m very confident the dotnet SDK will be a game changer for F# development. Thanks to tools like <a href="https://fsprojects.github.io/Paket/">Paket</a>, <a href="http://fsharp.github.io/FAKE/">FAKE</a> or <a href="http://forge.run/">Forge</a>, it has been possible to write F# outside Visual Studio for quite a long time, but now for the first time the dotnet SDK provides a simple way out of the box to create, manage and build an F# project with just a few commands on a console. Thanks to the herculean work of <a href="https://twitter.com/enricosada">Enrico Sada</a>, who&#39;s been also leading the development of Fable 1.0, the dotnet SDK is fully compatible with F# and with Fable, as we will see below.</p>
+<p>Besides tooling, an ugly duckling was making hard to sell F# as a viable alternative for frontend development: the project file. Everyone approaching the language (myself included) was impacted by the bloated XML file where you had to dig among many cryptic options to find where your files and references were listed. This made incredibly difficult to edit the project file by hand without the help of other tools. Luckily, and again thanks to Enrico, these days will soon be part of the past. Fable 1.0 projects will look like this:</p>
+<pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Project</span> <span class="hljs-attr">Sdk</span>=<span class="hljs-string">"FSharp.NET.Sdk;Microsoft.NET.Sdk"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">PropertyGroup</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">TargetFramework</span>&gt;</span>netstandard1.6<span class="hljs-tag">&lt;/<span class="hljs-name">TargetFramework</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">PropertyGroup</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">ItemGroup</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">Compile</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">"../Server/Shared/Domain.fs"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">Compile</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">"Pages/Menu.fs"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">Compile</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">"Pages/Login.fs"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">Compile</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">"App.fs"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">ItemGroup</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">ItemGroup</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">ProjectReference</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">"../node_modules/fable-powerpack/Fable.PowerPack.fsproj"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">PackageReference</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">"FSharp.NET.Sdk"</span> <span class="hljs-attr">Version</span>=<span class="hljs-string">"1.0.*"</span> <span class="hljs-attr">PrivateAssets</span>=<span class="hljs-string">"All"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">PackageReference</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">"FSharp.Core"</span> <span class="hljs-attr">Version</span>=<span class="hljs-string">"4.1.*"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">PackageReference</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">"Fable.Core"</span> <span class="hljs-attr">Version</span>=<span class="hljs-string">"1.0.0-narumi-*"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">DotNetCliToolReference</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">"dotnet-fable"</span> <span class="hljs-attr">Version</span>=<span class="hljs-string">"1.0.0-narumi-*"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">ItemGroup</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">Project</span>&gt;</span>
+</code></pre>
+<p>Still XML, not a fancy modern markup language, but with a glance we can see now our list of files, references and CLI tools, that can be easily edited without fear to break anything in the build. Did I say CLI tools? Yes, in addition to project and <a href="https://www.nuget.org/">nuget</a> references, the dotnet SDK accepts references for CLI tools. And this is how Fable will be distributed now, <strong>no more npm&#39;s fable-compiler</strong>. With a project file such as the one above after running <code>dotnet restore</code> we will be able to run Fable commands (from the project directory) prefixing them with <code>dotnet fable</code>. For example to start the Fable server you just need to type: <code>dotnet fable start</code>.</p>
+<blockquote>
+<p>At the moment, the only editor that supports the new .fsproj format is <a href="http://ionide.io/">Ionide</a> so you may need to wait a bit until it&#39;s supported in other IDEs. Also, if you have problems with Ionide recognizing the project references, try setting the environment variable <code>UseCommonOutputDirectory</code> to <code>true</code>.</p>
+</blockquote>
+<p>But what about Fable server? Keep on reading to find the answer!</p>
+<h2><a name="integration-with-webpack" class="anchor" href="#integration-with-webpack">Integration with Webpack</a></h2><p>Under the hood Fable compiler is a hybrid of .NET and a <a href="https://nodejs.org/">node</a> app. So far this has been transparent to the users, but now the distinction is made obvious as the .NET part is distributed through nuget (see above) while the JS part becomes a <a href="https://webpack.js.org/concepts/loaders/">Webpack loader</a> available through <a href="https://www.npmjs.com/package/fable-loader">npm</a>.</p>
+<p>Webpack is a JS bundler with many powerful features that has become the standard build tool of choice for a vast majority of JS developers, though many (I among them) have been drawn back by its complexity. Luckily with Webpack 2 this is being addressed with a much better <a href="https://webpack.js.org">documentation site</a> and great community support thanks to its widespread use. Tying Fable to Webpack may seem risky, but <a href="https://twitter.com/FableCompiler/status/829372278878126080">most of the users are already using Webpack</a> anyways and the integration offers several advantages, like:</p>
+<ul>
+<li>Only one configuration file. You read correctly, <strong>no more fableconfig.json</strong>, the config options can be passed now to the Fable loader.</li>
+<li>Better interaction with other languages like JS or Typescript. Just add the necessary loaders and Webpack will take care of merging everything into a single bundle.</li>
+<li>Management of tasks like file watching. This frees development resources for Fable so we can focus on improving the code generation.</li>
+</ul>
+<p>So with the Fable server mentioned above running, you only need to invoke Webpack with the appropriate configuration. Please check the Webpack documentation for more info. For convenience, you can also start the Fable server and Webpack with a single command using <a href="https://docs.npmjs.com/misc/scripts">npm scripts</a>. If you have a <code>build</code> script to invoke Webpack in your package.json, you can type: <code>dotnet fable npm-run build</code> to start and keep Fable server active only during the time the npm script is being executed.</p>
+<blockquote>
+<p>By default, Fable server will listen on port 61225. You can modify it by using the <code>--port</code> argument when starting the Fable server.</p>
+</blockquote>
+<p>Check <a href="https://github.com/fable-compiler/Fable/blob/f3fa826f4e7faf382383daf1e9af5e89dec7fe13/src/templates/simple/Content/webpack.config.js#L27-L30">this example</a> to see how can you pass options to fable-loader. The currently available options are:</p>
+<ul>
+<li><code>babel</code>: Babel options in the same format as you would pass them to the babel-loader.</li>
+<li><code>define</code>: Array of define constants for conditional compilation (like <code>#if DEBUG</code>). The <code>FABLE_COMPILER</code> constant is always added by default. Please note that Fable won&#39;t use the <code>DefineConstants</code> property in the .fsproj file. (This option was named <code>symbols</code> in Fable 0.7.)</li>
+<li><code>plugins</code>: Array of Fable plugins, same as in Fable 0.7.</li>
+<li><code>typedArrays</code>: Set it to false if you don&#39;t want Fable to generate <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays">Typed Arrays</a>, true by default.</li>
+<li><code>clampByteArrays</code>: When generating typed arrays yo can set this to true to use <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray">UInt8ClampedArray</a> for byte arrays.</li>
+<li><code>port</code>: The port where Fable server is listening, default 61225.</li>
+</ul>
+<h2><a name="libraries" class="anchor" href="#libraries">Libraries</a></h2><p>With Fable 0.7 a system was put in place to distribute .dll assemblies together with precompiled JS files. This had some advantages and make the F# tooling (autocompletion, type checking...) faster. However distributing precompiled JS files has proven to be problematic, as final users of the library may want to generate JS code with different parameters (modules, polyfills...). To solve this problem, Fable 1.0 libraries will distribute the F# source (still as npm packages) and let the final user generate the JS code to their taste. Instead of .dll references, project references (which has become much simpler in the new .fsproj as there&#39;re no guids anymore) will be used. You can check the <code>fable-powerpack</code> project reference in the sample above. In general, to add a Fable package you&#39;ll only have to install it with npm and add the reference to your F# project:</p>
+<pre><code>npm install --save-dev fable-powerpack@next
+dotnet add reference ./node_modules/fable-powerpack/Fable.PowerPack.fsproj
+dotnet restore
+</code></pre><p>To make things even simpler, the Fable CLI tool provides a command to do these three steps in one:</p>
+<pre><code>dotnet fable add fable-powerpack@next
+</code></pre><blockquote>
+<p>The command must be executed in the same directory as the F# project. The npm package.json can be in a parent folder (for example, if it&#39;s shared with other projects). Several packages can be passed at the same time.</p>
+</blockquote>
+<p>Currently, there are Fable 1.0 prereleases for the following packages: fable-powerpack, fable-react, fable-elmish, fable-elmish-react and fable-elmish-snabbdom. Please install them using the <code>next</code> tag (e.g. <code>fable-elmish-react@next</code>).</p>
+<p>Not directly related with Fable 1.0 but in a happy coincidence <strong>fable-elmish and fable-arch have just joined forces</strong> to avoid the most frequent confusion of Fable newcomers who never knew how to decide between the two libraries. Basically, from now on <a href="https://github.com/fable-compiler/fable-elmish">fable-elmish</a> is the preferred choice, but there&#39;s also a <a href="https://github.com/fable-compiler/fable-elmish/tree/master/samples/snabbdom">fable-elmish-snabbdom</a> package available to write apps with an Elm-like architecture and a renderer lighter than React. I&#39;m sure this movement will be extremely beneficial for the Fable community!</p>
+<h2><a name="changes-in-code-generation" class="anchor" href="#changes-in-code-generation">Changes in code generation</a></h2><p>As you can see, most of the changes in Fable 1.0 have to do with the workflow, but there are still a few important changes in code generation. Most importantly, thanks to the outstanding achievement of <a href="https://github.com/ncave">ncave</a> (who&#39;s ncave?) who has <a href="https://github.com/fsharp/FSharp.Compiler.Service/pull/688">compiled the F# compiler itself to JS using Fable</a> enabling the <a href="http://fable.io/repl.html">Fable REPL</a> to run entirely on the browser with no backend, we had the chance to analyze the generated JS code for a big, big, big project, fixing many subtle bugs that surfaced and introducing several optimizations.</p>
+<h3><a name="curried-lambdas-are-not-compiled-as-nested-functions-anymore" class="anchor" href="#curried-lambdas-are-not-compiled-as-nested-functions-anymore">Curried lambdas are not compiled as nested functions anymore</a></h3><p>Even if Fable is designed to make interaction with JS as seamless as possible, there was a pain point for all users when sending F# code to JS and vice versa: F# curried lambdas were being translated as nested functions. This was very confusing and force users to convert the lambdas into delegates (<code>System.Func</code>) before sending them to JS. Nested functions were needed to make possible all the composition patterns in F# (there&#39;s a discussion <a href="https://github.com/fable-compiler/Fable/pull/335">here</a> if you&#39;re interested).</p>
+<p>Fable 1.0 introduces a system wherein the compiler will detect whenever more or less arguments than expected are being applied to a function, and create a nested function ad-hoc if necessary. In cases where this guess becomes too difficult (for example, <a href="https://goo.gl/tor4uu">three or more nested functions with side effects</a>) Fable will create a dynamic curried lambda that will check the number of applied arguments in runtime. This is a compromise similar to the one made with generics: make possible complicated F# patterns while using standard JS code for the most common situations.</p>
+<p>Hopefully this change will help when interacting with external JS libraries and increase the performance of generated code. It may still be possible that some edge cases are not covered by this technique, if you find one, please <a href="https://github.com/fable-compiler/Fable/issues/new">submit an issue</a>. At the moment whole F# compiler is being translated to JS without problem, so that&#39;s a good sign :)</p>
+<h3><a name="-code-keyvaluelist-code-attribute-has-been-deprecated" class="anchor" href="#-code-keyvaluelist-code-attribute-has-been-deprecated"><code>KeyValueList</code> attribute has been deprecated</a></h3><p>So far, in order to make the interaction with JS more idiomatic in F# I&#39;ve introduced some attributes to change the runtime representation of certain types. This is nice because you can have the types we know and love from F# like unions and records, while they behave as JS objects, strings, etc. in runtime. But on the other hand, this was also problematic because developers had some expectations about these types that behave differently in runtime.</p>
+<p>In order to avoid these frictions, Fable 1.0 won&#39;t introduce more <em>hacky</em> attributes and will explore other ways to improve the interaction with JS that don&#39;t break from standard F#. In order to keep compatibility old attributes are still supported with the exception of <code>KeyValueList</code> that was used to represent options in JS (by transforming a list of union cases into a JS object). This is because this attribute was mainly used in libraries (like <code>fable-react</code>) and it&#39;s been possible to change it without modifying the API. Moreover the new solution (a <code>keyValueList</code> function) can be inlined to make the transformation happen in compile time and avoid any performance penalty in runtime.</p>
+<h2><a name="how-do-i-start-" class="anchor" href="#how-do-i-start-">How do I start?</a></h2><p>Wow, I started the post saying that Fable 1.0 would make things easier but there are too many new things to learn! Luckily one of the cool features of the dotnet SDK that&#39;s been also a long request for Fable users is the template system. Thanks to that you can get a simple working project with a few commands. First, if you haven&#39;t already, install the latest <a href="https://www.microsoft.com/net/download/core">dotnet SDK</a> and then type:</p>
+<pre><code class="lang-shell">dotnet new -i Fable.Template::*
+</code></pre>
+<p>You only need to do this the first time or when you want to update the template (<code>::*</code> points to the latest version). Then create a directory and invoke the Fable template.</p>
+<pre><code class="lang-shell">mkdir myfableapp
+cd myfableapp
+dotnet new fable
+</code></pre>
+<p>It&#39;s better to avoid hyphens or periods in the directory name, as this can confuse the template system (you can add them later if needed). Now you only have to install npm and nuget dependencies:</p>
+<pre><code class="lang-shell">dotnet restore
+npm install
+</code></pre>
+<p>Now it depends on your project configuration, in the simple project created you can type <code>dotnet fable npm-run start</code> (see above) to start a web server that hot reloads on code changes (the npm <code>start</code> script in package.json just invokes the webpack dev server). Remember you can also use the <code>dotnet fable add</code> command to add Fable libraries. For example if you want to add <code>fable-elmish-react</code> you can type:</p>
+<pre><code class="lang-shell">dotnet fable add fable-powerpack@next fable-react@next fable-elmish@next fable-elmish-react@next
+</code></pre>
+<blockquote>
+<p>At the moment Fable cannot resolve transitive dependencies so it&#39;s necessary to list them all.</p>
+</blockquote>
+<h4><a name="important-note" class="anchor" href="#important-note">Important Note</a></h4><p>When adding new dependencies and making changes to the project file, it is often necessary to run the following commands again.</p>
+<pre><code class="lang-shell"> dotnet restore
+ dotnet build
+ dotnet fable npm-run build
+</code></pre>
+<p>A key indicator that you need to run these commands is that Intellisense stops working.  Also, be sure you are setting the environment variable correctly as mentioned above.</p>
+<p><br /></p>
+<p>It&#39;s been a long way to get here, but I hope Fable 1.0 will meet most of the user needs and provide better stability for the project so we can focus on expanding the ecosystem, writing tutorials and such. Please give Fable 1.0 beta (codename <code>narumi</code>) a try and provide feedback either through the <a href="https://gitter.im/fable-compiler/Fable">Gitter channel</a> or <a href="https://github.com/fable-compiler/Fable/issues/new">Fable Github repo</a> to help make the final Fable 1.0 stable release as polished as possible. And don&#39;t forget to follow us <a href="https://twitter.com/FableCompiler">on Twitter</a> to get all Fable news first-hand!</p>
+</div></div><div class="column"></div></div></div></div>
+  <footer>
+      <p> Fable <a href="https://github.com/fable-compiler/Fable">source code</a> is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.</p>
+  </footer>
+  <script>
+    // Activate navbar burget button
+    document.addEventListener('DOMContentLoaded', function () {
+      var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+      if ($navbarBurgers.length > 0) {
+        $navbarBurgers.forEach(function ($el) {
+          $el.addEventListener('click', function () {
+            var target = $el.dataset.target;
+            var $target = document.getElementById(target);
+            $el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>

@@ -751,7 +751,7 @@ define(["require", "exports", "./Int32", "./Symbol"], function (require, exports
             };
         }
     }
-    exports.default = Long;
+    exports.Long = Long;
     // A cache of the Long representations of small integer values.
     const INT_CACHE = {};
     // A cache of the Long representations of small unsigned integer values.
@@ -966,12 +966,4 @@ define(["require", "exports", "./Int32", "./Symbol"], function (require, exports
      * @type {!Long}
      */
     exports.MIN_VALUE = fromBits(0, 0x80000000 | 0, false);
-    function unixEpochMillisecondsToTicks(ms, offset) {
-        return fromNumber(ms).add(62135596800000).add(offset).mul(10000);
-    }
-    exports.unixEpochMillisecondsToTicks = unixEpochMillisecondsToTicks;
-    function ticksToUnixEpochMilliseconds(ticks) {
-        return ticks.div(10000).sub(62135596800000).toNumber();
-    }
-    exports.ticksToUnixEpochMilliseconds = ticksToUnixEpochMilliseconds;
 });

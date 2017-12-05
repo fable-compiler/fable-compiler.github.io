@@ -1,4 +1,4 @@
-define(["require", "exports", "./Option", "./Symbol", "./Util"], function (require, exports, Option_1, Symbol_1, Util_1) {
+define(["require", "exports", "./Symbol", "./Util"], function (require, exports, Symbol_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     class Observer {
@@ -35,7 +35,7 @@ define(["require", "exports", "./Option", "./Symbol", "./Util"], function (requi
     exports.add = add;
     function choose(chooser, source) {
         return new Observable((observer) => source.Subscribe(new Observer((t) => protect(() => chooser(t), (u) => { if (u != null) {
-            observer.OnNext(Option_1.getValue(u));
+            observer.OnNext(u);
         } }, observer.OnError), observer.OnError, observer.OnCompleted)));
     }
     exports.choose = choose;

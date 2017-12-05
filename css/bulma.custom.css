@@ -5732,6 +5732,15 @@ html, body {
   overflow-y: auto;
   overflow-x: hidden; }
 
+footer {
+  margin-top: 40px;
+  background-color: #202020;
+  color: white;
+  padding: 20px 10px; }
+  footer a {
+    color: white;
+    text-decoration: underline; }
+
 .container {
   padding: 5px; }
 
@@ -5806,3 +5815,28 @@ html, body {
 .fable-friends img {
   max-height: 150px;
   margin: 0 10px; }
+
+.markdown img {
+  display: block;
+  margin: auto; }
+
+span.omitted {
+  background: #3c4e52;
+    background-border-radius: 5px;
+  color: #808080;
+  padding: 0px 0px 1px 0px; }
+
+div.tip {
+  background-color: #475b5f;
+  border-radius: 4px;
+  font: "11pt 'Droid Sans', arial, sans-serif";
+  padding: 6px 8px 6px 8px;
+  display: none;
+  color: #d1d1d1;
+  pointer-events: none; }
+  div.tip strong {
+    color: inherit; }
+
+.xmldoc .github-link {
+  float: right;
+  padding-left: 5px; }

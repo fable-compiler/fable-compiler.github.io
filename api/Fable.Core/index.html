@@ -1,0 +1,1218 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>API Reference</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,300,600,700|Roboto+Mono">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/bulma.custom.css">
+  <link rel="shortcut icon" href="/img/shared/fable.ico" />
+  <script src="https://cdn.polyfill.io/v2/polyfill.js?features=default,fetch"></script>
+  <script src="/js/tips.js"></script>
+</head>
+
+<body>
+  <nav class="navbar"><div class="navbar-brand"><div class="navbar-item title is-4">Fable</div><div class="navbar-burger" data-target="navMenu"><span></span><span></span><span></span></div></div><div id="navMenu" class=" navbar-menu"><div class="navbar-start"><a class=" navbar-item" href="/">Home</a><a class=" navbar-item" href="/repl">REPL</a><a class=" navbar-item" href="/blog">Blog</a><a class=" navbar-item" href="/docs">Docs</a><a class=" navbar-item is-active" href="/api">API</a><a class=" navbar-item" href="/samples-browser">Samples</a><a class=" navbar-item" href="/fableconf">FableConf</a></div><div class="navbar-end"><div class="navbar-item"><div class="field is-grouped"><p class="control"><a class="button twitter" href="https://twitter.com/FableCompiler"><span class="icon"><i class="fa fa-twitter"></i></span><span>Share the love!</span></a></p><p class="control"><a class="button github" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class="fa fa-comments"></i></span><span>Chat</span></a></p><p class="control"><a class="button github" href="https://github.com/fable-compiler/Fable"><span class="icon"><i class="fa fa-github"></i></span><span>Contribute</span></a></p></div></div></div></div></nav>
+  <div style="overflow-y:hidden;"><section class="hero fable-header"><div class="hero-body"><div class="container"><div class="columns is-vcentered"><div class="column"><img class="fable-logo" src="/img/shared/fable_logo.png"/></div><div class="column has-text-right"><h1 class="title is-1">API Reference</h1><h1 class="subtitle is-4">Exploring API reference of built-in libraries.</h1></div></div></div></div></section><div style="margin-top:1.6rem;"><div class="columns"><div class="column"></div><div class="column is-two-thirds"><div class="content" style="margin:5px;"> 
+
+<h1>Fable</h1>
+
+
+  <h2>Fable Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fable-compileroptions.html">CompilerOptions</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-icompiler.html">ICompiler</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-iplugin.html">IPlugin</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ireplaceplugin.html">IReplacePlugin</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-plugininfo.html">PluginInfo</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-position.html">Position</a>
+          </td>
+          <td class="xmldoc"><p>Each Position object consists of a line number (1-indexed) and a column number (0-indexed):</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-severity.html">Severity</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+  <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="fable-list.html">List</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fable-map.html">Map</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fable-option.html">Option</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fable-path.html">Path</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>Fable.AST Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-assignmentoperator.html">AssignmentOperator</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-binaryoperator.html">BinaryOperator</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-extendednumberkind.html">ExtendedNumberKind</a>
+          </td>
+          <td class="xmldoc"><p>Numbers that are not represented with JS native number type</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-logicaloperator.html">LogicalOperator</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-numberkind.html">NumberKind</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-regexflag.html">RegexFlag</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-unaryoperator.html">UnaryOperator</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-updateoperator.html">UpdateOperator</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>Fable.AST.Babel Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-anytypeannotation.html">AnyTypeAnnotation</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-arrayexpression.html">ArrayExpression</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-arraypattern.html">ArrayPattern</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-arrowfunctionexpression.html">ArrowFunctionExpression</a>
+          </td>
+          <td class="xmldoc"><p>A fat arrow function expression, e.g., let foo = (bar) =&gt; { /<em> body </em>/ }.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-assignmentexpression.html">AssignmentExpression</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-assignmentpattern.html">AssignmentPattern</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-awaitexpression.html">AwaitExpression</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-binaryexpression.html">BinaryExpression</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-blockstatement.html">BlockStatement</a>
+          </td>
+          <td class="xmldoc"><p>A block statement, i.e., a sequence of statements surrounded by braces.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-booleanliteral.html">BooleanLiteral</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-booleantypeannotation.html">BooleanTypeAnnotation</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-breakstatement.html">BreakStatement</a>
+          </td>
+          <td class="xmldoc"><p>Break can optionally take a label of a loop to break</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-callexpression.html">CallExpression</a>
+          </td>
+          <td class="xmldoc"><p>A function or method call expression.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-catchclause.html">CatchClause</a>
+          </td>
+          <td class="xmldoc"><p>A catch clause following a try block.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-classbody.html">ClassBody</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-classdeclaration.html">ClassDeclaration</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-classexpression.html">ClassExpression</a>
+          </td>
+          <td class="xmldoc"><p>Anonymous class: e.g., var myClass = class { }</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-classmethod.html">ClassMethod</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-classmethodkind.html">ClassMethodKind</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-classproperty.html">ClassProperty</a>
+          </td>
+          <td class="xmldoc"><p>ES Class Fields &amp; Static Properties
+<a href="https://github.com/jeffmo/es-class-fields-and-static-properties
+e.g,">https://github.com/jeffmo/es-class-fields-and-static-properties
+e.g,</a> class MyClass { static myStaticProp = 5; myProp /<em> = 10 </em>/; }</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-conditionalexpression.html">ConditionalExpression</a>
+          </td>
+          <td class="xmldoc"><p>A conditional expression, i.e., a ternary ?/: expression.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-continuestatement.html">ContinueStatement</a>
+          </td>
+          <td class="xmldoc"><p>Contineu can optionally take a label of a loop to continuue</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-debuggerstatement.html">DebuggerStatement</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-declaration.html">Declaration</a>
+          </td>
+          <td class="xmldoc"><p>Note that declarations are considered statements; this is because declarations can appear in any statement context.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-decorator.html">Decorator</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-directive.html">Directive</a>
+          </td>
+          <td class="xmldoc"><p>e.g. "use strict";</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-directiveliteral.html">DirectiveLiteral</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-doexpression.html">DoExpression</a>
+          </td>
+          <td class="xmldoc"><p>e.g., x = do { var t = f(); t * t + 1 };
+<a href="http://wiki.ecmascript.org/doku.php?id=strawman:do_expressions
+Doesn't">http://wiki.ecmascript.org/doku.php?id=strawman:do_expressions
+Doesn't</a> seem to work well with block-scoped variables (let, const)</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-dowhilestatement.html">DoWhileStatement</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-emptyexpression.html">EmptyExpression</a>
+          </td>
+          <td class="xmldoc"><p>Placeholder, doesn't belong to Babel specs</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-emptystatement.html">EmptyStatement</a>
+          </td>
+          <td class="xmldoc"><p>An empty statement, i.e., a solitary semicolon.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-exportalldeclaration.html">ExportAllDeclaration</a>
+          </td>
+          <td class="xmldoc"><p>An export batch declaration, e.g., export * from "mod";.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-exportdefaultdeclaration.html">ExportDefaultDeclaration</a>
+          </td>
+          <td class="xmldoc"><p>An export default declaration, e.g., export default function () {}; or export default 1;.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-exportnameddeclaration.html">ExportNamedDeclaration</a>
+          </td>
+          <td class="xmldoc"><p>An export named declaration, e.g., export {foo, bar};, export {foo} from "mod"; or export var foo = 1;.
+Note: Having declaration populated with non-empty specifiers or non-null source results in an invalid state.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-exportspecifier.html">ExportSpecifier</a>
+          </td>
+          <td class="xmldoc"><p>An exported variable binding, e.g., {foo} in export {foo} or {bar as foo} in export {bar as foo}.
+The exported field refers to the name exported in the module.
+The local field refers to the binding into the local module scope.
+If it is a basic named export, such as in export {foo}, both exported and local are equivalent Identifier nodes;
+in this case an Identifier node representing foo. If it is an aliased export, such as in export {bar as foo},
+the exported field is an Identifier node representing foo, and the local field is an Identifier node representing bar.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-expression.html">Expression</a>
+          </td>
+          <td class="xmldoc"><p>Since the left-hand side of an assignment may be any expression in general, an expression can also be a pattern.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-expressionstatement.html">ExpressionStatement</a>
+          </td>
+          <td class="xmldoc"><p>An expression statement, i.e., a statement consisting of a single expression.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-forinstatement.html">ForInStatement</a>
+          </td>
+          <td class="xmldoc"><p>When passing a VariableDeclaration, the bound value must go through
+the <code>right</code> parameter instead of <code>init</code> property in VariableDeclarator</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-forofstatement.html">ForOfStatement</a>
+          </td>
+          <td class="xmldoc"><p>When passing a VariableDeclaration, the bound value must go through
+the <code>right</code> parameter instead of <code>init</code> property in VariableDeclarator</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-forstatement.html">ForStatement</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-functiondeclaration.html">FunctionDeclaration</a>
+          </td>
+          <td class="xmldoc"><p>A function declaration. Note that id cannot be null.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-functionexpression.html">FunctionExpression</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-functiontypeannotation.html">FunctionTypeAnnotation</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-functiontypeparam.html">FunctionTypeParam</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-generictypeannotation.html">GenericTypeAnnotation</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-ifstatement.html">IfStatement</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-importdeclaration.html">ImportDeclaration</a>
+          </td>
+          <td class="xmldoc"><p>e.g., import foo from "mod";.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-importdefaultspecifier.html">ImportDefaultSpecifier</a>
+          </td>
+          <td class="xmldoc"><p>A default import specifier, e.g., foo in import foo from "mod".</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-importnamespacespecifier.html">ImportNamespaceSpecifier</a>
+          </td>
+          <td class="xmldoc"><p>A namespace import specifier, e.g., <em> as foo in import </em> as foo from "mod".</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-importspecifier.html">ImportSpecifier</a>
+          </td>
+          <td class="xmldoc"><p>An imported variable binding, e.g., {foo} in import {foo} from "mod" or {foo as bar} in import {foo as bar} from "mod".
+The imported field refers to the name of the export imported from the module.
+The local field refers to the binding imported into the local module scope.
+If it is a basic named import, such as in import {foo} from "mod", both imported and local are equivalent Identifier nodes; in this case an Identifier node representing foo.
+If it is an aliased import, such as in import {foo as bar} from "mod", the imported field is an Identifier node representing foo, and the local field is an Identifier node representing bar.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-interfacedeclaration.html">InterfaceDeclaration</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-interfaceextends.html">InterfaceExtends</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-labeledstatement.html">LabeledStatement</a>
+          </td>
+          <td class="xmldoc"><p>Statement (typically loop) prefixed with a label (for continuue and break)</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-literal.html">Literal</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-logicalexpression.html">LogicalExpression</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-macroexpression.html">MacroExpression</a>
+          </td>
+          <td class="xmldoc"><p>Not in Babel specs, disguised as StringLiteral</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-memberexpression.html">MemberExpression</a>
+          </td>
+          <td class="xmldoc"><p>If computed is true, the node corresponds to a computed (a[b]) member expression and property is an Expression.
+If computed is false, the node corresponds to a static (a.b) member expression and property is an Identifier.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-moduledeclaration.html">ModuleDeclaration</a>
+          </td>
+          <td class="xmldoc"><p>A module import or export declaration.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-modulespecifier.html">ModuleSpecifier</a>
+          </td>
+          <td class="xmldoc"><p>A specifier in an import or export declaration.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-newexpression.html">NewExpression</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-node.html">Node</a>
+          </td>
+          <td class="xmldoc"><p>The type field is a string representing the AST variant type.
+Each subtype of Node is documented below with the specific string of its type field.
+You can use this field to determine which interface a node implements.
+The loc field represents the source location information of the node.
+If the node contains no information about the source location, the field is null;
+otherwise it is an object consisting of a start position (the position of the first character of the parsed source region)
+and an end position (the position of the first character after the parsed source region):</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-nullliteral.html">NullLiteral</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-nullabletypeannotation.html">NullableTypeAnnotation</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-numbertypeannotation.html">NumberTypeAnnotation</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-numericliteral.html">NumericLiteral</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-objectexpression.html">ObjectExpression</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-objectmember.html">ObjectMember</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-objectmethod.html">ObjectMethod</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-objectmethodkind.html">ObjectMethodKind</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-objectproperty.html">ObjectProperty</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-objecttypeannotation.html">ObjectTypeAnnotation</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-objecttypeproperty.html">ObjectTypeProperty</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-pattern.html">Pattern</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-program.html">Program</a>
+          </td>
+          <td class="xmldoc"><p>A complete program source tree.
+Parsers must specify sourceType as "module" if the source has been parsed as an ES6 module.
+Otherwise, sourceType must be "script".</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-regexpliteral.html">RegExpLiteral</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-restelement.html">RestElement</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-restproperty.html">RestProperty</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-returnstatement.html">ReturnStatement</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-sequenceexpression.html">SequenceExpression</a>
+          </td>
+          <td class="xmldoc"><p>A comma-separated sequence of expressions.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-spreadelement.html">SpreadElement</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-spreadproperty.html">SpreadProperty</a>
+          </td>
+          <td class="xmldoc"><p>e.g., var z = { x: 1, ...y } // Copy all properties from y</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-statement.html">Statement</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-stringliteral.html">StringLiteral</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-stringtypeannotation.html">StringTypeAnnotation</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-super.html">Super</a>
+          </td>
+          <td class="xmldoc"><p>A super pseudo-expression.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-switchcase.html">SwitchCase</a>
+          </td>
+          <td class="xmldoc"><p>A case (if test is an Expression) or default (if test === null) clause in the body of a switch statement.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-switchstatement.html">SwitchStatement</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-taggedtemplateexpression.html">TaggedTemplateExpression</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-templateliteral.html">TemplateLiteral</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-thisexpression.html">ThisExpression</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-throwstatement.html">ThrowStatement</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-trystatement.html">TryStatement</a>
+          </td>
+          <td class="xmldoc"><p>If handler is null then finalizer must be a BlockStatement.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-tupletypeannotation.html">TupleTypeAnnotation</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-typeannotation.html">TypeAnnotation</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-typeannotationinfo.html">TypeAnnotationInfo</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-typeparameter.html">TypeParameter</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-typeparameterdeclaration.html">TypeParameterDeclaration</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-typeparameterinstantiation.html">TypeParameterInstantiation</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-u2-2.html">U2<'a, 'b></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-u3-3.html">U3<'a, 'b, 'c></a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-unaryexpression.html">UnaryExpression</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-updateexpression.html">UpdateExpression</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-variabledeclaration.html">VariableDeclaration</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-variabledeclarationkind.html">VariableDeclarationKind</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-variabledeclarator.html">VariableDeclarator</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-voidtypeannotation.html">VoidTypeAnnotation</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-whilestatement.html">WhileStatement</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-babel-yieldexpression.html">YieldExpression</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>Fable.AST.Fable Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-fable-applyinfo.html">ApplyInfo</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-fable-applykind.html">ApplyKind</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-fable-arrayconskind.html">ArrayConsKind</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-fable-declaration.html">Declaration</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-fable-decorator.html">Decorator</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-fable-entitykind.html">EntityKind</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-fable-externalentity.html">ExternalEntity</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-fable-fablemap.html">FableMap</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-fable-file.html">File</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-fable-fileinfo.html">FileInfo</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-fable-importkind.html">ImportKind</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-fable-lambdainfo.html">LambdaInfo</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-fable-loopkind.html">LoopKind</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-fable-memberkind.html">MemberKind</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-fable-memberloc.html">MemberLoc</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-fable-nondeclaredtype.html">NonDeclaredType</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-fable-objexprmember.html">ObjExprMember</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-fable-type.html">Type</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-ast-fable-valuekind.html">ValueKind</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+  <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="fable-ast-fable-util.html">Util</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>Fable.Core Namespace</h2>
+    <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fable-core-applicable.html">Applicable</a>
+          </td>
+          <td class="xmldoc"><p>DO NOT USE: Internal type for Fable dynamic operations</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-core-u2-2.html">U2<'a, 'b></a>
+          </td>
+          <td class="xmldoc"><p>Erased union type to represent one of two possible values.
+More info: <a href="http://fable.io/docs/interacting.html#Erase-attribute">http://fable.io/docs/interacting.html#Erase-attribute</a></p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-core-u3-3.html">U3<'a, 'b, 'c></a>
+          </td>
+          <td class="xmldoc"><p>Erased union type to represent one of three possible values.
+More info: <a href="http://fable.io/docs/interacting.html#Erase-attribute">http://fable.io/docs/interacting.html#Erase-attribute</a></p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-core-u4-4.html">U4<'a, 'b, 'c, 'd></a>
+          </td>
+          <td class="xmldoc"><p>Erased union type to represent one of four possible values.
+More info: <a href="http://fable.io/docs/interacting.html#Erase-attribute">http://fable.io/docs/interacting.html#Erase-attribute</a></p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-core-u5-5.html">U5<'a, 'b, 'c, 'd, 'e></a>
+          </td>
+          <td class="xmldoc"><p>Erased union type to represent one of five possible values.
+More info: <a href="http://fable.io/docs/interacting.html#Erase-attribute">http://fable.io/docs/interacting.html#Erase-attribute</a></p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-core-u6-6.html">U6<'a, 'b, 'c, 'd, 'e, 'f></a>
+          </td>
+          <td class="xmldoc"><p>Erased union type to represent one of six possible values.
+More info: <a href="http://fable.io/docs/interacting.html#Erase-attribute">http://fable.io/docs/interacting.html#Erase-attribute</a></p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-core-u7-7.html">U7<'a, 'b, 'c, 'd, 'e, 'f, 'g></a>
+          </td>
+          <td class="xmldoc"><p>Erased union type to represent one of seven possible values.
+More info: <a href="http://fable.io/docs/interacting.html#Erase-attribute">http://fable.io/docs/interacting.html#Erase-attribute</a></p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fable-core-u8-8.html">U8<'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h></a>
+          </td>
+          <td class="xmldoc"><p>Erased union type to represent one of eight possible values.
+More info: <a href="http://fable.io/docs/interacting.html#Erase-attribute">http://fable.io/docs/interacting.html#Erase-attribute</a></p>
+
+</td>
+        </tr>
+    </tbody>
+  </table>
+  <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="fable-core-exceptions.html">Exceptions</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fable-core-jsinterop.html">JsInterop</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fable-core-testing.html">Testing</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+  <h2>Fable.Import Namespace</h2>
+    <div>
+      <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="fable-import-js.html">JS</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+    </div>
+ </div></div><div class="column"></div></div></div></div>
+  <footer>
+      <p> Fable <a href="https://github.com/fable-compiler/Fable">source code</a> is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.</p>
+  </footer>
+  <script>
+    // Activate navbar burget button
+    document.addEventListener('DOMContentLoaded', function () {
+      var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+      if ($navbarBurgers.length > 0) {
+        $navbarBurgers.forEach(function ($el) {
+          $el.addEventListener('click', function () {
+            var target = $el.dataset.target;
+            var $target = document.getElementById(target);
+            $el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>

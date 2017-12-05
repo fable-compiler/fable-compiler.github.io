@@ -1,0 +1,292 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>API Reference</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,300,600,700|Roboto+Mono">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/bulma.custom.css">
+  <link rel="shortcut icon" href="/img/shared/fable.ico" />
+  <script src="https://cdn.polyfill.io/v2/polyfill.js?features=default,fetch"></script>
+  <script src="/js/tips.js"></script>
+</head>
+
+<body>
+  <nav class="navbar"><div class="navbar-brand"><div class="navbar-item title is-4">Fable</div><div class="navbar-burger" data-target="navMenu"><span></span><span></span><span></span></div></div><div id="navMenu" class=" navbar-menu"><div class="navbar-start"><a class=" navbar-item" href="/">Home</a><a class=" navbar-item" href="/repl">REPL</a><a class=" navbar-item" href="/blog">Blog</a><a class=" navbar-item" href="/docs">Docs</a><a class=" navbar-item is-active" href="/api">API</a><a class=" navbar-item" href="/samples-browser">Samples</a><a class=" navbar-item" href="/fableconf">FableConf</a></div><div class="navbar-end"><div class="navbar-item"><div class="field is-grouped"><p class="control"><a class="button twitter" href="https://twitter.com/FableCompiler"><span class="icon"><i class="fa fa-twitter"></i></span><span>Share the love!</span></a></p><p class="control"><a class="button github" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class="fa fa-comments"></i></span><span>Chat</span></a></p><p class="control"><a class="button github" href="https://github.com/fable-compiler/Fable"><span class="icon"><i class="fa fa-github"></i></span><span>Contribute</span></a></p></div></div></div></div></nav>
+  <div style="overflow-y:hidden;"><section class="hero fable-header"><div class="hero-body"><div class="container"><div class="columns is-vcentered"><div class="column"><img class="fable-logo" src="/img/shared/fable_logo.png"/></div><div class="column has-text-right"><h1 class="title is-1">API Reference</h1><h1 class="subtitle is-4">Exploring API reference of built-in libraries.</h1></div></div></div></div></section><div style="margin-top:1.6rem;"><div class="columns"><div class="column"></div><div class="column is-two-thirds"><div class="content" style="margin:5px;"> 
+
+
+
+<h1>ApplyInfo</h1>
+<p>
+  <span>Namespace: Fable.AST.Fable</span><br />
+</p>
+<div class="xmldoc">
+</div>
+  <h3>Record Fields</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Record Field</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '564', 564)" onmouseover="showTip(event, '564', 564)">
+            args
+          </code>
+          <div class="tip" id="564">
+            <strong>Signature:</strong> Expr list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fable-compiler/Fable/tree/master/src/dotnet/Fable.Core/AST/AST.Fable.fs#L209-209" class="github-link" target="_blank">[src]</a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '565', 565)" onmouseover="showTip(event, '565', 565)">
+            callee
+          </code>
+          <div class="tip" id="565">
+            <strong>Signature:</strong> Expr option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fable-compiler/Fable/tree/master/src/dotnet/Fable.Core/AST/AST.Fable.fs#L208-208" class="github-link" target="_blank">[src]</a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '566', 566)" onmouseover="showTip(event, '566', 566)">
+            calleeTypeArgs
+          </code>
+          <div class="tip" id="566">
+            <strong>Signature:</strong> Type list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fable-compiler/Fable/tree/master/src/dotnet/Fable.Core/AST/AST.Fable.fs#L215-215" class="github-link" target="_blank">[src]</a>
+          <p>Generic arguments applied to the callee (for instance methods)</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '567', 567)" onmouseover="showTip(event, '567', 567)">
+            caughtException
+          </code>
+          <div class="tip" id="567">
+            <strong>Signature:</strong> Ident option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fable-compiler/Fable/tree/master/src/dotnet/Fable.Core/AST/AST.Fable.fs#L221-221" class="github-link" target="_blank">[src]</a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '568', 568)" onmouseover="showTip(event, '568', 568)">
+            decorators
+          </code>
+          <div class="tip" id="568">
+            <strong>Signature:</strong> Decorator list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fable-compiler/Fable/tree/master/src/dotnet/Fable.Core/AST/AST.Fable.fs#L213-213" class="github-link" target="_blank">[src]</a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '569', 569)" onmouseover="showTip(event, '569', 569)">
+            fileName
+          </code>
+          <div class="tip" id="569">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fable-compiler/Fable/tree/master/src/dotnet/Fable.Core/AST/AST.Fable.fs#L212-212" class="github-link" target="_blank">[src]</a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '570', 570)" onmouseover="showTip(event, '570', 570)">
+            genericAvailability
+          </code>
+          <div class="tip" id="570">
+            <strong>Signature:</strong> bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fable-compiler/Fable/tree/master/src/dotnet/Fable.Core/AST/AST.Fable.fs#L220-220" class="github-link" target="_blank">[src]</a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '571', 571)" onmouseover="showTip(event, '571', 571)">
+            methodArgTypes
+          </code>
+          <div class="tip" id="571">
+            <strong>Signature:</strong> Type list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fable-compiler/Fable/tree/master/src/dotnet/Fable.Core/AST/AST.Fable.fs#L219-219" class="github-link" target="_blank">[src]</a>
+          <p>Types of arguments as appearing in method signature (not to be confused with <code>methodTypeArgs</code>)</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '572', 572)" onmouseover="showTip(event, '572', 572)">
+            methodKind
+          </code>
+          <div class="tip" id="572">
+            <strong>Signature:</strong> MemberKind<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fable-compiler/Fable/tree/master/src/dotnet/Fable.Core/AST/AST.Fable.fs#L207-207" class="github-link" target="_blank">[src]</a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '573', 573)" onmouseover="showTip(event, '573', 573)">
+            methodName
+          </code>
+          <div class="tip" id="573">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fable-compiler/Fable/tree/master/src/dotnet/Fable.Core/AST/AST.Fable.fs#L206-206" class="github-link" target="_blank">[src]</a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '574', 574)" onmouseover="showTip(event, '574', 574)">
+            methodTypeArgs
+          </code>
+          <div class="tip" id="574">
+            <strong>Signature:</strong> Type list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fable-compiler/Fable/tree/master/src/dotnet/Fable.Core/AST/AST.Fable.fs#L217-217" class="github-link" target="_blank">[src]</a>
+          <p>Generic arguments applied to the method (not to be confused with <code>methodArgTypes</code>)</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '575', 575)" onmouseover="showTip(event, '575', 575)">
+            ownerFullName
+          </code>
+          <div class="tip" id="575">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fable-compiler/Fable/tree/master/src/dotnet/Fable.Core/AST/AST.Fable.fs#L205-205" class="github-link" target="_blank">[src]</a>
+          <p>Sometimes Fable.Type may differ from original F# name (e.g. System.Object -&gt; Fable.Any).
+This field keeps the original name.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '576', 576)" onmouseover="showTip(event, '576', 576)">
+            ownerType
+          </code>
+          <div class="tip" id="576">
+            <strong>Signature:</strong> Type<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fable-compiler/Fable/tree/master/src/dotnet/Fable.Core/AST/AST.Fable.fs#L202-202" class="github-link" target="_blank">[src]</a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '577', 577)" onmouseover="showTip(event, '577', 577)">
+            range
+          </code>
+          <div class="tip" id="577">
+            <strong>Signature:</strong> SourceLocation option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fable-compiler/Fable/tree/master/src/dotnet/Fable.Core/AST/AST.Fable.fs#L211-211" class="github-link" target="_blank">[src]</a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '578', 578)" onmouseover="showTip(event, '578', 578)">
+            returnType
+          </code>
+          <div class="tip" id="578">
+            <strong>Signature:</strong> Type<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fable-compiler/Fable/tree/master/src/dotnet/Fable.Core/AST/AST.Fable.fs#L210-210" class="github-link" target="_blank">[src]</a>
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+ </div></div><div class="column"></div></div></div></div>
+  <footer>
+      <p> Fable <a href="https://github.com/fable-compiler/Fable">source code</a> is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.</p>
+  </footer>
+  <script>
+    // Activate navbar burget button
+    document.addEventListener('DOMContentLoaded', function () {
+      var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+      if ($navbarBurgers.length > 0) {
+        $navbarBurgers.forEach(function ($el) {
+          $el.addEventListener('click', function () {
+            var target = $el.dataset.target;
+            var $target = document.getElementById(target);
+            $el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>

@@ -1,182 +1,37 @@
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "./Long", "./TimeSpan", "./Util"], function (require, exports, Long, TimeSpan_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.offsetRegex = /(?:Z|[+-](\d{2}):?(\d{2})?)$/;
-    function padWithZeros(i, length) {
-        let str = i.toString(10);
-        while (str.length < length) {
-            str = "0" + str;
-        }
-        return str;
-    }
-    exports.padWithZeros = padWithZeros;
-    function offsetToString(offset) {
-        const isMinus = offset < 0;
-        offset = Math.abs(offset);
-        const hours = ~~(offset / 3600000);
-        const minutes = (offset % 3600000) / 60000;
-        return (isMinus ? "-" : "+") +
-            padWithZeros(hours, 2) + ":" +
-            padWithZeros(minutes, 2);
-    }
-    exports.offsetToString = offsetToString;
-    function toHalfUTCString(date, half) {
-        const str = date.toISOString();
-        return half === "first"
-            ? str.substring(0, str.indexOf("T"))
-            : str.substring(str.indexOf("T") + 1, str.length - 1);
-    }
-    exports.toHalfUTCString = toHalfUTCString;
-    function toISOString(d, utc) {
-        if (utc) {
-            return d.toISOString();
-        }
-        else {
-            // JS Date is always local
-            const printOffset = d.kind == null ? true : d.kind === 2 /* Local */;
-            return padWithZeros(d.getFullYear(), 4) + "-" +
-                padWithZeros(d.getMonth() + 1, 2) + "-" +
-                padWithZeros(d.getDate(), 2) + "T" +
-                padWithZeros(d.getHours(), 2) + ":" +
-                padWithZeros(d.getMinutes(), 2) + ":" +
-                padWithZeros(d.getSeconds(), 2) + "." +
-                padWithZeros(d.getMilliseconds(), 3) +
-                (printOffset ? offsetToString(d.getTimezoneOffset() * -60000) : "");
-        }
-    }
-    function toISOStringWithOffset(dateWithOffset, offset) {
-        const str = dateWithOffset.toISOString();
-        return str.substring(0, str.length - 1) + offsetToString(offset);
-    }
-    function toStringWithCustomFormat(date, format, utc) {
-        return format.replace(/(\w)\1*/g, (match) => {
-            let rep = match;
-            switch (match.substring(0, 1)) {
-                case "y":
-                    const y = utc ? date.getUTCFullYear() : date.getFullYear();
-                    rep = match.length < 4 ? y % 100 : y;
-                    break;
-                case "M":
-                    rep = (utc ? date.getUTCMonth() : date.getMonth()) + 1;
-                    break;
-                case "d":
-                    rep = utc ? date.getUTCDate() : date.getDate();
-                    break;
-                case "H":
-                    rep = utc ? date.getUTCHours() : date.getHours();
-                    break;
-                case "h":
-                    const h = utc ? date.getUTCHours() : date.getHours();
-                    rep = h > 12 ? h % 12 : h;
-                    break;
-                case "m":
-                    rep = utc ? date.getUTCMinutes() : date.getMinutes();
-                    break;
-                case "s":
-                    rep = utc ? date.getUTCSeconds() : date.getSeconds();
-                    break;
-            }
-            if (rep !== match && rep < 10 && match.length > 1) {
-                rep = "0" + rep;
-            }
-            return rep;
-        });
-    }
-    function toStringWithOffset(date, format) {
-        const d = new Date(date.getTime() + date.offset);
-        if (!format) {
-            return d.toISOString().replace(/\.\d+/, "").replace(/[A-Z]|\.\d+/g, " ") + offsetToString(date.offset);
-        }
-        else if (format.length === 1) {
-            switch (format) {
-                case "D":
-                case "d": return toHalfUTCString(d, "first");
-                case "T":
-                case "t": return toHalfUTCString(d, "second");
-                case "O":
-                case "o": return toISOStringWithOffset(d, date.offset);
-                default: throw new Error("Unrecognized Date print format");
-            }
-        }
-        else {
-            return toStringWithCustomFormat(d, format, true);
-        }
-    }
-    exports.toStringWithOffset = toStringWithOffset;
-    function toStringWithKind(date, format) {
-        const utc = date.kind === 1 /* UTC */;
-        if (!format) {
-            return utc ? date.toUTCString() : date.toLocaleString();
-        }
-        else if (format.length === 1) {
-            switch (format) {
-                case "D":
-                case "d":
-                    return utc ? toHalfUTCString(date, "first") : date.toLocaleDateString();
-                case "T":
-                case "t":
-                    return utc ? toHalfUTCString(date, "second") : date.toLocaleTimeString();
-                case "O":
-                case "o":
-                    return toISOString(date, utc);
-                default:
-                    throw new Error("Unrecognized Date print format");
-            }
-        }
-        else {
-            return toStringWithCustomFormat(date, format, utc);
-        }
-    }
-    exports.toStringWithKind = toStringWithKind;
-    function toString(date, format) {
-        return date.offset != null
-            ? toStringWithOffset(date, format)
-            : toStringWithKind(date, format);
-    }
-    exports.toString = toString;
-    function DateTime(value, kind) {
-        kind = kind == null ? 0 /* Unspecified */ : kind;
-        const d = new Date(value);
-        d.kind = kind | 0;
-        return d;
-    }
-    exports.default = DateTime;
     function minValue() {
-        // This is "0001-01-01T00:00:00.000Z", actual JS min value is -8640000000000000
-        return DateTime(-62135596800000, 0 /* Unspecified */);
+        return parse(-8640000000000000, 1);
     }
     exports.minValue = minValue;
     function maxValue() {
-        // This is "9999-12-31T23:59:59.999Z", actual JS max value is 8640000000000000
-        return DateTime(253402300799999, 0 /* Unspecified */);
+        return parse(8640000000000000, 1);
     }
     exports.maxValue = maxValue;
-    function parseRaw(str) {
-        let date = new Date(str);
+    /* tslint:disable */
+    function parse(v, kind) {
+        if (kind == null) {
+            kind = typeof v === "string" && v.slice(-1) === "Z" ? 1 /* UTC */ : 2 /* Local */;
+        }
+        let date = (v == null) ? new Date() : new Date(v);
         if (isNaN(date.getTime())) {
             // Check if this is a time-only string, which JS Date parsing cannot handle (see #1045)
-            if (/^(?:[01]?\d|2[0-3]):(?:[0-5]?\d)(?::[0-5]?\d(?:\.\d+)?)?(?:\s*[AaPp][Mm])?$/.test(str)) {
+            if (typeof v === "string" && /^(?:[01]?\d|2[0-3]):(?:[0-5]?\d)(?::[0-5]?\d(?:\.\d+)?)?(?:\s*[AaPp][Mm])?$/.test(v)) {
                 const d = new Date();
-                date = new Date(d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate() + " " + str);
+                date = new Date(d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate() + " " + v);
             }
             else {
                 throw new Error("The string is not a valid Date.");
             }
         }
+        if (kind === 2 /* Local */) {
+            date.kind = kind;
+        }
         return date;
     }
-    exports.parseRaw = parseRaw;
-    function parse(str, detectUTC = false) {
-        const date = parseRaw(str);
-        const offset = exports.offsetRegex.exec(str);
-        // .NET always parses DateTime as Local if there's offset info (even "Z")
-        // Newtonsoft.Json uses UTC if the offset is "Z"
-        const kind = offset != null
-            ? (detectUTC && offset[0] === "Z" ? 1 /* UTC */ : 2 /* Local */)
-            : 0 /* Unspecified */;
-        return DateTime(date.getTime(), kind);
-    }
     exports.parse = parse;
+    /* tslint:enable */
     function tryParse(v) {
         try {
             return [true, parse(v)];
@@ -186,34 +41,30 @@ define(["require", "exports"], function (require, exports) {
         }
     }
     exports.tryParse = tryParse;
-    function offset(date) {
-        const date1 = date;
-        return typeof date1.offset === "number"
-            ? date1.offset
-            : (date.kind === 1 /* UTC */
-                ? 0 : date.getTimezoneOffset() * -60000);
-    }
-    exports.offset = offset;
-    function create(year, month, day, h = 0, m = 0, s = 0, ms = 0, kind) {
-        const dateValue = kind === 1 /* UTC */
-            ? Date.UTC(year, month - 1, day, h, m, s, ms)
-            : new Date(year, month - 1, day, h, m, s, ms).getTime();
-        if (isNaN(dateValue)) {
-            throw new Error("The parameters describe an unrepresentable Date.");
+    function create(year, month, day, h = 0, m = 0, s = 0, ms = 0, kind = 2 /* Local */) {
+        let date;
+        if (kind === 2 /* Local */) {
+            date = new Date(year, month - 1, day, h, m, s, ms);
+            date.kind = kind;
         }
-        const date = DateTime(dateValue, kind);
+        else {
+            date = new Date(Date.UTC(year, month - 1, day, h, m, s, ms));
+        }
         if (year <= 99) {
             date.setFullYear(year, month - 1, day);
+        }
+        if (isNaN(date.getTime())) {
+            throw new Error("The parameters describe an unrepresentable Date.");
         }
         return date;
     }
     exports.create = create;
     function now() {
-        return DateTime(Date.now(), 2 /* Local */);
+        return parse();
     }
     exports.now = now;
     function utcNow() {
-        return DateTime(Date.now(), 1 /* UTC */);
+        return parse(null, 1);
     }
     exports.utcNow = utcNow;
     function today() {
@@ -226,61 +77,84 @@ define(["require", "exports"], function (require, exports) {
     exports.isLeapYear = isLeapYear;
     function daysInMonth(year, month) {
         return month === 2
-            ? (isLeapYear(year) ? 29 : 28)
-            : (month >= 8 ? (month % 2 === 0 ? 31 : 30) : (month % 2 === 0 ? 30 : 31));
+            ? isLeapYear(year) ? 29 : 28
+            : month >= 8 ? month % 2 === 0 ? 31 : 30 : month % 2 === 0 ? 30 : 31;
     }
     exports.daysInMonth = daysInMonth;
-    function toUniversalTime(date) {
-        return date.kind === 1 /* UTC */ ? date : DateTime(date.getTime(), 1 /* UTC */);
+    function toUniversalTime(d) {
+        return d.kind === 2 /* Local */ ? new Date(d.getTime()) : d;
     }
     exports.toUniversalTime = toUniversalTime;
-    function toLocalTime(date) {
-        return date.kind === 2 /* Local */ ? date : DateTime(date.getTime(), 2 /* Local */);
+    function toLocalTime(d) {
+        if (d.kind === 2 /* Local */) {
+            return d;
+        }
+        else {
+            const d2 = new Date(d.getTime());
+            d2.kind = 2 /* Local */;
+            return d2;
+        }
     }
     exports.toLocalTime = toLocalTime;
     function timeOfDay(d) {
-        return hour(d) * 3600000
-            + minute(d) * 60000
-            + second(d) * 1000
-            + millisecond(d);
+        return TimeSpan_1.create(0, hour(d), minute(d), second(d), millisecond(d));
     }
     exports.timeOfDay = timeOfDay;
     function date(d) {
-        return create(year(d), month(d), day(d), 0, 0, 0, 0, d.kind);
+        return create(year(d), month(d), day(d), 0, 0, 0, 0, d.kind || 1 /* UTC */);
     }
     exports.date = date;
+    function kind(d) {
+        return d.kind || 1 /* UTC */;
+    }
+    exports.kind = kind;
     function day(d) {
-        return d.kind === 1 /* UTC */ ? d.getUTCDate() : d.getDate();
+        return d.kind === 2 /* Local */ ? d.getDate() : d.getUTCDate();
     }
     exports.day = day;
     function hour(d) {
-        return d.kind === 1 /* UTC */ ? d.getUTCHours() : d.getHours();
+        return d.kind === 2 /* Local */ ? d.getHours() : d.getUTCHours();
     }
     exports.hour = hour;
     function millisecond(d) {
-        return d.kind === 1 /* UTC */ ? d.getUTCMilliseconds() : d.getMilliseconds();
+        return d.kind === 2 /* Local */ ? d.getMilliseconds() : d.getUTCMilliseconds();
     }
     exports.millisecond = millisecond;
     function minute(d) {
-        return d.kind === 1 /* UTC */ ? d.getUTCMinutes() : d.getMinutes();
+        return d.kind === 2 /* Local */ ? d.getMinutes() : d.getUTCMinutes();
     }
     exports.minute = minute;
     function month(d) {
-        return (d.kind === 1 /* UTC */ ? d.getUTCMonth() : d.getMonth()) + 1;
+        return (d.kind === 2 /* Local */ ? d.getMonth() : d.getUTCMonth()) + 1;
     }
     exports.month = month;
     function second(d) {
-        return d.kind === 1 /* UTC */ ? d.getUTCSeconds() : d.getSeconds();
+        return d.kind === 2 /* Local */ ? d.getSeconds() : d.getUTCSeconds();
     }
     exports.second = second;
     function year(d) {
-        return d.kind === 1 /* UTC */ ? d.getUTCFullYear() : d.getFullYear();
+        return d.kind === 2 /* Local */ ? d.getFullYear() : d.getUTCFullYear();
     }
     exports.year = year;
     function dayOfWeek(d) {
-        return d.kind === 1 /* UTC */ ? d.getUTCDay() : d.getDay();
+        return d.kind === 2 /* Local */ ? d.getDay() : d.getUTCDay();
     }
     exports.dayOfWeek = dayOfWeek;
+    function ticks(d) {
+        return Long.fromNumber(d.getTime())
+            .add(62135596800000) // UnixEpochMilliseconds
+            .sub(d.kind === 2 /* Local */ ? d.getTimezoneOffset() * 60 * 1000 : 0)
+            .mul(10000);
+    }
+    exports.ticks = ticks;
+    function ofTicks(ticks) {
+        return parse(ticks.div(10000).sub(62135596800000).toNumber(), 1 /* UTC */);
+    }
+    exports.ofTicks = ofTicks;
+    function toBinary(d) {
+        return ticks(d);
+    }
+    exports.toBinary = toBinary;
     function dayOfYear(d) {
         const _year = year(d);
         const _month = month(d);
@@ -292,35 +166,39 @@ define(["require", "exports"], function (require, exports) {
     }
     exports.dayOfYear = dayOfYear;
     function add(d, ts) {
-        return DateTime(d.getTime() + ts, d.kind);
+        return parse(d.getTime() + ts, d.kind || 1 /* UTC */);
     }
     exports.add = add;
     function addDays(d, v) {
-        return DateTime(d.getTime() + v * 86400000, d.kind);
+        return parse(d.getTime() + v * 86400000, d.kind || 1 /* UTC */);
     }
     exports.addDays = addDays;
     function addHours(d, v) {
-        return DateTime(d.getTime() + v * 3600000, d.kind);
+        return parse(d.getTime() + v * 3600000, d.kind || 1 /* UTC */);
     }
     exports.addHours = addHours;
     function addMinutes(d, v) {
-        return DateTime(d.getTime() + v * 60000, d.kind);
+        return parse(d.getTime() + v * 60000, d.kind || 1 /* UTC */);
     }
     exports.addMinutes = addMinutes;
     function addSeconds(d, v) {
-        return DateTime(d.getTime() + v * 1000, d.kind);
+        return parse(d.getTime() + v * 1000, d.kind || 1 /* UTC */);
     }
     exports.addSeconds = addSeconds;
     function addMilliseconds(d, v) {
-        return DateTime(d.getTime() + v, d.kind);
+        return parse(d.getTime() + v, d.kind || 1 /* UTC */);
     }
     exports.addMilliseconds = addMilliseconds;
+    function addTicks(d, t) {
+        return parse(Long.fromNumber(d.getTime()).add(t.div(10000)).toNumber(), d.kind || 1 /* UTC */);
+    }
+    exports.addTicks = addTicks;
     function addYears(d, v) {
         const newMonth = month(d);
         const newYear = year(d) + v;
         const _daysInMonth = daysInMonth(newYear, newMonth);
         const newDay = Math.min(_daysInMonth, day(d));
-        return create(newYear, newMonth, newDay, hour(d), minute(d), second(d), millisecond(d), d.kind);
+        return create(newYear, newMonth, newDay, hour(d), minute(d), second(d), millisecond(d), d.kind || 1 /* UTC */);
     }
     exports.addYears = addYears;
     function addMonths(d, v) {
@@ -340,12 +218,12 @@ define(["require", "exports"], function (require, exports) {
         const newYear = year(d) + yearOffset;
         const _daysInMonth = daysInMonth(newYear, newMonth);
         const newDay = Math.min(_daysInMonth, day(d));
-        return create(newYear, newMonth, newDay, hour(d), minute(d), second(d), millisecond(d), d.kind);
+        return create(newYear, newMonth, newDay, hour(d), minute(d), second(d), millisecond(d), d.kind || 1 /* UTC */);
     }
     exports.addMonths = addMonths;
     function subtract(d, that) {
         return typeof that === "number"
-            ? DateTime(d.getTime() - that, d.kind)
+            ? parse(d.getTime() - that, d.kind || 1 /* UTC */)
             : d.getTime() - that.getTime();
     }
     exports.subtract = subtract;
@@ -370,12 +248,13 @@ define(["require", "exports"], function (require, exports) {
     }
     exports.equals = equals;
     function compare(x, y) {
-        const xtime = x.getTime();
-        const ytime = y.getTime();
-        return xtime === ytime ? 0 : (xtime < ytime ? -1 : 1);
+        return Util_1.compare(x, y);
     }
     exports.compare = compare;
-    exports.compareTo = compare;
+    function compareTo(x, y) {
+        return Util_1.compare(x, y);
+    }
+    exports.compareTo = compareTo;
     function op_Addition(x, y) {
         return add(x, y);
     }

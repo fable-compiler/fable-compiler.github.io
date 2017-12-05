@@ -1,4 +1,4 @@
-define(["require", "exports", "./Array", "./Array", "./ListClass", "./Option", "./Util"], function (require, exports, Array_1, Array_2, ListClass_1, Option_1, Util_1) {
+define(["require", "exports", "./Array", "./Array", "./ListClass", "./Util", "./Util"], function (require, exports, Array_1, Array_2, ListClass_1, Util_1, Util_2) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     class Enumerator {
@@ -37,7 +37,7 @@ define(["require", "exports", "./Array", "./Array", "./ListClass", "./Option", "
         if (res == null) {
             throw new Error("Seq did not contain any matching element");
         }
-        return Option_1.getValue(res);
+        return res;
     }
     function toList(xs) {
         return foldBack((x, acc) => new ListClass_1.default(x, acc), xs, new ListClass_1.default());
@@ -134,7 +134,7 @@ define(["require", "exports", "./Array", "./Array", "./ListClass", "./Option", "
             while (!cur.done) {
                 const y = f(cur.value);
                 if (y != null) {
-                    return [Option_1.getValue(y), iter];
+                    return [y, iter];
                 }
                 cur = iter.next();
             }
@@ -144,7 +144,7 @@ define(["require", "exports", "./Array", "./Array", "./ListClass", "./Option", "
     exports.choose = choose;
     function compareWith(f, xs, ys) {
         const nonZero = tryFind((i) => i !== 0, map2((x, y) => f(x, y), xs, ys));
-        return nonZero != null ? Option_1.getValue(nonZero) : count(xs) - count(ys);
+        return nonZero != null ? nonZero : count(xs) - count(ys);
     }
     exports.compareWith = compareWith;
     function delay(f) {
@@ -334,7 +334,7 @@ define(["require", "exports", "./Array", "./Array", "./ListClass", "./Option", "
     function tryHead(xs) {
         const iter = xs[Symbol.iterator]();
         const cur = iter.next();
-        return cur.done ? null : new Option_1.Some(cur.value);
+        return cur.done ? null : cur.value;
     }
     exports.tryHead = tryHead;
     function head(xs) {
@@ -354,18 +354,17 @@ define(["require", "exports", "./Array", "./Array", "./ListClass", "./Option", "
             return null;
         }
         if (Array.isArray(xs) || ArrayBuffer.isView(xs)) {
-            return i < xs.length ? new Option_1.Some(xs[i]) : null;
+            return i < xs.length ? xs[i] : null;
         }
         for (let j = 0, iter = xs[Symbol.iterator]();; j++) {
             const cur = iter.next();
             if (cur.done) {
-                break;
+                return null;
             }
             if (j === i) {
-                return new Option_1.Some(cur.value);
+                return cur.value;
             }
         }
-        return null;
     }
     exports.tryItem = tryItem;
     function item(i, xs) {
@@ -395,7 +394,7 @@ define(["require", "exports", "./Array", "./Array", "./ListClass", "./Option", "
     exports.isEmpty = isEmpty;
     function tryLast(xs) {
         try {
-            return new Option_1.Some(reduce((_, x) => x, xs));
+            return reduce((_, x) => x, xs);
         }
         catch (err) {
             return null;
@@ -505,19 +504,19 @@ define(["require", "exports", "./Array", "./Array", "./ListClass", "./Option", "
     }
     exports.mapFoldBack = mapFoldBack;
     function max(xs) {
-        return reduce((acc, x) => Util_1.compare(acc, x) === 1 ? acc : x, xs);
+        return reduce((acc, x) => Util_2.compare(acc, x) === 1 ? acc : x, xs);
     }
     exports.max = max;
     function maxBy(f, xs) {
-        return reduce((acc, x) => Util_1.compare(f(acc), f(x)) === 1 ? acc : x, xs);
+        return reduce((acc, x) => Util_2.compare(f(acc), f(x)) === 1 ? acc : x, xs);
     }
     exports.maxBy = maxBy;
     function min(xs) {
-        return reduce((acc, x) => Util_1.compare(acc, x) === -1 ? acc : x, xs);
+        return reduce((acc, x) => Util_2.compare(acc, x) === -1 ? acc : x, xs);
     }
     exports.min = min;
     function minBy(f, xs) {
-        return reduce((acc, x) => Util_1.compare(f(acc), f(x)) === -1 ? acc : x, xs);
+        return reduce((acc, x) => Util_2.compare(f(acc), f(x)) === -1 ? acc : x, xs);
     }
     exports.minBy = minBy;
     function pairwise(xs) {
@@ -697,13 +696,12 @@ define(["require", "exports", "./Array", "./Array", "./ListClass", "./Option", "
         for (let i = 0, iter = xs[Symbol.iterator]();; i++) {
             const cur = iter.next();
             if (cur.done) {
-                break;
+                return defaultValue === void 0 ? null : defaultValue;
             }
             if (f(cur.value, i)) {
-                return new Option_1.Some(cur.value);
+                return cur.value;
             }
         }
-        return defaultValue === void 0 ? null : new Option_1.Some(defaultValue);
     }
     exports.tryFind = tryFind;
     function find(f, xs) {
@@ -711,8 +709,16 @@ define(["require", "exports", "./Array", "./Array", "./ListClass", "./Option", "
     }
     exports.find = find;
     function tryFindBack(f, xs, defaultValue) {
-        const arr = Array.isArray(xs) || ArrayBuffer.isView(xs) ? xs.slice(0) : Array.from(xs);
-        return tryFind(f, arr.reverse(), defaultValue);
+        let match = null;
+        for (let i = 0, iter = xs[Symbol.iterator]();; i++) {
+            const cur = iter.next();
+            if (cur.done) {
+                return match === null ? (defaultValue === void 0 ? null : defaultValue) : match;
+            }
+            if (f(cur.value, i)) {
+                match = cur.value;
+            }
+        }
     }
     exports.tryFindBack = tryFindBack;
     function findBack(f, xs) {
@@ -723,13 +729,12 @@ define(["require", "exports", "./Array", "./Array", "./ListClass", "./Option", "
         for (let i = 0, iter = xs[Symbol.iterator]();; i++) {
             const cur = iter.next();
             if (cur.done) {
-                break;
+                return null;
             }
             if (f(cur.value, i)) {
                 return i;
             }
         }
-        return null;
     }
     exports.tryFindIndex = tryFindIndex;
     function findIndex(f, xs) {
@@ -737,13 +742,16 @@ define(["require", "exports", "./Array", "./Array", "./ListClass", "./Option", "
     }
     exports.findIndex = findIndex;
     function tryFindIndexBack(f, xs) {
-        const arr = Array.isArray(xs) || ArrayBuffer.isView(xs) ? xs.slice(0) : Array.from(xs);
-        for (let i = arr.length - 1; i >= 0; i--) {
-            if (f(arr[i], i)) {
-                return i;
+        let match = -1;
+        for (let i = 0, iter = xs[Symbol.iterator]();; i++) {
+            const cur = iter.next();
+            if (cur.done) {
+                return match === -1 ? null : match;
+            }
+            if (f(cur.value, i)) {
+                match = i;
             }
         }
-        return null;
     }
     exports.tryFindIndexBack = tryFindIndexBack;
     function findIndexBack(f, xs) {
@@ -761,19 +769,16 @@ define(["require", "exports", "./Array", "./Array", "./ListClass", "./Option", "
                 return y;
             }
         }
-        return null;
+        return void 0;
     }
     exports.tryPick = tryPick;
     function pick(f, xs) {
         return __failIfNone(tryPick(f, xs));
     }
     exports.pick = pick;
-    function unfold(f, fst) {
+    function unfold(f, acc) {
         return {
             [Symbol.iterator]: () => {
-                // Capture a copy of the first value in the closure
-                // so the sequence is restarted every time, see #1230
-                let acc = fst;
                 return {
                     next: () => {
                         const res = f(acc);

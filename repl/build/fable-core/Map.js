@@ -1,4 +1,4 @@
-define(["require", "exports", "./Comparer", "./ListClass", "./ListClass", "./Option", "./Seq", "./Seq", "./Seq", "./Seq", "./Seq", "./Symbol", "./Util", "./Util", "./Util"], function (require, exports, Comparer_1, ListClass_1, ListClass_2, Option_1, Seq_1, Seq_2, Seq_3, Seq_4, Seq_5, Symbol_1, Util_1, Util_2, Util_3) {
+define(["require", "exports", "./Comparer", "./ListClass", "./ListClass", "./Seq", "./Seq", "./Seq", "./Seq", "./Seq", "./Symbol", "./Util", "./Util", "./Util"], function (require, exports, Comparer_1, ListClass_1, ListClass_2, Seq_1, Seq_2, Seq_3, Seq_4, Seq_5, Symbol_1, Util_1, Util_2, Util_3) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     // ----------------------------------------------
@@ -17,7 +17,7 @@ define(["require", "exports", "./Comparer", "./ListClass", "./ListClass", "./Opt
                 acc = add(k, [cur.value], acc);
             }
             else {
-                Option_1.getValue(vs).push(cur.value);
+                vs.push(cur.value);
             }
             cur = iter.next();
         }
@@ -145,17 +145,17 @@ define(["require", "exports", "./Comparer", "./ListClass", "./ListClass", "./Opt
     }
     function tree_find(comparer, k, m) {
         const res = tree_tryFind(comparer, k, m);
-        if (res == null) {
-            throw new Error("key not found: " + k);
+        if (res != null) {
+            return res;
         }
-        return Option_1.getValue(res);
+        throw new Error("key not found");
     }
     function tree_tryFind(comparer, k, m) {
         tryFind: while (true) {
             if (m.tag === 1) {
                 const c = comparer.Compare(k, m.data[0]) | 0;
                 if (c === 0) {
-                    return new Option_1.Some(m.data[1]);
+                    return m.data[1];
                 }
                 else {
                     return null;
@@ -170,7 +170,7 @@ define(["require", "exports", "./Comparer", "./ListClass", "./ListClass", "./Opt
                     continue tryFind;
                 }
                 else if (c_1 === 0) {
-                    return new Option_1.Some(m.data[1]);
+                    return m.data[1];
                 }
                 else {
                     comparer = comparer;
@@ -603,17 +603,17 @@ define(["require", "exports", "./Comparer", "./ListClass", "./ListClass", "./Opt
     }
     exports.partition = partition;
     function findKey(f, map) {
-        return Seq_3.pick((kv) => f(kv[0], kv[1]) ? new Option_1.Some(kv[0]) : null, map);
+        return Seq_3.pick((kv) => f(kv[0], kv[1]) ? kv[0] : null, map);
     }
     exports.findKey = findKey;
     function tryFindKey(f, map) {
-        return Seq_4.tryPick((kv) => f(kv[0], kv[1]) ? new Option_1.Some(kv[0]) : null, map);
+        return Seq_4.tryPick((kv) => f(kv[0], kv[1]) ? kv[0] : null, map);
     }
     exports.tryFindKey = tryFindKey;
     function pick(f, map) {
         const res = tryPick(f, map);
         if (res != null) {
-            return Option_1.getValue(res);
+            return res;
         }
         throw new Error("key not found");
     }

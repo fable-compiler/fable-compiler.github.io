@@ -1,4 +1,4 @@
-define(["require", "exports", "./Date", "./RegExp", "./Util"], function (require, exports, Date_1, RegExp_1, Util_1) {
+define(["require", "exports", "./Date", "./Date", "./Date", "./Date", "./Date", "./Date", "./RegExp", "./Util"], function (require, exports, Date_1, Date_2, Date_3, Date_4, Date_5, Date_6, RegExp_1, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     const fsFormatRegExp = /(^|[^%])%([0+ ]*)(-?\d+)?(?:\.(\d+))?(\w)/;
@@ -98,10 +98,10 @@ define(["require", "exports", "./Date", "./RegExp", "./Util"], function (require
             ? "ff" + (16777215 - (Math.abs(value) - 1)).toString(16)
             : value.toString(16);
     }
-    function printf(input) {
+    function printf(input, ...args) {
         return {
             input,
-            cont: fsFormat(input),
+            cont: fsFormat(input, ...args),
         };
     }
     exports.printf = printf;
@@ -117,66 +117,67 @@ define(["require", "exports", "./Date", "./RegExp", "./Util"], function (require
         return arg.cont((x) => { throw new Error(x); });
     }
     exports.toFail = toFail;
-    function formatOnce(str2, rep) {
-        return str2.replace(fsFormatRegExp, (_, prefix, flags, pad, precision, format) => {
-            switch (format) {
-                case "f":
-                case "F":
-                    rep = rep.toFixed(precision || 6);
-                    break;
-                case "g":
-                case "G":
-                    rep = rep.toPrecision(precision);
-                    break;
-                case "e":
-                case "E":
-                    rep = rep.toExponential(precision);
-                    break;
-                case "O":
-                    rep = Util_1.toString(rep);
-                    break;
-                case "A":
-                    rep = Util_1.toString(rep, true);
-                    break;
-                case "x":
-                    rep = toHex(Number(rep));
-                    break;
-                case "X":
-                    rep = toHex(Number(rep)).toUpperCase();
-                    break;
-            }
-            const plusPrefix = flags.indexOf("+") >= 0 && parseInt(rep, 10) >= 0;
-            pad = parseInt(pad, 10);
-            if (!isNaN(pad)) {
-                const ch = pad >= 0 && flags.indexOf("0") >= 0 ? "0" : " ";
-                rep = padLeft(rep, Math.abs(pad) - (plusPrefix ? 1 : 0), ch, pad < 0);
-            }
-            const once = prefix + (plusPrefix ? "+" + rep : rep);
-            return once.replace(/%/g, "%%");
-        });
-    }
-    function createPrinter(str, cont) {
-        const printer = (...args) => {
-            // Make a copy as the function may be used several times
-            let strCopy = str;
+    function fsFormat(str, ...args) {
+        function formatOnce(str2, rep) {
+            return str2.replace(fsFormatRegExp, (_, prefix, flags, pad, precision, format) => {
+                switch (format) {
+                    case "f":
+                    case "F":
+                        rep = rep.toFixed(precision || 6);
+                        break;
+                    case "g":
+                    case "G":
+                        rep = rep.toPrecision(precision);
+                        break;
+                    case "e":
+                    case "E":
+                        rep = rep.toExponential(precision);
+                        break;
+                    case "O":
+                        rep = Util_1.toString(rep);
+                        break;
+                    case "A":
+                        rep = Util_1.toString(rep, true);
+                        break;
+                    case "x":
+                        rep = toHex(Number(rep));
+                        break;
+                    case "X":
+                        rep = toHex(Number(rep)).toUpperCase();
+                        break;
+                }
+                const plusPrefix = flags.indexOf("+") >= 0 && parseInt(rep, 10) >= 0;
+                pad = parseInt(pad, 10);
+                if (!isNaN(pad)) {
+                    const ch = pad >= 0 && flags.indexOf("0") >= 0 ? "0" : " ";
+                    rep = padLeft(rep, Math.abs(pad) - (plusPrefix ? 1 : 0), ch, pad < 0);
+                }
+                const once = prefix + (plusPrefix ? "+" + rep : rep);
+                return once.replace(/%/g, "%%");
+            });
+        }
+        if (args.length === 0) {
+            return (cont) => {
+                if (fsFormatRegExp.test(str)) {
+                    return (...args2) => {
+                        let strCopy = str;
+                        for (const arg of args2) {
+                            strCopy = formatOnce(strCopy, arg);
+                        }
+                        return cont(strCopy.replace(/%%/g, "%"));
+                    };
+                }
+                else {
+                    return cont(str);
+                }
+            };
+        }
+        else {
             for (const arg of args) {
-                strCopy = formatOnce(strCopy, arg);
+                str = formatOnce(str, arg);
             }
-            return fsFormatRegExp.test(strCopy)
-                ? createPrinter(strCopy, cont)
-                : cont(strCopy.replace(/%%/g, "%"));
-        };
-        // Mark it as curried so it doesn't
-        // get wrapped by CurriedLambda
-        printer.curried = true;
-        return printer;
-    }
-    function fsFormat(str) {
-        return (cont) => {
-            return fsFormatRegExp.test(str)
-                ? createPrinter(str, cont)
-                : cont(str);
-        };
+            return str.replace(/%%/g, "%");
+        }
     }
     exports.fsFormat = fsFormat;
     function format(str, ...args) {
@@ -222,11 +223,64 @@ define(["require", "exports", "./Date", "./RegExp", "./Util"], function (require
                         }
                 }
             }
-            else if (typeof rep.ToString === "function") {
-                rep = rep.ToString(pattern);
-            }
             else if (rep instanceof Date) {
-                rep = Date_1.toString(rep, pattern);
+                if (pattern.length === 1) {
+                    switch (pattern) {
+                        case "D":
+                            rep = rep.toDateString();
+                            break;
+                        case "T":
+                            rep = rep.toLocaleTimeString();
+                            break;
+                        case "d":
+                            rep = rep.toLocaleDateString();
+                            break;
+                        case "t":
+                            rep = rep.toLocaleTimeString().replace(/:\d\d(?!:)/, "");
+                            break;
+                        case "o":
+                        case "O":
+                            if (rep.kind === 2 /* Local */) {
+                                const offset = rep.getTimezoneOffset() * -1;
+                                rep = format("{0:yyyy-MM-dd}T{0:HH:mm}:{1:00.000}{2}{3:00}:{4:00}", rep, Date_1.second(rep), offset >= 0 ? "+" : "-", ~~(offset / 60), offset % 60);
+                            }
+                            else {
+                                rep = rep.toISOString();
+                            }
+                    }
+                }
+                else {
+                    rep = pattern.replace(/(\w)\1*/g, (match2) => {
+                        let rep2 = match2;
+                        switch (match2.substring(0, 1)) {
+                            case "y":
+                                rep2 = match2.length < 4 ? Date_6.year(rep) % 100 : Date_6.year(rep);
+                                break;
+                            case "h":
+                                rep2 = rep.getHours() > 12 ? Date_3.hour(rep) % 12 : Date_3.hour(rep);
+                                break;
+                            case "M":
+                                rep2 = Date_5.month(rep);
+                                break;
+                            case "d":
+                                rep2 = Date_4.day(rep);
+                                break;
+                            case "H":
+                                rep2 = Date_3.hour(rep);
+                                break;
+                            case "m":
+                                rep2 = Date_2.minute(rep);
+                                break;
+                            case "s":
+                                rep2 = Date_1.second(rep);
+                                break;
+                        }
+                        if (rep2 !== match2 && rep2 < 10 && match2.length > 1) {
+                            rep2 = "0" + rep2;
+                        }
+                        return rep2;
+                    });
+                }
             }
             pad = parseInt((pad || "").substring(1), 10);
             if (!isNaN(pad)) {
@@ -268,7 +322,7 @@ define(["require", "exports", "./Date", "./RegExp", "./Util"], function (require
     }
     exports.isNullOrWhiteSpace = isNullOrWhiteSpace;
     function join(delimiter, xs) {
-        let xs2 = typeof xs === "string" ? [xs] : xs;
+        let xs2 = xs;
         const len = arguments.length;
         if (len > 2) {
             xs2 = Array(len - 1);
@@ -276,8 +330,8 @@ define(["require", "exports", "./Date", "./RegExp", "./Util"], function (require
                 xs2[key - 1] = arguments[key];
             }
         }
-        else if (!Array.isArray(xs2)) {
-            xs2 = Array.from(xs2);
+        else if (!Array.isArray(xs)) {
+            xs2 = Array.from(xs);
         }
         return xs2.map((x) => Util_1.toString(x)).join(delimiter);
     }
@@ -382,19 +436,18 @@ define(["require", "exports", "./Date", "./RegExp", "./Util"], function (require
     }
     exports.arrayToGuid = arrayToGuid;
     /* tslint:enable */
-    function notSupported(name) {
-        throw new Error("The environment doesn't support '" + name + "', please use a polyfill.");
-    }
     function toBase64String(inArray) {
         let str = "";
         for (let i = 0; i < inArray.length; i++) {
             str += String.fromCharCode(inArray[i]);
         }
-        return typeof btoa === "function" ? btoa(str) : notSupported("btoa");
+        return typeof btoa === "function"
+            ? btoa(str) : new Buffer(str).toString("base64");
     }
     exports.toBase64String = toBase64String;
     function fromBase64String(b64Encoded) {
-        const binary = typeof atob === "function" ? atob(b64Encoded) : notSupported("atob");
+        const binary = typeof atob === "function"
+            ? atob(b64Encoded) : new Buffer(b64Encoded, "base64").toString();
         const bytes = new Uint8Array(binary.length);
         for (let i = 0; i < binary.length; i++) {
             bytes[i] = binary.charCodeAt(i);

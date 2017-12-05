@@ -32,6 +32,7 @@ var references = [
     "System.IO.dll",
     "System.Xml.dll",
     "System.Numerics.dll",
+    "FSharp.Core.sigdata",
     "FSharp.Core.dll",
     "Fable.Core.dll",
     "Fable.Import.Browser.dll"
@@ -40,6 +41,10 @@ var references = [
     // See https://github.com/fable-compiler/Fable/issues/1152#issuecomment-330315250
     // "System.ValueTuple.dll",
 ];
+
+function isSigdata(ref) {
+    return ref.indexOf(".sigdata") >= 0;
+}
 
 function getFileBlob(key, url) {
     var xhr = new XMLHttpRequest();
@@ -69,7 +74,7 @@ function compile(source, replacements) {
                 return;
             }
             var readAllBytes = function (fileName) { return metadata[fileName]; }
-            var references2 = references.map(x => x.replace(".dll", ""));
+            var references2 = references.filter(x => !isSigdata(x)).map(x => x.replace(".dll", ""));
             checker = Fable.createChecker(readAllBytes, references2);
         }
         var com = Fable.makeCompiler(replacements);

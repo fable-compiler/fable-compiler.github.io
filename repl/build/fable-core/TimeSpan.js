@@ -1,7 +1,6 @@
-define(["require", "exports", "./Long", "./Util"], function (require, exports, Long_1, Util_1) {
+define(["require", "exports", "./Long", "./Util"], function (require, exports, Long, Util_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    // TimeSpan in runtime just becomes a number representing milliseconds
     function create(d = 0, h = 0, m = 0, s = 0, ms = 0) {
         switch (arguments.length) {
             case 1:
@@ -59,7 +58,7 @@ define(["require", "exports", "./Long", "./Util"], function (require, exports, L
     }
     exports.milliseconds = milliseconds;
     function ticks(ts) {
-        return Long_1.fromNumber(ts).mul(10000);
+        return Long.fromNumber(ts).mul(10000);
     }
     exports.ticks = ticks;
     function totalDays(ts) {
