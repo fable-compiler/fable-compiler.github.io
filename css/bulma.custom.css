@@ -5816,7 +5816,7 @@ footer {
   max-height: 150px;
   margin: 0 10px; }
 
-.markdown img {
+.markdown .content img {
   display: block;
   margin: auto; }
 
