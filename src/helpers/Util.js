@@ -14,6 +14,6 @@ renderer.heading = function (text, level) {
     return `<h${level}><a name="${escapedText}" class="anchor" href="#${escapedText}">${text}</a></h${level}>`;
 };
 
-export function parseMarkdownDocFile(filePath) {
-    return marked(fs.readFileSync(filePath).toString(), { renderer });
+export function parseMarkdown(content) {
+  return marked(content, { renderer });
 }

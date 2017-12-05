@@ -1,20 +1,17 @@
 module WebGenerator.Main
 
-open Fable.Core
+open System.Text.RegularExpressions
 open Fable.Core.JsInterop
 open Fable.Import
 open Fable.Import.Node.Exports
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Fable.PowerPack
-open Fulma.Elements
-open Fulma.Components
 open WebGenerator.Components
 open WebGenerator.Literals
 open Helpers
 open Types
 
-let parseMarkdownDocFile(path: string): string = importMember "./helpers/Util.js"
+let parseMarkdown(content: string): string = importMember "./helpers/Util.js"
 
 let render (info: PageInfo) =
     [ "title" ==> info.Title
@@ -24,43 +21,66 @@ let render (info: PageInfo) =
     |> parseTemplate Paths.Template
     |> writeFile info.TargetPath
 
-let renderDocs() =
-  let title, subtitle = "Documentation", "Learn how Fable works & how to use it"
-  // Main docs page
-  render
-    { Title = "Fable Docs"
-      TargetPath = Path.join(Paths.PublicDir, "docs", "index.html")
-      NavbarActivePage = Literals.Navbar.Docs
-      RenderBody = DocsPage.renderBody title subtitle }
-  // Docs translated from markdown files in Fable repo
-  let docFiles = Fs.readdirSync(!^Path.join(Paths.FableRepo, "docs"))
-  for doc in docFiles |> Seq.filter (fun x -> x.EndsWith(".md")) do
-    let fullPath = Path.join(Paths.FableRepo, "docs", doc)
-    let targetPath = Path.join(Paths.PublicDir, "docs", doc.Replace(".md", ".html"))
-    let content = parseMarkdownDocFile fullPath
+let renderMarkdown pageTitle navbar header targetFullPath content =
     let body =
-      div [Style [Overflow "hidden"]] [
-        Header.render title subtitle
-        div [Style [MarginTop "1.6rem"]] [
+      div [ClassName "markdown"; Style [Overflow "hidden"]] [
+        match header with
+        | Some(header, subheader) -> yield Header.render header subheader
+        | None -> ()
+        yield div [Style [MarginTop "1.6rem"]] [
           div [Class "columns"] [
             div [Class "column"] []
             div [Class "column is-two-thirds"] [
               div [
                 Class "content"
                 Style [Margin "5px"]
-                DangerouslySetInnerHTML { __html = content }] []
+                DangerouslySetInnerHTML { __html = parseMarkdown content }] []
             ]
             div [Class "column"] []
           ]
         ]
       ]
-    [ "title" ==> "Fable Docs"
+    [ "title" ==> pageTitle
       "extraCss" ==> [| "/css/highlight.css" |]
-      // "extraCss" ==> [| createObj [ "href" ==> "/css/highlight.css"] |]
-      "navbar" ==> (Navbar.root Literals.Navbar.Docs |> parseReactStatic)
+      "navbar" ==> (Navbar.root navbar |> parseReactStatic)
       "body" ==> parseReactStatic body ]
     |> parseTemplate Paths.Template
-    |> writeFile targetPath
+    |> writeFile targetFullPath
+
+let renderMarkdownFrom pageTitle navbar header fileFullPath targetFullPath =
+  let content = Fs.readFileSync(fileFullPath).toString()
+  renderMarkdown pageTitle navbar header targetFullPath content
+
+let renderDocs() =
+  let pageTitle, header, subheader = "Fable Docs", "Documentation", "Learn how Fable works & how to use it"
+  // Main docs page
+  render
+    { Title = pageTitle
+      TargetPath = Path.join(Paths.PublicDir, "docs", "index.html")
+      NavbarActivePage = Literals.Navbar.Docs
+      RenderBody = DocsPage.renderBody header subheader }
+  // Docs translated from markdown files in Fable repo
+  let docFiles = Fs.readdirSync(!^Path.join(Paths.FableRepo, "docs"))
+  for doc in docFiles |> Seq.filter (fun x -> x.EndsWith(".md")) do
+    let fullPath = Path.join(Paths.FableRepo, "docs", doc)
+    let targetPath = Path.join(Paths.PublicDir, "docs", doc.Replace(".md", ".html"))
+    renderMarkdownFrom pageTitle Literals.Navbar.Docs (Some(header, subheader)) fullPath targetPath
+
+let renderBlog() =
+  let reg = Regex(@"^\s*-\s*title\s*:(.+)\n\s*-\s*subtitle\s*:(.+)\n")
+  let pageTitle, header, subheader = "Fable Blog", "Blog", "Read about latest Fable news"
+  renderMarkdownFrom pageTitle Literals.Navbar.Blog (Some(header, subheader))
+    (Path.join(Paths.BlogDir, "blog.md")) (Path.join(Paths.PublicDir, "blog", "index.html"))
+  let blogFiles = Fs.readdirSync(!^Paths.BlogDir)
+  for blog in blogFiles |> Seq.filter (fun x -> x.EndsWith(".md")) do
+    let text = Fs.readFileSync(Path.join(Paths.BlogDir, blog)).toString()
+    let m = reg.Match(text)
+    let header, text =
+      if m.Success
+      then Some(m.Groups.[1].Value.Trim(), m.Groups.[2].Value.Trim()), text.Substring(m.Index + m.Length)
+      else None, text
+    let targetPath = Path.join(Paths.PublicDir, "blog", blog.Replace(".md", ".html"))
+    renderMarkdown pageTitle Literals.Navbar.Blog header targetPath text
 
 let renderHomePage() =
   render
@@ -144,21 +164,9 @@ let renderAPI() =
   renderRazorTpl()
   renderReference()
 
-
-let redirects() =
-  let redirect oldUrl newUrl =
-    [ "url" ==> newUrl ]
-    |> parseTemplate Paths.TemplateRedirect
-    |> writeFile (Path.join(Paths.PublicDir, oldUrl))
-  redirect "samples.html" "/samples-browser"
-  redirect "docs.html" "/docs"
-  redirect "repl.html" "/repl"
-
 // Run
 renderHomePage()
+renderBlog()
 renderDocs()
 renderSamples()
-renderAPI()
-// Redirections are not working correctly, needs a fix
-// See https://github.com/fable-compiler/fable-compiler.github.io/issues/8#issuecomment-328045038
-// redirects()
+// renderAPI()

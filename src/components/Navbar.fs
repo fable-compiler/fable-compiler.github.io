@@ -44,6 +44,7 @@ let root currentPage =
       div [Class "navbar-start"] [
         menuItem "Home" Navbar.Home currentPage
         menuItem "REPL" Navbar.Repl currentPage
+        menuItem "Blog" Navbar.Blog currentPage
         menuItem "Docs" Navbar.Docs currentPage
         menuItem "API" Navbar.API currentPage
         menuItem "Samples" Navbar.Samples currentPage
