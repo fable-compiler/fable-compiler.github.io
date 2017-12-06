@@ -49,7 +49,7 @@ _Please have a look at the [Fable-Elmish](https://fable-elmish.github.io/elmish/
 
 I ended up with very few Pages:
 
-```f#
+```fsharp
 type Page =
   | Home
   | About
@@ -65,7 +65,7 @@ The documentary part is split into 2 sections which are :
 
 Since each section uses the same layout I decided I would create reusable components such as video embeds:
 
-```f#
+```fsharp
   let youtube id =
     let realUrl = sprintf "https://www.youtube.com/embed/%s?controls=1&showinfo=0&rel=0&autoplay=0&loop=1&playlist=%s&rel=0&modestbranding=1" id id
     div [ClassName "columns" ]
@@ -88,7 +88,7 @@ Since each section uses the same layout I decided I would create reusable compon
 
 or [Font awesome icons](http://fontawesome.io/icons/)
 
-```f#
+```fsharp
   let icon name css =
     span
       [
@@ -99,7 +99,7 @@ or [Font awesome icons](http://fontawesome.io/icons/)
 
 For the main layout I ended up with a very simple scheme:
 
-```f#
+```fsharp
   div [
   ][
     Navbar.View.root model.navbar (NavMsg >> dispatch ) model.currentPage //  navigation bar
@@ -154,7 +154,7 @@ The ```HideBurger``` message hides the burger when the navbar is displayed on mo
 The most interesting part being the subsections. Clicking on a chapter number scrolls down the page to the section. So I created *scrollableTo* component:
 
 
-```f#
+```fsharp
 let scrollableTo css tag elems dispatch=
   let id = (sprintf "nav%s" tag)
   a [
@@ -180,7 +180,7 @@ The code is pretty straightforward. We ask for the content through the ```scroll
 Regarding the sounds. Each section plays a sound when loaded. The speaker icon on the navbar mutes the sound through a ```ToggleSound``` message. I created a simple sound component.
 
 *View*:
-```f#
+```fsharp
 let sound model dispatch =
 
   let icon =
@@ -199,7 +199,7 @@ let sound model dispatch =
 ```
 
 *State*:
-```f#
+```fsharp
   match msg with
   | ToggleSound  ->
     let value = not model.toggleSound

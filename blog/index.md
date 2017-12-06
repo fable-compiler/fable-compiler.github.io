@@ -2,6 +2,14 @@ Check our blog to be up-to-date with recent developments in Fable community and 
 
 -------------------------------------------------------------------
 
+## [FableConf or where the magic happened](FableConf.html)
+
+> By [Alfonso García-Caro](https://twitter.com/alfonsogcnunez) on December 6, 2017
+
+Hi everybody! This is going to be my small and not too stunning contribution to the [F# Advent Calendar in English 2017](https://sergeytihon.com/2017/10/22/f-advent-calendar-in-english-2017/) (remember the original and still running version is [in Japanese](https://qiita.com/advent-calendar/2017/fsharp)) and I'm planning to talk about [FableConf](http://fable.io/fableconf).
+
+[Read more...](FableConf.html)
+
 ## [Casque Noir: Raising awareness on Haïti social and environmental issues](Development-For-Haiti.html)
 
 > By [François Nicaise](https://twitter.com/thewhitetigle) on June 20, 2017
