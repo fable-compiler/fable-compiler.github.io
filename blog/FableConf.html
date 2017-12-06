@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Fable Blog</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,300,600,700|Roboto+Mono">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/bulma.custom.css">
+  <link rel="stylesheet" type="text/css" href="/css/highlight.css">
+  <link rel="shortcut icon" href="/img/shared/fable.ico" />
+  <script src="https://cdn.polyfill.io/v2/polyfill.js?features=default,fetch"></script>
+</head>
+
+<body>
+  <nav class="navbar"><div class="navbar-brand"><div class="navbar-item title is-4">Fable</div><div class="navbar-burger" data-target="navMenu"><span></span><span></span><span></span></div></div><div id="navMenu" class=" navbar-menu"><div class="navbar-start"><a class=" navbar-item" href="/">Home</a><a class=" navbar-item" href="/repl">REPL</a><a class=" navbar-item is-active" href="/blog">Blog</a><a class=" navbar-item" href="/docs">Docs</a><a class=" navbar-item" href="/api">API</a><a class=" navbar-item" href="/samples-browser">Samples</a><a class=" navbar-item" href="/fableconf">FableConf</a></div><div class="navbar-end"><div class="navbar-item"><div class="field is-grouped"><p class="control"><a class="button twitter" href="https://twitter.com/FableCompiler"><span class="icon"><i class="fa fa-twitter"></i></span><span>Share the love!</span></a></p><p class="control"><a class="button github" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class="fa fa-comments"></i></span><span>Chat</span></a></p><p class="control"><a class="button github" href="https://github.com/fable-compiler/Fable"><span class="icon"><i class="fa fa-github"></i></span><span>Contribute</span></a></p></div></div></div></div></nav>
+  <div class="markdown" style="overflow:hidden;"><section class="hero fable-header"><div class="hero-body"><div class="container"><div class="columns is-vcentered"><div class="column"><img class="fable-logo" src="/img/shared/fable_logo.png"/></div><div class="column has-text-right"><h1 class="title is-1">FableConf</h1><h1 class="subtitle is-4">Where the magic happened</h1></div></div></div></div></section><div style="margin-top:1.6rem;"><div class="columns"><div class="column"></div><div class="column is-two-thirds"><div class="content" style="margin:5px;"><p>Hi everybody! This is going to be my small and not-really-stunning contribution to the <a href="https://sergeytihon.com/2017/10/22/f-advent-calendar-in-english-2017/">F# Advent Calendar in English 2017</a> (remember the original version is <a href="https://qiita.com/advent-calendar/2017/fsharp">in Japanese</a>) and I&#39;m planning to talk about <a href="http://fable.io/fableconf">FableConf</a>. Yes, that thing that happened two months ago, or one zillion years in Twitter time. But they say better late than never, so here we go! And you may have noticed this also brings back <a href="http://fable.io/blog/">the blog</a> to the new Fable site so you can review our previous entries and more importantly you can also <a href="https://github.com/fable-compiler/fable-compiler.github.io/tree/dev/blog">send a PR with your post</a> or a link to your personal website with anything Fable related, the community is eager to hear you!</p>
+<blockquote>
+<p>BTW, <a href="https://twitter.com/verdonckflorian">Florian Verdonck</a> did my homework before myself, you can read his report on the conference <a href="https://axxes.com/net-2/conference-report-of-fableconf/">here</a>.</p>
+</blockquote>
+<p>So then, FableConf, where to start... Most of you probably know the feeling of something that you&#39;ve been preparing for a long time, in occasions wishing you could skip it somehow because you&#39;re afraid everything will go wrong. But then it finally happens and everything goes so great than when it finishes (and this always happens too quickly) you wonder if it was real or it was only a dream. Writing is also useful for me to bring up memories that sometimes become fuzzy (and I promise I didn&#39;t have too much wine). Let&#39;s start with the first day of talks when, after arriving to <a href="http://www.cap-sciences.net/">Cap Sciences</a>, the amazing venue for the event, and having a good breakfast with the <a href="http://fable.io/fableconf/#food">great catering</a> I was in charge of opening with whatever I managed to hack at 3:00AM the night before (you know I&#39;m not joking). But I&#39;m not going to talk about that, if you wish you can see <a href="https://www.youtube.com/watch?v=ssKX7T3lNvw">the video on YouTube</a> where you will also find the recordings of the other talks.</p>
+<p><img src="/img/capsciences.jpg" alt="Cap Sciences"></p>
+<p>Next was Eugene Tolmachev, <a href="https://fable-elmish.github.io/">Elmish author</a>, the library that bears much of the responsibility of Fable success, who made all the way from Canada to speak the conference, and we&#39;re really grateful for that. It was awesome to meet him in person and learn about UI architecture from him. If you haven&#39;t tried Elmish yet, <a href="https://fable-elmish.github.io/react/browser.html">you should do it now</a>, everybody that has (with literally no exception) immediately fell in love with its elegance, simplicity and efficiency.</p>
+<p>After that came the turn of <a href="https://twitter.com/MangelMaxime">Maxime Mangel</a>, a core Fable maintainer who contributes to ALL major projects in the ecosystem and is always there to help Fable users with any question. He presented <a href="https://www.youtube.com/watch?v=mU6iuyf7o9g">Hink</a>, a library based on HTML5 Canvas to write web apps <strong>without CSS</strong> for quick prototyping. But that was not the only surprise he had for the conference, during the workshops he presented <a href="https://mangelmaxime.github.io/Fulma/">Fulma</a> to build apps <strong>with CSS</strong> (I told you he does everything) in a really efficient manner, with the help of type checking, autocompletion and fully integration with your render code. Fulma has proven to be a great match for Elmish and it&#39;s now part of the standard toolset of Fable devs. Check the <a href="https://mangelmaxime.github.io/Fulma/">awesome documentation</a> and start writing a beautiful web app in minutes.</p>
+<p>After the lunch (and the wine!), <a href="https://twitter.com/indy9000">Indy Garcia</a> explained us how to train a Recurrent Neural Network based agent to navigate a simulated asteroid field with different evolutionary strategies, everything happening in the browser. Indy was followed by <a href="https://twitter.com/svensauleau">Sven Sauleau</a>, a member of <a href="https://babeljs.io/">Babel</a> core team. Babel is one of the tools used by Fable under the hood (the other being the F# compiler) and I&#39;m really happy of Sven&#39;s participation at FableConf, an important step to join two communities I really admire and enjoy being part of: JS and F# devs.</p>
+<p><a href="http://ionide.io/">Ionide</a> guy was next, <a href="https://twitter.com/k_cieslak">Krzysztof Cieślak</a>, the F#er who was already using Fable before Fable existed, the creator of tools that became the reason why many of us write F# today, shared some of his magic tricks and taught us both in a talk and a workshop how to use F# and Fable to create extensions for Visual Studio Code. And the closing was appropriately done by François Nicaise, secret identity of <a href="https://twitter.com/thewhitetigle">the Whitetigle</a>. I say appropriately because he also <em>opened</em> FableConf by turning it into a reality from a simple Twitter joke and taking care of all the logistics involved (whoever has organized an event knows this is not an easy task) with an infectious enthusiasm that he also transmitted in his talk. Bravo! But that was not all folks, <a href="https://twitter.com/dsyme">Don Syme</a>, the language creator himself, was also there and had some words to show his support and commitment to extending F# to the JS ecosystem.</p>
+<p><img src="/img/FableConf_Map.png" alt="Map"></p>
+<p>But in spite of the great speakers we had, the most important part of the conference were the attendees, coming from <strong>12 different countries</strong>. This is not a cliché, literally nothing would have been possible without your support. Actually, sometimes I wonder if all the time spent working on Open Source is really worth it, but whenever I remember all the fantastic people I met during those two wonderful days the answer is immediately clear, so thank you, thank you, thank you all for being part of this. I <i class="fa fa-heart"></i> U ALL!</p>
+<p><img src="/img/FableConf_Community.jpg" alt="Attendees"></p>
+<p>See you next year!</p>
+<blockquote>
+<p>BTW2, also as part of the F# Advent Calendar, <a href="https://twitter.com/StachuDotNet">Stachu Korick</a> has also posted a podcast with a <a href="https://wtfsharp.fireside.fm/wtf-is-fable">great introduction to Fable and its ecosystem</a>, check it out! (<a href="https://sergeytihon.com/2017/10/22/f-advent-calendar-in-english-2017/">and the other calendar posts out too!</a>)</p>
+</blockquote>
+</div></div><div class="column"></div></div></div></div>
+  <footer>
+      <p> Fable <a href="https://github.com/fable-compiler/Fable">source code</a> is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.</p>
+  </footer>
+  <script>
+    // Activate navbar burget button
+    document.addEventListener('DOMContentLoaded', function () {
+      var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+      if ($navbarBurgers.length > 0) {
+        $navbarBurgers.forEach(function ($el) {
+          $el.addEventListener('click', function () {
+            var target = $el.dataset.target;
+            var $target = document.getElementById(target);
+            $el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>

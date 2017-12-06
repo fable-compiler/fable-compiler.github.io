@@ -41,7 +41,7 @@
 <p>Once again, I decided I would go with <a href="http://fable.io/">Fable</a>. And I asked my friend <a href="https://twitter.com/MangelMaxime">Maxime Mangel</a> what he thought about using <a href="https://fable-elmish.github.io/elmish/">Fable-Elmish</a> to build the site. He validated the combo fable-elmish with <a href="http://bulma.io/">bulma css framework</a></p>
 <h2><a name="the-architecture" class="anchor" href="#the-architecture">The Architecture</a></h2><p><em>Please have a look at the <a href="https://fable-elmish.github.io/elmish/">Fable-Elmish</a> documentation to understand what follows.</em></p>
 <p>I ended up with very few Pages:</p>
-<pre><code class="lang-f#">type Page =
+<pre><code class="lang-fsharp"><span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">Page</span> </span>=
   | Home
   | About
   | Jalousie
@@ -54,19 +54,19 @@
 <li><a href="http://www.casquenoir.com/#montreal">Montreal</a></li>
 </ol>
 <p>Since each section uses the same layout I decided I would create reusable components such as video embeds:</p>
-<pre><code class="lang-f#">  let youtube id =
-    let realUrl = sprintf "https://www.youtube.com/embed/%s?controls=1&amp;showinfo=0&amp;rel=0&amp;autoplay=0&amp;loop=1&amp;playlist=%s&amp;rel=0&amp;modestbranding=1" id id
-    div [ClassName "columns" ]
+<pre><code class="lang-fsharp">  <span class="hljs-keyword">let</span> youtube id =
+    <span class="hljs-keyword">let</span> realUrl = sprintf <span class="hljs-string">"https://www.youtube.com/embed/%s?controls=1&amp;showinfo=0&amp;rel=0&amp;autoplay=0&amp;loop=1&amp;playlist=%s&amp;rel=0&amp;modestbranding=1"</span> id id
+    div [ClassName <span class="hljs-string">"columns"</span> ]
       [
-        div [ClassName "column is-half is-offset-2" ]
+        div [ClassName <span class="hljs-string">"column is-half is-offset-2"</span> ]
           [
-            div [ ClassName "videowrapper"]
+            div [ ClassName <span class="hljs-string">"videowrapper"</span>]
               [
               iframe
                 [
                   Src realUrl
-                  unbox("frameBorder","0")
-                  unbox("allowFullScreen","allowFullScreen")
+                  unbox(<span class="hljs-string">"frameBorder"</span>,<span class="hljs-string">"0"</span>)
+                  unbox(<span class="hljs-string">"allowFullScreen"</span>,<span class="hljs-string">"allowFullScreen"</span>)
                 ]
                 [ ]
             ]
@@ -74,25 +74,25 @@
       ]
 </code></pre>
 <p>or <a href="http://fontawesome.io/icons/">Font awesome icons</a></p>
-<pre><code class="lang-f#">  let icon name css =
+<pre><code class="lang-fsharp">  <span class="hljs-keyword">let</span> icon name css =
     span
       [
-        ClassName &lt;| sprintf "icon %s" css
-        unbox("aria-hidden", "true")
-      ] [ i [ ClassName (sprintf "fa %s" name) ] [] ]
+        ClassName &lt;| sprintf <span class="hljs-string">"icon %s"</span> css
+        unbox(<span class="hljs-string">"aria-hidden"</span>, <span class="hljs-string">"true"</span>)
+      ] [ i [ ClassName (sprintf <span class="hljs-string">"fa %s"</span> name) ] [] ]
 </code></pre>
 <p>For the main layout I ended up with a very simple scheme:</p>
-<pre><code class="lang-f#">  div [
+<pre><code class="lang-fsharp">  div [
   ][
-    Navbar.View.root model.navbar (NavMsg &gt;&gt; dispatch ) model.currentPage //  navigation bar
+    Navbar.View.root model.navbar (NavMsg &gt;&gt; dispatch ) model.currentPage <span class="hljs-comment">//  navigation bar</span>
 
-    pageHtml model.currentPage // current page
+    pageHtml model.currentPage <span class="hljs-comment">// current page</span>
 
-    Credits.View.root model.credits (CreditsMsg &gt;&gt; dispatch ) // credits modal
+    Credits.View.root model.credits (CreditsMsg &gt;&gt; dispatch ) <span class="hljs-comment">// credits modal</span>
 
-    Intro.View.root model.intro (IntroMsg &gt;&gt; dispatch ) // intro modal
+    Intro.View.root model.intro (IntroMsg &gt;&gt; dispatch ) <span class="hljs-comment">// intro modal</span>
 
-    Partners.View.root model.partners (PartnersMsg &gt;&gt; dispatch ) // partners modal
+    Partners.View.root model.partners (PartnersMsg &gt;&gt; dispatch ) <span class="hljs-comment">// partners modal</span>
   ]
 </code></pre>
 <p>The <em>Credits</em>, <em>Intro</em> and <em>Partners</em> section are just <a href="http://bulma.io/documentation/components/modal/">modal windows</a> that appear when needed from any section, so I added them in there.</p>
@@ -118,13 +118,13 @@
 </code></pre><p>The <code>DisplayCredits</code> message simply toggles the display of the modal window through the use of <code>is-active</code> css class as specified in <a href="http://bulma.io/documentation/components/modal/">Bulma doc</a></p>
 <p>The <code>HideBurger</code> message hides the burger when the navbar is displayed on mobile phones. Again through the use of <code>is-active</code> css class as specified in <a href="http://bulma.io/documentation/components/nav/">Bulma doc</a></p>
 <p>The most interesting part being the subsections. Clicking on a chapter number scrolls down the page to the section. So I created <em>scrollableTo</em> component:</p>
-<pre><code class="lang-f#">let scrollableTo css tag elems dispatch=
-  let id = (sprintf "nav%s" tag)
+<pre><code class="lang-fsharp"><span class="hljs-keyword">let</span> scrollableTo css tag elems dispatch=
+  <span class="hljs-keyword">let</span> id = (sprintf <span class="hljs-string">"nav%s"</span> tag)
   a [
     Id id
     Href id
     ClassName css
-    OnClick (fun _ -&gt;
+    OnClick (<span class="hljs-keyword">fun</span> _ -&gt;
 
       document.getElementById( tag ).scrollIntoView()
 
@@ -138,31 +138,31 @@
 <p><img src="https://img15.hostingpics.net/pics/904108navbar.gif" alt="nav bar"></p>
 <p>Regarding the sounds. Each section plays a sound when loaded. The speaker icon on the navbar mutes the sound through a <code>ToggleSound</code> message. I created a simple sound component.</p>
 <p><em>View</em>:</p>
-<pre><code class="lang-f#">let sound model dispatch =
+<pre><code class="lang-fsharp"><span class="hljs-keyword">let</span> sound model dispatch =
 
-  let icon =
-    match model.toggleSound with
-    | true -&gt;
-      Components.icon "fa-volume-up" ""
-    | false -&gt;
-      Components.icon "fa-volume-off" ""
+  <span class="hljs-keyword">let</span> icon =
+    <span class="hljs-keyword">match</span> model.toggleSound <span class="hljs-keyword">with</span>
+    | <span class="hljs-keyword">true</span> -&gt;
+      Components.icon <span class="hljs-string">"fa-volume-up"</span> <span class="hljs-string">""</span>
+    | <span class="hljs-keyword">false</span> -&gt;
+      Components.icon <span class="hljs-string">"fa-volume-off"</span> <span class="hljs-string">""</span>
 
   div [
-    ClassName "nav-item nav-title"
-    OnClick ( fun _ -&gt; ToggleSound |&gt; dispatch )
+    ClassName <span class="hljs-string">"nav-item nav-title"</span>
+    OnClick ( <span class="hljs-keyword">fun</span> _ -&gt; ToggleSound |&gt; dispatch )
   ] [
     icon
   ]
 </code></pre>
 <p><em>State</em>:</p>
-<pre><code class="lang-f#">  match msg with
+<pre><code class="lang-fsharp">  <span class="hljs-keyword">match</span> msg <span class="hljs-keyword">with</span>
   | ToggleSound  -&gt;
-    let value = not model.toggleSound
-    match value with
-    | true -&gt; Waud.setVolume 1.0
-    | false -&gt; Waud.setVolume 0.0
+    <span class="hljs-keyword">let</span> value = not model.toggleSound
+    <span class="hljs-keyword">match</span> value <span class="hljs-keyword">with</span>
+    | <span class="hljs-keyword">true</span> -&gt; Waud.setVolume <span class="hljs-number">1.0</span>
+    | <span class="hljs-keyword">false</span> -&gt; Waud.setVolume <span class="hljs-number">0.0</span>
 
-    { model with toggleSound = value}, []
+    { model <span class="hljs-keyword">with</span> toggleSound = value}, []
 </code></pre>
 <h2><a name="straightforward-development" class="anchor" href="#straightforward-development">Straightforward development</a></h2><p>The only external library I ended up using was <a href="http://www.waudjs.com/">Waud.js</a> for the sound which offers many cool features, among others <strong>automute</strong> when we quit the web site to another tab or use another app.</p>
 <p>All the other components were created for the app.</p>
