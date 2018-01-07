@@ -99,23 +99,16 @@ chart
 <span class="hljs-keyword">let</span> instance = createNew jsObject?myMethod(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)
 <span class="hljs-comment">// var instance = new jsObject.myMethod(1, 2)</span>
 </code></pre>
-<p>If you prefer the OOP style rather than the operators for dynamic typing, you can easily define your own extensions for the <code>obj</code> type.</p>
-<pre><code class="lang-fsharp"><span class="hljs-keyword">open</span> System
-<span class="hljs-keyword">open</span> Fable.Core
-<span class="hljs-keyword">open</span> Fable.Core.JsInterop
-
-<span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">Object</span> <span class="hljs-title">with</span></span>
-  <span class="hljs-meta">[&lt;Emit("$0[$1]")&gt;]</span>
-  <span class="hljs-keyword">member</span> __.Item(idx: string): obj = jsNative
-  <span class="hljs-meta">[&lt;Emit("$0($1...)")&gt;]</span>
-  <span class="hljs-keyword">member</span> __.Invoke(<span class="hljs-meta">[&lt;ParamArray&gt;]</span> args: obj[]): obj = jsNative
+<p>If you prefer member extensions rather than operators for dynamic typing, you can open <code>Fable.Core.DynamicExtensions</code> (Fable.Core 1.3.8 or higher) to have the methods <code>.Item</code> and <code>.Invoke</code> available on any object.</p>
+<pre><code class="lang-fsharp"><span class="hljs-keyword">open</span> Fable.Core.DynamicExtensions
 
 <span class="hljs-keyword">let</span> foo = obj()
-<span class="hljs-keyword">let</span> bar1 = foo.[<span class="hljs-string">"b"</span>]
+<span class="hljs-keyword">let</span> bar1 = foo.[<span class="hljs-string">"b"</span>]  <span class="hljs-comment">// Same as foo.Item("b")</span>
+foo.[<span class="hljs-string">"c"</span>] &lt;- <span class="hljs-number">14</span>
 <span class="hljs-keyword">let</span> bar2 = foo.Invoke(<span class="hljs-number">4</span>, <span class="hljs-string">"a"</span>)
 </code></pre>
 <h2><a name="plain-old-javascript-objects" class="anchor" href="#plain-old-javascript-objects">Plain Old JavaScript Objects</a></h2><p>To create a plain JS object (aka POJO), use <code>createObj</code>:</p>
-<pre><code class="lang-fsharp"><span class="hljs-keyword">open</span> FSharp.Core.JsInterop
+<pre><code class="lang-fsharp"><span class="hljs-keyword">open</span> Fable.Core.JsInterop
 
 <span class="hljs-keyword">let</span> data =
     createObj [
@@ -244,6 +237,7 @@ JsonConvert.SerializeObject(value, [|jsonConverter|])
 <span class="hljs-comment">// Deserialization</span>
 JsonConvert.DeserializeObject&lt;MyType&gt;(json, [|jsonConverter|])
 </code></pre>
+<p>If you need more fine-grained control over the JSON serialization, please use the <a href="https://mangelmaxime.github.io/Thot/json/decode.html">Thot library</a>.</p>
 </div></div><div class="column"></div></div></div></div>
   <footer>
       <p> Fable <a href="https://github.com/fable-compiler/Fable">source code</a> is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.</p>
