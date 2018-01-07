@@ -72,5 +72,6 @@ let renderBody (info: PageInfo) =
       linkImage "danpower.png" "https://www.danpower-gruppe.de/"
       linkImage "tachyus.png" "http://www.tachyus.com/"
       linkImage "axxes.png" "https://axxes.com/en"
+      linkImage "visualmips.png" "https://visualmips.github.io/"
     ]
   ]
