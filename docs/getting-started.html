@@ -34,30 +34,26 @@
 <pre><code class="lang-shell">dotnet new fable -n FableApp -lang F#
 cd FableApp
 </code></pre>
-<p>This will create Fable project in a directory with the given name. Below we will see the steps to run the app, but <strong>always check the README file</strong> in case instructions change in future versions of the template.</p>
-<p>After scaffolding the project, install JS and F# dependencies. This is only needed once or whenever dependencies change.</p>
+<p><strong>IMPORTANT. PLEASE READ:</strong> Always check the README file in the generated project in case instructions change in future versions of the template.</p>
+<p>After scaffolding the project, run the following commands (the first one can be skipped if dependencies are already installed and haven&#39;t changed):.</p>
 <blockquote>
 <p>In the samples below, yarn is the tool of choice. If you want to use npm, just replace <code>yarn</code> by <code>npm</code> in the commands.</p>
 </blockquote>
-<pre><code class="lang-shell">yarn install
-</code></pre>
-<p>Install Fable and dotnet dependencies using Paket:</p>
-<pre><code class="lang-shell">dotnet restore
-cd src
-</code></pre>
-<p>Start Fable and <a href="https://webpack.js.org/">Webpack</a> dev server:</p>
-<pre><code class="lang-shell">dotnet fable yarn-start
-</code></pre>
+<ul>
+<li>Install dependencies: <code>yarn</code></li>
+<li>Start Fable daemon and <a href="https://webpack.js.org/">Webpack</a> dev server: <code>yarn start</code></li>
+<li>In your browser, open: <a href="http://localhost:8080/">http://localhost:8080/</a></li>
+</ul>
 <blockquote>
-<p>This command is used to start the Fable daemon and run a script in package.json concurrently. It&#39;s a shortcut of <code>dotnet fable yarn-run [SCRIPT_NAME]</code>.</p>
+<p>Check the &quot;scripts&quot; section in <code>package.json</code> for more info. If you are using VS Code + Ionide, you can also use F5 or Ctrl+Shift+B (Cmd+Shift+B on macOS) instead of typing <code>yarn start</code>. With this, Fable-specific errors will be highlighted in the editor along with other F# errors. See &quot;Debugging in VS Code&quot; in the template README.</p>
 </blockquote>
-<p>Navigate to <a href="http://localhost:8080/">http://localhost:8080/</a> URL in your browser to see the (dead simple) web app in action. Any modification you do to the F# code will be reflected in the web page after saving. When you want to output the JS code to disk, run <code>dotnet fable yarn-build</code> and you&#39;ll get an optimized JS bundle in the <code>public</code> folder.</p>
+<p>Any modification you do to the F# code will be reflected in the web page after saving. When you want to output the JS code to disk, run <code>yarn build</code> and you&#39;ll get your frontend files ready for deployment in the <code>build</code> folder.</p>
 <blockquote>
 <p>You can learn more about the structure of the project generated in the README file.</p>
 </blockquote>
-<p>Now you are a Fable developer! This is all you need to start writing web apps in F#: go on and experiment for yourself.</p>
+<p>Now you are a Fable developer! This is all you need to start writing web apps in F#. Go on and experiment for yourself.</p>
 <h2><a name="a-bit-longer-explanation" class="anchor" href="#a-bit-longer-explanation">A bit longer explanation</a></h2><p>Fable has two &quot;hearts&quot; or sides: the .NET side is a daemon (a lightweight TCP server listening by default on port 61225) that waits for messages containing the F# source (.fs) or project (.fsproj) file to parse together with other options, and returns its contents in the form of a <a href="https://github.com/babel/babylon/blob/master/ast/spec.md">Babel compliant AST</a>.</p>
-<p>On the other side, there is a JS client that takes care of watching the files, communicating with the Fable daemon, resolving npm dependencies and outputting the actual JS code. At the time of writing there are three JS clients for Fable available:</p>
+<p>On the other side, there is a JS client that takes care of watching the files, communicating with the Fable daemon, resolving npm dependencies and outputting the actual JS code. Some of the JS clients for Fable available:</p>
 <ul>
 <li><a href="https://www.npmjs.com/package/fable-loader">fable-loader</a> is a plugin for <a href="https://webpack.js.org/">Webpack</a>, a powerful JS bundler with many handy features for development, like live reloading.</li>
 <li><a href="https://www.npmjs.com/package/rollup-plugin-fable">rollup-plugin-fable</a> for <a href="https://rollupjs.org/">Rollup</a>, another bundler focused on tree shaking.</li>
@@ -69,13 +65,13 @@ cd src
 <pre><code class="lang-shell">dotnet fable start
 <span class="hljs-meta">
 #</span><span class="bash"> In a different shell</span>
-yarn run start
+yarn run webpack-dev-server
 </code></pre>
 <blockquote>
-<p>The Fable daemon must be invoked in a directory with an .fsproj including a reference to the <code>dotnet-fable</code> package, while the JS script is to be called from the folder containing the <code>package.json</code> file.</p>
+<p>The Fable daemon must be invoked in a directory with an .fsproj including a reference to the <code>dotnet-fable</code> package.</p>
 </blockquote>
-<p>For convenience it is possible to tell Fable to automatically start the package.json script and stop whenever it finishes. The commands above can be also executed as:</p>
-<pre><code class="lang-shell">dotnet fable yarn-run start
+<p>For convenience it is possible to tell Fable to automatically start the JS client and stop whenever it finishes. The commands above can be also executed as:</p>
+<pre><code class="lang-shell">dotnet fable webpack-dev-server
 </code></pre>
 <blockquote>
 <p>Run <code>dotnet fable --help</code> to know more about the Fable daemon specific options.</p>
