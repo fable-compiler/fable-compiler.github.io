@@ -25,12 +25,7 @@ Fable libraries will managed by Paket from now on, but we still need development
 
 ## For library authors
 
-At the moment we're using a couple of conventions so Fable can handle the code from libraries:
-
-- Fable libraries must be prefixed with `Fable` (e.g. `Fable.Elmish`).
-- The project file (with same name as the package) must be put together with the sources in a folder named `fable` within the package.
-
-The last point may look complicated, but it's only a matter of adding a [couple of lines](https://github.com/fable-elmish/react/blob/1e97c734bfd943899958e1ca849974e3baea3500/src/Fable.Elmish.React.fsproj#L15-L19) to your project file and let the `dotnet pack` command do all the job :)
+To enable Fable to use a NuGet library, the F# source code and the F# project file have to be included in the Nuget Package in a folder named `fable` within the package. This may sound complicated but it's only a matter of adding a [couple of lines](https://github.com/fable-elmish/react/blob/1e97c734bfd943899958e1ca849974e3baea3500/src/Fable.Elmish.React.fsproj#L15-L19) to your project file and let the `dotnet pack` command do all the job :). (In earlier versions the package name had to start with `Fable.` but this is no longer required)
 
 <br />
 
