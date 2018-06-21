@@ -57,34 +57,6 @@
 <span class="hljs-keyword">let</span> aDifferentName: string = import <span class="hljs-string">"myString"</span> <span class="hljs-string">"my-lib"</span>
 <span class="hljs-comment">// import { myString } from "my-lib"</span>
 </code></pre>
-<p>Keep in mind you need to respect the kind of import, please check the documentation of the JS library for that. It&#39;s a common mistake to use a <strong>member</strong> import (in JS it appears between brackets: <code>import { Component } from &#39;react&#39;</code>) instead of a <strong>default</strong> import (without brackets: <code>import Select from &#39;react-select&#39;</code>):</p>
-<pre><code class="lang-fsharp"><span class="hljs-comment">// If the JS library samples show a MEMBER import like this:</span>
-<span class="hljs-comment">// import { Component } from 'react';</span>
-
-<span class="hljs-comment">// Use the following in Fable:</span>
-<span class="hljs-keyword">let</span> Component: obj = importMember <span class="hljs-string">"react"</span>
-
-<span class="hljs-comment">// Or the following if you need a different name</span>
-<span class="hljs-keyword">let</span> AnyNameYouLike: obj = import <span class="hljs-string">"Component"</span> <span class="hljs-string">"react"</span>
-
-
-<span class="hljs-comment">// However if you see a DEFAULT import (no brackets) in the samples:</span>
-<span class="hljs-comment">// import Select from 'react-select';</span>
-
-<span class="hljs-comment">// Use the following in Fable (note name doesn't matter):</span>
-<span class="hljs-keyword">let</span> Select: obj = importDefault <span class="hljs-string">"react-select"</span>
-
-<span class="hljs-comment">// Or:</span>
-<span class="hljs-keyword">let</span> Select: obj = import <span class="hljs-string">"default"</span> <span class="hljs-string">"react-select"</span>
-</code></pre>
-<p>Sometimes you need to access a member of the imported element. Fable allows you to do that directly in the import selector:</p>
-<pre><code class="lang-fsharp"><span class="hljs-keyword">let</span> Creatable: obj = import <span class="hljs-string">"default.Creatable"</span> <span class="hljs-string">"react-select"</span>
-
-<span class="hljs-comment">// Please note this is not possible in JS, the equivalent would be:</span>
-
-<span class="hljs-comment">// import Select from 'react-select';</span>
-<span class="hljs-comment">// const Creatable = Select.Creatable;</span>
-</code></pre>
 <h2><a name="dynamic-typing" class="anchor" href="#dynamic-typing">Dynamic typing</a></h2><p><a href="https://github.com/fable-compiler/Fable/blob/master/src/fable/Fable.Core/Fable.Core.fs">Fable.Core.JsInterop</a> implements the F# dynamic operators so you can easily access an object property by name (without static check)
 as follows:</p>
 <pre><code class="lang-fsharp"><span class="hljs-keyword">open</span> Fable.Core.JsInterop
