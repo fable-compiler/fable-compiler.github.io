@@ -74,6 +74,6 @@ let renderBody (info: PageInfo) =
       linkImage "axxes.png" "https://axxes.com/en"
       linkImage "visualmips.png" "https://visualmips.github.io/"
       linkImage "lambdafactory.png" "http://lambdafactory.io/"
-      linkImage "BTS.png" "https://www.bluetradingsystems.com/"
+      linkImage "BTS.svg" "https://www.bluetradingsystems.com/"
     ]
   ]
