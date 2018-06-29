@@ -17,7 +17,7 @@ let introText =
   "Here you will learn how to quickly get started with Fable, what is supported from FSharp.Core and .NET, as well as how to seamlessly interact with native JavaScript APIs or libraries. If you want to learn about the F# language, check the [fsharp.org](http://fsharp.org/) site for more resources."
 
 let cardTexts =
-  ["Getting started", Some "getting-started.html", "Come here to start developing a web app with F# in a few minutes. You will learn to setup your environment, to download Fable templates using the dotnet SDK and to bootstrap a simple web app. After that, we will see a quick overview of how Fable works underneath."
+  ["Getting started", Some "https://github.com/fable-compiler/fable-templates/blob/master/simple/Content/README.md", "Come here to start developing a web app with F# in a few minutes. You will learn to setup your environment, to download Fable templates using the dotnet SDK and to bootstrap a simple web app. After that, we will see a quick overview of how Fable works underneath."
 
    "F# language and library compatibility", Some "compatibility.html", "This page lists the F# and .NET classes available in Fable and how they are translated into JS, highlighting the small semantic differences you need to be aware of. You may be surprised to know how many F# features are supported in Fable (even reflection!) with almost no overhead."
 
