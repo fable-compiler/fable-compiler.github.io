@@ -2,6 +2,14 @@ Check our blog to be up-to-date with recent developments in Fable community and 
 
 -------------------------------------------------------------------
 
+## [Introducing Fable 2.0 beta](Introducing-2-0-beta.html)
+
+> By [Alfonso García-Caro](https://twitter.com/alfonsogcnunez) on August 3, 2018
+
+Guaranteed to be one better!
+
+[Read more...](Introducing-2-0-beta.html)
+
 ## [FableConf or where the magic happened](FableConf.html)
 
 > By [Alfonso García-Caro](https://twitter.com/alfonsogcnunez) on December 6, 2017
