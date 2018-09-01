@@ -1,15 +1,14 @@
 module WebGenerator.Components.SamplesPage
 
 open Fable.Import
-open Fable.Import.Node.Exports
 open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Fulma.Elements
-open Fulma.Components
+open Fulma
 open WebGenerator.Helpers
-open WebGenerator.Literals
 open WebGenerator.Types
+
+module Node = Fable.Import.Node.Exports
 
 let parseJson5<'T>(json: string): 'T = import "parse" "json5"
 
@@ -31,7 +30,7 @@ let renderSamples (samplesRepoPath: string) =
         Card.content [] [
           Media.media [] [
             Media.left [] [
-              Image.image [Image.is128x128] [
+              Image.image [Image.Is128x128] [
                 a [Href k] [img [Src ("img/" + v.img)]]
               ]
             ]
@@ -44,7 +43,7 @@ let renderSamples (samplesRepoPath: string) =
       ]
     ) |> Seq.toList
   let samples =
-    Path.join(samplesRepoPath, "public/samples.json5")
+    Node.path.join(samplesRepoPath, "public/samples.json5")
     |> readFile |> parseJson5<JsObj<JsObj<SampleInfo>>>
   div [Class "columns"] [
     div [Class "column"] []

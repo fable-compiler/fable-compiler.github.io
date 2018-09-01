@@ -1,16 +1,9 @@
 module WebGenerator.Components.DocsPage
 
-open Fable.Import
-open Fable.Import.Node.Exports
-open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Fulma.Common
-open Fulma.Elements
-open Fulma.Components
-open Fulma.Extra.FontAwesome
+open Fulma.FontAwesome
 open WebGenerator.Helpers
-open WebGenerator.Literals
 open WebGenerator.Types
 
 let introText =
@@ -31,12 +24,12 @@ let renderBody title subtitle (info: PageInfo) =
     renderIntro [introText]
     div [Style [Margin "20px 10px 0 10px"]] [
       div [Class "columns"] [
-        div [Class "column"] [cardTexts.[0] |||> renderCard (FaIcon Fa.Rocket)]
-        div [Class "column"] [cardTexts.[1] |||> renderCard (FaIcon Fa.Refresh)]
+        div [Class "column"] [cardTexts.[0] |||> renderCard (FaIcon Fa.I.Rocket)]
+        div [Class "column"] [cardTexts.[1] |||> renderCard (FaIcon Fa.I.Refresh)]
       ]
       div [Class "columns"] [
-        div [Class "column"] [cardTexts.[2] |||> renderCard (FaIcon Fa.Globe)]
-        div [Class "column"] [cardTexts.[3] |||> renderCard (FaIcon Fa.Group)]
+        div [Class "column"] [cardTexts.[2] |||> renderCard (FaIcon Fa.I.Globe)]
+        div [Class "column"] [cardTexts.[3] |||> renderCard (FaIcon Fa.I.Group)]
       ]
     ]
   ]

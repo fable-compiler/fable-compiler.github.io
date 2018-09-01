@@ -1,5 +1,6 @@
 source https://nuget.org/api/v2
 storage:none
+framework:netstandard2.0,netcoreapp2.0
 
 clitool dotnet-fable prerelease
 nuget Fable.Core prerelease
@@ -12,8 +13,7 @@ nuget Fulma prerelease
 group Build
   source https://nuget.org/api/v2
   storage: packages
+  framework >= net45
 
-  nuget FAKE
-  nuget FSharp.Formatting 3.0.0-beta01
-
+  nuget FAKE ~> 4
   github fsharp/FAKE modules/Octokit/Octokit.fsx

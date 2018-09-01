@@ -1,14 +1,13 @@
 module WebGenerator.Components.Navbar
 
-open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Fulma.Elements.Form
+open Fulma
 open WebGenerator.Helpers
 open WebGenerator.Literals
 
 let navButton classy href faClass txt =
-  Control.control [] [
+  Control.div [] [
     a [Class (sprintf "button %s" classy); Href href] [
       span [Class "icon"] [
         i [Class (sprintf "fa %s" faClass)] []
@@ -19,7 +18,7 @@ let navButton classy href faClass txt =
 
 let navButtons =
   div [Class "navbar-item"]
-    [ Field.field [ Field.isGroupedLeft ]
+    [ Field.div [ Field.IsGrouped ]
         [ navButton "twitter" "https://twitter.com/FableCompiler" "fa-twitter" "Share the love!"
           navButton "github" "https://gitter.im/fable-compiler/Fable" "fa-comments" "Chat"
           navButton "github" "https://github.com/fable-compiler/Fable" "fa-github" "Contribute" ] ]
@@ -46,8 +45,6 @@ let root currentPage =
         menuItem "REPL" Navbar.Repl currentPage
         menuItem "Blog" Navbar.Blog currentPage
         menuItem "Docs" Navbar.Docs currentPage
-        menuItem "API" Navbar.API currentPage
-        menuItem "Samples" Navbar.Samples currentPage
         menuItem "FableConf" Navbar.FableConf currentPage
       ]
       div [Class "navbar-end"] [navButtons]

@@ -1,15 +1,9 @@
 module WebGenerator.Components.HomePage
 
-open Fable.Import
-open Fable.Import.Node.Exports
-open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Fulma.Common
-open Fulma.Elements
-open Fulma.Components
-open Fulma.Grids
-open Fulma.Extra.FontAwesome
+open Fulma
+open Fulma.FontAwesome
 open WebGenerator.Helpers
 open WebGenerator.Literals
 open WebGenerator.Types
@@ -24,8 +18,8 @@ let cardTexts =
    "Easy integration", None, "Fable produces readable JavaScript code compatible with ES2015 standards, like modules, classes or iterables, so it plays very well with either native libraries like [React](https://facebook.github.io/react/) or development tools like [Webpack](https://webpack.js.org/). Don't give up the benefits of the ecosystem just because of your language choice."]
 
 let whereToText: string =
-  sprintf "[Try Fable online](/repl), [check the docs](%s) to learn how to [get started](%s/getting-started.html) on your computer, [play with the samples](%s), visit [fable-awesome](https://github.com/kunjee17/awesome-fable) for a curated list of Fable resources, join the community at [FableConf](%s) or watch the [Channel9 interview with Seth Juarez](https://channel9.msdn.com/events/NDC/NDC-Oslo-2017/C9L13?term=fable)."
-    Navbar.Docs Navbar.Docs Navbar.Samples Navbar.FableConf
+  sprintf "[Try Fable online](%s), [check the docs](%s) or visit [fable-awesome](https://github.com/kunjee17/awesome-fable) for a curated list of Fable resources, join the community at [FableConf](%s) or watch the [Channel9 interview with Seth Juarez](https://channel9.msdn.com/events/NDC/NDC-Oslo-2017/C9L13?term=fable)."
+    Navbar.Repl Navbar.Docs Navbar.FableConf
 
 let linkImage src href =
   a [Href href] [img [Src ("img/" + src)]]
@@ -42,27 +36,27 @@ let renderBody (info: PageInfo) =
     div [Style [Margin "20px 10px 0 10px"]] [
       Columns.columns []
         [ Column.column [] [cardTexts.[0] |||> renderCard (Img "./img/fsharp.png")]
-          Column.column [] [cardTexts.[1] |||> renderCard (FaIcon Fa.BatteryFull)]
+          Column.column [] [cardTexts.[1] |||> renderCard (FaIcon Fa.I.BatteryFull)]
       ]
       Columns.columns []
-        [ Column.column [] [cardTexts.[2] |||> renderCard (FaIcon Fa.Wrench)]
-          Column.column []  [cardTexts.[3] |||> renderCard (FaIcon Fa.PuzzlePiece)]
+        [ Column.column [] [cardTexts.[2] |||> renderCard (FaIcon Fa.I.Wrench)]
+          Column.column []  [cardTexts.[3] |||> renderCard (FaIcon Fa.I.PuzzlePiece)]
       ]
     ]
     br []
-    h1 [ClassName "title is-2 has-text-centered"] [str "Where to go from here"]
+    h1 [Class "title is-2 has-text-centered"] [str "Where to go from here"]
     paragraph whereToText
     Columns.columns [ ]
-      [ Column.column [ Column.Width.is8
-                        Column.Offset.is2 ]
+      [ Column.column [ Column.Width (Screen.All, Column.Is8)
+                        Column.Offset (Screen.All, Column.Is2) ]
                       [ a [ Href "https://channel9.msdn.com/events/NDC/NDC-Oslo-2017/C9L13?term=fable"]
                           [ img [ Src "img/channel9.png"
                                   Style [Margin "20px auto"; MaxHeight "600px"] ] ] ]
     ]
-    h1 [ClassName "title is-2 has-text-centered"] [str "You are in good company"]
+    h1 [Class "title is-2 has-text-centered"] [str "You are in good company"]
     paragraph "These are some of the projects and companies using Fable. Send us a message to include yours!"
     br []
-    div [ClassName "flex-wrap fable-friends"] [
+    div [Class "flex-wrap fable-friends"] [
       linkImage "nsynk.png" "http://nsynk.de/"
       linkImage "thegamma.png" "https://thegamma.net/"
       linkImage "msu.jpg" "https://www.msu-solutions.de/"
