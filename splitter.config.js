@@ -22,9 +22,9 @@ module.exports = {
   entry: "src/WebGenerator.fsproj",
   outDir: path.dirname(outFile),
   babel: {
-    plugins: ["@babel/plugin-transform-modules-commonjs"]
+    plugins: ["transform-es2015-modules-commonjs"]
   },
   postbuild() {
-    // runScript(outFile)
+    runScript(outFile)
   }
 };

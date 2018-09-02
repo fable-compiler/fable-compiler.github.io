@@ -58,13 +58,14 @@ let renderDocs() =
     { Title = pageTitle
       TargetPath = Node.path.join(Paths.PublicDir, "docs", "index.html")
       NavbarActivePage = Literals.Navbar.Docs
-      RenderBody = fun info -> DocsPage.renderBody header subheader info }
+      RenderBody = DocsPage.renderBody header subheader }
   // Docs translated from markdown files in Fable repo
   let docFiles = Node.fs.readdirSync(!^Node.path.join(Paths.FableRepo, "docs"))
   for doc in docFiles |> Seq.filter (fun x -> x.EndsWith(".md")) do
     let fullPath = Node.path.join(Paths.FableRepo, "docs", doc)
     let targetPath = Node.path.join(Paths.PublicDir, "docs", doc.Replace(".md", ".html"))
     renderMarkdownFrom pageTitle Literals.Navbar.Docs header subheader fullPath targetPath
+  printfn "Documentation generated"
 
 let renderBlog() =
   let reg = Regex(@"^\s*-\s*title\s*:(.+)\n\s*-\s*subtitle\s*:(.+)\n")
@@ -81,13 +82,14 @@ let renderBlog() =
       else header, subheader, text
     let targetPath = Node.path.join(Paths.PublicDir, "blog", blog.Replace(".md", ".html"))
     renderMarkdown pageTitle Literals.Navbar.Blog header subheader targetPath text
-
+  printfn "Blog generated"
 let renderHomePage() =
   render
     { Title = "Fable: JavaScript you can be proud of!"
       TargetPath = Node.path.join(Paths.PublicDir, "index.html")
       NavbarActivePage = Literals.Navbar.Home
       RenderBody = HomePage.renderBody }
+  printfn "Home page generated"
 
 // Run
 renderHomePage()

@@ -9,11 +9,12 @@
     "publish": "gh-pages -d public -b master"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0",
-    "@babel/plugin-transform-modules-commonjs": "^7.0.0",
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "bulma": "^0.7.1",
+    "bulma-carousel": "^3.0.0",
     "concurrently": "^4.0.1",
-    "fable-splitter": "^2.0.0-beta-001",
+    "fable-splitter": "2.0.0-alpha-003",
     "fs-extra": "^7.0.0",
     "gh-pages": "^1.2.0",
     "handlebars": "^4.0.11",

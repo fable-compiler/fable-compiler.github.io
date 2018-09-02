@@ -101,7 +101,7 @@ let renderCard icon title link text =
   let icon =
     match icon with
     | Img src -> Image.image [Image.Is64x64] [img [Src src]]
-    | FaIcon fa -> Icon.faIcon [ Icon.Size IsLarge ] [Fa.icon fa]
+    | FaIcon fa -> Icon.faIcon [ Icon.Size IsLarge ] [Fa.icon fa; Fa.fa2x]
   let header =
     match link with
      | None -> span [Class "title is-4"] [str title]
