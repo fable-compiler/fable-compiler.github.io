@@ -25,7 +25,10 @@ let navButtons =
 
 let menuItem label page currentPage =
   a [
-    classList ["navbar-item", true; "is-active", page = currentPage]
+    classList [
+      "navbar-item", true
+      "is-active", System.String.Compare(page, currentPage, true) = 0
+    ]
     Href page
   ] [str label]
 
