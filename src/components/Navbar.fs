@@ -45,6 +45,7 @@ let root currentPage =
         menuItem "REPL" Navbar.Repl currentPage
         menuItem "Blog" Navbar.Blog currentPage
         menuItem "Docs" Navbar.Docs currentPage
+        menuItem "FAQ" Navbar.FAQ currentPage
         menuItem "FableConf" Navbar.FableConf currentPage
       ]
       div [Class "navbar-end"] [navButtons]

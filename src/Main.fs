@@ -61,11 +61,18 @@ let renderDocs() =
       RenderBody = DocsPage.renderBody header subheader }
   // Docs translated from markdown files in Fable repo
   let docFiles = Node.fs.readdirSync(!^Node.path.join(Paths.FableRepo, "docs"))
-  for doc in docFiles |> Seq.filter (fun x -> x.EndsWith(".md")) do
+  for doc in docFiles |> Seq.filter (fun x -> x.EndsWith(".md") && not(x.EndsWith("FAQ.md"))) do
     let fullPath = Node.path.join(Paths.FableRepo, "docs", doc)
     let targetPath = Node.path.join(Paths.PublicDir, "docs", doc.Replace(".md", ".html"))
     renderMarkdownFrom pageTitle Literals.Navbar.Docs header subheader fullPath targetPath
   printfn "Documentation generated"
+
+let renderFaq() =
+  let subheader = "The place to find a quick answer to your questions"
+  let fullPath = Node.path.join(Paths.FableRepo, "docs/FAQ.md")
+  let targetPath = Node.path.join(Paths.PublicDir, "faq/index.html")
+  renderMarkdownFrom "Fable FAQ" Literals.Navbar.FAQ "FAQ" subheader fullPath targetPath
+  printfn "FAQ generated"
 
 let renderBlog() =
   let reg = Regex(@"^\s*-\s*title\s*:(.+)\n\s*-\s*subtitle\s*:(.+)\n")
@@ -95,3 +102,4 @@ let renderHomePage() =
 renderHomePage()
 renderBlog()
 renderDocs()
+renderFaq()
