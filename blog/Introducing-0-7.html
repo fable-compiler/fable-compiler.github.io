@@ -14,8 +14,8 @@
 </head>
 
 <body>
-  <nav class="navbar"><div class="navbar-brand"><div class="navbar-item title is-4">Fable</div><div class="navbar-burger" data-target="navMenu"><span></span><span></span><span></span></div></div><div id="navMenu" class=" navbar-menu"><div class="navbar-start"><a class=" navbar-item" href="/">Home</a><a class=" navbar-item" href="/repl">REPL</a><a class=" navbar-item is-active" href="/blog">Blog</a><a class=" navbar-item" href="/docs">Docs</a><a class=" navbar-item" href="/api">API</a><a class=" navbar-item" href="/samples-browser">Samples</a><a class=" navbar-item" href="/fableconf">FableConf</a></div><div class="navbar-end"><div class="navbar-item"><div class="field is-grouped"><p class="control"><a class="button twitter" href="https://twitter.com/FableCompiler"><span class="icon"><i class="fa fa-twitter"></i></span><span>Share the love!</span></a></p><p class="control"><a class="button github" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class="fa fa-comments"></i></span><span>Chat</span></a></p><p class="control"><a class="button github" href="https://github.com/fable-compiler/Fable"><span class="icon"><i class="fa fa-github"></i></span><span>Contribute</span></a></p></div></div></div></div></nav>
-  <div class="markdown" style="overflow:hidden;"><section class="hero fable-header"><div class="hero-body"><div class="container"><div class="columns is-vcentered"><div class="column"><img class="fable-logo" src="/img/shared/fable_logo.png"/></div><div class="column has-text-right"><h1 class="title is-1">Introducing Fable 0.7</h1><h1 class="subtitle is-4">Powered by Community™!</h1></div></div></div></div></section><div style="margin-top:1.6rem;"><div class="columns"><div class="column"></div><div class="column is-two-thirds"><div class="content" style="margin:5px;"><p>So finally here it is! It took a bit longer than expected but I&#39;m very happy to announce Fable 0.7 has been released to npm. This version includes lots of improvements thanks to the feedback from the community, it&#39;s almost a full rewrite and could be considered 1.0 (in fact, 1.0 will probably be this with minor upgrades). My experience when developing 0.7 has been completely different than in 0.1 times. Then I was coding alone in the room and this time... well, I&#39;m still coding alone in my room but on the other side of the internet the many faces of the community have been tremendously helping me with PRs, clever suggestions and thorough testing.</p>
+  <nav class="navbar"><div class="navbar-brand"><div class="navbar-item title is-4">Fable</div><div class="navbar-burger" data-target="navMenu"><span></span><span></span><span></span></div></div><div id="navMenu" class=" navbar-menu"><div class="navbar-start"><a class=" navbar-item" href="/">Home</a><a class=" navbar-item" href="/repl2">REPL</a><a class=" navbar-item is-active" href="/blog">Blog</a><a class=" navbar-item" href="/docs">Docs</a><a class=" navbar-item" href="/faq">FAQ</a><a class=" navbar-item" href="/fableconf">FableConf</a></div><div class="navbar-end"><div class="navbar-item"><div class="field is-grouped"><div class="control"><a class="button twitter" href="https://twitter.com/FableCompiler"><span class="icon"><i class="fa fa-twitter"></i></span><span>Share the love!</span></a></div><div class="control"><a class="button github" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class="fa fa-comments"></i></span><span>Chat</span></a></div><div class="control"><a class="button github" href="https://github.com/fable-compiler/Fable"><span class="icon"><i class="fa fa-github"></i></span><span>Contribute</span></a></div></div></div></div></div></nav>
+  <div class="markdown" style="overflow:hidden"><section class="hero fable-header"><div class="hero-body"><div class="container"><div class="columns is-vcentered"><div class="column"><img class="fable-logo" src="/img/shared/fable_logo.png"/></div><div class="column    has-text-right        "><h1 class="title is-1">Introducing Fable 0.7</h1><h1 class="subtitle is-4">Powered by Community™!</h1></div></div></div></div></section><div style="margin-top:1.6rem"><div class="columns"><div class="column"></div><div class="column is-two-thirds"><div class="content" style="margin:5px"><p>So finally here it is! It took a bit longer than expected but I&#39;m very happy to announce Fable 0.7 has been released to npm. This version includes lots of improvements thanks to the feedback from the community, it&#39;s almost a full rewrite and could be considered 1.0 (in fact, 1.0 will probably be this with minor upgrades). My experience when developing 0.7 has been completely different than in 0.1 times. Then I was coding alone in the room and this time... well, I&#39;m still coding alone in my room but on the other side of the internet the many faces of the community have been tremendously helping me with PRs, clever suggestions and thorough testing.</p>
 <p>Fable 0.7 has been in alpha status for several weeks and during this time it&#39;s gone through multiple iterations: for several of the new features different alternatives were implemented until picking the one that worked best for all. This means you can confidently write your apps in Fable without unexpected breaking changes (because most of them already happened in the alpha cycle). That said, there will be a short transition period until all the documentation and samples are updated so please make sure to check the list below and come to our <a href="https://gitter.im/fable-compiler/Fable">Gitter channel</a> if you&#39;ve questions.</p>
 <p>Let&#39;s go with the list of things to have in mind when upgrading your app to Fable 0.7!</p>
 <h2><a name="projects" class="anchor" href="#projects">Projects</a></h2><p>Fable uses F# Compiler Services (FCS) which until now relied on MSBuild 2013 being installed on the system to parse <code>.fsproj</code> files and resolve references. This has caused problems for many users so now, thanks to the work of <a href="https://github.com/dsyme">Don Syme</a> on FCS and <a href="https://github.com/cloudRoutine">Jared Hester</a> and <a href="https://github.com/Krzysztof-Cieslak">Krzysztof Cieślak</a> on <a href="https://github.com/fsharp-editing/Forge">Forge</a>, Fable can parse F# projects on its own. What&#39;s more, it&#39;s now possible to pass multiple project files (either <code>.fsproj</code> or <code>.fsx</code>) into <code>--projFile</code>. This is useful when you work with a solution in VS (<a href="https://github.com/fable-compiler/Fable/blob/286523fc80246a6b593df1771ef40ec9a48aca80/src/tests/fableconfig.json">example</a>).</p>
@@ -35,15 +35,14 @@
 <h2><a name="es2015-modules-and-bundling" class="anchor" href="#es2015-modules-and-bundling">ES2015 Modules and Bundling</a></h2><p>Bundling is often the only sane way to manage dependencies for browser JS apps and so far this has been accomplished by <a href="https://webpack.github.io/">Webpack</a> but, as flexible and comprehensive as this tool is, it still has two problems: 1) it can be somewhat complex to configure and 2) doesn&#39;t understand (yet) <a href="http://www.2ality.com/2014/09/es6-modules-final.html">ES2015 modules</a>.</p>
 <p>The biggest advantage of ES2015 modules is they allow static analysis of the dependencies among files which makes it much easier for a bundler to discard unused code. Fable compiles F# code using ES2015 imports and exports (provided you&#39;ve a single root module per file) which makes it a perfect fit for such a bundler. Furthermore, now <a href="https://www.npmjs.com/package/fable-core">fable-core</a> too is completely modular so your apps will only pay for what they get: not only the bundle will skip unused modules (say <code>Async</code> if you only use native JS <code>Promise</code>) but also any function from imported modules that you don&#39;t actually need.</p>
 <p>Thanks to <a href="https://github.com/Pauan">Pauan</a> (who&#39;s also been tremendously helping 0.7 development with many wonderful suggestions) and Rollup friends, Fable 0.7 comes with <a href="http://rollupjs.org/">Rollup</a> embedded, a lightweight bundler that can understand ES2015 modules. Now bundling your app is as simple as passing the <code>--rollup</code> flag to the compiler. In <code>fableconfig</code> it&#39;s also possible to pass a configuration object instead corresponding to <a href="https://github.com/rollup/rollup/wiki/JavaScript-API">Rollup JS API</a> options. The only difference is plugins, which must be passed differently as fableconfig cannot contain code. The same format as with Babel plugins is used (See &quot;Plugin/Presets Options&quot; <a href="https://babeljs.io/docs/plugins/">here</a>). These settings are equivalent:</p>
-<pre><code class="lang-js">rollup({
+<pre><code class="language-js">rollup({
   <span class="hljs-attr">plugins</span>: [
     commonjs({ <span class="hljs-attr">namedExports</span>: {
         <span class="hljs-string">"virtual-dom"</span>: [ <span class="hljs-string">"h"</span>, <span class="hljs-string">"create"</span>, <span class="hljs-string">"diff"</span>, <span class="hljs-string">"patch"</span> ]
       } })
   ]
-});
-</code></pre>
-<pre><code class="lang-json">&quot;rollup&quot;: {
+});</code></pre>
+<pre><code class="language-json">&quot;rollup&quot;: {
   &quot;plugins&quot;: [
     [&quot;commonjs&quot;, {
       &quot;namedExports&quot;: {
@@ -51,10 +50,9 @@
       }
     }]
   ]
-}
-</code></pre>
+}</code></pre>
 <p>The default Rollup configuration in Fable is as follows (any option in fableconfig will override them, including plugins):</p>
-<pre><code class="lang-js">{
+<pre><code class="language-js">{
     <span class="hljs-comment">// entry: &lt;Last F# source file&gt;</span>
     dest: fableOptions.outDir + <span class="hljs-string">"/bundle.js"</span>,
     <span class="hljs-attr">format</span>: fableOptions.module || <span class="hljs-string">"iife"</span>,
@@ -64,15 +62,13 @@
         <span class="hljs-built_in">require</span>(<span class="hljs-string">'rollup-plugin-node-resolve'</span>)({ <span class="hljs-attr">ignoreGlobal</span>: <span class="hljs-literal">true</span> }),
         <span class="hljs-built_in">require</span>(<span class="hljs-string">'rollup-plugin-commonjs'</span>)({ <span class="hljs-attr">jsnext</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">main</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">browser</span>: <span class="hljs-literal">true</span> })
     }
-}
-</code></pre>
+}</code></pre>
 <p>If you&#39;re writing a Node app or using <a href="http://requirejs.org/">RequireJS</a> and <strong>don&#39;t want to bundle</strong>, just use the UMD distribution of <code>fable-core</code>. The <code>--refs</code> compiler argument gives you a chance to replace the base directory of imported JS files when referencing assemblies (<a href="https://github.com/fable-compiler/Fable/blob/85fb471ecc77b6d7296c5a1513e89e95f44c225b/samples/browser/react-todomvc/fableconfig.json">example</a>):</p>
-<pre><code class="lang-json">{
+<pre><code class="language-json">{
     <span class="hljs-attr">"refs"</span>: {
         <span class="hljs-attr">"Fable.Core"</span>: <span class="hljs-string">"fable-core/umd"</span>
     }
-}
-</code></pre>
+}</code></pre>
 <p>Because of this, it&#39;s recommended that Fable libraries include two distributions: the default one with ES2015 modules, and another one in the <code>umd</code> subdirectory with UMD modules. Just create an <code>umd</code> target for your library and compile it as well before publishing (<a href="https://github.com/fable-compiler/fable-powerpack/blob/master/fableconfig.json">example</a>).</p>
 <blockquote>
 <p><strong>Caveat</strong>: Though Rollup can understand <code>commonjs</code> modules, it&#39;s not as powerful as Webpack and can have problems bundling some packages (notably <a href="https://facebook.github.io/react/">React</a>). In this case you may want to load the JS library globally with a <code>&lt;script&gt;</code> tag (<a href="https://github.com/fable-compiler/fable-elmish/blob/e34232b8fbbf979fd800d9c24a386c2a2ffda966/samples/react/counter/fableconfig.json">example</a>) or with RequireJS (<a href="https://github.com/fable-compiler/Fable/blob/85fb471ecc77b6d7296c5a1513e89e95f44c225b/samples/browser/react-todomvc/index.html#L25-L33">example</a>). Of course, it&#39;s still possible to skip Rollup bundling and use Webpack as before.</p>
@@ -82,7 +78,8 @@
 <p>Reflection info is only produced on demand so your types won&#39;t have any overhead compared to normal JS objects.</p>
 </blockquote>
 <p>If you still want to use the old method (e.g. when you don&#39;t know the concrete type you will receive), please call the <code>toJsonWithTypeInfo</code> and <code>ofJsonWithTypeInfo</code> functions. You can then interact with Json.NET using the <code>TypeNameHandling.All</code> option, but please remember Json.NET is not adding type info to F# union types so you will need <a href="https://github.com/fable-compiler/Fable/blob/master/src/tools/UnionTypeInfoConverter.fsx">the following converter</a>.</p>
-<p><br /></p>
+<br />
+
 <p>There are still many new features in Fable 0.7, here I&#39;m only listing the most important points for the migration. Again, please be understanding while the documentation and samples are being updated. The community is already making wonderful with Fable like the <a href="http://rio2016.thegamma.net/">Gamma Project</a> by Tomas Petricek, <a href="http://ionide.io/">Ionide</a> by Krzysztof Cieślak, <a href="https://github.com/fable-compiler/fable-elmish">fable-elmish</a> by Eugene Tolmachev and <a href="http://fable.io/fable-arch/">fable-arch</a> by Tomas Jansson and Maxime Mangel, as well as Steffen Forkmann and François Nicaise work on React Native and Pixi.js respectively; and I&#39;m sure there will be many other great projects coming with Fable 0.7. There&#39;s already work going on to improve editor support and Enrico Sada is bringing a surprise for the new <code>.fsproj</code> format, so there are exciting times ahead for Fable. Keep tuned!</p>
 </div></div><div class="column"></div></div></div></div>
   <footer>

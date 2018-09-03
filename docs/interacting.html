@@ -14,11 +14,14 @@
 </head>
 
 <body>
-  <nav class="navbar"><div class="navbar-brand"><div class="navbar-item title is-4">Fable</div><div class="navbar-burger" data-target="navMenu"><span></span><span></span><span></span></div></div><div id="navMenu" class=" navbar-menu"><div class="navbar-start"><a class=" navbar-item" href="/">Home</a><a class=" navbar-item" href="/repl">REPL</a><a class=" navbar-item" href="/blog">Blog</a><a class=" navbar-item is-active" href="/docs">Docs</a><a class=" navbar-item" href="/api">API</a><a class=" navbar-item" href="/samples-browser">Samples</a><a class=" navbar-item" href="/fableconf">FableConf</a></div><div class="navbar-end"><div class="navbar-item"><div class="field is-grouped"><p class="control"><a class="button twitter" href="https://twitter.com/FableCompiler"><span class="icon"><i class="fa fa-twitter"></i></span><span>Share the love!</span></a></p><p class="control"><a class="button github" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class="fa fa-comments"></i></span><span>Chat</span></a></p><p class="control"><a class="button github" href="https://github.com/fable-compiler/Fable"><span class="icon"><i class="fa fa-github"></i></span><span>Contribute</span></a></p></div></div></div></div></nav>
-  <div class="markdown" style="overflow:hidden;"><section class="hero fable-header"><div class="hero-body"><div class="container"><div class="columns is-vcentered"><div class="column"><img class="fable-logo" src="/img/shared/fable_logo.png"/></div><div class="column has-text-right"><h1 class="title is-1">Documentation</h1><h1 class="subtitle is-4">Learn how Fable works &amp; how to use it</h1></div></div></div></div></section><div style="margin-top:1.6rem;"><div class="columns"><div class="column"></div><div class="column is-two-thirds"><div class="content" style="margin:5px;"><h1><a name="interacting-with-javascript" class="anchor" href="#interacting-with-javascript">Interacting with JavaScript</a></h1><p>This page is structured as a reference document. For a more practical approach to Fable and JavaScript interop, please check <a href="https://medium.com/@zaid.naom/f-interop-with-javascript-in-fable-the-complete-guide-ccc5b896a59f">this great guide by Zaid Ajaj</a>.</p>
+  <nav class="navbar"><div class="navbar-brand"><div class="navbar-item title is-4">Fable</div><div class="navbar-burger" data-target="navMenu"><span></span><span></span><span></span></div></div><div id="navMenu" class=" navbar-menu"><div class="navbar-start"><a class=" navbar-item" href="/">Home</a><a class=" navbar-item" href="/repl2">REPL</a><a class=" navbar-item" href="/blog">Blog</a><a class=" navbar-item is-active" href="/docs">Docs</a><a class=" navbar-item" href="/faq">FAQ</a><a class=" navbar-item" href="/fableconf">FableConf</a></div><div class="navbar-end"><div class="navbar-item"><div class="field is-grouped"><div class="control"><a class="button twitter" href="https://twitter.com/FableCompiler"><span class="icon"><i class="fa fa-twitter"></i></span><span>Share the love!</span></a></div><div class="control"><a class="button github" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class="fa fa-comments"></i></span><span>Chat</span></a></div><div class="control"><a class="button github" href="https://github.com/fable-compiler/Fable"><span class="icon"><i class="fa fa-github"></i></span><span>Contribute</span></a></div></div></div></div></div></nav>
+  <div class="markdown" style="overflow:hidden"><section class="hero fable-header"><div class="hero-body"><div class="container"><div class="columns is-vcentered"><div class="column"><img class="fable-logo" src="/img/shared/fable_logo.png"/></div><div class="column    has-text-right        "><h1 class="title is-1">Documentation</h1><h1 class="subtitle is-4">Learn how Fable works &amp; how to use it</h1></div></div></div></div></section><div style="margin-top:1.6rem"><div class="columns"><div class="column"></div><div class="column is-two-thirds"><div class="content" style="margin:5px"><h1><a name="interacting-with-javascript" class="anchor" href="#interacting-with-javascript">Interacting with JavaScript</a></h1><blockquote>
+<p>This document applies to Fable 1. It will be updated soon with Fable 2 information.</p>
+</blockquote>
+<p>This page is structured as a reference document. For a more practical approach to Fable and JavaScript interop, please check <a href="https://medium.com/@zaid.naom/f-interop-with-javascript-in-fable-the-complete-guide-ccc5b896a59f">this great guide by Zaid Ajaj</a>.</p>
 <h2><a name="importing-javascript-code" class="anchor" href="#importing-javascript-code">Importing JavaScript code</a></h2><p>To use code from JS libraries first you need to import it into F#. For this Fables uses <a href="https://developer.mozilla.org/en/docs/web/javascript/reference/statements/import">ES2015 imports</a>, which can be later transformed to other JS module systems like <code>commonjs</code> or <code>amd</code> by Babel.</p>
 <p>There are two ways to declare ES2015 imports in the Fable: by using either the <strong>Import attribute</strong> or the <strong>import expressions</strong>. The <code>ImportAttribute</code> can decorate members, types or modules and works as follows:</p>
-<pre><code class="lang-fsharp"><span class="hljs-comment">// Namespace imports</span>
+<pre><code class="language-fsharp"><span class="hljs-comment">// Namespace imports</span>
 <span class="hljs-meta">[&lt;Import("*", from="my-module")&gt;]</span>
 <span class="hljs-comment">// import * from "my-module"</span>
 
@@ -28,19 +31,17 @@
 
 <span class="hljs-comment">// Default imports</span>
 <span class="hljs-meta">[&lt;Import("default", from="express")&gt;]</span>
-<span class="hljs-comment">// import Express from "express"</span>
-</code></pre>
+<span class="hljs-comment">// import Express from "express"</span></code></pre>
 <blockquote>
 <p>If the value is globally accessible in JS, you can use the <code>Global</code> attribute with an optional name parameter instead.</p>
 </blockquote>
 <p>Unless you are decorating an abstract member, you can use <code>jsNative</code> as a placeholder for the body:</p>
-<pre><code class="lang-fsharp"><span class="hljs-keyword">open</span> Fable.Core.JsInterop
+<pre><code class="language-fsharp"><span class="hljs-keyword">open</span> Fable.Core.JsInterop
 
 <span class="hljs-meta">[&lt;Import("default", from="express")&gt;]</span>
-<span class="hljs-keyword">let</span> Express: obj = jsNative
-</code></pre>
+<span class="hljs-keyword">let</span> Express: obj = jsNative</code></pre>
 <p>By opening <code>Fable.Core.JsInterop</code>, you will also have access to <strong>import expressions</strong>. These expressions are generic so be sure to make the type of the imported value explicit.</p>
-<pre><code class="lang-fsharp"><span class="hljs-keyword">open</span> Fable.Core.JsInterop
+<pre><code class="language-fsharp"><span class="hljs-keyword">open</span> Fable.Core.JsInterop
 
 <span class="hljs-keyword">let</span> buttons: obj = importAll <span class="hljs-string">"my-lib/buttons"</span>
 <span class="hljs-comment">// import * as buttons from "my-lib/buttons"</span>
@@ -55,11 +56,10 @@
 <span class="hljs-comment">// Use just `import` to make the member name explicit</span>
 <span class="hljs-comment">// as with the ImportAttribute</span>
 <span class="hljs-keyword">let</span> aDifferentName: string = import <span class="hljs-string">"myString"</span> <span class="hljs-string">"my-lib"</span>
-<span class="hljs-comment">// import { myString } from "my-lib"</span>
-</code></pre>
+<span class="hljs-comment">// import { myString } from "my-lib"</span></code></pre>
 <h2><a name="dynamic-typing" class="anchor" href="#dynamic-typing">Dynamic typing</a></h2><p><a href="https://github.com/fable-compiler/Fable/blob/master/src/fable/Fable.Core/Fable.Core.fs">Fable.Core.JsInterop</a> implements the F# dynamic operators so you can easily access an object property by name (without static check)
 as follows:</p>
-<pre><code class="lang-fsharp"><span class="hljs-keyword">open</span> Fable.Core.JsInterop
+<pre><code class="language-fsharp"><span class="hljs-keyword">open</span> Fable.Core.JsInterop
 
 printfn <span class="hljs-string">"Value: %O"</span> jsObject?myProperty
 
@@ -67,10 +67,9 @@ printfn <span class="hljs-string">"Value: %O"</span> jsObject?myProperty
 
 printfn <span class="hljs-string">"Value: %O"</span> jsObject?(pname) <span class="hljs-comment">// Access with a string reference</span>
 
-jsObject?myProperty &lt;- <span class="hljs-number">5</span> <span class="hljs-comment">// Assignment is also possible</span>
-</code></pre>
+jsObject?myProperty &lt;- <span class="hljs-number">5</span> <span class="hljs-comment">// Assignment is also possible</span></code></pre>
 <p>When you combine the dynamic operator with application, Fable will destructure tuple arguments as with normal method calls. These operations can also be chained to replicate JS fluent APIs.</p>
-<pre><code class="lang-fsharp"><span class="hljs-keyword">let</span> result = jsObject?myMethod(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)
+<pre><code class="language-fsharp"><span class="hljs-keyword">let</span> result = jsObject?myMethod(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)
 <span class="hljs-comment">// var result = jsObject.myMethod(1, 2)</span>
 
 chart
@@ -88,53 +87,47 @@ chart
 <span class="hljs-comment">//         return chart.selectAll("rect").on("click", function (sender, args) {</span>
 <span class="hljs-comment">//             return console.log("click!", args);</span>
 <span class="hljs-comment">//         });</span>
-<span class="hljs-comment">//      });</span>
-</code></pre>
+<span class="hljs-comment">//      });</span></code></pre>
 <blockquote>
 <p>Note that in order to make this possible, the output of the <code>?</code> is an applicable value. If you don&#39;t want this behaviour, <code>unbox</code> or the <code>!!</code> dynamic cast operator: <code>let myValue: int = !!myObj?otherMethod(&quot;foo&quot;, &quot;bar&quot;)</code></p>
 </blockquote>
 <p>When you have to call a function with the <code>new</code> keyword in JS, use <code>createNew</code>.</p>
-<pre><code class="lang-fsharp"><span class="hljs-keyword">open</span> Fable.Core.JsInterop
+<pre><code class="language-fsharp"><span class="hljs-keyword">open</span> Fable.Core.JsInterop
 
 <span class="hljs-keyword">let</span> instance = createNew jsObject?myMethod(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)
-<span class="hljs-comment">// var instance = new jsObject.myMethod(1, 2)</span>
-</code></pre>
+<span class="hljs-comment">// var instance = new jsObject.myMethod(1, 2)</span></code></pre>
 <p>If you prefer member extensions rather than operators for dynamic typing, you can open <code>Fable.Core.DynamicExtensions</code> (Fable.Core 1.3.8 or higher) to have the methods <code>.Item</code> and <code>.Invoke</code> available on any object.</p>
-<pre><code class="lang-fsharp"><span class="hljs-keyword">open</span> Fable.Core.DynamicExtensions
+<pre><code class="language-fsharp"><span class="hljs-keyword">open</span> Fable.Core.DynamicExtensions
 
 <span class="hljs-keyword">let</span> foo = obj()
 <span class="hljs-keyword">let</span> bar1 = foo.[<span class="hljs-string">"b"</span>]  <span class="hljs-comment">// Same as foo.Item("b")</span>
 foo.[<span class="hljs-string">"c"</span>] &lt;- <span class="hljs-number">14</span>
-<span class="hljs-keyword">let</span> bar2 = foo.Invoke(<span class="hljs-number">4</span>, <span class="hljs-string">"a"</span>)
-</code></pre>
+<span class="hljs-keyword">let</span> bar2 = foo.Invoke(<span class="hljs-number">4</span>, <span class="hljs-string">"a"</span>)</code></pre>
 <h2><a name="plain-old-javascript-objects" class="anchor" href="#plain-old-javascript-objects">Plain Old JavaScript Objects</a></h2><p>To create a plain JS object (aka POJO), use <code>createObj</code>:</p>
-<pre><code class="lang-fsharp"><span class="hljs-keyword">open</span> Fable.Core.JsInterop
+<pre><code class="language-fsharp"><span class="hljs-keyword">open</span> Fable.Core.JsInterop
 
 <span class="hljs-keyword">let</span> data =
     createObj [
         <span class="hljs-string">"todos"</span> ==&gt; Storage.fetch()
         <span class="hljs-string">"editedTodo"</span> ==&gt; None
         <span class="hljs-string">"visibility"</span> ==&gt; <span class="hljs-string">"all"</span>
-    ]
-</code></pre>
+    ]</code></pre>
 <p>You can also create a JS object from an interface by using <code>createEmpty</code> and then assigning manually:</p>
-<pre><code class="lang-fsharp"><span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">IMyInterface</span> </span>=
+<pre><code class="language-fsharp"><span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">IMyInterface</span> </span>=
     <span class="hljs-keyword">abstract</span> foo: string <span class="hljs-keyword">with</span> get, set
     <span class="hljs-keyword">abstract</span> bar: float <span class="hljs-keyword">with</span> get, set
 
 <span class="hljs-keyword">let</span> x = createEmpty&lt;IMyInterface&gt; <span class="hljs-comment">// var x = {}</span>
 x.foo &lt;- <span class="hljs-string">"abc"</span>                    <span class="hljs-comment">// x.foo = "abc"</span>
-x.bar &lt;- <span class="hljs-number">8.5</span>                      <span class="hljs-comment">// val.bar = 8.5</span>
-</code></pre>
+x.bar &lt;- <span class="hljs-number">8.5</span>                      <span class="hljs-comment">// val.bar = 8.5</span></code></pre>
 <p>It is also possible to instantiate a plain JS object in a type-safe manner by declaring an F# record with the <code>Pojo</code> attribute:</p>
-<pre><code class="lang-fsharp"><span class="hljs-keyword">open</span> Fable.Core
+<pre><code class="language-fsharp"><span class="hljs-keyword">open</span> Fable.Core
 
 <span class="hljs-class"><span class="hljs-keyword">type</span> [&lt;Pojo&gt;] <span class="hljs-title">MyRecord</span> </span>=
     { aNumber: int; aString: string }
 
 <span class="hljs-keyword">let</span> foo = { aNumber = <span class="hljs-number">5</span>; aString = <span class="hljs-string">"bar"</span> }
-<span class="hljs-comment">// var foo = { aNumber: 5, aString: "bar" }</span>
-</code></pre>
+<span class="hljs-comment">// var foo = { aNumber: 5, aString: "bar" }</span></code></pre>
 <p>This is mainly useful to interact with JS libraries that expect a plain object (e.g., for configuration) instead of a class instance. But do not abuse this solution because records with <code>Pojo</code> attribute will miss features like members or reflection.</p>
 <h2><a name="foreign-interfaces" class="anchor" href="#foreign-interfaces">Foreign interfaces</a></h2><p>Defining a foreign interface is trivial: just create an F# interface and the compiler will call its properties or methods by name. However doing this may be a bit tedious for JS libraries with large APIs, so we better take advantage of <a href="http://definitelytyped.org">Typescript definition files</a> using <a href="https://www.npmjs.com/package/ts2fable">ts2fable</a>, a tool to translate <code>.d.ts</code> files into F# sources with Fable metadata. Check the <a href="https://www.npmjs.com/package/ts2fable">README file</a> for installation and usage instructions.</p>
 <blockquote>
@@ -143,44 +136,38 @@ x.bar &lt;- <span class="hljs-number">8.5</span>                      <span clas
 <p>You can find common definitions already parsed <a href="https://github.com/fable-compiler/fable-import">here</a>. These are already published in Nuget, where you can find more packages maintained by other contributors, usually <a href="https://www.nuget.org/packages?q=Fable.Import">prefixed by Fable.Import</a>. You can also find some other bindings and helpers in the <a href="https://github.com/kunjee17/awesome-fable#libraries">fable-awesome list</a>.</p>
 <h2><a name="special-attributes" class="anchor" href="#special-attributes">Special attributes</a></h2><p>There are some attributes available in the <code>Fable.Core</code> namespace to ease the interaction with JS.</p>
 <h3><a name="emit-attribute" class="anchor" href="#emit-attribute">Emit attribute</a></h3><p>You can use the <code>Emit</code> attribute to decorate a function. Every call to the function will then be replaced <strong>inline</strong> by the content of the attribute with the placeholders <code>$0</code>, <code>$1</code>, <code>$2</code>... replaced by the arguments. For example, the following code will generate JavaScript as seen below.</p>
-<pre><code class="lang-fsharp"><span class="hljs-keyword">open</span> Fable.Core
+<pre><code class="language-fsharp"><span class="hljs-keyword">open</span> Fable.Core
 
 <span class="hljs-meta">[&lt;Emit("$0 + $1")&gt;]</span>
 <span class="hljs-keyword">let</span> add (x: int) (y: string): float = jsNative
 
-<span class="hljs-keyword">let</span> result = add <span class="hljs-number">1</span> <span class="hljs-string">"2"</span>
-</code></pre>
-<pre><code class="lang-js"><span class="hljs-keyword">var</span> result = <span class="hljs-number">1</span> + <span class="hljs-string">"2"</span>
-</code></pre>
+<span class="hljs-keyword">let</span> result = add <span class="hljs-number">1</span> <span class="hljs-string">"2"</span></code></pre>
+<pre><code class="language-js"><span class="hljs-keyword">var</span> result = <span class="hljs-number">1</span> + <span class="hljs-string">"2"</span></code></pre>
 <p>When you don&#39;t know the exact number of arguments you can use the following syntax:</p>
-<pre><code class="lang-fsharp"><span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">Test</span></span>() =
+<pre><code class="language-fsharp"><span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">Test</span></span>() =
     <span class="hljs-meta">[&lt;Emit("$0($1...)")&gt;]</span>
-    <span class="hljs-keyword">member</span> __.Invoke(<span class="hljs-meta">[&lt;ParamArray&gt;]</span> args: int[]): obj = jsNative
-</code></pre>
+    <span class="hljs-keyword">member</span> __.Invoke(<span class="hljs-meta">[&lt;ParamArray&gt;]</span> args: int[]): obj = jsNative</code></pre>
 <p>It&#39;s also possible to pass syntax conditioned to optional parameters.</p>
-<pre><code class="lang-fsharp"><span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">Test</span></span>() =
+<pre><code class="language-fsharp"><span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">Test</span></span>() =
     <span class="hljs-meta">[&lt;Emit("$0[$1]{{=$2}}")&gt;]</span>
     <span class="hljs-keyword">member</span> __.Item <span class="hljs-keyword">with</span> get(): float = jsNative <span class="hljs-keyword">and</span> set(v: float): unit = jsNative
 
     <span class="hljs-comment">// This syntax means: if second arg evals to true in JS print 'i' and nothing otherwise</span>
     <span class="hljs-meta">[&lt;Emit("new RegExp($0,'g{{$1?i:}}')")&gt;]</span>
-    <span class="hljs-keyword">member</span> __.ParseRegex(pattern: string, ?ignoreCase: bool): Regex = jsNative
-</code></pre>
+    <span class="hljs-keyword">member</span> __.ParseRegex(pattern: string, ?ignoreCase: bool): Regex = jsNative</code></pre>
 <p>The content of <code>Emit</code> will actually be parsed by Babel so it will still be validated somehow. However, it&#39;s not advised to abuse this method, as the code in the template will remain obscure to Fable and may prevent some optimizations.</p>
 <h3><a name="erase-attribute" class="anchor" href="#erase-attribute">Erase attribute</a></h3><p>In TypeScript there&#39;s a concept of <a href="https://www.typescriptlang.org/docs/handbook/advanced-types.html#union-types">Union Types</a> which differs from union types in F#. The former are just used to statically check a function argument accepting different types. In Fable, they&#39;re translated as <strong>Erased Union Types</strong> whose cases must have one and only one single data field. After compilation, the wrapping will be erased and only the data field will remain. To define an erased union type, just attach the <code>Erase</code> attribute to the type. Example:</p>
-<pre><code class="lang-fsharp"><span class="hljs-keyword">open</span> Fable.Core
+<pre><code class="language-fsharp"><span class="hljs-keyword">open</span> Fable.Core
 
 <span class="hljs-meta">[&lt;Erase&gt;]</span>
 <span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">MyErasedType</span> </span>=
     | String <span class="hljs-keyword">of</span> string
     | Number <span class="hljs-keyword">of</span> int
 
-myLib.myMethod(String <span class="hljs-string">"test"</span>)
-</code></pre>
-<pre><code class="lang-js">myLib.myMethod(<span class="hljs-string">"test"</span>)
-</code></pre>
+myLib.myMethod(String <span class="hljs-string">"test"</span>)</code></pre>
+<pre><code class="language-js">myLib.myMethod(<span class="hljs-string">"test"</span>)</code></pre>
 <p><code>Fable.Core</code> already includes predefined erased types which can be used as follows:</p>
-<pre><code class="lang-fsharp"><span class="hljs-keyword">open</span> Fable.Core
+<pre><code class="language-fsharp"><span class="hljs-keyword">open</span> Fable.Core
 
 <span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">Test</span></span>() =
     <span class="hljs-keyword">member</span> x.Value = <span class="hljs-string">"Test"</span>
@@ -189,23 +176,20 @@ myLib.myMethod(String <span class="hljs-string">"test"</span>)
     <span class="hljs-keyword">match</span> arg <span class="hljs-keyword">with</span>
     | U3.Case1 s -&gt; s
     | U3.Case2 i -&gt; string i
-    | U3.Case3 t -&gt; t.Value
-</code></pre>
+    | U3.Case3 t -&gt; t.Value</code></pre>
 <h3><a name="stringenum-attribute" class="anchor" href="#stringenum-attribute">StringEnum attribute</a></h3><p>Similarly, in TypeScript it&#39;s possible to define <a href="https://www.typescriptlang.org/docs/handbook/advanced-types.html#string-literal-types">String Literal Types</a> which are similar to enumerations with an underlying string value. Fable allows the same feature by using union types and the <code>StringEnum</code> attribute. These union types must not have any data fields as they will be compiled to a string matching the name of the union case.</p>
 <p>By default, the compiled string will have the first letter lowered. If you want to prevent this or use a different text than the union case name, use the <code>CompiledName</code> attribute:</p>
-<pre><code class="lang-fsharp"><span class="hljs-keyword">open</span> Fable.Core
+<pre><code class="language-fsharp"><span class="hljs-keyword">open</span> Fable.Core
 
 <span class="hljs-meta">[&lt;StringEnum&gt;]</span>
 <span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">MyStrings</span> </span>=
     | Vertical
     | <span class="hljs-meta">[&lt;CompiledName("Horizontal")&gt;]</span> Horizontal
 
-myLib.myMethod(Vertical, Horizontal)
-</code></pre>
-<pre><code class="lang-js">myLib.myMethod(<span class="hljs-string">"vertical"</span>, <span class="hljs-string">"Horizontal"</span>)
-</code></pre>
+myLib.myMethod(Vertical, Horizontal)</code></pre>
+<pre><code class="language-js">myLib.myMethod(<span class="hljs-string">"vertical"</span>, <span class="hljs-string">"Horizontal"</span>)</code></pre>
 <h2><a name="json-serialization" class="anchor" href="#json-serialization">JSON serialization</a></h2><p>To make it easier to share types when you are also using F# on the server side, the functions <code>toJson</code> and <code>ofJson</code> are available in <code>Fable.Core.JsInterop</code> module. Unlike native JSON parsing in JavaScript, <code>ofJson</code> will <em>inflate</em> a proper instance of the target type if the string is well formed, that is, if it is the result of serializing the same type with <code>toJson</code> or <code>Fable.JsonConverter</code> (see below).</p>
-<pre><code class="lang-fsharp"><span class="hljs-keyword">open</span> Fable.Core.JsInterop
+<pre><code class="language-fsharp"><span class="hljs-keyword">open</span> Fable.Core.JsInterop
 
 <span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">Tree</span> </span>=
     | Leaf <span class="hljs-keyword">of</span> int
@@ -222,10 +206,9 @@ myLib.myMethod(Vertical, Horizontal)
 <span class="hljs-keyword">let</span> tree2 = ofJson&lt;Tree&gt; json
 
 <span class="hljs-keyword">let</span> typeTest = (box tree2) :? Tree      <span class="hljs-comment">// Type is kept</span>
-<span class="hljs-keyword">let</span> sum = tree2.Sum()   <span class="hljs-comment">// Prototype members can be accessed</span>
-</code></pre>
+<span class="hljs-keyword">let</span> sum = tree2.Sum()   <span class="hljs-comment">// Prototype members can be accessed</span></code></pre>
 <p>On the server side, you can use <a href="https://www.newtonsoft.com/json">Newtonsoft.Json</a> + <a href="https://www.nuget.org/packages/Fable.JsonConverter/">Fable.JsonConverter</a>, as follows:</p>
-<pre><code class="lang-fsharp"><span class="hljs-keyword">open</span> Newtonsoft.Json
+<pre><code class="language-fsharp"><span class="hljs-keyword">open</span> Newtonsoft.Json
 
 <span class="hljs-comment">// Always use the same instance of the converter</span>
 <span class="hljs-comment">// as it will create a cache to improve performance</span>
@@ -235,9 +218,8 @@ myLib.myMethod(Vertical, Horizontal)
 JsonConvert.SerializeObject(value, [|jsonConverter|])
 
 <span class="hljs-comment">// Deserialization</span>
-JsonConvert.DeserializeObject&lt;MyType&gt;(json, [|jsonConverter|])
-</code></pre>
-<p>If you need more fine-grained control over the JSON serialization, please use the <a href="https://mangelmaxime.github.io/Thot/json/decode.html">Thot library</a>.</p>
+JsonConvert.DeserializeObject&lt;MyType&gt;(json, [|jsonConverter|])</code></pre>
+<p>If you need more fine-grained control over the JSON serialization, please use the <a href="https://mangelmaxime.github.io/Thoth/json/decode.html">Thoth library</a>.</p>
 </div></div><div class="column"></div></div></div></div>
   <footer>
       <p> Fable <a href="https://github.com/fable-compiler/Fable">source code</a> is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.</p>
