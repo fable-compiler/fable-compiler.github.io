@@ -6514,23 +6514,7 @@ footer {
   display: block;
   margin: auto; }
 
-span.omitted {
-  background: #3c4e52;
-    background-border-radius: 5px;
-  color: #808080;
-  padding: 0px 0px 1px 0px; }
-
-div.tip {
-  background-color: #475b5f;
-  border-radius: 4px;
-  font: "11pt 'Droid Sans', arial, sans-serif";
-  padding: 6px 8px 6px 8px;
-  display: none;
-  color: #d1d1d1;
-  pointer-events: none; }
-  div.tip strong {
-    color: inherit; }
-
-.xmldoc .github-link {
-  float: right;
-  padding-left: 5px; }
+.faq li {
+  font-weight: 800;
+  font-variant: small-caps;
+  text-decoration: underline; }
