@@ -9,10 +9,15 @@ marked.setOptions({
 });
 
 var renderer = new marked.Renderer();
+
 renderer.heading = function (text, level) {
     var escapedText = text.toLowerCase().replace(/[^\w]+/g, '-');
     return `<h${level}><a name="${escapedText}" class="anchor" href="#${escapedText}">${text}</a></h${level}>`;
 };
+
+renderer.link = function (href, title, text) {
+  return `<a href="${href.replace(/\.md$/, ".html")}">${text}</a>`;
+}
 
 export function parseMarkdown(content) {
   return marked(content, { renderer });
