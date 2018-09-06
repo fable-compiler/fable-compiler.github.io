@@ -6,7 +6,8 @@
     "sass": "node-sass files/styles.sass public/css/bulma.custom.css",
     "start-all": "concurrently -k \"cd src && dotnet fable fable-splitter -- -w\" \"yarn server\" \"yarn sass -w\"",
     "build-all": "concurrently \"cd src && dotnet fable-splitter\" \"yarn sass\"",
-    "publish": "gh-pages -d public -b master"
+    "predeploy": "yarn sass && node build/Main.js",
+    "deploy": "gh-pages -d public -b master"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

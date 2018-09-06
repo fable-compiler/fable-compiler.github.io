@@ -45,6 +45,10 @@ Alternatively, you can run the following to run the three processes (Fable, serv
 yarn start-all
 ```
 
+## Build and publish to Github pages
+
+Run `yarn deploy` (this assumes you already compiled the F# project).
+
 ## Other repositories
 
 The tool expects the [Fable](https://github.com/fable-compiler/Fable) repository to be cloned on the same directory level as this one.
