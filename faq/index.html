@@ -32,6 +32,17 @@ printfn <span class="hljs-string">"only printing in production bundle"</span>
 <li>How are numbers compiled to JS?</li>
 </ul>
 <p>All numeric types including decimal become <code>JS number</code> (64-bit floating type), except for longs and big integers. Tom Clarke has documented in much more detail the differences in numeric types between .NET and JS, <a href="../docs/numbers.html">check it out</a>.</p>
+<h2><a name="library-authors" class="anchor" href="#library-authors">Library authors</a></h2><ul>
+<li>Which files need to be included in the nuget package?</li>
+</ul>
+<p>The F# source code and the F# project file have to be included in the Nuget Package in a folder named <code>fable</code> within the package. This may sound complicated but it&#39;s only a matter of adding a couple of lines to your project file and let the <code>dotnet pack</code> command do all the rest.</p>
+<pre><code class="language-xml"><span class="hljs-comment">&lt;!-- Add source files to "fable" folder in Nuget package --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">ItemGroup</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">Content</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">"*.fsproj; **\*.fs"</span> <span class="hljs-attr">PackagePath</span>=<span class="hljs-string">"fable\"</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ItemGroup</span>&gt;</span></code></pre>
+<blockquote>
+<p>Possible cryptic error message when you don&#39;t include the project file and/or source files is <code>Cannot find root module</code>.</p>
+</blockquote>
 </div></div><div class="column"></div></div></div></div>
   <footer>
       <p> Fable <a href="https://github.com/fable-compiler/Fable">source code</a> is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.</p>
