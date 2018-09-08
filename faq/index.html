@@ -35,7 +35,7 @@ printfn <span class="hljs-string">"only printing in production bundle"</span>
 <h2><a name="fable-core" class="anchor" href="#fable-core">Fable.Core</a></h2><ul>
 <li>Which operators are used in Fable.Core?</li>
 </ul>
-<p>The <code>Fable.Core.JsInterop</code> module provides three main operators to interact with JS (all of them erased in generated JS code): <code>?</code> to dynamically access a property of an object, <code>!!</code> for unsafe casting (equivalent to <code>unbox</code>) and <code>!^</code> to pass arguments to a method accepting <a href="../docs/interacting.md#erase-attribute">Erased Unions</a>.</p>
+<p>The <code>Fable.Core.JsInterop</code> module provides three main operators to interact with JS (all of them erased in generated JS code): <code>?</code> to dynamically access a property of an object, <code>!!</code> for unsafe casting (equivalent to <code>unbox</code>) and <code>!^</code> to pass arguments to a method accepting <a href="../docs/interacting.html#erase-attribute">Erased Unions</a>.</p>
 <pre><code class="language-fsharp"><span class="hljs-keyword">open</span> Fable.Core.JsInterop
 
 <span class="hljs-keyword">let</span> jqElement = Browser.window?jQuery
