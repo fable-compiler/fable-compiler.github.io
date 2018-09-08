@@ -32,6 +32,59 @@ printfn <span class="hljs-string">"only printing in production bundle"</span>
 <li>How are numbers compiled to JS?</li>
 </ul>
 <p>All numeric types including decimal become <code>JS number</code> (64-bit floating type), except for longs and big integers. Tom Clarke has documented in much more detail the differences in numeric types between .NET and JS, <a href="../docs/numbers.html">check it out</a>.</p>
+<h2><a name="fable-core" class="anchor" href="#fable-core">Fable.Core</a></h2><ul>
+<li>Which operators are used in Fable.Core?</li>
+</ul>
+<p>The <code>Fable.Core.JsInterop</code> module provides three main operators to interact with JS (all of them erased in generated JS code): <code>?</code> to dynamically access a property of an object, <code>!!</code> for unsafe casting (equivalent to <code>unbox</code>) and <code>!^</code> to pass arguments to a method accepting <a href="../docs/interacting.md#erase-attribute">Erased Unions</a>.</p>
+<pre><code class="language-fsharp"><span class="hljs-keyword">open</span> Fable.Core.JsInterop
+
+<span class="hljs-keyword">let</span> jqElement = Browser.window?jQuery
+<span class="hljs-keyword">let</span> result: float = !!myObj?bar(<span class="hljs-number">5</span>)
+myObject?aProperty &lt;- <span class="hljs-number">30</span>
+
+<span class="hljs-keyword">let</span> myMethod (arg: U3&lt;string, int, Test&gt;) = ...
+myMethod !^<span class="hljs-number">5</span> <span class="hljs-comment">// Same as: myMethod (U3.Case2 5)</span></code></pre>
+<ul>
+<li>How can I create a JS object?</li>
+</ul>
+<p>The <code>Fable.Core.JsInterop</code> module provides three helpers to create JS object. The first one, <code>createObj</code>, is used to dynamically create a JS object with string keys:</p>
+<pre><code class="language-fsharp"><span class="hljs-keyword">open</span> Fable.Core.JsInterop
+
+<span class="hljs-comment">// { a: 5, b: aValue }</span>
+createObj [
+    <span class="hljs-string">"a"</span> ==&gt; <span class="hljs-number">5</span>
+    <span class="hljs-string">"b"</span> ==&gt; aValue
+]</code></pre>
+<p>If you have an interface definition for the JS object you can just use an <a href="https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/object-expressions">F# Object Expression</a>. However, in many cases you only want to set a few fields, as when you pass options to a JS library, in those cases you can use <code>jsOptions</code> and a lambda to declare your object and have the compiler type-check the fields:</p>
+<pre><code class="language-fsharp"><span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">IFoo</span> </span>=
+    <span class="hljs-keyword">abstract</span> foo: string <span class="hljs-keyword">with</span> get, set
+    <span class="hljs-keyword">abstract</span> bar: int <span class="hljs-keyword">with</span> get, set
+    <span class="hljs-keyword">abstract</span> optionalField: obj <span class="hljs-keyword">with</span> get, set
+
+<span class="hljs-keyword">let</span> myJsApi (options: IFoo) = importMember <span class="hljs-string">"foo-module"</span>
+
+<span class="hljs-comment">// JS: { foo: "foo", bar: 5 }</span>
+myJsApi (jsOptions(<span class="hljs-keyword">fun</span> (o: IFoo) -&gt;
+    o.foo &lt;- <span class="hljs-string">"foo"</span>
+    o.bar &lt;- <span class="hljs-number">5</span>
+))</code></pre>
+<p>If you use these helpers multiple times, you may want to define custom prefix operators for a terser syntax. For example:</p>
+<pre><code class="language-fsharp"><span class="hljs-keyword">let</span> <span class="hljs-keyword">inline</span> (~%) x = createObj x
+<span class="hljs-keyword">let</span> <span class="hljs-keyword">inline</span> (~%%) x = jsOptions x
+
+anotherJsApi %[<span class="hljs-string">"bar"</span> ==&gt; <span class="hljs-number">10</span>]
+myJsApi %%(<span class="hljs-keyword">fun</span> o -&gt; o.foo &lt;- <span class="hljs-string">"foo"</span>)</code></pre>
+<p>Finally, some libraries (like React bindings) use F# unions to represent fields of JS objects. In those cases you can use <code>keyValueList</code> to transform a list of union cases to a JS object.</p>
+<pre><code class="language-fsharp"><span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">MyOptions</span> </span>=
+    | Foo <span class="hljs-keyword">of</span> string
+    | Bar <span class="hljs-keyword">of</span> int
+
+<span class="hljs-comment">// JS: { foo: "foo", bar: 5 }</span>
+<span class="hljs-comment">// Note we use the caseRules argument to change the first letter</span>
+keyValueList CaseRules.LowerFirst [
+    Foo <span class="hljs-string">"foo"</span>
+    Bar <span class="hljs-number">5</span>
+]</code></pre>
 <h2><a name="library-authors" class="anchor" href="#library-authors">Library authors</a></h2><ul>
 <li>Which files need to be included in the nuget package?</li>
 </ul>
@@ -40,9 +93,7 @@ printfn <span class="hljs-string">"only printing in production bundle"</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">ItemGroup</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">Content</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">"*.fsproj; **\*.fs"</span> <span class="hljs-attr">PackagePath</span>=<span class="hljs-string">"fable\"</span> /&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">ItemGroup</span>&gt;</span></code></pre>
-<blockquote>
 <p>Possible cryptic error message when you don&#39;t include the project file and/or source files is <code>Cannot find root module</code>.</p>
-</blockquote>
 </div></div><div class="column"></div></div></div></div>
   <footer>
       <p> Fable <a href="https://github.com/fable-compiler/Fable">source code</a> is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.</p>

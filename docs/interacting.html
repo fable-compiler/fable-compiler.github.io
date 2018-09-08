@@ -177,6 +177,16 @@ myLib.myMethod(String <span class="hljs-string">"test"</span>)</code></pre>
     | U3.Case1 s -&gt; s
     | U3.Case2 i -&gt; string i
     | U3.Case3 t -&gt; t.Value</code></pre>
+<p>When passing arguments to a method accepting <code>U2</code>, <code>U3</code>... you can use the <code>!^</code> as syntax sugar so you don&#39;t need to type the exact case (the argument will still be type checked):</p>
+<pre><code class="language-fsharp"><span class="hljs-keyword">open</span> Fable.Core.JsInterop
+
+<span class="hljs-keyword">let</span> myMethod (arg: U3&lt;string, int, Test&gt;) = ...
+
+<span class="hljs-comment">// This is equivalent to: myMethod (U3.Case2 5)</span>
+myMethod !^<span class="hljs-number">5</span>
+
+<span class="hljs-comment">// This doesn't compile, myMethod doesn't accept floats</span>
+myMethod !^<span class="hljs-number">2.3</span></code></pre>
 <h3><a name="stringenum-attribute" class="anchor" href="#stringenum-attribute">StringEnum attribute</a></h3><p>Similarly, in TypeScript it&#39;s possible to define <a href="https://www.typescriptlang.org/docs/handbook/advanced-types.html#string-literal-types">String Literal Types</a> which are similar to enumerations with an underlying string value. Fable allows the same feature by using union types and the <code>StringEnum</code> attribute. These union types must not have any data fields as they will be compiled to a string matching the name of the union case.</p>
 <p>By default, the compiled string will have the first letter lowered. If you want to prevent this or use a different text than the union case name, use the <code>CompiledName</code> attribute:</p>
 <pre><code class="language-fsharp"><span class="hljs-keyword">open</span> Fable.Core
