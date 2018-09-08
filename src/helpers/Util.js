@@ -16,7 +16,7 @@ renderer.heading = function (text, level) {
 };
 
 renderer.link = function (href, title, text) {
-  return `<a href="${href.replace(/\.md$/, ".html")}">${text}</a>`;
+  return `<a href="${href.replace(/\.md\b/, ".html")}">${text}</a>`;
 }
 
 export function parseMarkdown(content) {
