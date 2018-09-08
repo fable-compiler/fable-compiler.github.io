@@ -16,26 +16,15 @@
 <body>
   <nav class="navbar"><div class="navbar-brand"><div class="navbar-item title is-4">Fable</div><div class="navbar-burger" data-target="navMenu"><span></span><span></span><span></span></div></div><div id="navMenu" class=" navbar-menu"><div class="navbar-start"><a class=" navbar-item" href="/">Home</a><a class=" navbar-item" href="/repl2">REPL</a><a class=" navbar-item" href="/blog">Blog</a><a class=" navbar-item" href="/docs">Docs</a><a class=" navbar-item is-active" href="/faq">FAQ</a><a class=" navbar-item" href="/fableconf">FableConf</a></div><div class="navbar-end"><div class="navbar-item"><div class="field is-grouped"><div class="control"><a class="button twitter" href="https://twitter.com/FableCompiler"><span class="icon"><i class="fa fa-twitter"></i></span><span>Share the love!</span></a></div><div class="control"><a class="button github" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class="fa fa-comments"></i></span><span>Chat</span></a></div><div class="control"><a class="button github" href="https://github.com/fable-compiler/Fable"><span class="icon"><i class="fa fa-github"></i></span><span>Contribute</span></a></div></div></div></div></div></nav>
   <div class="markdown faq" style="overflow:hidden"><section class="hero fable-header"><div class="hero-body"><div class="container"><div class="columns is-vcentered"><div class="column"><img class="fable-logo" src="/img/shared/fable_logo.png"/></div><div class="column    has-text-right        "><h1 class="title is-1">FAQ</h1><h1 class="subtitle is-4">The place to find a quick answer to your questions</h1></div></div></div></div></section><div style="margin-top:1.6rem"><div class="columns"><div class="column"></div><div class="column is-two-thirds"><div class="content" style="margin:5px"><h1><a name="faq" class="anchor" href="#faq">FAQ</a></h1><p>This is the section for quick questions or to miss the holes in the documentation. Check the first question below to learn how you can help make the FAQ a great resource for Fable users.</p>
-<h2><a name="general" class="anchor" href="#general">General</a></h2><ul>
-<li>How can I add a new question?</li>
-</ul>
-<p>Make sure the question is not answered already either here or in the documentation. Then just <a href="https://github.com/fable-compiler/Fable/edit/master/docs/FAQ.html">click here to edit this page in Github</a>, add your question to the bottom and create a PR. Maintainers will write an answer and ask you if that solves the issue. If it does, the PR will be merged and the question will be added to the page so it can be referenced by other users.</p>
-<h2><a name="compiler" class="anchor" href="#compiler">Compiler</a></h2><ul>
-<li>How can I run a certain piece of code only in my production build?</li>
-</ul>
-<p>Using a <a href="https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/compiler-directives">Compiler Directive</a>.</p>
+<h2><a name="general" class="anchor" href="#general">General</a></h2><h4><a name="how-can-i-add-a-new-question-" class="anchor" href="#how-can-i-add-a-new-question-">How can I add a new question?</a></h4><p>Make sure the question is not answered already either here or in the documentation. Then just <a href="https://github.com/fable-compiler/Fable/edit/master/docs/FAQ.html">click here to edit this page in Github</a>, add your question to the bottom and create a PR. Maintainers will write an answer and ask you if that solves the issue. If it does, the PR will be merged and the question will be added to the page so it can be referenced by other users.</p>
+<h2><a name="compiler" class="anchor" href="#compiler">Compiler</a></h2><h4><a name="can-i-use-type-providers-with-fable-" class="anchor" href="#can-i-use-type-providers-with-fable-">Can I use Type Providers with Fable?</a></h4><p>Erasure Type Providers compatible with netstandard should be compatible with Fable, however they must generate code that doesn&#39;t call .NET APIs unsupported by Fable. At the time of writing there are no Type Providers designed for Fable available.</p>
+<h4><a name="how-can-i-run-a-certain-piece-of-code-only-in-my-production-build-" class="anchor" href="#how-can-i-run-a-certain-piece-of-code-only-in-my-production-build-">How can I run a certain piece of code only in my production build?</a></h4><p>Using a <a href="https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/compiler-directives">Compiler Directive</a>.</p>
 <pre><code class="language-fsharp">#<span class="hljs-keyword">if</span> !DEBUG
 printfn <span class="hljs-string">"only printing in production bundle"</span>
 #endif</code></pre>
 <p>You can define compilation directives using the <code>define</code> option in your Fable client. Latest <a href="https://www.npmjs.com/package/fable-loader">fable-loader</a> will automatically define <code>DEBUG</code> when running Webpack in development mode.</p>
-<ul>
-<li>How are numbers compiled to JS?</li>
-</ul>
-<p>All numeric types including decimal become <code>JS number</code> (64-bit floating type), except for longs and big integers. Tom Clarke has documented in much more detail the differences in numeric types between .NET and JS, <a href="../docs/numbers.html">check it out</a>.</p>
-<h2><a name="fable-core" class="anchor" href="#fable-core">Fable.Core</a></h2><ul>
-<li>Which operators are used in Fable.Core?</li>
-</ul>
-<p>The <code>Fable.Core.JsInterop</code> module provides three main operators to interact with JS (all of them erased in generated JS code): <code>?</code> to dynamically access a property of an object, <code>!!</code> for unsafe casting (equivalent to <code>unbox</code>) and <code>!^</code> to pass arguments to a method accepting <a href="../docs/interacting.html#erase-attribute">Erased Unions</a>.</p>
+<h4><a name="how-are-numbers-compiled-to-js-" class="anchor" href="#how-are-numbers-compiled-to-js-">How are numbers compiled to JS?</a></h4><p>All numeric types including decimal become <code>JS number</code> (64-bit floating type), except for longs and big integers. Tom Clarke has documented in much more detail the differences in numeric types between .NET and JS, <a href="../docs/numbers.html">check it out</a>.</p>
+<h2><a name="fable-core" class="anchor" href="#fable-core">Fable.Core</a></h2><h4><a name="which-operators-are-used-in-fable-core-" class="anchor" href="#which-operators-are-used-in-fable-core-">Which operators are used in Fable.Core?</a></h4><p>The <code>Fable.Core.JsInterop</code> module provides three main operators to interact with JS (all of them erased in generated JS code): <code>?</code> to dynamically access a property of an object, <code>!!</code> for unsafe casting (equivalent to <code>unbox</code>) and <code>!^</code> to pass arguments to a method accepting <a href="../docs/interacting.html#erase-attribute">Erased Unions</a>.</p>
 <pre><code class="language-fsharp"><span class="hljs-keyword">open</span> Fable.Core.JsInterop
 
 <span class="hljs-keyword">let</span> jqElement = Browser.window?jQuery
@@ -44,10 +33,7 @@ myObject?aProperty &lt;- <span class="hljs-number">30</span>
 
 <span class="hljs-keyword">let</span> myMethod (arg: U3&lt;string, int, Test&gt;) = ...
 myMethod !^<span class="hljs-number">5</span> <span class="hljs-comment">// Same as: myMethod (U3.Case2 5)</span></code></pre>
-<ul>
-<li>How can I create a JS object?</li>
-</ul>
-<p>The <code>Fable.Core.JsInterop</code> module provides three helpers to create JS object. The first one, <code>createObj</code>, is used to dynamically create a JS object with string keys:</p>
+<h4><a name="how-can-i-create-a-js-object-" class="anchor" href="#how-can-i-create-a-js-object-">How can I create a JS object?</a></h4><p>The <code>Fable.Core.JsInterop</code> module provides three helpers to create JS object. The first one, <code>createObj</code>, is used to dynamically create a JS object with string keys:</p>
 <pre><code class="language-fsharp"><span class="hljs-keyword">open</span> Fable.Core.JsInterop
 
 <span class="hljs-comment">// { a: 5, b: aValue }</span>
@@ -85,10 +71,7 @@ keyValueList CaseRules.LowerFirst [
     Foo <span class="hljs-string">"foo"</span>
     Bar <span class="hljs-number">5</span>
 ]</code></pre>
-<h2><a name="library-authors" class="anchor" href="#library-authors">Library authors</a></h2><ul>
-<li>Which files need to be included in the nuget package?</li>
-</ul>
-<p>The F# source code and the F# project file have to be included in the Nuget Package in a folder named <code>fable</code> within the package. This may sound complicated but it&#39;s only a matter of adding a couple of lines to your project file and let the <code>dotnet pack</code> command do all the rest.</p>
+<h2><a name="library-authors" class="anchor" href="#library-authors">Library authors</a></h2><h4><a name="which-files-need-to-be-included-in-the-nuget-package-" class="anchor" href="#which-files-need-to-be-included-in-the-nuget-package-">Which files need to be included in the nuget package?</a></h4><p>The F# source code and the F# project file have to be included in the Nuget Package in a folder named <code>fable</code> within the package. This may sound complicated but it&#39;s only a matter of adding a couple of lines to your project file and let the <code>dotnet pack</code> command do all the rest.</p>
 <pre><code class="language-xml"><span class="hljs-comment">&lt;!-- Add source files to "fable" folder in Nuget package --&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">ItemGroup</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">Content</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">"*.fsproj; **\*.fs"</span> <span class="hljs-attr">PackagePath</span>=<span class="hljs-string">"fable\"</span> /&gt;</span>
