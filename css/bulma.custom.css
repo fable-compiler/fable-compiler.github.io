@@ -6441,6 +6441,8 @@ footer {
 .navbar {
   font-size: 1.2em;
   background-color: #202020; }
+  .navbar .navbar-menu {
+    background-color: #202020; }
   .navbar .title {
     color: #686868;
     font-weight: 600;
