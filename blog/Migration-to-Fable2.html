@@ -1,0 +1,330 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Fable Blog</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,300,600,700|Roboto+Mono">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/bulma.custom.css">
+  <link rel="stylesheet" type="text/css" href="/css/highlight.css">
+  <link rel="shortcut icon" href="/img/shared/fable.ico" />
+  <script src="https://cdn.polyfill.io/v2/polyfill.js?features=default,fetch"></script>
+</head>
+
+<body>
+  <nav class="navbar"><div class="navbar-brand"><div class="navbar-item title is-4">Fable</div><div class="navbar-burger" data-target="navMenu"><span></span><span></span><span></span></div></div><div id="navMenu" class=" navbar-menu"><div class="navbar-start"><a class=" navbar-item" href="/">Home</a><a class=" navbar-item" href="/repl2">REPL</a><a class=" navbar-item is-active" href="/blog">Blog</a><a class=" navbar-item" href="/docs">Docs</a><a class=" navbar-item" href="/faq">FAQ</a><a class=" navbar-item" href="/fableconf">FableConf</a></div><div class="navbar-end"><div class="navbar-item"><div class="field is-grouped"><div class="control"><a class="button twitter" href="https://twitter.com/FableCompiler"><span class="icon"><i class="fa fa-twitter"></i></span><span>Share the love!</span></a></div><div class="control"><a class="button github" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class="fa fa-comments"></i></span><span>Chat</span></a></div><div class="control"><a class="button github" href="https://github.com/fable-compiler/Fable"><span class="icon"><i class="fa fa-github"></i></span><span>Contribute</span></a></div></div></div></div></div></nav>
+  <div class="markdown blog" style="overflow:hidden"><section class="hero fable-header"><div class="hero-body"><div class="container"><div class="columns is-vcentered"><div class="column"><img class="fable-logo" src="/img/shared/fable_logo.png"/></div><div class="column    has-text-right        "><h1 class="title is-1">Migration to Fable 2</h1><h1 class="subtitle is-4">Everything you need to know to migrate</h1></div></div></div></div></section><div style="margin-top:1.6rem"><div class="columns"><div class="column"></div><div class="column is-two-thirds"><div class="content" style="margin:5px"><h2><a name="tl-dr" class="anchor" href="#tl-dr">TL;DR</a></h2><p>With this document we are going to convert a Fable 1 project into a Fable 2 project.</p>
+<div class="message is-info">
+<div class="message-body">
+This guide has been writed by converting Fulma.Minimal template from Fable 1 to Fable 2.
+
+<p>You can see all the changes made by looking at <a href="https://github.com/MangelMaxime/Fulma/commit/24c9269fc08eac9c66e774aec4a5fe4132968805">this commit</a>.</p>
+</div>
+</div>
+
+<h3><a name="upgrade-to-babel-7" class="anchor" href="#upgrade-to-babel-7">Upgrade to Babel 7</a></h3><p>During Fable 2 development, <a href="https://babeljs.io/blog/2018/08/27/7.0.0">Babel 7</a> has been released so we need to upgrade to it. Hopefully for us, they created a tool to help us.</p>
+<ol>
+<li><p>Install <a href="https://github.com/zkat/npx#readme">npx</a>, this a CLI program allowing us to run npm packages.</p>
+<ul>
+<li>For npm: <code>npm install -g npx</code></li>
+<li>For yarn: <code>yarn global add npx</code></li>
+</ul>
+</li>
+<li><p>Run <code>npx babel-upgrade --write</code>, this will modify the nearest <code>package.json</code></p>
+</li>
+</ol>
+<h3><a name="upgrade-fable-39-s-npm-package" class="anchor" href="#upgrade-fable-39-s-npm-package">Upgrade fable&#39;s npm package</a></h3><ol>
+<li><p>Upgrade <code>fable-loader</code> to latest version <code>2.x.x</code></p>
+<ul>
+<li>For npm: <code>npm update fable-loader@latest</code></li>
+<li>For yarn: <code>yarn upgrade fable-loader@latest</code></li>
+</ul>
+</li>
+<li><p>Remove <code>fable-utils</code>, it is not needed anymore</p>
+<ul>
+<li>For npm: <code>npm uninstall fable-utils</code></li>
+<li>For yarn: <code>yarn remove fable-utils</code></li>
+</ul>
+</li>
+</ol>
+<h3><a name="update-your-webpack-config-js" class="anchor" href="#update-your-webpack-config-js">Update your webpack.config.js</a></h3><div class="message is-info">
+<div class="message-body">
+
+<p>In order to best benefit of new Fable 2 tree-shaking and module size reduction we encourage you to upgrade all your webpack related packages to their latest version.</p>
+</div>
+</div>
+
+<p>Here are the key points to consider for updating your <code>webpack.config.js</code>:</p>
+<h5><a name="1-remove-code-resolve-modules-code-" class="anchor" href="#1-remove-code-resolve-modules-code-">1. Remove <code>resolve.modules</code></a></h5><p>Now, fable will create a <code>.fable</code> folder located near your <code>package.json</code> so JavaScript tools works natively.</p>
+<p>Remove this lines from your <code>webpack.config.js</code></p>
+<div class="columns">
+<div class="column"></div>
+<div class="column is-half">
+
+<pre><code class="language-js">resolve: {
+    <span class="hljs-attr">modules</span>: [
+        <span class="hljs-string">"node_modules/"</span>,
+        resolve(<span class="hljs-string">"./node_modules/"</span>)
+    ]
+},</code></pre>
+</div>
+<div class="column"></div>
+</div>
+
+<h5><a name="2-remove-any-reference-to-code-fable-utils-code-" class="anchor" href="#2-remove-any-reference-to-code-fable-utils-code-">2. Remove any reference to <code>fable-utils</code></a></h5><div class="columns">
+
+<div class="column">
+<div class="has-text-centered has-text-weight-semibold">
+With Fable 1
+</div>
+
+<pre><code class="language-js"><span class="hljs-keyword">const</span> fableUtils = <span class="hljs-built_in">require</span>(<span class="hljs-string">"fable-utils"</span>);
+
+<span class="hljs-comment">// ...</span>
+
+<span class="hljs-keyword">var</span> babelOptions = fableUtils.resolveBabelOptions({
+    <span class="hljs-attr">presets</span>: [
+        <span class="hljs-comment">// ...</span></code></pre>
+</div>
+
+<div class="column">
+<div class="has-text-centered has-text-weight-semibold">
+With Fable 2
+</div>
+
+<pre><code class="language-js">
+
+
+
+<span class="hljs-keyword">var</span> babelOptions = {
+    <span class="hljs-attr">presets</span>: [
+        <span class="hljs-comment">// ...</span></code></pre>
+</div>
+
+</div>
+
+
+<h5><a name="3-update-code-babeloptions-code-" class="anchor" href="#3-update-code-babeloptions-code-">3. Update <code>babelOptions</code></a></h5><p>Because you are now using Babel 7, you need to use <code>@babel</code> scope if available.</p>
+<div class="columns">
+
+<div class="column">
+<div class="has-text-centered has-text-weight-semibold">
+With Fable 1
+</div>
+
+<pre><code class="language-js"><span class="hljs-keyword">var</span> babelOptions = fableUtils.resolveBabelOptions({
+    <span class="hljs-attr">presets</span>: [
+        [<span class="hljs-string">"env"</span>, {
+            <span class="hljs-string">"targets"</span>: {
+                <span class="hljs-string">"browsers"</span>: [<span class="hljs-string">"last 2 versions"</span>]
+            },
+            <span class="hljs-string">"modules"</span>: <span class="hljs-literal">false</span>
+        }]
+    ]
+});</code></pre>
+<pre><code class="language-js">babel-polyfill</code></pre>
+</div>
+
+<div class="column">
+<div class="has-text-centered has-text-weight-semibold">
+With Fable 2
+</div>
+
+<pre><code class="language-js"><span class="hljs-keyword">var</span> babelOptions = {
+    <span class="hljs-attr">presets</span>: [
+        [<span class="hljs-string">"@babel/preset-env"</span>, {
+            <span class="hljs-string">"targets"</span>: {
+                <span class="hljs-string">"browsers"</span>: [<span class="hljs-string">"last 2 versions"</span>]
+            },
+            <span class="hljs-string">"modules"</span>: <span class="hljs-literal">false</span>
+        }]
+    ]
+};</code></pre>
+<pre><code class="language-js">@babel/polyfill</code></pre>
+</div>
+
+</div>
+
+<h5><a name="4-remove-unnecessary-absolute-paths" class="anchor" href="#4-remove-unnecessary-absolute-paths">4. Remove unnecessary absolute paths</a></h5><p>Because Fable 2, now creates a <code>.fable</code> folder you are not forced anymore to use <strong>absolute</strong> filepaths. All the filepaths are now relative to the nearest <code>package.json</code> found by Fable.</p>
+<div class="message is-info">
+<div class="message-body">
+
+<p>If you are not sure of your <em>current working directory</em>, you can run Fable.</p>
+<pre><code>Fable (2.0.1) daemon started on port 56569
+CWD: /Users/maximemangel/Workspaces/Github/MangelMaxime/Fulma/templates/Content</code></pre><p>Here the <em>current working directory</em> is <code>/Users/maximemangel/Workspaces/Github/MangelMaxime/Fulma/templates/Content</code></p>
+</div>
+</div>
+
+<div class="message is-warning">
+<div class="message-body">
+
+<p>If you are using latest version of Webpack you still need to provide an absolute path for the <code>output</code></p>
+<pre><code class="language-js"><span class="hljs-built_in">module</span>.exports = {
+    <span class="hljs-comment">// ...</span>
+    output: {
+        <span class="hljs-attr">path</span>: path.join(__dirname, CONFIG.outputDir),
+    }
+    <span class="hljs-comment">// ...</span>
+};</code></pre>
+</div>
+</div>
+
+
+<p>You can find <a href="https://github.com/fable-compiler/webpack-config-template/blob/master/webpack.config.js">here</a> a <code>webpack.config.js</code> file to serve as a template for yours.</p>
+<p>If needed you can also take a look at the Fulma.Minimal diff <a href="https://github.com/MangelMaxime/Fulma/commit/24c9269fc08eac9c66e774aec4a5fe4132968805#diff-b81ec06774f7dfd70d0cac66cf146951">here</a>.</p>
+<h3><a name="update-fable-nuget-package" class="anchor" href="#update-fable-nuget-package">Update fable nuget package</a></h3><p>Run <code>.paket/paket.exe update</code> to install the latest version of your dependencies. You can check that you are using the correct version of the package by comparing with this list:</p>
+<div class="has-text-centered has-text-italic">
+At the time of writing here are the version retrieved
+</div>
+
+<div class="columns">
+<div class="column"></div>
+<div class="column">
+
+<table class="table is-hoverable is-striped" style="min-width: 300px">
+<thead>
+<tr>
+<th> Package </th>
+<th> Version </th>
+</tr>
+</thead>
+<tbody>
+
+<tr class="has-background-grey-lighter">
+    <td class="has-text-centered" colspan="2"> Common to any Fable project </td>
+</tr>
+
+<tr>
+    <td>Fable.Core</td>
+    <td> 2.0.0</td>
+</tr>
+<tr>
+    <td>dotnet-fable</td>
+    <td> 2.0.1</td>
+</tr>
+
+<tr class="has-background-grey-lighter">
+<td class="has-text-centered" <td colspan="2"> For projects using Elmish </td>
+</tr>
+
+<tr>
+    <td> Fable.React </td>
+    <td> 4.0.1 </td>
+</tr>
+<tr>
+    <td> Fable.Elmish </td>
+    <td> 2.0.0 </td>
+</tr>
+<tr>
+    <td> Fable.Elmish.React </td>
+    <td> 2.0.0 </td>
+</tr>
+<tr>
+    <td> Fable.Elmish.Browser </td>
+    <td> 2.0.0 </td>
+</tr>
+<tr>
+    <td> Fable.Elmish.Debugger </td>
+    <td> 2.0.0 </td>
+</tr>
+<tr>
+    <td> Fable.Elmish.HMR </td>
+    <td> 2.0.0 </td>
+</tr>
+
+</tbody>
+</thead>
+</table>
+
+</div>
+
+<div class="column is-1-desktop"></div>
+
+<div class="column">
+
+<table class="table is-hoverable is-striped" style="min-width: 300px">
+<thead>
+<tr>
+<th> Package </th>
+<th> Version </th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr class="has-background-grey-lighter">
+    <td class="has-text-centered" colspan="2"> General libraries </td>
+</tr>
+
+<tr>
+    <td> Fable.PowerPack </td>
+    <td> 2.0.1 </td>
+</tr>
+<tr>
+    <td> Fulma </td>
+    <td> 1.0.0 </td>
+</tr>
+<tr>
+    <td> Fulma.Extensions </td>
+    <td> 1.0.0 </td>
+</tr>
+<tr>
+    <td> Thoth.Json </td>
+    <td> 2.1.0 </td>
+</tr>
+
+</tbody>
+</thead>
+</table>
+
+</div>
+<div class="column"></div>
+</div>
+
+<h3><a name="breaking-changes" class="anchor" href="#breaking-changes">Breaking changes</a></h3><p>Fable 2 introduce severals breaking changes, it will inform you by displaying an <em>obsolete</em> warning or by generating a warning in the ouput.</p>
+<p>Most important changes are:</p>
+<ul>
+<li><code>PojoAttribute</code> is not needed anymore</li>
+<li><code>PassGenericsAttribute</code> is also deprecated. If you need to resolve a generic argument, please inline the function. If you only need the <code>Type</code> of a generic argument, you can use <a href="https://github.com/fable-compiler/Fable/blob/d0f09bb74524c03d200249ea12906e426e170b44/tests/Main/ReflectionTests.fs#L402-L405">the <code>Fable.Core.Inject</code> attribute with <code>ITypeResolver</code></a>.</li>
+<li><strong>JSON serialization</strong>, you now need to choose between <a href="https://mangelmaxime.github.io/Thoth/json/v2/decode.html">Thoth.Json</a> and <a href="https://github.com/Zaid-Ajaj/Fable.SimpleJson/">Fable.SimpleJson</a>. If you need to support serialization both on Fable and .Net side you need to use <a href="https://mangelmaxime.github.io/Thoth/json/v2/net.html">Thoth.Json</a> as Fable.SimpleJson is based on a JavaScript library.</li>
+</ul>
+<p>If you want to quickly test Fable 2 and not convert all your <code>ofJson/toJson</code> reference yet. You can use the following polyfills:</p>
+<div class="columns">
+<div class="column"></div>
+<div class="column">
+
+<pre><code class="language-fsharp"><span class="hljs-keyword">open</span> Thoth.Json
+
+<span class="hljs-keyword">let</span> <span class="hljs-keyword">inline</span> toJson x = Encode.Auto.toString(<span class="hljs-number">0</span>, x)
+
+<span class="hljs-keyword">let</span> <span class="hljs-keyword">inline</span> ofJson&lt;<span class="hljs-symbol">'T</span>&gt; x = Decode.Auto.unsafeFromString&lt;Record9&gt;(json)</code></pre>
+</div>
+<div class="column"></div>
+</div>
+
+<p>See <a href="https://mangelmaxime.github.io/Thoth/json/v2/decode.html#auto-decoder">Thoth.Json auto decoder</a> documentation for more information about them.</p>
+</div></div><div class="column"></div></div></div></div>
+  <footer>
+      <p> Fable <a href="https://github.com/fable-compiler/Fable">source code</a> is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.</p>
+  </footer>
+  <script>
+    // Activate navbar burget button
+    document.addEventListener('DOMContentLoaded', function () {
+      var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+      if ($navbarBurgers.length > 0) {
+        $navbarBurgers.forEach(function ($el) {
+          $el.addEventListener('click', function () {
+            var target = $el.dataset.target;
+            var $target = document.getElementById(target);
+            $el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>
