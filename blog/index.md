@@ -4,7 +4,7 @@ Check our blog to be up-to-date with recent developments in Fable community and 
 
 ## [Migration to Fable 2](Migration-to-Fable2.html)
 
-> By [Mangel Maxime](https://twitter.com/MangelMaxime) & [Alfonso García-Caro](https://twitter.com/alfonsogcnunez) on October 1, 2018
+> By [Mangel Maxime](https://twitter.com/MangelMaxime) on October 1, 2018
 
 ## [Introducing Fable 2.0 beta](Introducing-2-0-beta.html)
 
