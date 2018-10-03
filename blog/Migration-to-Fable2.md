@@ -55,6 +55,10 @@ Now, fable will create a `.fable` folder located near your `package.json` so Jav
 
 Remove this lines from your `webpack.config.js`
 
+<div class="columns">
+<div class="column"></div>
+<div class="column is-half">
+
 ```js
 resolve: {
     modules: [
@@ -63,6 +67,10 @@ resolve: {
     ]
 },
 ```
+
+</div>
+<div class="column"></div>
+</div>
 
 ##### 2. Remove any reference to `fable-utils`
 
@@ -325,3 +333,23 @@ Most important changes are:
 - `PojoAttribute` is not needed anymore
 - `PassGenericsAttribute` is also deprecated. If you need to resolve a generic argument, please inline the function. If you only need the `Type` of a generic argument, you can use [the `Fable.Core.Inject` attribute with `ITypeResolver`](https://github.com/fable-compiler/Fable/blob/d0f09bb74524c03d200249ea12906e426e170b44/tests/Main/ReflectionTests.fs#L402-L405).
 - **JSON serialization**, you now need to choose between [Thoth.Json](https://mangelmaxime.github.io/Thoth/json/v2/decode.html) and [Fable.SimpleJson](https://github.com/Zaid-Ajaj/Fable.SimpleJson/). If you need to support serialization both on Fable and .Net side you need to use [Thoth.Json](https://mangelmaxime.github.io/Thoth/json/v2/net.html) as Fable.SimpleJson is based on a JavaScript library.
+
+If you want to quickly test Fable 2 and not convert all your `ofJson/toJson` reference yet. You can use the following polyfills:
+
+<div class="columns">
+<div class="column"></div>
+<div class="column">
+
+```fs
+open Thoth.Json
+
+let inline toJson x = Encode.Auto.toString(0, x)
+
+let inline ofJson<'T> x = Decode.Auto.unsafeFromString<Record9>(json)
+```
+
+</div>
+<div class="column"></div>
+</div>
+
+See [Thoth.Json auto decoder](https://mangelmaxime.github.io/Thoth/json/v2/decode.html#auto-decoder) documentation for more information about them.
