@@ -340,7 +340,7 @@ If you want to quickly test Fable 2 and not convert all your `ofJson/toJson` ref
 <div class="column"></div>
 <div class="column">
 
-```fs
+```fsharp
 open Thoth.Json
 
 let inline toJson x = Encode.Auto.toString(0, x)
