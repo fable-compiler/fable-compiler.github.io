@@ -3,6 +3,7 @@ public/**/*.*
 !public/img/**/*.*
 !public/repl/**/*.*
 !public/css/highlight.css
+!public/404.html
 !public/CNAME
 !public/README.md
 **/.DS_Store
