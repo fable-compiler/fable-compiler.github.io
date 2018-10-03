@@ -23,6 +23,19 @@
 printfn <span class="hljs-string">"only printing in production bundle"</span>
 #endif</code></pre>
 <p>You can define compilation directives using the <code>define</code> option in your Fable client. Latest <a href="https://www.npmjs.com/package/fable-loader">fable-loader</a> will automatically define <code>DEBUG</code> when running Webpack in development mode.</p>
+<h4><a name="how-can-i-make-the-compilation-fail-on-incomplete-pattern-matches-" class="anchor" href="#how-can-i-make-the-compilation-fail-on-incomplete-pattern-matches-">How can I make the compilation fail on incomplete pattern matches?</a></h4><p>Fable emits a warning on incomplete pattern matching expressions by default. To turn this particular warning into an error, add the following block to your project file:</p>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Project</span> <span class="hljs-attr">Sdk</span>=<span class="hljs-string">"Microsoft.NET.Sdk"</span>&gt;</span>
+  <span class="hljs-comment">&lt;!-- ... --&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">PropertyGroup</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- FS0025: Incomplete pattern matches on this expression. --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">WarningsAsErrors</span>&gt;</span>25<span class="hljs-tag">&lt;/<span class="hljs-name">WarningsAsErrors</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">PropertyGroup</span>&gt;</span>
+
+  <span class="hljs-comment">&lt;!-- ... --&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">Project</span>&gt;</span></code></pre>
+<p>This setting will not only make your compilation process fail on the command line, but will also make your IDE show an error at the location in the source code.</p>
+<p>To turn more warnings into errors, separate them with commas or semicolons.</p>
 <h4><a name="how-are-numbers-compiled-to-js-" class="anchor" href="#how-are-numbers-compiled-to-js-">How are numbers compiled to JS?</a></h4><p>All numeric types including decimal become <code>JS number</code> (64-bit floating type), except for longs and big integers. Tom Clarke has documented in much more detail the differences in numeric types between .NET and JS, <a href="../docs/numbers.html">check it out</a>.</p>
 <h2><a name="fable-core" class="anchor" href="#fable-core">Fable.Core</a></h2><h4><a name="which-operators-are-used-in-fable-core-" class="anchor" href="#which-operators-are-used-in-fable-core-">Which operators are used in Fable.Core?</a></h4><p>The <code>Fable.Core.JsInterop</code> module provides three main operators to interact with JS (all of them erased in generated JS code): <code>?</code> to dynamically access a property of an object, <code>!!</code> for unsafe casting (equivalent to <code>unbox</code>) and <code>!^</code> to pass arguments to a method accepting <a href="../docs/interacting.html#erase-attribute">Erased Unions</a>.</p>
 <pre><code class="language-fsharp"><span class="hljs-keyword">open</span> Fable.Core.JsInterop
