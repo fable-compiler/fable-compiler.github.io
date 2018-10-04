@@ -15,7 +15,7 @@ You can see all the changes made by looking at [this commit](https://github.com/
 
 ### Upgrade to Babel 7
 
-During Fable 2 development, [Babel 7](https://babeljs.io/blog/2018/08/27/7.0.0) has been released so we need to upgrade to it. Hopefully for us, they created a tool to help us.
+During Fable 2 development, [Babel 7](https://babeljs.io/blog/2018/08/27/7.0.0) has been released so we need to upgrade to it. Helpfully for us, they created a tool to help us.
 
 1. Install [npx](https://github.com/zkat/npx#readme), this a CLI program allowing us to run npm packages.
 
