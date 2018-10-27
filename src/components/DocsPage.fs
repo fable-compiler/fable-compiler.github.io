@@ -2,6 +2,7 @@ module WebGenerator.Components.DocsPage
 
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
+open Fulma
 open Fulma.FontAwesome
 open WebGenerator.Helpers
 open WebGenerator.Types
@@ -22,7 +23,7 @@ let renderBody title subtitle (info: PageInfo) =
   div [Style [Overflow "hidden"]] [
     Header.render title subtitle
     renderIntro [introText]
-    div [Style [Margin "20px 10px 0 10px"]] [
+    Container.container [] [
       div [Class "columns"] [
         div [Class "column"] [cardTexts.[0] |||> renderCard (FaIcon Fa.I.Rocket)]
         div [Class "column"] [cardTexts.[1] |||> renderCard (FaIcon Fa.I.Refresh)]

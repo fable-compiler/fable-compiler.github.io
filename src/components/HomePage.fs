@@ -33,7 +33,7 @@ let renderBody (info: PageInfo) =
   div [Style [Overflow "hidden"]] [
     Header.render "F# |> BABEL" "The compiler that emits JavaScript you can be proud of!"
     renderIntro [introText]
-    div [Style [Margin "20px 10px 0 10px"]] [
+    Container.container [] [
       Columns.columns []
         [ Column.column [] [cardTexts.[0] |||> renderCard (Img "./img/fsharp.png")]
           Column.column [] [cardTexts.[1] |||> renderCard (FaIcon Fa.I.BatteryFull)]
