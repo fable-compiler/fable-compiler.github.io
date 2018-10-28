@@ -345,7 +345,7 @@ open Thoth.Json
 
 let inline toJson x = Encode.Auto.toString(0, x)
 
-let inline ofJson<'T> x = Decode.Auto.unsafeFromString<Record9>(json)
+let inline ofJson<'T> json = Decode.Auto.unsafeFromString<'T>(json)
 ```
 
 </div>
