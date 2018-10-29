@@ -4,8 +4,9 @@
     "postinstall": "dotnet restore src",
     "server": "reload -b --dir public",
     "sass": "node-sass files/styles.sass public/css/bulma.custom.css",
-    "start-all": "concurrently -k \"cd src && dotnet fable fable-splitter -- -w\" \"yarn server\" \"yarn sass -w\"",
-    "build-all": "concurrently \"cd src && dotnet fable-splitter\" \"yarn sass\"",
+    "sass-watch": "yarn sass && yarn sass -w",
+    "start-all": "concurrently -k \"cd src && dotnet fable fable-splitter -- -w\" \"yarn server\" \"yarn sass-watch\"",
+    "build-all": "concurrently \"cd src && dotnet fable fable-splitter\" \"yarn sass\"",
     "predeploy": "yarn sass && node build/Main.js",
     "deploy": "gh-pages -d public -b master"
   },

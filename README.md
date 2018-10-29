@@ -1,14 +1,10 @@
 # [Fable website](http://fable.io) generator
 
-This project generates the static web pages for [Fable website](http://fable.io) using several resources, among them:
+This project generates the static web pages for [Fable website](http://fable.io). Requirements are the same as for other Fable projects (plus [yarn](https://yarnpkg.com/)).
 
-- [Markdown docs in Fable repo](https://github.com/fable-compiler/Fable/tree/master/docs)
-- React components built with [Fable.React](https://github.com/fable-compiler/fable-react)
-- [Handlebars templates](http://handlebarsjs.com/)
+The F# project in `src` is compiled to a node app using Fable and then executed to generate the static pages. To run the app in development mode (with live reload of the server whenever F# sources change) run the following commands.
 
-The F# project in `src` is compiled to a node app using Fable and then executed to generate the static pages. To run app the app in development mode (with live reload of the server whenever F# sources change) run the following commands.
-
-> Requirements are the same as for other Fable projects. [yarn](https://yarnpkg.com/) is used as the JS package manager.
+> TL;DR Run `yarn` to install dependencies, `yarn start-all` for development and `yarn deploy` to update the site.
 
 Install JS and F# dependencies (only first time or whenever dependencies change):
 
@@ -45,7 +41,7 @@ Alternatively, you can run the following to run the three processes (Fable, serv
 yarn start-all
 ```
 
-## Build and publish to Github pages
+## Render the pages and publish them to Github
 
 Run `yarn deploy` (this assumes you already compiled the F# project).
 
