@@ -299,7 +299,7 @@ At the time of writing here are the version retrieved
 
 <span class="hljs-keyword">let</span> <span class="hljs-keyword">inline</span> toJson x = Encode.Auto.toString(<span class="hljs-number">0</span>, x)
 
-<span class="hljs-keyword">let</span> <span class="hljs-keyword">inline</span> ofJson&lt;<span class="hljs-symbol">'T</span>&gt; x = Decode.Auto.unsafeFromString&lt;Record9&gt;(json)</code></pre>
+<span class="hljs-keyword">let</span> <span class="hljs-keyword">inline</span> ofJson&lt;<span class="hljs-symbol">'T</span>&gt; json = Decode.Auto.unsafeFromString&lt;<span class="hljs-symbol">'T</span>&gt;(json)</code></pre>
 </div>
 <div class="column"></div>
 </div>
