@@ -1,26 +1,25 @@
-module WebGenerator.Main
+module Main
 
 open System.Text.RegularExpressions
 open Fable.Core.JsInterop
 open Fable.Import
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open WebGenerator.Components
-open WebGenerator.Literals
-open Helpers
-open Types
+open Components
+open Util.Literals
+open Util.Helpers
+open Util.Types
 
 module Node = Fable.Import.Node.Exports
 module NodeGlobals = Fable.Import.Node.Globals
 
-let parseMarkdown(content: string): string = importMember "./helpers/Util.js"
+let parseMarkdown(content: string): string = importMember "./util/Util.js"
 
 let render (info: PageInfo) =
-    [ "title" ==> info.Title
-      // "root" ==> Node.path.dirname(Node.path.relative(Paths.PublicDir, info.TargetPath))
-      "navbar" ==> (Navbar.root info.NavbarActivePage |> parseReactStatic)
-      "body" ==> (info.RenderBody(info) |> parseReactStatic) ]
-    |> parseTemplate Paths.Template
+    Frame.render info.Title []
+      (Navbar.root info.NavbarActivePage)
+      (info.RenderBody(info))
+    |> parseReactStatic
     |> writeFile info.TargetPath
 
 let renderMarkdown pageTitle navbar header subheader className targetFullPath content =
@@ -40,11 +39,8 @@ let renderMarkdown pageTitle navbar header subheader className targetFullPath co
           ]
         ]
       ]
-    [ "title" ==> pageTitle
-      "extraCss" ==> [| "/css/highlight.css" |]
-      "navbar" ==> (Navbar.root navbar |> parseReactStatic)
-      "body" ==> parseReactStatic body ]
-    |> parseTemplate Paths.Template
+    Frame.render pageTitle ["/css/highlight.css"] (Navbar.root navbar) body
+    |> parseReactStatic
     |> writeFile targetFullPath
 
 let renderMarkdownFrom pageTitle navbar header subheader className fileFullPath targetFullPath =
@@ -56,29 +52,29 @@ let renderDocs() =
   // Main docs page
   render
     { Title = pageTitle
-      TargetPath = Node.path.join(Paths.PublicDir, "docs", "index.html")
-      NavbarActivePage = Literals.Navbar.Docs
+      TargetPath = Node.path.join(Paths.DeployDir, "docs", "index.html")
+      NavbarActivePage = Navbar.Docs
       RenderBody = DocsPage.renderBody header subheader }
   // Docs translated from markdown files in Fable repo
   let docFiles = Node.fs.readdirSync(!^Node.path.join(Paths.FableRepo, "docs"))
   for doc in docFiles |> Seq.filter (fun x -> x.EndsWith(".md") && not(x.EndsWith("FAQ.md"))) do
     let fullPath = Node.path.join(Paths.FableRepo, "docs", doc)
-    let targetPath = Node.path.join(Paths.PublicDir, "docs", doc.Replace(".md", ".html"))
-    renderMarkdownFrom pageTitle Literals.Navbar.Docs header subheader "docs" fullPath targetPath
+    let targetPath = Node.path.join(Paths.DeployDir, "docs", doc.Replace(".md", ".html"))
+    renderMarkdownFrom pageTitle Navbar.Docs header subheader "docs" fullPath targetPath
   printfn "Documentation generated"
 
 let renderFaq() =
   let subheader = "The place to find a quick answer to your questions"
   let fullPath = Node.path.join(Paths.FableRepo, "docs/FAQ.md")
-  let targetPath = Node.path.join(Paths.PublicDir, "faq/index.html")
-  renderMarkdownFrom "Fable FAQ" Literals.Navbar.FAQ "FAQ" subheader "faq" fullPath targetPath
+  let targetPath = Node.path.join(Paths.DeployDir, "faq/index.html")
+  renderMarkdownFrom "Fable FAQ" Navbar.FAQ "FAQ" subheader "faq" fullPath targetPath
   printfn "FAQ generated"
 
 let renderBlog() =
   let reg = Regex(@"^\s*-\s*title\s*:(.+)\n\s*-\s*subtitle\s*:(.+)\n")
   let pageTitle, header, subheader = "Fable Blog", "Blog", "Read about latest Fable news"
-  renderMarkdownFrom pageTitle Literals.Navbar.Blog header subheader "blog"
-    (Node.path.join(Paths.BlogDir, "index.md")) (Node.path.join(Paths.PublicDir, "blog", "index.html"))
+  renderMarkdownFrom pageTitle Navbar.Blog header subheader "blog"
+    (Node.path.join(Paths.BlogDir, "index.md")) (Node.path.join(Paths.DeployDir, "blog", "index.html"))
   let blogFiles = Node.fs.readdirSync(!^Paths.BlogDir)
   for blog in blogFiles |> Seq.filter (fun x -> x.EndsWith(".md")) do
     let text = Node.fs.readFileSync(Node.path.join(Paths.BlogDir, blog)).toString()
@@ -87,18 +83,19 @@ let renderBlog() =
       if m.Success
       then m.Groups.[1].Value.Trim(), m.Groups.[2].Value.Trim(), text.Substring(m.Index + m.Length)
       else header, subheader, text
-    let targetPath = Node.path.join(Paths.PublicDir, "blog", blog.Replace(".md", ".html"))
-    renderMarkdown pageTitle Literals.Navbar.Blog header subheader "blog" targetPath text
+    let targetPath = Node.path.join(Paths.DeployDir, "blog", blog.Replace(".md", ".html"))
+    renderMarkdown pageTitle Navbar.Blog header subheader "blog" targetPath text
   printfn "Blog generated"
 let renderHomePage() =
   render
     { Title = "Fable: JavaScript you can be proud of!"
-      TargetPath = Node.path.join(Paths.PublicDir, "index.html")
-      NavbarActivePage = Literals.Navbar.Home
+      TargetPath = Node.path.join(Paths.DeployDir, "index.html")
+      NavbarActivePage = Navbar.Home
       RenderBody = HomePage.renderBody }
   printfn "Home page generated"
 
 // Run
+copy Paths.PublicDir Paths.DeployDir
 renderHomePage()
 renderBlog()
 renderDocs()

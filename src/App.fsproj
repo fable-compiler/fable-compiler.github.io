@@ -3,9 +3,10 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="helpers/Helpers.fs" />
-    <Compile Include="helpers/Literals.fs" />
-    <Compile Include="helpers/Types.fs" />
+    <Compile Include="util/Helpers.fs" />
+    <Compile Include="util/Literals.fs" />
+    <Compile Include="util/Types.fs" />
+    <Compile Include="components/Frame.fs" />
     <Compile Include="components/Navbar.fs" />
     <Compile Include="components/Header.fs" />
     <Compile Include="components/HomePage.fs" />

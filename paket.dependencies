@@ -2,18 +2,10 @@ source https://nuget.org/api/v2
 storage:none
 framework:netstandard2.0,netcoreapp2.0
 
-clitool dotnet-fable prerelease
-nuget Fable.Core prerelease
-nuget Fable.PowerPack prerelease
-nuget Fable.React prerelease
+clitool dotnet-fable
+nuget Fable.Core
+nuget Fable.PowerPack
+nuget Fable.React
 nuget Fable.Import.Browser
 nuget Fable.Import.Node
-nuget Fulma prerelease
-
-group Build
-  source https://nuget.org/api/v2
-  storage: packages
-  framework >= net45
-
-  nuget FAKE ~> 4
-  github fsharp/FAKE modules/Octokit/Octokit.fsx
+nuget Fulma

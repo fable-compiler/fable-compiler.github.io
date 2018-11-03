@@ -1,4 +1,4 @@
-module WebGenerator.Types
+module Util.Types
 
 open System
 open Fable.Core

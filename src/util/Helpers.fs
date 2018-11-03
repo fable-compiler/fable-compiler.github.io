@@ -1,4 +1,4 @@
-module WebGenerator.Helpers
+module Util.Helpers
 
 open System
 open System.Collections.Generic
@@ -9,8 +9,6 @@ open Fable.PowerPack
 module NodeGlobals = Fable.Import.Node.Globals
 module Node = Fable.Import.Node.Exports
 
-let private templateCache = Dictionary<string, obj->string>()
-let private handleBarsCompile (templateString: string): obj->string = import "compile" "handlebars"
 let private marked (markdown: string): string = importDefault "marked"
 let private fsExtra: obj = importAll "fs-extra"
 
@@ -18,17 +16,6 @@ let private fsExtra: obj = importAll "fs-extra"
 /// Note the function is inline so `__dirname` will belong to the calling file
 let inline resolve (path: string) =
     Node.path.resolve(NodeGlobals.__dirname, path)
-
-/// Parses a Handlebars template
-let parseTemplate (path: string) (context: (string*obj) list) =
-    let template =
-        match templateCache.TryGetValue(path) with
-        | true, template -> template
-        | false, _ ->
-            let template = Node.fs.readFileSync(path).toString() |> handleBarsCompile
-            templateCache.Add(path, template)
-            template
-    createObj context |> template
 
 /// Parses a markdown file
 let parseMarkdownFile (path: string) =
@@ -63,7 +50,7 @@ let writeFile (path: string) (content: string) =
 /// Copy a file or directory. The directory can have contents. Like cp -r.
 /// Overwrites target files
 let copy (source: string) (target: string): unit =
-    !!fsExtra?copySync(source, target, createObj["overwrite" ==> true])
+    fsExtra?copySync(source, target, createObj["overwrite" ==> true])
 
 let readFile (path: string) =
     Node.fs.readFileSync(path).toString()

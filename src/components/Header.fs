@@ -1,9 +1,9 @@
-module WebGenerator.Components.Header
+module Components.Header
 
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
-open WebGenerator.Literals
+open Util.Literals
 
 let render title subtitle =
   Hero.hero [ Hero.CustomClass "fable-header" ]

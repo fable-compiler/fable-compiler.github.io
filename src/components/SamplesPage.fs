@@ -1,12 +1,12 @@
-module WebGenerator.Components.SamplesPage
+module Components.SamplesPage
 
 open Fable.Import
 open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
-open WebGenerator.Helpers
-open WebGenerator.Types
+open Util.Helpers
+open Util.Types
 
 module Node = Fable.Import.Node.Exports
 

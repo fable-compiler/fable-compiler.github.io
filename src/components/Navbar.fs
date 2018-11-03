@@ -1,10 +1,10 @@
-module WebGenerator.Components.Navbar
+module Components.Navbar
 
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
-open WebGenerator.Helpers
-open WebGenerator.Literals
+open Util.Helpers
+open Util.Literals
 
 let navButton classy href faClass txt =
   Control.div [] [

@@ -1,12 +1,12 @@
-module WebGenerator.Components.HomePage
+module Components.HomePage
 
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
 open Fulma.FontAwesome
-open WebGenerator.Helpers
-open WebGenerator.Literals
-open WebGenerator.Types
+open Util.Helpers
+open Util.Literals
+open Util.Types
 
 let introText =
   "Fable is an F# to JavaScript compiler powered by [Babel](https://babeljs.io/), designed to produce readable and standard code. [Try it right now in your browser!](repl)"

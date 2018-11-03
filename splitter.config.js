@@ -19,10 +19,10 @@ function runScript(scriptPath) {
 var outFile = path.join(__dirname, "build/Main.js");
 
 module.exports = {
-  entry: "src/WebGenerator.fsproj",
+  entry: "src/App.fsproj",
   outDir: path.dirname(outFile),
   babel: {
-    plugins: ["transform-es2015-modules-commonjs"]
+    plugins: ["@babel/plugin-transform-modules-commonjs"]
   },
   postbuild() {
     runScript(outFile)

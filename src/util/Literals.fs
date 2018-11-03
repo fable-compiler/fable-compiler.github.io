@@ -1,6 +1,6 @@
-namespace WebGenerator.Literals
+namespace Util.Literals
 
-open WebGenerator.Helpers
+open Util.Helpers
 
 module Fable =
   let [<Literal>] Root = "/" //"http://fable.io/"
@@ -19,12 +19,11 @@ module Paths =
   // Make sure to always resolve paths to avoid conflicts in generated JS files
   // Check fable-splitter README for info about ${entryDir} macro
 
-  let Template = resolve "${entryDir}/../files/template.hbs"
-  let TemplateRedirect = resolve "${entryDir}/../files/redirect.hbs"
   let PublicDir = resolve "${entryDir}/../public"
+  let DeployDir = resolve "${entryDir}/../deploy"
   let BlogDir = resolve "${entryDir}/../blog"
   let FableRepo = resolve "${entryDir}/../../Fable"
   let SamplesRepo = resolve "${entryDir}/../../samples-browser"
 
 module WebAssets =
-  let FableLogo = "/img/shared/fable_logo.png"
+  let FableLogo = "/img/fable_logo.png"

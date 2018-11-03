@@ -1,11 +1,11 @@
-module WebGenerator.Components.DocsPage
+module Components.DocsPage
 
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
 open Fulma.FontAwesome
-open WebGenerator.Helpers
-open WebGenerator.Types
+open Util.Helpers
+open Util.Types
 
 let introText =
   "Here you will learn how to quickly get started with Fable, what is supported from FSharp.Core and .NET, as well as how to seamlessly interact with native JavaScript APIs or libraries. If you want to learn about the F# language, check the [fsharp.org](http://fsharp.org/) site for more resources."
