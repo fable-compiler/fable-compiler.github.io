@@ -1,21 +1,4 @@
-<!doctype html>
-<html>
-
-<head>
-  <title>Fable Blog</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,300,600,700|Roboto+Mono">
-  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" type="text/css" href="/css/bulma.custom.css">
-  <link rel="stylesheet" type="text/css" href="/css/highlight.css">
-  <link rel="shortcut icon" href="/img/shared/fable.ico" />
-  <script src="https://cdn.polyfill.io/v2/polyfill.js?features=default,fetch"></script>
-</head>
-
-<body>
-  <nav class="navbar"><div class="navbar-brand"><div class="navbar-item title is-4">Fable</div><div class="navbar-burger" data-target="navMenu"><span></span><span></span><span></span></div></div><div id="navMenu" class=" navbar-menu"><div class="navbar-start"><a class=" navbar-item" href="/">Home</a><a class=" navbar-item" href="/repl2">REPL</a><a class=" navbar-item is-active" href="/blog">Blog</a><a class=" navbar-item" href="/docs">Docs</a><a class=" navbar-item" href="/faq">FAQ</a><a class=" navbar-item" href="/fableconf">FableConf</a></div><div class="navbar-end"><div class="navbar-item"><div class="field is-grouped"><div class="control"><a class="button twitter" href="https://twitter.com/FableCompiler"><span class="icon"><i class="fa fa-twitter"></i></span><span>Share the love!</span></a></div><div class="control"><a class="button github" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class="fa fa-comments"></i></span><span>Chat</span></a></div><div class="control"><a class="button github" href="https://github.com/fable-compiler/Fable"><span class="icon"><i class="fa fa-github"></i></span><span>Contribute</span></a></div></div></div></div></div></nav>
-  <div class="markdown blog" style="overflow:hidden"><section class="hero fable-header"><div class="hero-body"><div class="container"><div class="columns is-vcentered"><div class="column"><img class="fable-logo" src="/img/shared/fable_logo.png"/></div><div class="column    has-text-right        "><h1 class="title is-1">Tree Shaking with Fable</h1><h1 class="subtitle is-4">Light webs load faster!</h1></div></div></div></div></section><div style="margin-top:1.6rem"><div class="columns"><div class="column"></div><div class="column is-two-thirds"><div class="content" style="margin:5px"><p>Hi everybody! This is my first contribution to the <a href="https://sergeytihon.wordpress.com/2016/10/23/f-advent-calendar-in-english-2016/">F# advent calendar</a> and you&#39;ll probably be very surprised to know it will be about... Fable! Yes, the lightweight F# compiler that emits JavaScript you can be proud of (or at least I&#39;ll be). This time I want to talk you about one of the exciting new features introduced in <a href="blog/Introducing-0-7.html">Fable 0.7</a>: tree shaking.</p>
+<html><head><title>Fable Blog</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,300,600,700|Roboto+Mono"/><link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/><link rel="stylesheet" type="text/css" href="/css/styles.css"/><link rel="stylesheet" type="text/css" href="/css/highlight.css"/><link rel="shortcut icon" href="/img/fable.ico"/></head><body><nav class="navbar"><div class="navbar-brand"><div class="navbar-item title is-4">Fable</div><div class="navbar-burger" data-target="navMenu"><span></span><span></span><span></span></div></div><div id="navMenu" class=" navbar-menu"><div class="navbar-start"><a class=" navbar-item" href="/">Home</a><a class=" navbar-item" href="/repl2">REPL</a><a class=" navbar-item is-active" href="/blog">Blog</a><a class=" navbar-item" href="/docs">Docs</a><a class=" navbar-item" href="/faq">FAQ</a><a class=" navbar-item" href="/fableconf">FableConf</a></div><div class="navbar-end"><div class="navbar-item"><div class="field is-grouped"><div class="control"><a class="button twitter" href="https://twitter.com/FableCompiler"><span class="icon"><i class="fa fa-twitter"></i></span><span>Share the love!</span></a></div><div class="control"><a class="button github" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class="fa fa-comments"></i></span><span>Chat</span></a></div><div class="control"><a class="button github" href="https://github.com/fable-compiler/Fable"><span class="icon"><i class="fa fa-github"></i></span><span>Contribute</span></a></div></div></div></div></div></nav><div class="markdown blog" style="overflow:hidden"><section class="hero fable-header"><div class="hero-body"><div class="container"><div class="columns is-vcentered"><div class="column"><img class="fable-logo" src="/img/fable_logo.png"/></div><div class="column    has-text-right        "><h1 class="title is-1">Tree Shaking with Fable</h1><h1 class="subtitle is-4">Light webs load faster!</h1></div></div></div></div></section><div style="margin-top:1.6rem"><div class="columns"><div class="column"></div><div class="column is-two-thirds"><div class="content" style="margin:5px"><p>Hi everybody! This is my first contribution to the <a href="https://sergeytihon.wordpress.com/2016/10/23/f-advent-calendar-in-english-2016/">F# advent calendar</a> and you&#39;ll probably be very surprised to know it will be about... Fable! Yes, the lightweight F# compiler that emits JavaScript you can be proud of (or at least I&#39;ll be). This time I want to talk you about one of the exciting new features introduced in <a href="blog/Introducing-0-7.html">Fable 0.7</a>: tree shaking.</p>
 <hr>
 <p>From the very fist version, Fable compiles F# code to JavaScript using <a href="https://babeljs.io/docs/learn-es2015/">ES2015 features</a> like classes or iterators, and then uses <a href="https://babeljs.io/">Babel</a> (hence the name) to convert the code to something old browsers don&#39;t have that much trouble understanding. Among ES2015 features we find a new <a href="http://www.2ality.com/2014/09/es6-modules-final.html">module system</a> that it&#39;s been designed to standardize the different solutions that tried to emulate modules in JS so far, like <a href="https://nodejs.org/docs/latest/api/modules.html">commonjs</a> or <a href="http://requirejs.org/docs/whyamd.html">amd</a>. But why create a new standard instead of taking one of existing ones?</p>
 <p><img src="/img/standards.png" alt="How standards proliferate"></p>
@@ -89,26 +72,17 @@ function test() {
 <pre><code>fable src/MyProject.fsproj --rollup</code></pre><p>And that&#39;s it!</p>
 <hr>
 <p>Hope you liked the post and give Fable a try. Please check the web and the documentation (being updated to 0.7 at the moment) and come to the <a href="https://gitter.im/fable-compiler/Fable">Gitter channel</a> if you have any question. Also make sure to follow the other posts of the awesome <a href="https://sergeytihon.wordpress.com/2016/10/23/f-advent-calendar-in-english-2016/">F# advent calendar</a> and keep tuned with Fable&#39;s website and <a href="https://twitter.com/FableCompiler">Twitter</a> for other exciting announcements!</p>
-</div></div><div class="column"></div></div></div></div>
-  <footer>
-      <p> Fable <a href="https://github.com/fable-compiler/Fable">source code</a> is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.</p>
-  </footer>
-  <script>
-    // Activate navbar burget button
-    document.addEventListener('DOMContentLoaded', function () {
-      var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-      if ($navbarBurgers.length > 0) {
-        $navbarBurgers.forEach(function ($el) {
-          $el.addEventListener('click', function () {
-            var target = $el.dataset.target;
-            var $target = document.getElementById(target);
-            $el.classList.toggle('is-active');
-            $target.classList.toggle('is-active');
-          });
-        });
-      }
+</div></div><div class="column"></div></div></div></div><footer><p>Fable <a href="https://github.com/fable-compiler/Fable">source code</a> is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.</p></footer><script>
+document.addEventListener('DOMContentLoaded', function () {
+  var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+  if ($navbarBurgers.length > 0) {
+    $navbarBurgers.forEach(function ($el) {
+      $el.addEventListener('click', function () {
+        var target = $el.dataset.target;
+        var $target = document.getElementById(target);
+        $el.classList.toggle('is-active');
+        $target.classList.toggle('is-active');
+      });
     });
-  </script>
-</body>
-
-</html>
+  }
+});</script></body></html>
