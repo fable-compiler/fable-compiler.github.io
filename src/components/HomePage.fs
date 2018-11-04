@@ -42,32 +42,32 @@ let renderBody (info: PageInfo) =
         [ Column.column [] [cardTexts.[2] |||> renderCard (FaIcon Fa.I.Wrench)]
           Column.column []  [cardTexts.[3] |||> renderCard (FaIcon Fa.I.PuzzlePiece)]
       ]
-    ]
-    br []
-    h1 [Class "title is-2 has-text-centered"] [str "Where to go from here"]
-    paragraph whereToText
-    Columns.columns [ ]
-      [ Column.column [ Column.Width (Screen.All, Column.Is8)
-                        Column.Offset (Screen.All, Column.Is2) ]
-                      [ a [ Href "https://channel9.msdn.com/events/NDC/NDC-Oslo-2017/C9L13?term=fable"]
-                          [ img [ Src "img/channel9.png"
-                                  Style [Margin "20px auto"; MaxHeight "600px"] ] ] ]
-    ]
-    h1 [Class "title is-2 has-text-centered"] [str "You are in good company"]
-    paragraph "These are some of the projects and companies using Fable. Send us a message to include yours!"
-    br []
-    div [Class "flex-wrap fable-friends"] [
-      linkImage "nsynk.png" "http://nsynk.de/"
-      linkImage "thegamma.png" "https://thegamma.net/"
-      linkImage "msu.jpg" "https://www.msu-solutions.de/"
-      linkImage "ionide.png" "http://ionide.io/"
-      linkImage "prolucid.jpg" "http://prolucid.ca/"
-      linkImage "casquenoir.jpg" "http://casquenoir.com/"
-      linkImage "danpower.png" "https://www.danpower-gruppe.de/"
-      linkImage "tachyus.png" "http://www.tachyus.com/"
-      linkImage "axxes.png" "https://axxes.com/en"
-      linkImage "visualmips.png" "https://visualmips.github.io/"
-      linkImage "lambdafactory.png" "http://lambdafactory.io/"
-      linkImage "BTS.svg" "https://www.bluetradingsystems.com/"
+      br []
+      h1 [Class "title is-2 has-text-centered"] [str "Where to go from here"]
+      paragraph whereToText
+      Columns.columns [ ]
+        [ Column.column [ Column.Width (Screen.All, Column.Is8)
+                          Column.Offset (Screen.All, Column.Is2) ]
+                        [ a [ Href "https://channel9.msdn.com/events/NDC/NDC-Oslo-2017/C9L13?term=fable"]
+                            [ img [ Src "img/channel9.png"
+                                    Style [Margin "20px auto"; MaxHeight "600px"] ] ] ]
+      ]
+      h1 [Class "title is-2 has-text-centered"] [str "You are in good company"]
+      paragraph "These are some of the projects and companies using Fable. Send us a message to include yours!"
+      br []
+      div [Class "flex-wrap fable-friends"] [
+        linkImage "nsynk.png" "http://nsynk.de/"
+        linkImage "thegamma.png" "https://thegamma.net/"
+        linkImage "msu.jpg" "https://www.msu-solutions.de/"
+        linkImage "ionide.png" "http://ionide.io/"
+        linkImage "prolucid.jpg" "http://prolucid.ca/"
+        linkImage "casquenoir.jpg" "http://casquenoir.com/"
+        linkImage "danpower.png" "https://www.danpower-gruppe.de/"
+        linkImage "tachyus.png" "http://www.tachyus.com/"
+        linkImage "axxes.png" "https://axxes.com/en"
+        linkImage "visualmips.png" "https://visualmips.github.io/"
+        linkImage "lambdafactory.png" "http://lambdafactory.io/"
+        linkImage "BTS.svg" "https://www.bluetradingsystems.com/"
+      ]
     ]
   ]

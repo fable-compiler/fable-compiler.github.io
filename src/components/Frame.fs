@@ -8,6 +8,21 @@ let cssLink path =
            Type "text/css"
            Href path ]
 
+let burgerJsCode = """
+document.addEventListener('DOMContentLoaded', function () {
+  var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+  if ($navbarBurgers.length > 0) {
+    $navbarBurgers.forEach(function ($el) {
+      $el.addEventListener('click', function () {
+        var target = $el.dataset.target;
+        var $target = document.getElementById(target);
+        $el.classList.toggle('is-active');
+        $target.classList.toggle('is-active');
+      });
+    });
+  }
+});"""
+
 let render titleText extraCss navbar contents =
     html [] [
         head [] [
@@ -28,29 +43,15 @@ let render titleText extraCss navbar contents =
             navbar
             contents
             footer [] [ p [] [
-                str "Fable"
+                str "Fable "
                 a [ Href "https://github.com/fable-compiler/Fable" ]
                   [ str "source code" ]
-                str "is licensed"
+                str " is licensed "
                 a [ Href "http://opensource.org/licenses/mit-license.php" ]
                   [ str "MIT" ]
                 str "."
             ] ]
             // Activate navbar burget button
-            script [] [str """
-document.addEventListener('DOMContentLoaded', function () {
-  var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-  if ($navbarBurgers.length > 0) {
-    $navbarBurgers.forEach(function ($el) {
-      $el.addEventListener('click', function () {
-        var target = $el.dataset.target;
-        var $target = document.getElementById(target);
-        $el.classList.toggle('is-active');
-        $target.classList.toggle('is-active');
-      });
-    });
-  }
-});"""
-            ]
+            script [DangerouslySetInnerHTML { __html = burgerJsCode }] []
         ]
     ]
