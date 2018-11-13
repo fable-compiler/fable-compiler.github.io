@@ -7,6 +7,7 @@ open Fulma.FontAwesome
 open Util.Helpers
 open Util.Literals
 open Util.Types
+open StaticWebGenerator
 
 let introText =
   "Fable is an F# to JavaScript compiler powered by [Babel](https://babeljs.io/), designed to produce readable and standard code. [Try it right now in your browser!](repl)"
@@ -25,8 +26,7 @@ let linkImage src href =
   a [Href href] [img [Src ("img/" + src)]]
 
 let paragraph text =
-  div [Class "fable-introduction"
-       setInnerHtml (parseMarkdown text)] []
+  parseMarkdownAsReactEl "fable-introduction" text
 
 let renderBody (info: PageInfo) =
   // This fixes the problem with the double scrollbar on Windows

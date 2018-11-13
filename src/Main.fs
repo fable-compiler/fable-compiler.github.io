@@ -5,9 +5,9 @@ open Fable.Core.JsInterop
 open Fable.Import
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
+open StaticWebGenerator
 open Components
 open Util.Literals
-open Util.Helpers
 open Util.Types
 
 module Node = Fable.Import.Node.Exports
@@ -15,12 +15,18 @@ module NodeGlobals = Fable.Import.Node.Globals
 
 let parseMarkdown(content: string): string = importMember "./util/Util.js"
 
+let parseMarkdownAsReactEl className (content: string) =
+    div [
+      Class className
+      DangerouslySetInnerHTML { __html = parseMarkdown content }
+    ] []
+
 let render (info: PageInfo) =
     Frame.render info.Title []
       (Navbar.root info.NavbarActivePage)
       (info.RenderBody(info))
     |> parseReactStatic
-    |> writeFile info.TargetPath
+    |> IO.writeFile info.TargetPath
 
 let renderMarkdown pageTitle navbar header subheader className targetFullPath content =
     let body =
@@ -41,7 +47,7 @@ let renderMarkdown pageTitle navbar header subheader className targetFullPath co
       ]
     Frame.render pageTitle ["/css/highlight.css"] (Navbar.root navbar) body
     |> parseReactStatic
-    |> writeFile targetFullPath
+    |> IO.writeFile targetFullPath
 
 let renderMarkdownFrom pageTitle navbar header subheader className fileFullPath targetFullPath =
   let content = Node.fs.readFileSync(fileFullPath).toString()
@@ -95,7 +101,7 @@ let renderHomePage() =
   printfn "Home page generated"
 
 // Run
-copy Paths.PublicDir Paths.DeployDir
+IO.copy Paths.PublicDir Paths.DeployDir
 renderHomePage()
 renderBlog()
 renderDocs()

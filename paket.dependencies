@@ -9,3 +9,4 @@ nuget Fable.React
 nuget Fable.Import.Browser
 nuget Fable.Import.Node
 nuget Fulma
+github fable-compiler/static-web-generator src/Helpers.fs

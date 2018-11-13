@@ -1,6 +1,6 @@
 namespace Util.Literals
 
-open Util.Helpers
+open StaticWebGenerator
 
 module Fable =
   let [<Literal>] Root = "/" //"http://fable.io/"
@@ -19,11 +19,11 @@ module Paths =
   // Make sure to always resolve paths to avoid conflicts in generated JS files
   // Check fable-splitter README for info about ${entryDir} macro
 
-  let PublicDir = resolve "${entryDir}/../public"
-  let DeployDir = resolve "${entryDir}/../deploy"
-  let BlogDir = resolve "${entryDir}/../blog"
-  let FableRepo = resolve "${entryDir}/../../Fable"
-  let SamplesRepo = resolve "${entryDir}/../../samples-browser"
+  let PublicDir = IO.resolve "${entryDir}/../public"
+  let DeployDir = IO.resolve "${entryDir}/../deploy"
+  let BlogDir = IO.resolve "${entryDir}/../blog"
+  let FableRepo = IO.resolve "${entryDir}/../../Fable"
+  let SamplesRepo = IO.resolve "${entryDir}/../../samples-browser"
 
 module WebAssets =
   let FableLogo = "/img/fable_logo.png"
