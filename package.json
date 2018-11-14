@@ -7,8 +7,8 @@
     "start-sass": "yarn build-sass --watch",
     "build-fable": "cd src && dotnet fable fable-splitter -- src/App.fsproj -o build --run",
     "start-fable": "yarn build-fable --watch",
-    "start": "concurrently -k npm:start-*",
-    "build": "concurrently -k npm:build-*",
+    "start": "concurrently npm:start-*",
+    "build": "concurrently npm:build-*",
     "deploy": "yarn build && gh-pages -d deploy -b master",
     "deploy-fast": "node build/Main.js && gh-pages -d deploy -b master"
   },
