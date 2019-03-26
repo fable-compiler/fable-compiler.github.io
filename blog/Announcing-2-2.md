@@ -74,7 +74,11 @@ Latest Fable.React (v5, currently in beta) has a dependency on the new Fable.Bro
 
 ## Fable.Elmish
 
-// TODO: Eugene's explanation
+The original implementation of Elmish was intentially made simple and meant to resemble Elm's abstractions. The v3 of Elimsh introduces a few breaking changes, mostly affecting library authors:
+
+- The dispatch loop has been reimplemented to run on the main thread, using a queue that maintains FIFO semantics under JS runtime. This implementation offers a few other benefits, like stabilising the `dispatch` reference and finally addressing a long-standing request to report messages that cause unhandled exceptions.
+- `Cmd` module has been reorganized into similarly-shaped submodules to accomodate the use-cases that have emerged with the growing popularity and adoption under CLR.
+- `Program` type has been made opaque to ease potential future evolution. If you own a library that extends Elmish please take a look at the core libraries for examples of how to use the functions instead of working directly with the fields.
 
 ## Other packages: Fulma, Thoth.Json, Fable.SimpleHttp...
 
