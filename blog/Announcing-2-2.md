@@ -43,7 +43,7 @@ The [fable-compiler/fable-import](https://github.com/fable-compiler/fable-import
 This means we're phasing out the fable-import repository and given that the browser bindings are the most used in Fable projects, we've already ported them to [another repository](https://github.com/fable-compiler/fable-browser). This contains not only one but multiple packages, roughly corresponding to [the Web APIs](https://developer.mozilla.org/es/docs/Web/API). The guidelines to make the namespaces consistent across these packages are:
 
 - Interfaces are contained in the `Browser.Types` namespace in all packages.
-- Values, [like `window` or constructors like `FileReader`](https://github.com/fable-compiler/fable-browser/blob/439b42070c9ed6afc6ec18499f22f3c238c221ae/src/Dom/Browser.Dom.Api.fs#L14-L22), are put in a module with the same name as the package (e.g. Fable.Browser.Dom -> Browser.Dom). This module is decorated with `AutoOpen` so in general you only need to `open Browser` to access any of the values in the Fable.Browser packages. Only to prevent conflicts you should need to qualify the module name (e.g. `Browser.Dom.document`).
+- Values, [like `window` or constructors like `FileReader`](https://github.com/fable-compiler/fable-browser/blob/439b42070c9ed6afc6ec18499f22f3c238c221ae/src/Dom/Browser.Dom.Api.fs#L14-L22), are put in a module with the same name as the package (e.g. Fable.Browser.Dom -> Browser.Dom, note the package hast the Fable prefix but not the module). This module is decorated with `AutoOpen` so in general you only need to `open Browser` to access any of the values in the Fable.Browser packages. Only to prevent conflicts you should need to qualify the module name (e.g. `Browser.Dom.document`).
 
 The `fable-browser` repository doesn't contain all Web APIs yet. Please contribute them or, if you prefer, it's also ok to publish packages for the missing APIs from your own profile.
 
@@ -51,17 +51,21 @@ The `fable-browser` repository doesn't contain all Web APIs yet. Please contribu
 
 Similar problems affected Fable.PowerPack. It was originally intended as an extended Fable.Core but it had become a mix of unrelated modules and many times it was difficult for maintainers to remember who had authored what.
 
-Following the reasoning above, we've decided to deprecate Fable.PowerPack and replace it with single-purpose packages. For now, [Fable.Promise](https://github.com/fable-compiler/fable-promise) and [Fable.Fetch](https://github.com/fable-compiler/fable-fetch) have been released (only v2 beta is compatible with Fable.Core 3). The API is identical to the modules in Fable.PowerPack except for these changes:
+Following the reasoning above, we've decided to deprecate Fable.PowerPack and replace it with single-purpose packages. For now, [Fable.Promise](https://github.com/fable-compiler/fable-promise), [Fable.Fetch](https://github.com/fable-compiler/fable-fetch) and [Fable.Date](https://github.com/fable-compiler/fable-date) have been released (for Fable.Core 3 compatibility make sure to use the latest version which may be prerelease). The API is identical to the modules in Fable.PowerPack except for these changes:
 
 - Similar to Fable.Browser, the `Fable.` prefix is removed from the actual module names. In most cases (e.g. to use `Promise.map`) you won't need to open anything.
 - `Fetch.Fetch_types` is renamed to `Fetch.Types`.
-- The fetch methods in auto-serialization (like `fetchAs`) have been removed, please combine fetching with [Thoth.Json](https://github.com/thoth-org/Thoth.Json) or [Fable.SimpleJson](https://github.com/Zaid-Ajaj/Fable.SimpleJson).
+- The fetch methods in auto-serialization (like `fetchAs`) have been removed, please combine fetching with [Thoth.Json](https://github.com/thoth-org/Thoth.Json) or [Fable.SimpleJson](https://github.com/Zaid-Ajaj/Fable.SimpleJson). Example:
+
+// TODO: Add code sample
 
 ## Fable.React
 
 Latest Fable.React (v5, currently in beta) has a dependency on the new Fable.Browser.Dom package, besides these changes:
 
 - In line with the previous changes, the `Fable.Import.` and `Fable.Helpers.` prefixes have been dropped, so now you only need to `open Fable.React` (and/or Fable.React.Props).
+- The React event interfaces have been replaced with Browser.Types. Except for `SyntheticEvent` and `FormEvent` (which are just assimilated to `Event`), the other events have corresponding ones with same name.
+- `ComponentClass` is replaced by `ReactElementType`. To parse such and element use `ReactElementType.create`.
 - The react-dom and react-dom/server bindings are in `Fable.ReactDom` and `Fable.ReactDomServer` static types.
 - If you need to fully qualify one of the standard HTML tags, use `Fable.React.Standard`.
 - [React.memo support](https://github.com/fable-compiler/fable-react/pull/119) thanks to @vbfox
