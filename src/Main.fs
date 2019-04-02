@@ -13,7 +13,30 @@ open Util.Types
 module Node = Fable.Import.Node.Exports
 module NodeGlobals = Fable.Import.Node.Globals
 
-let parseMarkdown(content: string): string = importMember "./util/Util.js"
+module private Util =
+  let highlight: obj = importAll "highlight.js"
+  let marked: obj = importDefault "marked"
+
+  marked?setOptions(createObj [
+    "highlight" ==> fun code lang ->
+      highlight?highlightAuto(code, [|lang|])?value
+  ])
+
+  let renderer = createNew marked?Renderer ()
+
+  renderer?heading <- fun (text: string) level ->
+    let escapedText = Regex.Replace(text.ToLower(), @"[^\w]+", "-")
+    sprintf """<h%s><a name="%s" class="anchor" href="#%s">%s</a></h%s>"""
+      level escapedText escapedText text level
+
+  renderer?link <- fun href title text ->
+    sprintf """<a href="%s">%s</a>"""
+      (Regex.Replace(href, @"\.md\b", ".html")) text
+
+open Util
+
+let parseMarkdown(content: string): string =
+    marked $ (content, createObj ["renderer" ==> renderer])
 
 let parseMarkdownAsReactEl className (content: string) =
     div [
