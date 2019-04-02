@@ -28,11 +28,11 @@ Although we just released the stable 1.0 version, for now please consider this a
 
 Here's where the fun starts ;) The new Fable.Core major release doesn't contain many new additions, but the main change is renaming `Fable.Import.JS` to `Fable.Core.JS`. Changing a namespace seems like a gratuitous breaking change. However, it gives consistency to the package (it was the only module without the Fable.Core prefix) and there's a reasoning to abandon the Fable.Import prefix we will see in the next section.
 
-Some APIs that nobody was using (or at least seemed so) have also been removed. This has been done to clean the code and also because a lighter Fable.Core increases the startup time in Fable compilations. If there's something you find missing please [open an issue](https://github.com/fable-compiler/Fable/issues/new) and we'll add it back.
+Some APIs that nobody was using (or at least seemed so) have also been removed. This has been done to clean the code and also because a lighter Fable.Core increases the startup time in Fable compilations. If there's something you find missing please [open an issue](https://github.com/fable-compiler/Fable/issues/new) and we'll add it back (or publish the API in a different package).
 
 > The `nameof` operator has been moved to the Fable.Core.Experimental module, so it's not opened automatically. This should prevent conflicts when the operator with the same name is added to FSharp.Core.
 
-Please note that the new Fable.Core and the rest of the packages below are still in alpha/beta release (we don't expect more breaking changes and we'll release stable versions soon), so you need to specify the version when downloading them or use `prerelease` with Paket.
+Please note that the new Fable.Core and the rest of the packages below are still in beta release (we don't expect more breaking changes and we'll release stable versions soon), so you need to specify the version when downloading them or use `prerelease` with Paket.
 
 ## Fable.Browser
 
@@ -40,7 +40,7 @@ It's possible you haven't noticed but many Fable libraries have a dependency to 
 
 The [fable-compiler/fable-import](https://github.com/fable-compiler/fable-import/) repository also contains other bindings generated with ts2fable that suffered similar problems, even if the size wasn't so big. Because of this and after discussing with the main contributors to Fable ecosystem, we've decided to abandon the idea of having a single repository with multiple Fable bindings automatically generated, and instead encourage the community to create (and maintain) bindings that may start with ts2fable but also include another layer with more idiomatic F# code, and that don't need to start with the `Fable.Import.` prefix.
 
-This means we're phasing out the fable-import repository and given that the browser bindings are the most used in Fable projects, we've already ported them to [another repository](https://github.com/fable-compiler/fable-browser). This contains not only one but multiple packages, roughly corresponding to [the Web APIs](https://developer.mozilla.org/es/docs/Web/API). The guidelines to make the namespaces consistent across these packages are:
+This means we're phasing out the fable-import repository and given that the browser bindings are the most used in Fable projects, we've already ported them to [another repository](https://github.com/fable-compiler/fable-browser). This contains not only one but multiple packages, roughly corresponding to [the Web APIs](https://developer.mozilla.org/docs/Web/API). The guidelines to make the namespaces consistent across these packages are:
 
 - Interfaces are contained in the `Browser.Types` namespace in all packages.
 - Values, [like `window` or constructors like `FileReader`](https://github.com/fable-compiler/fable-browser/blob/439b42070c9ed6afc6ec18499f22f3c238c221ae/src/Dom/Browser.Dom.Api.fs#L14-L22), are put in a module with the same name as the package (e.g. Fable.Browser.Dom -> Browser.Dom, note the package hast the Fable prefix but not the module). This module is decorated with `AutoOpen` so in general you only need to `open Browser` to access any of the values in the Fable.Browser packages. Only to prevent conflicts you should need to qualify the module name (e.g. `Browser.Dom.document`).
@@ -57,7 +57,30 @@ Following the reasoning above, we've decided to deprecate Fable.PowerPack and re
 - `Fetch.Fetch_types` is renamed to `Fetch.Types`.
 - The fetch methods in auto-serialization (like `fetchAs`) have been removed, please combine fetching with [Thoth.Json](https://github.com/thoth-org/Thoth.Json) or [Fable.SimpleJson](https://github.com/Zaid-Ajaj/Fable.SimpleJson). Example:
 
-// TODO: Add code sample
+```fsharp
+open Fable.Core
+open Fetch.Types
+open Thoth.Json
+
+// Custom error message
+let errorString (response: Response) =
+    string response.Status + " " + response.StatusText + " for URL " + response.Url
+
+let fetchWithDecoder<'T> (url: string) (decoder: Decoder<'T>) (init: RequestProperties list) =
+    GlobalFetch.fetch(RequestInfo.Url url, Fetch.requestProps init)
+    |> Promise.bind (fun response ->
+        if not response.Ok then
+            errorString response |> Error |> Promise.lift
+        else
+            response.text() |> Promise.map (Decode.fromString decoder))
+
+// Inline the function so Fable can resolve the generic parameter at compile time
+let inline fetchAs<'T> (url: string) (init: RequestProperties list) =
+    // In this example we use Thoth.Json cached auto decoders
+    // More info at: https://mangelmaxime.github.io/Thoth/json/v3.html#caching
+    let decoder = Decode.Auto.generateDecoderCached<'T>()
+    fetchWithDecoder url decoder init
+```
 
 ## Fable.React
 
@@ -82,7 +105,22 @@ The original implementation of Elmish was intentially made simple and meant to r
 
 ## Other packages: Fulma, Thoth.Json, Fable.SimpleHttp...
 
-Several other packages have published new beta versions without actual changes (fortunately! I hear you) but with dependencies on Fable.Core 3 and Fable.Browser to avoid compilation errors. If you spot a package that hasn't been updated please contact the author and if needed reference it by source (most are only one or two files) until a new release is pushed.
+Several other packages have published new beta versions without actual changes (fortunately! I hear you) but with dependencies on Fable.Core 3 and Fable.Browser to avoid compilation errors. However, after updating dependencies and building your project, if you see an error like the following:
+
+```
+FSC : error FS0193: The module/namespace 'Fable.Import.JS' coming from 'Fable.Core' didn't contain the namespace, module or type 'Promise`1' [/path/to/your/Project.fsproj]
+```
+
+This means one of your dependencies is still not updated. Find which package still depends on Fable.Core 2.0 (you can inspect `paket.lock` if using Paket) and contact the maintainers of the library to ask for an upgrade (check first there's no a prerelease version already available with the update).
+
+Find below a table with a summary of the package and namespace changes. You can also use [this commit](https://github.com/MangelMaxime/fulma-demo/pull/26/commits/e92fa03e0241170719d51a7268e1114a389485da) as reference when upgrading your project.
+
+|        Old pkg       |                    New pkg                    |                          Namespace changes                         |
+|:--------------------:|:---------------------------------------------:|:------------------------------------------------------------------:|
+| Fable.Core           |                       -                       | Fable.Import.JS > Fable.Core.JS                                    |
+| Fable.Import.Browser | Fable.Browser.Dom Fable.Browser.WebSocket ... | Fable.Import.Browser > Browser[.Types]                             |
+| Fable.React          |                       -                       | Fable.Import.React > Fable.React Fable.Helpers.React > Fable.React |
+| Fable.Elmish.***     |                       -                       |                                                                    |
 
 -----------------------------------------------------------
 
