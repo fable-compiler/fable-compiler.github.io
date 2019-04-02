@@ -8,7 +8,7 @@ Hi everybody! We've many announcements to do today. Together with a minor (but b
 First things first, the summary of changes in fable-compiler 2.2 is as follows (full change list [here](https://github.com/fable-compiler/Fable/blob/635c0379d12ca7348b394310256105e56240408c/src/fable-compiler/RELEASE_NOTES.md)):
 
 - Anonymous records @dsyme
-- Compile .fsx scripts @nojaf
+- [Compile .fsx scripts](https://axxes.com/en/net/compiling-f-scripts-with-fable-2-2/) @nojaf
 - Improve watch compilations @ncave
 - Improve sourcemaps
 - Fix (erased) type providers
