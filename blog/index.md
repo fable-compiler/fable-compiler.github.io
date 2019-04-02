@@ -2,6 +2,10 @@ Check our blog to be up-to-date with recent developments in Fable community and 
 
 -------------------------------------------------------------------
 
+## [Announcing fable-compiler 2.2, Fable.Core 3 and more](Announcing-2-2.html)
+
+> By [Alfonso García-Caro](https://twitter.com/alfonsogcnunez) on April 2, 2019
+
 ## [Migration to Fable 2](Migration-to-Fable2.html)
 
 > By [Mangel Maxime](https://twitter.com/MangelMaxime) on October 1, 2018
