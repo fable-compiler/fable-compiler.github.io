@@ -1,0 +1,123 @@
+<html><head><title>Fable Blog</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,300,600,700|Roboto+Mono"/><link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/><link rel="stylesheet" type="text/css" href="/css/styles.css"/><link rel="stylesheet" type="text/css" href="/css/highlight.css"/><link rel="shortcut icon" href="/img/fable.ico"/></head><body><nav class="navbar"><div class="navbar-brand"><div class="navbar-item title is-4">Fable</div><div class="navbar-burger" data-target="navMenu"><span></span><span></span><span></span></div></div><div id="navMenu" class=" navbar-menu"><div class="navbar-start"><a class=" navbar-item" href="/">Home</a><a class=" navbar-item" href="/repl">REPL</a><a class=" navbar-item is-active" href="/blog">Blog</a><a class=" navbar-item" href="/docs">Docs</a><a class=" navbar-item" href="/faq">FAQ</a><a class=" navbar-item" href="/fableconf">FableConf</a></div><div class="navbar-end"><div class="navbar-item"><div class="field is-grouped"><div class="control"><a class="button twitter" href="https://twitter.com/FableCompiler"><span class="icon"><i class="fa fa-twitter"></i></span><span>Share the love!</span></a></div><div class="control"><a class="button github" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class="fa fa-comments"></i></span><span>Chat</span></a></div><div class="control"><a class="button github" href="https://github.com/fable-compiler/Fable"><span class="icon"><i class="fa fa-github"></i></span><span>Contribute</span></a></div></div></div></div></div></nav><div class="markdown blog" style="overflow:hidden"><section class="hero fable-header"><div class="hero-body"><div class="container"><div class="columns is-vcentered"><div class="column"><img class="fable-logo" src="/img/fable_logo.png"/></div><div class="column    has-text-right        "><h1 class="title is-1">Announcing fable-compiler 2.2, Fable.Core 3 and more</h1><h1 class="subtitle is-4">Making maintainer&#x27;s life a bit easier</h1></div></div></div></div></section><div style="margin-top:1.6rem"><div class="columns"><div class="column"></div><div class="column is-two-thirds"><div class="content" style="margin:5px"><h2><a name="fable-compiler-2-2" class="anchor" href="#fable-compiler-2-2">fable-compiler 2.2</a></h2><p>Hi everybody! We&#39;ve many announcements to do today. Together with a minor (but big) release of fable-compiler, we&#39;re launching new beta versions of the packages most used by the community, like Fable.Core, Elmish, Fulma or Fable.SimpleHttp. The main goal of these releases is to restructure the packages to make maintenance easier and lower the bar for contributions.</p>
+<p>First things first, the summary of changes in fable-compiler 2.2 is as follows (full change list <a href="https://github.com/fable-compiler/Fable/blob/635c0379d12ca7348b394310256105e56240408c/src/fable-compiler/RELEASE_NOTES.html">here</a>):</p>
+<ul>
+<li>Anonymous records @dsyme</li>
+<li>Compile .fsx scripts @nojaf</li>
+<li>Improve watch compilations @ncave</li>
+<li>Improve sourcemaps</li>
+<li>Fix (erased) type providers</li>
+<li>Many other bug fixes thanks to @chadunit, @SirUppyPancakes, @vbfox, @Zaid-Ajaj and @xdaDaveShaw!</li>
+</ul>
+<p>Fable internals have gone through many changes for this release. But the good news is this time you have <strong>absolutely nothing to do</strong> for the update. Just run <code>npm install fable-compiler@latest</code> and be done :)</p>
+<p>The not-so-good news is you&#39;ll have to make some changes to update the other packages, please see below.</p>
+<h2><a name="fable-compiler-js-1-0" class="anchor" href="#fable-compiler-js-1-0">fable-compiler-js 1.0</a></h2><p>But before talking about Fable libraries, let&#39;s introduce the <a href="https://www.npmjs.com/package/fable-compiler-js">fable-compiler-js</a> npm package. Thanks to <a href="https://github.com/ncave">ncave</a>&#39;s magic, this is a version of fable-compiler which <strong>runs entirely on node.js</strong>, so it can run on a machine without dotnet installed. It&#39;s basically the engine powering the <a href="https://fable.io/repl/">Fable REPL</a> adapted to node.js with a few additional capabilities, and it&#39;s also a great case of dogfooding to show what Fable is capable of.</p>
+<p>Although we just released the stable 1.0 version, for now please consider this as an experiment. Because we don&#39;t rely on the dotnet SDK, at the moment the tool cannot download Nuget packages or resolve references on its own. For now it just does a manual parsing of .fsproj and .fsx files that only covers simple cases. One possible usage is build scripts (as Fable repo <a href="https://github.com/fable-compiler/Fable/blob/9bc3c2187c0c0a9a08ad1adb5dd144e74edf62e6/build.fsx">does now</a>) if you want to have direct access to the hundreds of tools available in the node ecosystem.</p>
+<h2><a name="fable-core-3" class="anchor" href="#fable-core-3">Fable.Core 3</a></h2><p>Here&#39;s where the fun starts ;) The new Fable.Core major release doesn&#39;t contain many new additions, but the main change is renaming <code>Fable.Import.JS</code> to <code>Fable.Core.JS</code>. Changing a namespace seems like a gratuitous breaking change. However, it gives consistency to the package (it was the only module without the Fable.Core prefix) and there&#39;s a reasoning to abandon the Fable.Import prefix we will see in the next section.</p>
+<p>Some APIs that nobody was using (or at least seemed so) have also been removed. This has been done to clean the code and also because a lighter Fable.Core increases the startup time in Fable compilations. If there&#39;s something you find missing please <a href="https://github.com/fable-compiler/Fable/issues/new">open an issue</a> and we&#39;ll add it back (or publish the API in a different package).</p>
+<blockquote>
+<p>The <code>nameof</code> operator has been moved to the Fable.Core.Experimental module, so it&#39;s not opened automatically. This should prevent conflicts when the operator with the same name is added to FSharp.Core.</p>
+</blockquote>
+<p>Please note that the new Fable.Core and the rest of the packages below are still in beta release (we don&#39;t expect more breaking changes and we&#39;ll release stable versions soon), so you need to specify the version when downloading them or use <code>prerelease</code> with Paket.</p>
+<h2><a name="fable-browser" class="anchor" href="#fable-browser">Fable.Browser</a></h2><p>It&#39;s possible you haven&#39;t noticed but many Fable libraries have a dependency to the monstrous <code>Fable.Import.Browser</code> package, a <a href="https://github.com/fable-compiler/fable-import/blob/0f780da448be900287f1a0bd1af9a59fdc7680d4/Browser/Fable.Import.Browser.fs">single file of more than 12000 lines</a> that most IDEs struggled to open. This file was automatically generated in its origin using <a href="http://fable.io/ts2fable/">ts2fable</a> from Typescript definitions. It also contained manual tweaks however, and this together with its size made it very difficult to update.</p>
+<p>The <a href="https://github.com/fable-compiler/fable-import/">fable-compiler/fable-import</a> repository also contains other bindings generated with ts2fable that suffered similar problems, even if the size wasn&#39;t so big. Because of this and after discussing with the main contributors to Fable ecosystem, we&#39;ve decided to abandon the idea of having a single repository with multiple Fable bindings automatically generated, and instead encourage the community to create (and maintain) bindings that may start with ts2fable but also include another layer with more idiomatic F# code, and that don&#39;t need to start with the <code>Fable.Import.</code> prefix.</p>
+<p>This means we&#39;re phasing out the fable-import repository and given that the browser bindings are the most used in Fable projects, we&#39;ve already ported them to <a href="https://github.com/fable-compiler/fable-browser">another repository</a>. This contains not only one but multiple packages, roughly corresponding to <a href="https://developer.mozilla.org/docs/Web/API">the Web APIs</a>. The guidelines to make the namespaces consistent across these packages are:</p>
+<ul>
+<li>Interfaces are contained in the <code>Browser.Types</code> namespace in all packages.</li>
+<li>Values, <a href="https://github.com/fable-compiler/fable-browser/blob/439b42070c9ed6afc6ec18499f22f3c238c221ae/src/Dom/Browser.Dom.Api.fs#L14-L22">like <code>window</code> or constructors like <code>FileReader</code></a>, are put in a module with the same name as the package (e.g. Fable.Browser.Dom -&gt; Browser.Dom, note the package hast the Fable prefix but not the module). This module is decorated with <code>AutoOpen</code> so in general you only need to <code>open Browser</code> to access any of the values in the Fable.Browser packages. Only to prevent conflicts you should need to qualify the module name (e.g. <code>Browser.Dom.document</code>).</li>
+</ul>
+<p>The <code>fable-browser</code> repository doesn&#39;t contain all Web APIs yet. Please contribute them or, if you prefer, it&#39;s also ok to publish packages for the missing APIs from your own profile.</p>
+<h2><a name="fable-powerpack" class="anchor" href="#fable-powerpack">Fable.PowerPack</a></h2><p>Similar problems affected Fable.PowerPack. It was originally intended as an extended Fable.Core but it had become a mix of unrelated modules and many times it was difficult for maintainers to remember who had authored what.</p>
+<p>Following the reasoning above, we&#39;ve decided to deprecate Fable.PowerPack and replace it with single-purpose packages. For now, <a href="https://github.com/fable-compiler/fable-promise">Fable.Promise</a>, <a href="https://github.com/fable-compiler/fable-fetch">Fable.Fetch</a> and <a href="https://github.com/fable-compiler/fable-date">Fable.Date</a> have been released (for Fable.Core 3 compatibility make sure to use the latest version which may be prerelease). The API is identical to the modules in Fable.PowerPack except for these changes:</p>
+<ul>
+<li>Similar to Fable.Browser, the <code>Fable.</code> prefix is removed from the actual module names. In most cases (e.g. to use <code>Promise.map</code>) you won&#39;t need to open anything.</li>
+<li><code>Fetch.Fetch_types</code> is renamed to <code>Fetch.Types</code>.</li>
+<li>The fetch methods in auto-serialization (like <code>fetchAs</code>) have been removed, please combine fetching with <a href="https://github.com/thoth-org/Thoth.Json">Thoth.Json</a> or <a href="https://github.com/Zaid-Ajaj/Fable.SimpleJson">Fable.SimpleJson</a>. Example:</li>
+</ul>
+<pre><code class="language-fsharp"><span class="hljs-keyword">open</span> Fable.Core
+<span class="hljs-keyword">open</span> Fetch.Types
+<span class="hljs-keyword">open</span> Thoth.Json
+
+<span class="hljs-comment">// Custom error message</span>
+<span class="hljs-keyword">let</span> errorString (response: Response) =
+    string response.Status + <span class="hljs-string">" "</span> + response.StatusText + <span class="hljs-string">" for URL "</span> + response.Url
+
+<span class="hljs-keyword">let</span> fetchWithDecoder&lt;<span class="hljs-symbol">'T</span>&gt; (url: string) (decoder: Decoder&lt;<span class="hljs-symbol">'T</span>&gt;) (init: RequestProperties list) =
+    GlobalFetch.fetch(RequestInfo.Url url, Fetch.requestProps init)
+    |&gt; Promise.bind (<span class="hljs-keyword">fun</span> response -&gt;
+        <span class="hljs-keyword">if</span> not response.Ok <span class="hljs-keyword">then</span>
+            errorString response |&gt; Error |&gt; Promise.lift
+        <span class="hljs-keyword">else</span>
+            response.text() |&gt; Promise.map (Decode.fromString decoder))
+
+<span class="hljs-comment">// Inline the function so Fable can resolve the generic parameter at compile time</span>
+<span class="hljs-keyword">let</span> <span class="hljs-keyword">inline</span> fetchAs&lt;<span class="hljs-symbol">'T</span>&gt; (url: string) (init: RequestProperties list) =
+    <span class="hljs-comment">// In this example we use Thoth.Json cached auto decoders</span>
+    <span class="hljs-comment">// More info at: https://mangelmaxime.github.io/Thoth/json/v3.html#caching</span>
+    <span class="hljs-keyword">let</span> decoder = Decode.Auto.generateDecoderCached&lt;<span class="hljs-symbol">'T</span>&gt;()
+    fetchWithDecoder url decoder init</code></pre>
+<h2><a name="fable-react" class="anchor" href="#fable-react">Fable.React</a></h2><p>Latest Fable.React (v5, currently in beta) has a dependency on the new Fable.Browser.Dom package, besides these changes:</p>
+<ul>
+<li>In line with the previous changes, the <code>Fable.Import.</code> and <code>Fable.Helpers.</code> prefixes have been dropped, so now you only need to <code>open Fable.React</code> (and/or Fable.React.Props).</li>
+<li>The React event interfaces have been replaced with Browser.Types. Except for <code>SyntheticEvent</code> and <code>FormEvent</code> (which are just assimilated to <code>Event</code>), the other events have corresponding ones with same name.</li>
+<li><code>ComponentClass</code> is replaced by <code>ReactElementType</code>. To parse such and element use <code>ReactElementType.create</code>.</li>
+<li>The react-dom and react-dom/server bindings are in <code>Fable.ReactDom</code> and <code>Fable.ReactDomServer</code> static types.</li>
+<li>If you need to fully qualify one of the standard HTML tags, use <code>Fable.React.Standard</code>.</li>
+<li><a href="https://github.com/fable-compiler/fable-react/pull/119">React.memo support</a> thanks to @vbfox</li>
+<li><a href="https://github.com/fable-compiler/fable-react/issues/140">React hooks support</a>: if you&#39;ve a suggestion to improve the API do it quickly before the stable release</li>
+<li><a href="https://github.com/fable-compiler/fable-react/pull/147/files">Type-safe CSS props</a> thanks to @Zaid-Ajaj</li>
+</ul>
+<h2><a name="fable-elmish" class="anchor" href="#fable-elmish">Fable.Elmish</a></h2><p>The original implementation of Elmish was intentially made simple and meant to resemble Elm&#39;s abstractions. The v3 of Elimsh introduces a few breaking changes, mostly affecting library authors:</p>
+<ul>
+<li>The dispatch loop has been reimplemented to run on the main thread, using a queue that maintains FIFO semantics under JS runtime. This implementation offers a few other benefits, like stabilising the <code>dispatch</code> reference and finally addressing a long-standing request to report messages that cause unhandled exceptions.</li>
+<li><code>Cmd</code> module has been reorganized into similarly-shaped submodules to accomodate the use-cases that have emerged with the growing popularity and adoption under CLR.</li>
+<li><code>Program</code> type has been made opaque to ease potential future evolution. If you own a library that extends Elmish please take a look at the core libraries for examples of how to use the functions instead of working directly with the fields.</li>
+</ul>
+<h2><a name="other-packages-fulma-thoth-json-fable-simplehttp-" class="anchor" href="#other-packages-fulma-thoth-json-fable-simplehttp-">Other packages: Fulma, Thoth.Json, Fable.SimpleHttp...</a></h2><p>Several other packages have published new beta versions without actual changes (fortunately! I hear you) but with dependencies on Fable.Core 3 and Fable.Browser to avoid compilation errors. However, after updating dependencies and building your project, if you see an error like the following:</p>
+<pre><code>FSC : error FS0193: The module/namespace &#39;Fable.Import.JS&#39; coming from &#39;Fable.Core&#39; didn&#39;t contain the namespace, module or type &#39;Promise`1&#39; [/path/to/your/Project.fsproj]</code></pre><p>This means one of your dependencies is still not updated. Find which package still depends on Fable.Core 2.0 (you can inspect <code>paket.lock</code> if using Paket) and contact the maintainers of the library to ask for an upgrade (check first there&#39;s no a prerelease version already available with the update).</p>
+<p>Find below a table with a summary of the package and namespace changes. You can also use <a href="https://github.com/MangelMaxime/fulma-demo/pull/26/commits/e92fa03e0241170719d51a7268e1114a389485da">this commit</a> as reference when upgrading your project.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Old pkg</th>
+<th align="center">New pkg</th>
+<th align="center">Namespace changes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Fable.Core</td>
+<td align="center">-</td>
+<td align="center">Fable.Import.JS &gt; Fable.Core.JS</td>
+</tr>
+<tr>
+<td align="center">Fable.Import.Browser</td>
+<td align="center">Fable.Browser.Dom Fable.Browser.WebSocket ...</td>
+<td align="center">Fable.Import.Browser &gt; Browser[.Types]</td>
+</tr>
+<tr>
+<td align="center">Fable.React</td>
+<td align="center">-</td>
+<td align="center">Fable.Import.React &gt; Fable.React Fable.Helpers.React &gt; Fable.React</td>
+</tr>
+<tr>
+<td align="center">Fable.Elmish.***</td>
+<td align="center">-</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<hr>
+<p>We know these are a lot of changes and we apologize for the trouble when updating, but we&#39;re convinced this is much better for the future and will increase the health of Fable ecosystem. You can give us feedback through a <a href="https://github.com/fable-compiler/Fable/issues/new">quick issue</a> if necessary, and we&#39;ll help you the best we can.</p>
+<p>Thanks for your attention and happy coding!</p>
+</div></div><div class="column"></div></div></div></div><footer><p>Fable <a href="https://github.com/fable-compiler/Fable">source code</a> is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.</p></footer><script>
+document.addEventListener('DOMContentLoaded', function () {
+  var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+  if ($navbarBurgers.length > 0) {
+    $navbarBurgers.forEach(function ($el) {
+      $el.addEventListener('click', function () {
+        var target = $el.dataset.target;
+        var $target = document.getElementById(target);
+        $el.classList.toggle('is-active');
+        $target.classList.toggle('is-active');
+      });
+    });
+  }
+});</script></body></html>
