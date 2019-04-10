@@ -3,7 +3,7 @@
 
 ## TL;DR
 
-- **Fable 2? Really? I want to try it out! NOW!** The easiest way is to check [the new and shiny repl](http://fable.io/repl2) for quickly running and editing samples online. To test the new tooling in your machine, we have prepared two samples: [one with minimal configuration](https://github.com/fable-compiler/fable2-samples/tree/master/minimal) if you prefer to start with the basics; and [a full-blown app](https://github.com/MangelMaxime/fulma-demo) that includes most extensive configuration and code.
+- **Fable 2? Really? I want to try it out! NOW!** The easiest way is to check [the new and shiny repl](http://fable.io/repl) for quickly running and editing samples online. To test the new tooling in your machine, we have prepared two samples: [one with minimal configuration](https://github.com/fable-compiler/fable2-samples/tree/master/minimal) if you prefer to start with the basics; and [a full-blown app](https://github.com/MangelMaxime/fulma-demo) that includes most extensive configuration and code.
 
 > Note [the old repl](http://fable.io/repl-legacy) is still alive in case you want to compare the different outputs.
 
