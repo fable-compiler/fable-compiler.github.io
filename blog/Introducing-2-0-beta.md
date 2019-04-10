@@ -5,7 +5,7 @@
 
 - **Fable 2? Really? I want to try it out! NOW!** The easiest way is to check [the new and shiny repl](http://fable.io/repl2) for quickly running and editing samples online. To test the new tooling in your machine, we have prepared two samples: [one with minimal configuration](https://github.com/fable-compiler/fable2-samples/tree/master/minimal) if you prefer to start with the basics; and [a full-blown app](https://github.com/MangelMaxime/fulma-demo) that includes most extensive configuration and code.
 
-> Note [the old repl](http://fable.io/repl) is still alive in case you want to compare the different outputs.
+> Note [the old repl](http://fable.io/repl-legacy) is still alive in case you want to compare the different outputs.
 
 - **Is Fable 2 any better?** Two is bigger than one, [so it has to be!](https://www.youtube.com/watch?v=uMSV4OteqBE&feature=youtu.be&t=80) Jokes aside, there's still room for improvement and we haven't done extensive benchmarking yet, but early findings show you can get [between 30-40% bundle size reduction](https://github.com/MangelMaxime/fulma-demo/pull/5#issue-190709436) as well as [up to 2x speed boost](https://github.com/fable-compiler/Fable/issues/1457#issuecomment-406901930) in complex computing-intensive apps (like Fable REPL itself).
 
@@ -53,6 +53,6 @@ I also want to thank my employers, who trust Fable (and me!) and are really supp
 
 <br />
 
-That's all for today. Please give Fable 2 a shoot, we've put a lot of love in it and hope you like it. Really excited to see what you will build with it!
+That's all for today. Please give Fable 2 a shot - we've put a lot of love in it and hope you like it. Really excited to see what you will build with it!
 
 Have a nice weekend and lovely Summer!
