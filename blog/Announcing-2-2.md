@@ -118,8 +118,8 @@ Find below a table with a summary of the package and namespace changes. You can 
 |        Old pkg       |                    New pkg                    |                          Namespace changes                         |
 |:--------------------:|:---------------------------------------------:|:------------------------------------------------------------------:|
 | Fable.Core           |                       -                       | Fable.Import.JS > Fable.Core.JS                                    |
-| Fable.Import.Browser | Fable.Browser.Dom Fable.Browser.WebSocket ... | Fable.Import.Browser > Browser[.Types]                             |
-| Fable.React          |                       -                       | Fable.Import.React > Fable.React Fable.Helpers.React > Fable.React |
+| Fable.Import.Browser | Fable.Browser.Dom, Fable.Browser.WebSocket... | Fable.Import.Browser > Browser[.Types]                             |
+| Fable.React          |                       -                       | Fable.Import.React > Fable.React, Fable.Helpers.React > Fable.React |
 | Fable.Elmish.***     |                       -                       |                                                                    |
 
 -----------------------------------------------------------

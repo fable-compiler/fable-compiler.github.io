@@ -2,6 +2,10 @@ Check our blog to be up-to-date with recent developments in Fable community and 
 
 -------------------------------------------------------------------
 
+## [Announcing Fable.React 5](Announcing-Fable-React-5.html)
+
+> By [Alfonso García-Caro](https://twitter.com/alfonsogcnunez) on April 16, 2019
+
 ## [Announcing fable-compiler 2.2, Fable.Core 3 and more](Announcing-2-2.html)
 
 > By [Alfonso García-Caro](https://twitter.com/alfonsogcnunez) on April 2, 2019
