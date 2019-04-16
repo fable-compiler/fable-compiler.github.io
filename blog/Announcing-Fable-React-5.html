@@ -28,7 +28,7 @@
 <ul>
 <li>To <strong>skip rendering</strong> the component if the props haven&#39;t changed. This is specially important when using central state management like Elmish, because every time our UI model is updated a new render for the whole app will be triggered. Skip the parts of the UI tree that don&#39;t need to change with the <code>memoizeWith</code> parameter, which receives a function to check if the old and new props are equal. Fable.React 5 also provides the <code>equalsButFunctions</code> helper which doesn&#39;t take into account the functions in the props object (useful in Elmish apps where we usually pass the <code>dispatch</code> function down the UI tree).</li>
 </ul>
-<pre><code class="language-fsharp"><span class="hljs-keyword">let</span> MiView  =
+<pre><code class="language-fsharp"><span class="hljs-keyword">let</span> MyView  =
     FunctionComponent.Of((<span class="hljs-keyword">fun</span> p -&gt; ..), memoizeWith = equalsButFunctions)</code></pre>
 <ul>
 <li><p>To keep some <strong>internal state</strong> for the component, which can be done using React&#39;s state hook. Hooks also give you more capabilities concerning the component&#39;s life cycle. Read more about them in the next section.</p>
