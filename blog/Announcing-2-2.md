@@ -102,6 +102,7 @@ The original implementation of Elmish was intentially made simple and meant to r
 - The dispatch loop has been reimplemented to run on the main thread, using a queue that maintains FIFO semantics under JS runtime. This implementation offers a few other benefits, like stabilising the `dispatch` reference and finally addressing a long-standing request to report messages that cause unhandled exceptions.
 - `Cmd` module has been reorganized into similarly-shaped submodules to accomodate the use-cases that have emerged with the growing popularity and adoption under CLR.
 - `Program` type has been made opaque to ease potential future evolution. If you own a library that extends Elmish please take a look at the core libraries for examples of how to use the functions instead of working directly with the fields.
+- `Elmish.Browser` namespace has been replaced with just `Elmish`
 
 ## Other packages: Fulma, Thoth.Json, Fable.SimpleHttp...
 
@@ -120,7 +121,7 @@ Find below a table with a summary of the package and namespace changes. You can 
 | Fable.Core           |                       -                       | Fable.Import.JS > Fable.Core.JS                                    |
 | Fable.Import.Browser | Fable.Browser.Dom, Fable.Browser.WebSocket... | Fable.Import.Browser > Browser[.Types]                             |
 | Fable.React          |                       -                       | Fable.Import.React > Fable.React, Fable.Helpers.React > Fable.React |
-| Fable.Elmish.***     |                       -                       |                                                                    |
+| Fable.Elmish.***     |                       -                       | Elmish.Browser > Elmish |
 
 -----------------------------------------------------------
 
