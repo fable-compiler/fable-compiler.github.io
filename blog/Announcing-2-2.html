@@ -71,6 +71,7 @@
 <li>The dispatch loop has been reimplemented to run on the main thread, using a queue that maintains FIFO semantics under JS runtime. This implementation offers a few other benefits, like stabilising the <code>dispatch</code> reference and finally addressing a long-standing request to report messages that cause unhandled exceptions.</li>
 <li><code>Cmd</code> module has been reorganized into similarly-shaped submodules to accomodate the use-cases that have emerged with the growing popularity and adoption under CLR.</li>
 <li><code>Program</code> type has been made opaque to ease potential future evolution. If you own a library that extends Elmish please take a look at the core libraries for examples of how to use the functions instead of working directly with the fields.</li>
+<li><code>Elmish.Browser</code> namespace has been replaced with just <code>Elmish</code></li>
 </ul>
 <h2><a name="other-packages-fulma-thoth-json-fable-simplehttp-" class="anchor" href="#other-packages-fulma-thoth-json-fable-simplehttp-">Other packages: Fulma, Thoth.Json, Fable.SimpleHttp...</a></h2><p>Several other packages have published new beta versions without actual changes (fortunately! I hear you) but with dependencies on Fable.Core 3 and Fable.Browser to avoid compilation errors. However, after updating dependencies and building your project, if you see an error like the following:</p>
 <pre><code>FSC : error FS0193: The module/namespace &#39;Fable.Import.JS&#39; coming from &#39;Fable.Core&#39; didn&#39;t contain the namespace, module or type &#39;Promise`1&#39; [/path/to/your/Project.fsproj]</code></pre><p>This means one of your dependencies is still not updated. Find which package still depends on Fable.Core 2.0 (you can inspect <code>paket.lock</code> if using Paket) and contact the maintainers of the library to ask for an upgrade (check first there&#39;s no a prerelease version already available with the update).</p>
@@ -101,7 +102,7 @@
 <tr>
 <td align="center">Fable.Elmish.***</td>
 <td align="center">-</td>
-<td align="center"></td>
+<td align="center">Elmish.Browser &gt; Elmish</td>
 </tr>
 </tbody></table>
 <hr>
