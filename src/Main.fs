@@ -17,6 +17,9 @@ module private Util =
   let highlight: obj = importAll "highlight.js"
   let marked: obj = importDefault "marked"
 
+  let isAbsoluteUrl (url: string) =
+    Regex.IsMatch(url, @"^(?:[a-z]+:)?//", RegexOptions.IgnoreCase)
+
   marked?setOptions(createObj [
     "highlight" ==> fun code lang ->
       highlight?highlightAuto(code, [|lang|])?value
@@ -30,8 +33,10 @@ module private Util =
       level escapedText escapedText text level
 
   renderer?link <- fun href title text ->
-    sprintf """<a href="%s">%s</a>"""
-      (Regex.Replace(href, @"\.md\b", ".html")) text
+    let href =
+        if isAbsoluteUrl href then href
+        else Regex.Replace(href, @"\.md$", ".html")
+    sprintf """<a href="%s">%s</a>""" href text
 
 open Util
 
