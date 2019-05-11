@@ -82,11 +82,13 @@ type MyView(props) =
 The situation gets more complicated when we also want to trigger some code at specific points in the life cycle, keep a reference to value outside the component state, etc. Thankfully, since React 16.8 we can use hooks to empower functions with all these capabilities. Now adding state to a component is as simple as:
 
 ```fsharp
-let view (props: {| initCount: int |}) =
-      let state = Hooks.useState(props.initCount) // This is where the magic happens
-      button
+let view =
+    FunctionComponent.Of(fun (props: {| initCount: int |}) ->
+    let state = Hooks.useState(props.initCount) // This is where the magic happens
+    button
         [ OnClick (fun _ -> state.update(fun s -> s + 1)) ]
         [ str "Times clicked: "; ofInt state.current ]
+    )
 ```
 
 I won't explain hooks in detail because [React documentation is already a fantastic source](https://reactjs.org/docs/hooks-overview.html) for that. Fable.React 5 provides bindings for the most commonly used hooks (`useState`, `useEffect`, `useRef`, `useMemo`...) matching React's API for the most part, except for a few cases where a different name is necessary to comply with F# overloading rules. I will only show another example combining `useEffect` and `useRef` to detect a click _outside_ our component, something that beforehand required quite a bit of code.
@@ -99,25 +101,27 @@ let attachEvent (f: Event->unit) (node: Node) (eventType: string) =
     { new System.IDisposable with
         member __.Dispose() = node.removeEventListener(eventType, f) }
 
-let view props =
-    // Keep a value ref during component's life cycle, initialized to None
-    let selfRef = Hooks.useRef None
+let view =
+    FunctionComponent.Of(fun props ->
+        // Keep a value ref during component's life cycle, initialized to None
+        let selfRef = Hooks.useRef None
 
-    // Passing an empty array for dependencies tells React the effect should
-    // only run when mounting (and the disposable when unmounting)
-    Hooks.useEffectDisposable((fun () ->
-        (Browser.Dom.document, "mousedown") ||> attachEvent (fun ev ->
-            let menuEl: Element = selfRef.current.Value
-            if not(menuEl.contains(ev.target :?> _)) then
-                printfn "Clicked outside!")
-    ), [||])
+        // Passing an empty array for dependencies tells React the effect should
+        // only run when mounting (and the disposable when unmounting)
+        Hooks.useEffectDisposable((fun () ->
+            (Browser.Dom.document, "mousedown") ||> attachEvent (fun ev ->
+                let menuEl: Element = selfRef.current.Value
+                if not(menuEl.contains(ev.target :?> _)) then
+                    printfn "Clicked outside!")
+        ), [||])
 
-    button
-        // We can pass the ref object directly to the new RefHook prop
-        // to get a reference to the actual button element in the browser's doom
-        [ RefHook selfRef
-          OnClick (fun _ -> printfn "Clicked inside!") ]
-        [ str "Click me" ]
+        button
+            // We can pass the ref object directly to the new RefHook prop
+            // to get a reference to the actual button element in the browser's doom
+            [ RefHook selfRef
+              OnClick (fun _ -> printfn "Clicked inside!") ]
+            [ str "Click me" ]
+    )
 ```
 
 ## Type-safe CSS props
