@@ -55,11 +55,13 @@
                 this.setState(<span class="hljs-keyword">fun</span> s _ -&gt; { s <span class="hljs-keyword">with</span> count = s.count + <span class="hljs-number">1</span> })) ]
             [ str <span class="hljs-string">"Times clicked: "</span>; ofInt this.state.count ]</code></pre>
 <p>The situation gets more complicated when we also want to trigger some code at specific points in the life cycle, keep a reference to value outside the component state, etc. Thankfully, since React 16.8 we can use hooks to empower functions with all these capabilities. Now adding state to a component is as simple as:</p>
-<pre><code class="language-fsharp"><span class="hljs-keyword">let</span> view (props: {| initCount: int |}) =
-      <span class="hljs-keyword">let</span> state = Hooks.useState(props.initCount) <span class="hljs-comment">// This is where the magic happens</span>
-      button
+<pre><code class="language-fsharp"><span class="hljs-keyword">let</span> view =
+    FunctionComponent.Of(<span class="hljs-keyword">fun</span> (props: {| initCount: int |}) -&gt;
+    <span class="hljs-keyword">let</span> state = Hooks.useState(props.initCount) <span class="hljs-comment">// This is where the magic happens</span>
+    button
         [ OnClick (<span class="hljs-keyword">fun</span> _ -&gt; state.update(<span class="hljs-keyword">fun</span> s -&gt; s + <span class="hljs-number">1</span>)) ]
-        [ str <span class="hljs-string">"Times clicked: "</span>; ofInt state.current ]</code></pre>
+        [ str <span class="hljs-string">"Times clicked: "</span>; ofInt state.current ]
+    )</code></pre>
 <p>I won&#39;t explain hooks in detail because <a href="https://reactjs.org/docs/hooks-overview.html">React documentation is already a fantastic source</a> for that. Fable.React 5 provides bindings for the most commonly used hooks (<code>useState</code>, <code>useEffect</code>, <code>useRef</code>, <code>useMemo</code>...) matching React&#39;s API for the most part, except for a few cases where a different name is necessary to comply with F# overloading rules. I will only show another example combining <code>useEffect</code> and <code>useRef</code> to detect a click <em>outside</em> our component, something that beforehand required quite a bit of code.</p>
 <pre><code class="language-fsharp"><span class="hljs-keyword">open</span> Browser.Types
 
@@ -68,25 +70,27 @@
     { <span class="hljs-keyword">new</span> System.IDisposable <span class="hljs-keyword">with</span>
         <span class="hljs-keyword">member</span> __.Dispose() = node.removeEventListener(eventType, f) }
 
-<span class="hljs-keyword">let</span> view props =
-    <span class="hljs-comment">// Keep a value ref during component's life cycle, initialized to None</span>
-    <span class="hljs-keyword">let</span> selfRef = Hooks.useRef None
+<span class="hljs-keyword">let</span> view =
+    FunctionComponent.Of(<span class="hljs-keyword">fun</span> props -&gt;
+        <span class="hljs-comment">// Keep a value ref during component's life cycle, initialized to None</span>
+        <span class="hljs-keyword">let</span> selfRef = Hooks.useRef None
 
-    <span class="hljs-comment">// Passing an empty array for dependencies tells React the effect should</span>
-    <span class="hljs-comment">// only run when mounting (and the disposable when unmounting)</span>
-    Hooks.useEffectDisposable((<span class="hljs-keyword">fun</span> () -&gt;
-        (Browser.Dom.document, <span class="hljs-string">"mousedown"</span>) ||&gt; attachEvent (<span class="hljs-keyword">fun</span> ev -&gt;
-            <span class="hljs-keyword">let</span> menuEl: Element = selfRef.current.Value
-            <span class="hljs-keyword">if</span> not(menuEl.contains(ev.target :?&gt; _)) <span class="hljs-keyword">then</span>
-                printfn <span class="hljs-string">"Clicked outside!"</span>)
-    ), [||])
+        <span class="hljs-comment">// Passing an empty array for dependencies tells React the effect should</span>
+        <span class="hljs-comment">// only run when mounting (and the disposable when unmounting)</span>
+        Hooks.useEffectDisposable((<span class="hljs-keyword">fun</span> () -&gt;
+            (Browser.Dom.document, <span class="hljs-string">"mousedown"</span>) ||&gt; attachEvent (<span class="hljs-keyword">fun</span> ev -&gt;
+                <span class="hljs-keyword">let</span> menuEl: Element = selfRef.current.Value
+                <span class="hljs-keyword">if</span> not(menuEl.contains(ev.target :?&gt; _)) <span class="hljs-keyword">then</span>
+                    printfn <span class="hljs-string">"Clicked outside!"</span>)
+        ), [||])
 
-    button
-        <span class="hljs-comment">// We can pass the ref object directly to the new RefHook prop</span>
-        <span class="hljs-comment">// to get a reference to the actual button element in the browser's doom</span>
-        [ RefHook selfRef
-          OnClick (<span class="hljs-keyword">fun</span> _ -&gt; printfn <span class="hljs-string">"Clicked inside!"</span>) ]
-        [ str <span class="hljs-string">"Click me"</span> ]</code></pre>
+        button
+            <span class="hljs-comment">// We can pass the ref object directly to the new RefHook prop</span>
+            <span class="hljs-comment">// to get a reference to the actual button element in the browser's doom</span>
+            [ RefHook selfRef
+              OnClick (<span class="hljs-keyword">fun</span> _ -&gt; printfn <span class="hljs-string">"Clicked inside!"</span>) ]
+            [ str <span class="hljs-string">"Click me"</span> ]
+    )</code></pre>
 <h2><a name="type-safe-css-props" class="anchor" href="#type-safe-css-props">Type-safe CSS props</a></h2><p>The following CSS props now accept a union type instead of a simple string for better type safety and discoverability. Thanks to Zaid-Ajaj for this contribution!</p>
 <ul>
 <li>Display</li>
