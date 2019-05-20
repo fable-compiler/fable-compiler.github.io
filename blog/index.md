@@ -2,6 +2,10 @@ Check our blog to be up-to-date with recent developments in Fable community and 
 
 -------------------------------------------------------------------
 
+## [May Announcements](2019-May-Announcements.html)
+
+> By [Alfonso García-Caro](https://twitter.com/alfonsogcnunez) on May 20, 2019
+
 ## [Announcing Fable.React 5](Announcing-Fable-React-5.html)
 
 > By [Alfonso García-Caro](https://twitter.com/alfonsogcnunez) on April 16, 2019
