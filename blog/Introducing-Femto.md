@@ -152,7 +152,7 @@ I hope you are just as excited about Femto as much I am now! However, there is a
 
 ### Fable library authors
 
-In order for femto to pick up the information about the npm dependency that your library requires, you need to release a new version of your Fable binding with this information included in the *project* file. Simply add a section in your project file like this:
+In order for Femto to pick up the information about the npm dependency that your library requires, you need to release a new version of your Fable binding with this information included in the *project* file. Simply add a section in your project file like this:
 ```xml
 <PropertyGroup>
   <NpmDependencies>
@@ -181,4 +181,4 @@ A while ago, sometime after FableConf 2018, I [proposed](https://github.com/fabl
 
 ### Want to contribute?
 
-At this point, we have the most crucial features added to Femto but there are a couple more good first issues for those who want to contribute to Femto. Please take a look a the [issues](https://github.com/Zaid-Ajaj/Femto/issues) pages and feel free to send pull requests, they are very much appreciated and are always welcome!
+At this point, we have the most crucial features added to Femto but there are a couple more good first issues for those who want to contribute to Femto. Please take a look at the [issues](https://github.com/Zaid-Ajaj/Femto/issues) pages and feel free to send pull requests, they are very much appreciated and are always welcome!
