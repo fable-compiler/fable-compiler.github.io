@@ -6,11 +6,11 @@
 In this blog post, we will introduce a new tool called Femto that will hopefully make the lives of Fable users a lot easier when it comes to the npm packages they depend upon. First things first: let's go through the problem context to understand what Femto is trying to solve.
 
 ### Fable Packages
-As you all know, Fable packages are normal dotnet packages that are distributed to the nuget package registry. A special type of these nuget packages are Fable bindings which provide idiomatic and type-safe wrappers around native Javascript APIs. These native Javascript APIs can be either available directly in the environment where your compiled F# code is running (Web APIs in browsers, system modules in node.js), or these APIs can be those of third-party javascript libraries distributed to the npm registry and this is where things get complicated.
+As you all know, Fable packages are normal dotnet packages that are distributed to the nuget package registry. A special type of these nuget packages are Fable bindings which provide idiomatic and type-safe wrappers around native Javascript APIs. These native Javascript APIs can be either available directly in the environment where your compiled F# code is running (Web APIs in browsers, system modules in node.js), or these APIs can be those of third-party Javascript libraries distributed to the npm registry and this is where things get complicated.
 
-In order to use a Fable binding for a third-party javascript library you as a user have to install *both* libraries in your project:
+In order to use a Fable binding for a third-party Javascript library you as a user have to install *both* libraries in your project:
  - The Fable binding from nuget
- - The actual javascript third-party library from npm
+ - The actual Javascript third-party library from npm
 
 For example when you install `Fable.React` in your Fable project you also have to install `react` and `react-dom` into your npm dependencies. Users usually have to look up the the exact versions of the npm package they need from the documentation page of the Fable binding itself, in case of `Fable.React` you need to install `react@16.8.0` and `react-dom@16.8.0`.
 
@@ -30,10 +30,11 @@ This is something you just have to know and applies to every Fable binding you u
 
 ### What is Femto
 
-Femto is a dotnet CLI tool that primarily does two things
- - **Project dependency analysis**: going through all your project's dependencies, the direct and the transitive, extracting information about which npm dependencies are needed, which versions they should have and where they should be installed. Next this information is compared against what you already have installed to decide whether a package is missing or if a version of an installed npm package has an invalid version (falls outside the required version constraint specified by the Fable binding). Femto will log the commands that are required for full package resolution.
+Femto is a dotnet CLI tool that primarily does two things:
 
- - **Automatic package resolution**: Logging the actions required for package resolution is nice, you can manually execute them one by one and  have all the packages you need in the right place. However why do it manually when Femto can do it for you? Run Femto with the `--resolve` flag and let it do the magic.
+ - **Project dependency analysis**: going through all your project's dependencies, the direct and the transitive, extracting information about which npm dependencies are needed, which versions they should have and how they should be installed (dependency vs development dependency). Next this information is compared against what you already have installed to decide whether a package is missing or if a version of an installed npm package has an invalid version (falls outside the required version constraint specified by the Fable binding). Femto will log the commands that are required for full package resolution.
+
+ - **Automatic package resolution**: Logging the actions required for package resolution is nice, you can manually execute them one by one and have all the packages you need in the right place. However why do it manually when Femto can do it for you? Run Femto with the `--resolve` flag and let it do the magic.
 
 Today, Femto is released as beta and we would love to hear from you what you think about it, ready to take it for a spin?
 
@@ -42,6 +43,10 @@ Today, Femto is released as beta and we would love to hear from you what you thi
 Install [Femto](https://github.com/Zaid-Ajaj/Femto) as a global dotnet tool as follows:
 ```
 dotnet tool install femto --global
+```
+Alternatively, you can install it locally into your projects directory:
+```
+dotnet tool install femto --tool-path ./femto
 ```
 then you can `cd` your way to where you have your Fable project and run project analysis:
 ```bash
@@ -52,7 +57,7 @@ cd src
 # run femto for project analysis
 femto
 ```
-You can also specify the directory of your Fable project or specify the project path itself, the following will find the same the same project.
+You can also specify the directory of your Fable project or specify the project path itself, the following will find the same project.
 ```bash
 femto .
 
@@ -84,7 +89,7 @@ then run `femto` in the project directory, you get the following logs:
 [20:13:43 INF]   | -- Missing react-spring in package.json
 [20:13:43 INF]   | -- Resolve manually using 'npm install react-spring@8.0.1 --save'
 ```
-Notice how femto decided to use `npm` for package management. In case I had the `yarn.lock` file next to `package.json` then femto will use `yarn` instead and the install commands would be yarn specifc:
+Notice how Femto decided to use `npm` for package management. In case I had the `yarn.lock` file next to `package.json` then Femto will use `yarn` instead and the install commands would be yarn specific:
 ```bash
 npm install sweetalert2@8.5.0 --save
 # becomes
