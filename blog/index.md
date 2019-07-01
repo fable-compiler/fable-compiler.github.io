@@ -2,6 +2,12 @@ Check our blog to be up-to-date with recent developments in Fable community and 
 
 -------------------------------------------------------------------
 
+## [Introducing Femto](Introducing-Femto.html)
+
+> By [Zaid Ajaj](https://github.com/Zaid-Ajaj) on June 29, 2019
+
+Automatic npm package resolution used by Fable bindings
+
 ## [May Announcements](2019-May-Announcements.html)
 
 > By [Alfonso García-Caro](https://twitter.com/alfonsogcnunez) on May 20, 2019
