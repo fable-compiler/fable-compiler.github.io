@@ -19,6 +19,7 @@ During Fable 2 development, [Babel 7](https://babeljs.io/blog/2018/08/27/7.0.0) 
 
 1. Install [npx](https://github.com/zkat/npx#readme), this a CLI program allowing us to run npm packages.
 
+    - Maybe it came with node/npm: `npx --help`
     - For npm: `npm install -g npx`
     - For yarn: `yarn global add npx`
 
