@@ -1,13 +1,13 @@
 module Components.HomePage
 
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
 open Fulma
-open Fulma.FontAwesome
+open Fable.FontAwesome.Free
 open Util.Helpers
 open Util.Literals
 open Util.Types
-open StaticWebGenerator
+open GlobalHelpers
 
 let introText =
   "Fable is an F# to JavaScript compiler powered by [Babel](https://babeljs.io/), designed to produce readable and standard code. [Try it right now in your browser!](repl)"
@@ -36,11 +36,11 @@ let renderBody (info: PageInfo) =
     Container.container [] [
       Columns.columns []
         [ Column.column [] [cardTexts.[0] |||> renderCard (Img "./img/fsharp.png")]
-          Column.column [] [cardTexts.[1] |||> renderCard (FaIcon Fa.I.BatteryFull)]
+          Column.column [] [cardTexts.[1] |||> renderCard (FaIcon Fa.Solid.BatteryFull)]
       ]
       Columns.columns []
-        [ Column.column [] [cardTexts.[2] |||> renderCard (FaIcon Fa.I.Wrench)]
-          Column.column []  [cardTexts.[3] |||> renderCard (FaIcon Fa.I.PuzzlePiece)]
+        [ Column.column [] [cardTexts.[2] |||> renderCard (FaIcon Fa.Solid.Wrench)]
+          Column.column []  [cardTexts.[3] |||> renderCard (FaIcon Fa.Solid.PuzzlePiece)]
       ]
       br []
       h1 [Class "title is-2 has-text-centered"] [str "Where to go from here"]

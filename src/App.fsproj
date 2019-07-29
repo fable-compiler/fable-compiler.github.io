@@ -3,7 +3,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="../paket-files/fable-compiler/static-web-generator/src/Helpers.fs" />
+    <Compile Include="util/GlobalHelpers.fs" />
     <Compile Include="util/Helpers.fs" />
     <Compile Include="util/Literals.fs" />
     <Compile Include="util/Types.fs" />

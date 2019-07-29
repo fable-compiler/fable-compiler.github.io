@@ -2,16 +2,14 @@ module Main
 
 open System.Text.RegularExpressions
 open Fable.Core.JsInterop
-open Fable.Import
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
-open StaticWebGenerator
+open Fable.React
+open Fable.React.Props
+open GlobalHelpers
 open Components
 open Util.Literals
 open Util.Types
 
-module Node = Fable.Import.Node.Exports
-module NodeGlobals = Fable.Import.Node.Globals
+module Node = Node.Api
 
 module private Util =
   let highlight: obj = importAll "highlight.js"
@@ -78,7 +76,7 @@ let renderMarkdown pageTitle navbar header subheader className targetFullPath co
     |> IO.writeFile targetFullPath
 
 let renderMarkdownFrom pageTitle navbar header subheader className fileFullPath targetFullPath =
-  let content = Node.fs.readFileSync(fileFullPath).toString()
+  let content = IO.readFile fileFullPath
   renderMarkdown pageTitle navbar header subheader className targetFullPath content
 
 let renderDocs() =
@@ -111,7 +109,7 @@ let renderBlog() =
     (Node.path.join(Paths.BlogDir, "index.md")) (Node.path.join(Paths.DeployDir, "blog", "index.html"))
   let blogFiles = Node.fs.readdirSync(!^Paths.BlogDir)
   for blog in blogFiles |> Seq.filter (fun x -> x.EndsWith(".md")) do
-    let text = Node.fs.readFileSync(Node.path.join(Paths.BlogDir, blog)).toString()
+    let text = Node.path.join(Paths.BlogDir, blog) |> IO.readFile
     let m = reg.Match(text)
     let header, subheader, text =
       if m.Success

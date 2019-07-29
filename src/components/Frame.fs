@@ -1,12 +1,15 @@
 module Components.Frame
 
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
 
 let cssLink path =
     link [ Rel "stylesheet"
            Type "text/css"
            Href path ]
+
+let jsLink path =
+    script [Src path] []
 
 let burgerJsCode = """
 document.addEventListener('DOMContentLoaded', function () {
@@ -32,7 +35,7 @@ let render titleText extraCss navbar contents =
             yield meta [ Name "viewport"
                          HTMLAttr.Content "width=device-width, initial-scale=1" ]
             yield cssLink "https://fonts.googleapis.com/css?family=Josefin+Sans:400,300,600,700|Roboto+Mono"
-            yield cssLink "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+            yield jsLink "https://kit.fontawesome.com/f1c8a90b9d.js"
             yield cssLink "/css/styles.css"
             for css in extraCss do
                 yield cssLink css

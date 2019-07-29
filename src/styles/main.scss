@@ -1,0 +1,161 @@
+@import "../../node_modules/bulma/sass/utilities/initial-variables";
+
+$purple: #7a325d;
+$blue: #0055a4;
+$fable-blue: #2294fc;
+$primary: $blue;
+$black: #202020;
+$family-sans-serif: "Josefin Sans", sans-serif;
+
+@import "../../node_modules/bulma/bulma";
+// @import "../../node_modules/bulma-carousel/dist/bulma-carousel.css"
+
+// Needed otherwise iframes show a disabled scrollbar
+html, body {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+body {
+  font-size: 1.1em;
+}
+
+footer {
+  margin-top: 40px;
+  background-color: $black;
+  color: white;
+  padding: 20px 10px;
+  a:link,a:visited,a:hover,a:active {
+    color: white;
+    text-decoration: underline;
+  }
+}
+
+.container {
+  padding: 5px;
+}
+
+.navbar {
+  font-size: 1.2em;
+  background-color: $black;
+  .navbar-menu {
+    // Needed to overwrite Bulma rules
+    background-color: $black;
+  }
+  .title {
+    color: #686868;
+    font-weight: 600;
+    margin-bottom: 0;
+  }
+  .navbar-burger span {
+    background-color: white;
+  }
+  .navbar-burger:hover {
+    background-color: #686868;
+  }
+  .navbar-start {
+    .navbar-item {
+      color: white;
+    }
+    .navbar-item.is-active {
+      background-color: #686868;
+    }
+    .navbar-item:hover {
+      color: black;
+    }
+  }
+}
+
+.twitter {
+  color: #55acee !important; // Override bulma
+  border-color: #55acee;
+}
+
+.github {
+  color: $black !important; // Override bulma
+  border-color: $black;
+}
+
+.fable-home-card {
+  background-color: lighten($fable-blue, 40%);
+  margin-bottom: 10px;
+  // min-height: 300px;
+}
+
+.flex-horizontal {
+  display: flex;
+  align-items: center;
+}
+
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.fable-header {
+  background: linear-gradient(to left, lighten($fable-blue, 20%), white);
+  .hero-body {
+    padding: 2rem 0;
+  }
+  .fable-logo {
+    max-height: 150px;
+    @media screen and (max-width: 600px) {
+      max-height: 120px;
+    }
+    @media screen and (max-width: 400px) {
+      max-height: 80px;
+    }
+    // h1
+    //   color: darken(gold, 10%) //invert($fable-blue);
+    //   font-weight: normal;
+  }
+}
+
+.fable-introduction {
+  @extend .has-text-centered;
+  font-size: 1.3em;
+  p:not(:last-child) {
+    margin-bottom: 20px;
+  }
+}
+
+.fable-samples {
+  margin: 0 5px;
+  &> h1 {
+    margin-top: 25px;
+  }
+  .media-content h1 {
+      margin-bottom: 5px;
+  }
+}
+
+.content {
+  h1, h2, h3, h4, h5, h6 {
+    &> a {
+      color: $black;
+    }
+  }
+}
+
+.fable-friends img {
+    max-height: 150px;
+    margin: 0 10px;
+}
+
+.markdown .content img {
+    display: block;
+    margin: auto;
+}
+
+.faq h4 {
+  display: list-item;
+  list-style-type: disc;
+  list-style-position: inside;
+  // font-weight: 800;
+  // font-size: 1.2em;
+  font-variant: small-caps;
+  text-decoration: underline;
+  margin-top: 30px;
+}

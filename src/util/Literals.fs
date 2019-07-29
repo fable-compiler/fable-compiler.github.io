@@ -1,6 +1,6 @@
 namespace Util.Literals
 
-open StaticWebGenerator
+open GlobalHelpers
 
 module Fable =
   let [<Literal>] Root = "/" //"http://fable.io/"

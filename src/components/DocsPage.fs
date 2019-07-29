@@ -1,9 +1,9 @@
 module Components.DocsPage
 
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
 open Fulma
-open Fulma.FontAwesome
+open Fable.FontAwesome.Free
 open Util.Helpers
 open Util.Types
 
@@ -25,12 +25,12 @@ let renderBody title subtitle (info: PageInfo) =
     renderIntro [introText]
     Container.container [] [
       div [Class "columns"] [
-        div [Class "column"] [cardTexts.[0] |||> renderCard (FaIcon Fa.I.Rocket)]
-        div [Class "column"] [cardTexts.[1] |||> renderCard (FaIcon Fa.I.Refresh)]
+        div [Class "column"] [cardTexts.[0] |||> renderCard (FaIcon Fa.Solid.Rocket)]
+        div [Class "column"] [cardTexts.[1] |||> renderCard (FaIcon Fa.Solid.Sync)]
       ]
       div [Class "columns"] [
-        div [Class "column"] [cardTexts.[2] |||> renderCard (FaIcon Fa.I.Globe)]
-        div [Class "column"] [cardTexts.[3] |||> renderCard (FaIcon Fa.I.Group)]
+        div [Class "column"] [cardTexts.[2] |||> renderCard (FaIcon Fa.Solid.Globe)]
+        div [Class "column"] [cardTexts.[3] |||> renderCard (FaIcon Fa.Solid.ObjectGroup)]
       ]
     ]
   ]
