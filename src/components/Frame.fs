@@ -13,6 +13,14 @@ let jsLink path =
 
 let burgerJsCode = """
 document.addEventListener('DOMContentLoaded', function () {
+  // highlightjs 
+  /*
+  document.querySelectorAll('pre code').forEach((block) => {
+    hljs.highlightBlock(block);
+  });
+  */
+  
+  // burger
   var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
   if ($navbarBurgers.length > 0) {
     $navbarBurgers.forEach(function ($el) {
@@ -34,9 +42,14 @@ let render titleText extraCss navbar contents =
                          HTMLAttr.Content "text/html; charset=utf-8" ]
             yield meta [ Name "viewport"
                          HTMLAttr.Content "width=device-width, initial-scale=1" ]
-            yield cssLink "https://fonts.googleapis.com/css?family=Josefin+Sans:400,300,600,700|Roboto+Mono"
+            yield cssLink "https://fonts.googleapis.com/css?family=Josefin+Sans:400,300,600,700|Roboto+Mono|Fira+Code|Open+Sans:400,300,600,700"
             yield jsLink "https://kit.fontawesome.com/f1c8a90b9d.js"
+            
+            //
+            yield cssLink "//cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/themes/prism.css"
+            yield jsLink "/scripts/prism.js"
             yield cssLink "/css/styles.css"
+            yield cssLink "/css/prism.css"
             for css in extraCss do
                 yield cssLink css
             yield link [ Rel "shortcut icon"

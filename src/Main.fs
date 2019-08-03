@@ -131,4 +131,4 @@ IO.copy Paths.PublicDir Paths.DeployDir
 renderHomePage()
 renderBlog()
 renderDocs()
-renderFaq()
+//renderFaq()

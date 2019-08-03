@@ -5,7 +5,8 @@ $blue: #0055a4;
 $fable-blue: #2294fc;
 $primary: $blue;
 $black: #202020;
-$family-sans-serif: "Josefin Sans", sans-serif;
+$fable-blue: dodgerblue;
+$family-sans-serif: "Open Sans", sans-serif;
 
 @import "../../node_modules/bulma/bulma";
 // @import "../../node_modules/bulma-carousel/dist/bulma-carousel.css"
@@ -18,6 +19,8 @@ html, body {
 
 body {
   font-size: 1.1em;
+  font-weight: 200;
+  background: whitesmoke;
 }
 
 footer {
@@ -37,13 +40,13 @@ footer {
 
 .navbar {
   font-size: 1.2em;
-  background-color: $black;
+  background-color: $fable-blue;
   .navbar-menu {
     // Needed to overwrite Bulma rules
-    background-color: $black;
+    background-color: $fable-blue;
   }
   .title {
-    color: #686868;
+    color: rgba(255,255,255,0.9);
     font-weight: 600;
     margin-bottom: 0;
   }
@@ -51,14 +54,14 @@ footer {
     background-color: white;
   }
   .navbar-burger:hover {
-    background-color: #686868;
+    background-color: rgba(255,255,255,0.1);
   }
   .navbar-start {
     .navbar-item {
       color: white;
     }
     .navbar-item.is-active {
-      background-color: #686868;
+      background-color: rgba(0,0,0,0.5);
     }
     .navbar-item:hover {
       color: black;

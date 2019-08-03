@@ -26,9 +26,9 @@ let renderCard icon title link text =
     | FaIcon fa -> div [] [ Fa.i [ fa; Fa.Size Fa.Fa2x ] [] ]
   let header =
     match link with
-     | None -> span [Class "title is-4"] [str title]
-     | Some link -> a [Href link] [span [Class "title is-4"] [str title]]
-  Card.card [CustomClass "fable-home-card"] [
+     | None -> span [Class "title is-5"] [str title]
+     | Some link -> a [Href link] [span [Class "title is-5"] [str title]]
+  Card.card [] [
     Card.header [] [Card.Header.title [] [header]]
     Card.content [] [
       Media.media [] [
