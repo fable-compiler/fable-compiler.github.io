@@ -13,13 +13,6 @@ let jsLink path =
 
 let burgerJsCode = """
 document.addEventListener('DOMContentLoaded', function () {
-  // highlightjs 
-  /*
-  document.querySelectorAll('pre code').forEach((block) => {
-    hljs.highlightBlock(block);
-  });
-  */
-  
   // burger
   var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
   if ($navbarBurgers.length > 0) {
@@ -46,7 +39,6 @@ let render titleText extraCss navbar contents =
             yield jsLink "https://kit.fontawesome.com/f1c8a90b9d.js"
             
             //
-            yield cssLink "//cdnjs.cloudflare.com/ajax/libs/prism/1.17.1/themes/prism.css"
             yield jsLink "/scripts/prism.js"
             yield cssLink "/css/styles.css"
             yield cssLink "/css/prism.css"

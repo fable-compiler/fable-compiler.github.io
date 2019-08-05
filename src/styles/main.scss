@@ -54,9 +54,11 @@ footer {
     background-color: white;
   }
   .navbar-burger:hover {
-    background-color: rgba(255,255,255,0.1);
+    background-color: rgba(0,0,0,0.5);
   }
   .navbar-start {
+    font-weight: 400;
+    font-size: 1rem;
     .navbar-item {
       color: white;
     }
@@ -64,7 +66,7 @@ footer {
       background-color: rgba(0,0,0,0.5);
     }
     .navbar-item:hover {
-      color: black;
+      color: dodgerblue;
     }
   }
 }
@@ -101,15 +103,17 @@ footer {
   background: linear-gradient(to left, lighten($fable-blue, 20%), white);
   .hero-body {
     padding: 2rem 0;
+    .fable-logo {
+      max-height: 150px;
+      @media screen and (max-width: 600px) {
+        max-height: 120px;
+        width: 20%;
+      }
+      @media screen and (max-width: 400px) {
+        max-height: 80px;
+        width: 20%;
+      }      
   }
-  .fable-logo {
-    max-height: 150px;
-    @media screen and (max-width: 600px) {
-      max-height: 120px;
-    }
-    @media screen and (max-width: 400px) {
-      max-height: 80px;
-    }
     // h1
     //   color: darken(gold, 10%) //invert($fable-blue);
     //   font-weight: normal;

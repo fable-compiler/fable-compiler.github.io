@@ -6,24 +6,21 @@ open Fulma
 open Util.Literals
 
 let render title subtitle =
-  Hero.hero [  ]
-    [ Hero.body [ ]
-        [ 
-          Columns.columns [] [
+  Hero.hero []
+    [ Hero.body []
+        [ Columns.columns [] [
             Column.column [] []
-            Column.column [] [
-              Image.image [ 
-                Image.Props [
-                  Style [
-                    Width "90%"
-                    MarginLeft "auto"
-                    MarginRight "auto"
-                  ]
-                ]
-              ] 
-                [ 
-                  img [ Class "fable-logo"; Src WebAssets.FableLogo ] 
-                ]
+            Column.column 
+              [] 
+              [ Image.image 
+                  [ Image.Props [
+                      Style [
+                        //Width "90%"
+                        MarginLeft "auto"
+                        MarginRight "auto"
+                      ]
+                    ] ] 
+                  [ img [ Class "fable-logo"; Src WebAssets.FableLogo; Style [ ] ] ]
             ]
             Column.column [] []
           ]
@@ -38,5 +35,4 @@ let render title subtitle =
             ]
           ] [ str subtitle]
           *)
-
     ] ]
