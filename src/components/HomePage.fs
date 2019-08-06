@@ -80,60 +80,7 @@ let actionButtons =
       Column.column [] [] 
     ]
 
-let renderBody (info: PageInfo) =
-
-  // This fixes the problem with the double scrollbar on Windows
-  div [Style [Overflow "hidden"]] [
-    
-    // Title
-    Header.render "F#|>BABEL" "The compiler that emits JavaScript you can be proud of!"
-
-    // FABLECONF
-    (*
-    Container.container[
-      Container.Props [
-        Style [
-        ]
-      ]
-    ] [
-      Heading.h4 [
-        Heading.Props [
-          Style [
-            TextAlign TextAlignOptions.Center
-          ]
-        ]
-      ] [
-        span [
-          Style [
-            Padding "1rem"
-          ]
-        ] [ str "Hey! FableConf 2019 is happening in Antwerp on September 6th."]      
-      ]
-      Heading.h5 [
-        Heading.Props [
-          Style [
-            TextAlign TextAlignOptions.Center
-          ]
-        ]
-      ] [
-        a [ 
-          Href "https://fable.io/fableconf"
-          Target "_blank"
-          Style [
-            Color "dodgerblue"
-            TextDecoration "underline"
-            FontWeight "400"
-          ]
-        ] [
-          str "Grab your tickets soon!"
-        ]
-      ]
-    ]
-
-*)
-    renderIntro [introText]
-
-    // First sammple
+let renderSample () =
     Section.section [] [
       actionButtons 
       Columns.columns [ Columns.IsVCentered ] [
@@ -167,6 +114,18 @@ let myApp =
         Column.column [Column.Modifiers [ Modifier.IsHidden (Screen.Tablet, true)]] []
       ]
     ]
+
+let renderBody (info: PageInfo) =
+
+  // This fixes the problem with the double scrollbar on Windows
+  div [Style [Overflow "hidden"]] [
+    
+    // Title
+    Header.render "F# |> BABEL" "The compiler that emits JavaScript you can be proud of!"
+
+    renderIntro [introText]
+
+    // renderSample ()
 
     Container.container [] [
       Columns.columns []
