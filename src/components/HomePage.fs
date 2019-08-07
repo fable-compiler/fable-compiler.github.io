@@ -231,6 +231,11 @@ npm start"""
           Heading.Modifiers [Modifier.TextAlignment (Screen.All, TextAlignment.Centered)]
           ] 
           [ str "Features"]
+        Content.content [
+          Content.Modifiers [Modifier.TextAlignment (Screen.All, TextAlignment.Centered)]          
+        ] [
+          p [] [ str "The Fable community is working hard to make sure you won't run into a nasty runtime bug. Thanks to the F# language we also offer great tools to fit any Domain and make sure the compiler checks averything before shipping your app!"]
+        ]
         hr []
         (Features.prepare 
           "The end of null?"
