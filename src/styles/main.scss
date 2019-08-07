@@ -92,6 +92,14 @@ footer {
   align-items: center;
 }
 
+/* prism.js helper to get numbers the right way*/
+span.token.number {
+  font-size: 0.8rem;
+  padding: 0;
+  margin: 0;
+  padding-bottom: 6px;
+}
+
 .flex-wrap {
   display: flex;
   flex-direction: row;
