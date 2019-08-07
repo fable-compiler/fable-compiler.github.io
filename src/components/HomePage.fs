@@ -29,7 +29,24 @@ let whereToText: string =
     Navbar.Repl Navbar.Docs Navbar.FableConf
 
 let linkImage src href =
-  a [Href href] [img [Src ("img/" + src)]]
+  div [
+    Style [
+      MarginRight "1rem"
+      MarginBottom "1rem"
+      BackgroundColor "white"
+      Padding "0.5rem"
+      Display DisplayOptions.Flex
+      FlexDirection "column"
+      JustifyContent "center"
+      AlignItems AlignItemsOptions.Center
+    ]
+  ] [
+    a [
+        Href href
+      ] [
+      img [Src ("img/" + src)]
+    ]
+  ]
 
 let paragraph text =
   parseMarkdownAsReactEl "fable-introduction" text
@@ -169,7 +186,7 @@ npm start"""
             ] ]
 
       Section.section 
-          []
+          [] 
           [ Heading.h4 
               [ Heading.Props [ Style [ TextAlign TextAlignOptions.Center ] ] ] 
               [ str "Users of Fable"]

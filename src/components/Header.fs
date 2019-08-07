@@ -8,20 +8,29 @@ open Util.Literals
 type Helpers =
     static member LinkButton(text, href, ?margin, ?color, ?openNewTab) =
         let color = defaultArg color IsSuccess
-        a [
-            yield Style [
-                Margin (defaultArg margin "0")
+        div [
+            Style [
+                Width "100%"
+                Margin "0.5rem"
             ]
-            yield Href href
-            match openNewTab with
-            | Some true -> yield Target "_black"
-            | _ -> ()
         ] [
-            Button.button  [
-                Button.Color color
-                Button.Size IsMedium 
-                Button.IsOutlined
-            ] [ str text ]
+            a [
+                yield Style [
+                    Margin (defaultArg margin "0")
+                ]
+                yield Href href
+                match openNewTab with
+                | Some true -> yield Target "_black"
+                | _ -> ()
+            ] [
+                Button.button  [
+                    Button.Color color
+                    Button.Size IsMedium 
+                    Button.IsOutlined
+                    Button.IsFullWidth
+                    Button.Props [ Style [ FontSize "1rem"]]
+                ] [ str text ]
+            ]
         ]
 
 let render title subtitle =
@@ -53,8 +62,9 @@ let render title subtitle =
                 Style [
                     Display DisplayOptions.Flex    
                     FlexDirection "column"
-                    AlignItems AlignItemsOptions.Center
+                    AlignItems AlignItemsOptions.FlexStart
                     JustifyContent "center"
+                    MarginLeft "2rem"
                 ]
             ]
         ] [

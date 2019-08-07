@@ -94,9 +94,10 @@ footer {
 
 .flex-wrap {
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  justify-content: center; //flex-start;
+  //align-content: center;
 }
 
 .fable-header {
@@ -147,8 +148,7 @@ footer {
 }
 
 .fable-friends img {
-    max-height: 150px;
-    margin: 0 10px;
+  max-width: 100px;
 }
 
 .markdown .content img {
