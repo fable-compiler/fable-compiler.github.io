@@ -2,6 +2,7 @@ module Components.Frame
 
 open Fable.React
 open Fable.React.Props
+open Fulma
 
 let cssLink path =
     link [ Rel "stylesheet"
@@ -50,15 +51,21 @@ let render titleText extraCss navbar contents =
         body [] [
             navbar
             contents
-            footer [] [ p [] [
-                str "Fable "
-                a [ Href "https://github.com/fable-compiler/Fable" ]
-                  [ str "source code" ]
-                str " is licensed "
-                a [ Href "http://opensource.org/licenses/mit-license.php" ]
-                  [ str "MIT" ]
-                str "."
-            ] ]
+            footer [
+              Style [
+                BackgroundColor "dodgerblue"
+              ]
+            ] [ 
+              Content.content [] [
+                p [] [
+                  str "Fable "
+                  a [ Href "https://github.com/fable-compiler/Fable" ]
+                    [ str "source code" ]
+                  str " is licensed "
+                  a [ Href "http://opensource.org/licenses/mit-license.php" ]
+                    [ str "MIT" ]
+                  str "."
+            ] ] ]
             // Activate navbar burget button
             script [DangerouslySetInnerHTML { __html = burgerJsCode }] []
         ]
