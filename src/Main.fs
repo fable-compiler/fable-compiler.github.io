@@ -9,6 +9,7 @@ open Components
 open Util.Literals
 open Util.Types
 open Fable.Core
+open Fulma
 module Node = Node.Api
 
 module private Util =
@@ -72,11 +73,11 @@ let renderMarkdown pageTitle navbar header subheader className targetFullPath co
           div [Class "columns"] [
             div [Class "column"] []
             div [Class "column is-two-thirds"] [
-              div [
-                Class "content"
-                Style [Margin "5px"]
-                DangerouslySetInnerHTML { __html = parseMarkdown content }] []
-            ]
+                div [
+                  Class "content"
+                  Style [Margin "5px"]
+                  DangerouslySetInnerHTML { __html = parseMarkdown content }] []
+              ]
             div [Class "column"] []
           ]
         ]

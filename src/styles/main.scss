@@ -223,3 +223,7 @@ h3 > a.anchor, h2 > a.anchor {
 span.token.tag {
   background-color:white;
 }
+
+p > a {
+  text-decoration: underline;
+}
