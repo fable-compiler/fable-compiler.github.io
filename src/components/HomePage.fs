@@ -44,18 +44,15 @@ let linkImage src href =
       MarginRight "1rem"
       MarginBottom "1rem"
       BackgroundColor "white"
-      Padding "0.5rem"
+      Padding "0.3rem"
       Display DisplayOptions.Flex
       FlexDirection "column"
       JustifyContent "center"
       AlignItems AlignItemsOptions.Center
     ]
   ] [
-    a [
-        Href href
-      ] [
-      img [Src ("img/" + src)]
-    ]
+    a [Href href; Target "_blank"]
+      [img [Src ("img/users/" + src)]]
   ]
 
 let paragraph text =
@@ -328,6 +325,9 @@ match card with
             paragraph "These are some of the projects and companies using Fable. Send us a message to include yours!"
             br []
             div [Class "flex-wrap fable-friends"] [
+              linkImage "demetrix.png" "https://demetrixbio.com"
+              linkImage "compraga.jpeg" "https://www.compraga.de/"
+              linkImage "aimtec.jpg" "https://www.aimtecglobal.com/en/"
               linkImage "nsynk.png" "http://nsynk.de/"
               linkImage "thegamma.png" "https://thegamma.net/"
               linkImage "msu.jpg" "https://www.msu-solutions.de/"
