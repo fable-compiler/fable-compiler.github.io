@@ -1,5 +1,5 @@
 /* PrismJS 1.17.1
-https://prismjs.com/download.html#themes=prism-solarizedlight&languages=markup+css+clike+javascript */
+https://prismjs.com/download.html#themes=prism-solarizedlight&languages=markup+css+clike+javascript+bash+markup-templating+fsharp+markdown+json */
 /*
  Solarized Color Schemes originally by Ethan Schoonover
  http://ethanschoonover.com/solarized
@@ -69,11 +69,13 @@ pre[class*="language-"] {
 	margin: .5em 0;
 	overflow: auto;
 	border-radius: 0.3em;
+	font-family: "Fira Code";
+	font-size: 0.9rem;
 }
 
 :not(pre) > code[class*="language-"],
 pre[class*="language-"] {
-	background-color: #fdf6e3; /* base3 */
+	background-color: white; /* #fdf6e3; */ /* base3 */
 }
 
 /* Inline code */

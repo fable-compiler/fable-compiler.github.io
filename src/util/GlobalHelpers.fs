@@ -7,12 +7,22 @@ open Fable.React.Props
 module Node = Node.Api
 
 module private Util =
-  let highlight: obj = importAll "highlight.js"
+  let prism: obj = importAll "prismjs"
   let marked: obj = importDefault "marked"
 
   marked?setOptions(createObj [
-    "highlight" ==> fun code lang ->
-      highlight?highlightAuto(code, [|lang|])?value
+    "highlight" ==> fun code (lang:string) ->
+
+      let l = 
+        match lang.ToLowerInvariant().Trim() with 
+        | "js" -> prism?languages?javascript
+        | "shell" -> prism?languages?shell
+        | "fsharp" -> prism?languages?fsharp
+        | "xml" -> prism?languages?xml
+        | "json" -> prism?languages?json
+        | _ -> prism?languages?shell
+
+      prism?highlight(code, l, lang)
   ])
 
   let renderer = createNew marked?Renderer ()

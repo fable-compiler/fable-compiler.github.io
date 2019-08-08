@@ -37,8 +37,8 @@ let root currentPage =
     [ Navbar.Brand.div [] 
         [ Navbar.Item.div 
             [ Navbar.Item.Modifiers [ Modifier.TextSize (Screen.All, TextSize.Is4) ] 
-              Navbar.Item.Props [ Style [ BackgroundColor "rgba(0,0,0,0.5)"; Color "dodgerblue"; FontWeight 600.]] ]
-            [ str "Fable" ]
+              Navbar.Item.Props [ Style [ BackgroundColor "rgba(0,0,0,0.5)"; FontWeight 600.]] ]
+            [ a [Href "/"; Style [Color "dodgerblue"]] [str "Fable"] ]
             
           Navbar.burger
             [ Props [ Data("target", Navbar.MenuId) ]]

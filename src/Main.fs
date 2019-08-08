@@ -8,19 +8,29 @@ open GlobalHelpers
 open Components
 open Util.Literals
 open Util.Types
-
+open Fable.Core
 module Node = Node.Api
 
 module private Util =
-  let highlight: obj = importAll "highlight.js"
+  let prism: obj = importAll "prismjs"
   let marked: obj = importDefault "marked"
 
   let isAbsoluteUrl (url: string) =
     Regex.IsMatch(url, @"^(?:[a-z]+:)?//", RegexOptions.IgnoreCase)
 
   marked?setOptions(createObj [
-    "highlight" ==> fun code lang ->
-      highlight?highlightAuto(code, [|lang|])?value
+    "highlight" ==> fun code (lang:string) ->
+
+      let l = 
+        match lang.ToLowerInvariant().Trim() with 
+        | "js" -> prism?languages?javascript
+        | "shell" -> prism?languages?shell
+        | "fsharp" -> prism?languages?fsharp
+        | "xml" -> prism?languages?xml
+        | "json" -> prism?languages?json
+        | _ -> prism?languages?shell
+
+      prism?highlight(code, l, lang)
   ])
 
   let renderer = createNew marked?Renderer ()
@@ -71,7 +81,7 @@ let renderMarkdown pageTitle navbar header subheader className targetFullPath co
           ]
         ]
       ]
-    Frame.render pageTitle ["/css/highlight.css"] (Navbar.root navbar) body
+    Frame.render pageTitle ["/css/highlight.css";"/css/prism.css"] (Navbar.root navbar) body
     |> parseReactStatic
     |> IO.writeFile targetFullPath
 

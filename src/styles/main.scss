@@ -71,6 +71,22 @@ footer {
   }
 }
 
+pre {
+  background-color: white;
+  font-family:  "Fira Code";
+  font-size: 0.8rem;
+}
+
+pre {
+  code {
+    background-color: white;
+    font-family:  "Fira Code";
+    font-size: 0.8rem;
+  }
+}
+
+
+
 .twitter {
   color: #55acee !important; // Override bulma
   border-color: #55acee;
@@ -173,4 +189,21 @@ span.token.number {
   font-variant: small-caps;
   text-decoration: underline;
   margin-top: 30px;
+}
+
+/* blog related */
+p > code, li > code {
+  background-color: rgba(255,255,255,0.8);
+  font-size: 0.9rem;
+  color:dodgerblue;
+}
+
+/* blog related */
+h3 > a.anchor, h2 > a.anchor {
+  color:dodgerblue;
+}
+
+/* prism.js helper */
+span.token.tag {
+  background-color:white;
 }
