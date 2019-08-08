@@ -10,8 +10,8 @@ type Helpers =
         let color = defaultArg color IsSuccess
         div [
             Style [
-                Width "100%"
-                Margin "0.5rem"
+                Width "250px"
+                Margin "0.5rem 0"
             ]
         ] [
             a [
@@ -35,10 +35,10 @@ type Helpers =
 
 let render title subtitle =
     Columns.columns [
+        Columns.CustomClass "fable-header"
         Columns.Props [Style [ Margin "20px 0" ]]
     ] [
         Column.column [
-            Column.Width (Screen.All, Column.IsOneQuarter)
             Column.Offset (Screen.All, Column.IsOneQuarter)            
         ] [
             Image.image [
@@ -57,14 +57,12 @@ let render title subtitle =
             ]
         ]
         Column.column [
-            Column.Width (Screen.All, Column.IsOneQuarter)
+            Column.CustomClass "fable-header-buttons"
             Column.Props [
                 Style [
                     Display DisplayOptions.Flex    
                     FlexDirection "column"
-                    AlignItems AlignItemsOptions.FlexStart
                     JustifyContent "center"
-                    MarginLeft "2rem"
                 ]
             ]
         ] [

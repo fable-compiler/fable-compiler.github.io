@@ -7,12 +7,14 @@ $primary: $blue;
 $black: #202020;
 $fable-blue: dodgerblue;
 $family-sans-serif: "Open Sans", sans-serif;
+$navbar-breakpoint: $tablet;
 
 @import "../../node_modules/bulma/bulma";
 // @import "../../node_modules/bulma-carousel/dist/bulma-carousel.css"
 
 // Needed otherwise iframes show a disabled scrollbar
-html, body {
+html,
+body {
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -28,7 +30,10 @@ footer {
   background-color: $black;
   color: white;
   padding: 20px 10px;
-  a:link,a:visited,a:hover,a:active {
+  a:link,
+  a:visited,
+  a:hover,
+  a:active {
     color: white;
     text-decoration: underline;
   }
@@ -46,7 +51,7 @@ footer {
     background-color: $fable-blue;
   }
   .title {
-    color: rgba(255,255,255,0.9);
+    color: rgba(255, 255, 255, 0.9);
     font-weight: 600;
     margin-bottom: 0;
   }
@@ -54,7 +59,7 @@ footer {
     background-color: white;
   }
   .navbar-burger:hover {
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
   }
   .navbar-start {
     font-weight: 400;
@@ -63,7 +68,7 @@ footer {
       color: white;
     }
     .navbar-item.is-active {
-      background-color: rgba(0,0,0,0.5);
+      background-color: rgba(0, 0, 0, 0.5);
     }
     .navbar-item:hover {
       color: dodgerblue;
@@ -109,24 +114,29 @@ span.token.number {
 }
 
 .fable-header {
-  background: linear-gradient(to left, lighten($fable-blue, 20%), white);
-  .hero-body {
-    padding: 2rem 0;
-    .fable-logo {
-      max-height: 150px;
-      @media screen and (max-width: 600px) {
-        max-height: 120px;
-        width: 20%;
-      }
-      @media screen and (max-width: 400px) {
-        max-height: 80px;
-        width: 20%;
-      }      
+  //   background: linear-gradient(to left, lighten($fable-blue, 20%), white);
+  //   padding: 2rem 0;
+//   .fable-logo {
+//     max-height: 150px;
+//     @media screen and (max-width: 600px) {
+//       max-height: 120px;
+//       width: 20%;
+//     }
+//     @media screen and (max-width: 400px) {
+//       max-height: 80px;
+//       width: 20%;
+//     }
+//   }
+  .fable-header-buttons {
+    align-items: center;
+    @media screen and (min-width: $desktop) {
+      margin-left: 2em;
+      align-items: flex-start;
+    }
   }
-    // h1
-    //   color: darken(gold, 10%) //invert($fable-blue);
-    //   font-weight: normal;
-  }
+  // h1
+  //   color: darken(gold, 10%) //invert($fable-blue);
+  //   font-weight: normal;
 }
 
 .fable-introduction {
@@ -139,17 +149,22 @@ span.token.number {
 
 .fable-samples {
   margin: 0 5px;
-  &> h1 {
+  & > h1 {
     margin-top: 25px;
   }
   .media-content h1 {
-      margin-bottom: 5px;
+    margin-bottom: 5px;
   }
 }
 
 .content {
-  h1, h2, h3, h4, h5, h6 {
-    &> a {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    & > a {
       color: $black;
     }
   }
@@ -160,8 +175,8 @@ span.token.number {
 }
 
 .markdown .content img {
-    display: block;
-    margin: auto;
+  display: block;
+  margin: auto;
 }
 
 .faq h4 {
