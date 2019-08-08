@@ -1,29 +1,40 @@
 module GlobalHelpers
 
 open System.Text.RegularExpressions
+open Fable.Core
 open Fable.Core.JsInterop
 open Fable.React
 open Fable.React.Props
 module Node = Node.Api
 
 module private Util =
+  let isAbsoluteUrl (url: string) =
+    Regex.IsMatch(url, @"^(?:[a-z]+:)?//", RegexOptions.IgnoreCase)
+
   let prism: obj = importAll "prismjs"
   let marked: obj = importDefault "marked"
+  let loadLanguages(langs: string array) = importDefault "prismjs/components/"
 
+  loadLanguages [|"fsharp"; "json"; "css"; "bash"|]
+  
   marked?setOptions(createObj [
-    "highlight" ==> fun code (lang:string) ->
-
-      let l = 
-        match lang.ToLowerInvariant().Trim() with 
-        | "js" -> prism?languages?javascript
-        | "shell" -> prism?languages?shell
-        | "fsharp" -> prism?languages?fsharp
-        | "xml" -> prism?languages?xml
-        | "json" -> prism?languages?json
-        | _ -> prism?languages?shell
-
-      prism?highlight(code, l, lang)
-  ])
+    "highlight" ==> fun code (lang:string) ->     
+      match lang.ToLowerInvariant().Trim() with
+      | "" -> code
+      | lang ->
+          let l = 
+            match lang.ToLowerInvariant().Trim() with 
+            | "js" -> prism?languages?javascript
+            | "fsharp" -> prism?languages?fsharp
+            | "xml" -> prism?languages?xml
+            | "json" -> prism?languages?json
+            | "bash" | "shell" | _ -> prism?languages?bash
+          if isNull l then
+            JS.console.error("Cannot find prism language for " + lang)
+            code
+          else
+            prism?highlight(code, l, lang)
+  ]) 
 
   let renderer = createNew marked?Renderer ()
 
@@ -33,8 +44,10 @@ module private Util =
       level escapedText escapedText text level
 
   renderer?link <- fun href title text ->
-    sprintf """<a href="%s">%s</a>"""
-      (Regex.Replace(href, @"\.md\b", ".html")) text
+    let href =
+        if isAbsoluteUrl href then href
+        else Regex.Replace(href, @"\.md$", ".html")
+    sprintf """<a href="%s">%s</a>""" href text
 
   let parseMarkdown(content: string): string =
     marked $ (content, createObj ["renderer" ==> renderer])
@@ -49,8 +62,9 @@ let parseMarkdown (str: string) =
 
 let parseMarkdownAsReactEl className (content: string) =
     div [
-      Class className
-      DangerouslySetInnerHTML { __html = parseMarkdown content }
+      if System.String.IsNullOrWhiteSpace(className) |> not then
+        yield Class className
+      yield DangerouslySetInnerHTML { __html = parseMarkdown content }
     ] []
 
 /// Parses a React element invoking ReactDOMServer.renderToString

@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "postinstall": "dotnet restore src",
-    "start-server": "live-server deploy",
+    "start-server": "live-server deploy --port=8000",
     "build-sass": "sass src/styles/main.scss deploy/css/styles.css",
     "start-sass": "npm run build-sass && npm run build-sass -- --watch",
     "build-fable": "fable-splitter src/App.fsproj -o build --run",

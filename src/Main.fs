@@ -12,54 +12,8 @@ open Fable.Core
 open Fulma
 module Node = Node.Api
 
-module private Util =
-  let prism: obj = importAll "prismjs"
-  let marked: obj = importDefault "marked"
-
-  let isAbsoluteUrl (url: string) =
-    Regex.IsMatch(url, @"^(?:[a-z]+:)?//", RegexOptions.IgnoreCase)
-
-  marked?setOptions(createObj [
-    "highlight" ==> fun code (lang:string) ->
-
-      let l = 
-        match lang.ToLowerInvariant().Trim() with 
-        | "js" -> prism?languages?javascript
-        | "shell" -> prism?languages?shell
-        | "fsharp" -> prism?languages?fsharp
-        | "xml" -> prism?languages?xml
-        | "json" -> prism?languages?json
-        | _ -> prism?languages?shell
-
-      prism?highlight(code, l, lang)
-  ])
-
-  let renderer = createNew marked?Renderer ()
-
-  renderer?heading <- fun (text: string) level ->
-    let escapedText = Regex.Replace(text.ToLower(), @"[^\w]+", "-")
-    sprintf """<h%s><a name="%s" class="anchor" href="#%s">%s</a></h%s>"""
-      level escapedText escapedText text level
-
-  renderer?link <- fun href title text ->
-    let href =
-        if isAbsoluteUrl href then href
-        else Regex.Replace(href, @"\.md$", ".html")
-    sprintf """<a href="%s">%s</a>""" href text
-
-open Util
-
-let parseMarkdown(content: string): string =
-    marked $ (content, createObj ["renderer" ==> renderer])
-
-let parseMarkdownAsReactEl className (content: string) =
-    div [
-      Class className
-      DangerouslySetInnerHTML { __html = parseMarkdown content }
-    ] []
-
 let render (info: PageInfo) =
-    Frame.render info.Title []
+    Frame.render info.Title
       (Navbar.root info.NavbarActivePage)
       (info.RenderBody(info))
     |> parseReactStatic
@@ -82,7 +36,7 @@ let renderMarkdown pageTitle navbar header subheader className targetFullPath co
           ]
         ]
       ]
-    Frame.render pageTitle ["/css/highlight.css";"/css/prism.css"] (Navbar.root navbar) body
+    Frame.render pageTitle (Navbar.root navbar) body
     |> parseReactStatic
     |> IO.writeFile targetFullPath
 

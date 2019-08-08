@@ -59,17 +59,18 @@ let paragraph text =
   parseMarkdownAsReactEl "fable-introduction" text
 
 let prepareCode snippet = 
-  pre  
-    [ Style [ BackgroundColor "whitesmoke" ] ] 
-    [ code 
-        [
-          Class "lang-fsharp"
-          Style [
-            BackgroundColor "whitesmoke"
-            FontFamily "Fira Code"
-            FontSize "0.8rem"
-          ] ] 
-        [ str snippet ] ]
+  parseMarkdownAsReactEl "" ("```fsharp\n" + snippet + "\n```")
+//   pre  
+//     [ Style [ BackgroundColor "whitesmoke" ] ] 
+//     [ code 
+//         [
+//           Class "lang-fsharp"
+//           Style [
+//             BackgroundColor "whitesmoke"
+//             FontFamily "Fira Code"
+//             FontSize "0.8rem"
+//           ] ] 
+//         [ str snippet ] ]
 
 module Features = 
 
@@ -195,8 +196,7 @@ let renderBody (info: PageInfo) =
           //Column.column []  [cardTexts.[5] |||> renderCard (FaIcon Fa.Solid.BoxOpen)]
       ]
 
-      Section.section
-        []
+      Section.section [Section.CustomClass "quickstart"]
         [  
           Heading.h4 [] [ str "Quick start"]
           Content.content 
@@ -219,6 +219,7 @@ npm start"""
             ] ]
 
       Section.section [
+        Section.CustomClass "features"
         Section.Modifiers [
           Modifier.BackgroundColor IsWhite
         ]

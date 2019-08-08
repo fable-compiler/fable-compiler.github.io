@@ -78,19 +78,15 @@ footer {
 
 pre {
   background-color: white;
-  font-family:  "Fira Code";
-  font-size: 0.8rem;
-}
-
-pre {
   code {
-    background-color: white;
     font-family:  "Fira Code";
     font-size: 0.8rem;
   }
 }
 
-
+.section.features pre {
+    background-color: whitesmoke;
+}
 
 .twitter {
   color: #55acee !important; // Override bulma
