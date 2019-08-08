@@ -35,10 +35,17 @@ let menuItem label page currentPage =
 let root currentPage =
   Navbar.navbar [] 
     [ Navbar.Brand.div [] 
-        [ Navbar.Item.div 
-            [ Navbar.Item.Modifiers [ Modifier.TextSize (Screen.All, TextSize.Is4) ] 
-              Navbar.Item.Props [ Style [ BackgroundColor "rgba(0,0,0,0.5)"; FontWeight 600.]] ]
-            [ a [Href "/"; Style [Color "dodgerblue"]] [str "Fable"] ]
+        [ Navbar.Item.a [
+            Navbar.Item.Modifiers [ Modifier.TextSize (Screen.All, TextSize.Is4) ] 
+            Navbar.Item.Props [
+                Href "/"
+                Style [
+                    BackgroundColor "rgba(0,0,0,0.5)"
+                    Color "dodgerblue"
+                    FontWeight 600.
+                ]
+            ]
+          ] [ str "Fable" ]
             
           Navbar.burger
             [ Props [ Data("target", Navbar.MenuId) ]]

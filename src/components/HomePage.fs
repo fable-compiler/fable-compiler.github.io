@@ -231,7 +231,7 @@ npm start"""
         Content.content [
           Content.Modifiers [Modifier.TextAlignment (Screen.All, TextAlignment.Centered)]          
         ] [
-          p [] [ str "The Fable community is working hard to make sure you won't run into a nasty runtime bug. Thanks to the F# language we also offer great tools to fit any Domain and make sure the compiler checks averything before shipping your app!"]
+          p [] [ str "The Fable community is working hard to make sure you won't run into a nasty runtime bug. Thanks to the F# language we also offer great tools to fit any Domain and make sure the compiler checks everything before shipping your app!"]
         ]
         hr []
         (Features.prepare 
