@@ -79,13 +79,13 @@ footer {
 pre {
   background-color: white;
   code {
-    font-family:  "Fira Code";
+    font-family: "Fira Code";
     font-size: 0.8rem;
   }
 }
 
 .section.features pre {
-    background-color: whitesmoke;
+  background-color: whitesmoke;
 }
 
 .twitter {
@@ -128,17 +128,17 @@ span.token.number {
 .fable-header {
   //   background: linear-gradient(to left, lighten($fable-blue, 20%), white);
   //   padding: 2rem 0;
-//   .fable-logo {
-//     max-height: 150px;
-//     @media screen and (max-width: 600px) {
-//       max-height: 120px;
-//       width: 20%;
-//     }
-//     @media screen and (max-width: 400px) {
-//       max-height: 80px;
-//       width: 20%;
-//     }
-//   }
+  //   .fable-logo {
+  //     max-height: 150px;
+  //     @media screen and (max-width: 600px) {
+  //       max-height: 120px;
+  //       width: 20%;
+  //     }
+  //     @media screen and (max-width: 400px) {
+  //       max-height: 80px;
+  //       width: 20%;
+  //     }
+  //   }
   .fable-header-buttons {
     align-items: center;
     @media screen and (min-width: $desktop) {
@@ -202,24 +202,82 @@ span.token.number {
   margin-top: 30px;
 }
 
-
 /* blog related */
-p > code, li > code {
-  background-color: rgba(255,255,255,0.8);
+p > code,
+li > code {
+  background-color: rgba(255, 255, 255, 0.8);
   font-size: 0.9rem;
-  color:dodgerblue;
+  color: dodgerblue;
 }
 
 /* blog related */
-h3 > a.anchor, h2 > a.anchor {
-  color:dodgerblue;
+h3 > a.anchor,
+h2 > a.anchor {
+  color: dodgerblue;
 }
 
 /* prism.js helper */
 span.token.tag {
-  background-color:white;
+  background-color: white;
 }
 
-p > a {
-  text-decoration: underline;
+.blog {
+  p > a {
+    text-decoration: underline;
+  }
+  .media-content a {
+    // Post cards
+    text-decoration: none;
+  }
+
+  // From https://bulmatemplates.github.io/bulma-templates/templates/blog.html
+  .articles {
+    margin: 5rem 0;
+    margin-top: 0;
+  }
+  .articles .content p {
+    line-height: 1.9;
+    margin: 15px 0;
+  }
+  .author-image {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    width: 60px;
+    height: 60px;
+    margin-left: -30px;
+    border: 3px solid #ccc;
+    border-radius: 50%;
+  }
+  .media-center {
+    display: block;
+    margin-bottom: 1rem;
+  }
+  .media-content {
+    margin-top: 3rem;
+  }
+  .article,
+  .promo-block {
+    margin-top: 6rem;
+  }
+  div.column.is-8:first-child {
+    padding-top: 0;
+    margin-top: 0;
+  }
+  .article-title {
+    font-size: 2rem;
+    font-weight: lighter;
+    line-height: 2;
+  }
+  .article-subtitle {
+    color: #909aa0;
+    margin-bottom: 3rem;
+  }
+  .article-body {
+    line-height: 1.4;
+    margin: 0 6rem;
+  }
+  .promo-block .container {
+    margin: 1rem 5rem;
+  }
 }

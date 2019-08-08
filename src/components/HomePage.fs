@@ -167,12 +167,10 @@ let myApp =
     ]
 
 let renderBody (info: PageInfo) =
-
   // This fixes the problem with the double scrollbar on Windows
   div [Style [Overflow "hidden"]] [
-    
-    // Title
-    Header.render "F# |> BABEL" "The compiler that emits JavaScript you can be proud of!"
+
+    Header.render()
 
     renderIntro [introText]
 

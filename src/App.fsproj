@@ -11,7 +11,7 @@
     <Compile Include="components/Navbar.fs" />
     <Compile Include="components/Header.fs" />
     <Compile Include="components/HomePage.fs" />
-    <Compile Include="components/DocsPage.fs" />
+    <Compile Include="components/BlogIndex.fs" />
     <Compile Include="Main.fs" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />

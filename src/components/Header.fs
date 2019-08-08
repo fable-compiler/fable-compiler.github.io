@@ -33,7 +33,7 @@ type Helpers =
             ]
         ]
 
-let render title subtitle =
+let render () =
     Columns.columns [
         Columns.CustomClass "fable-header"
         Columns.Props [Style [ Margin "20px 0" ]]
