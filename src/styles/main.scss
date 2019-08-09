@@ -225,9 +225,13 @@ span.token.tag {
   p > a {
     text-decoration: underline;
   }
-  .media-content a {
-    // Post cards
-    text-decoration: none;
+}
+
+.blog-index {
+  .card {
+    .media {
+      margin-bottom: -2rem;
+    }
   }
 
   // From https://bulmatemplates.github.io/bulma-templates/templates/blog.html
@@ -243,9 +247,9 @@ span.token.tag {
     position: absolute;
     top: -30px;
     left: 50%;
-    width: 60px;
-    height: 60px;
-    margin-left: -30px;
+    width: 80px;
+    height: 80px;
+    margin-left: -40px;
     border: 3px solid #ccc;
     border-radius: 50%;
   }
@@ -275,7 +279,7 @@ span.token.tag {
   }
   .article-body {
     line-height: 1.4;
-    margin: 0 6rem;
+    margin: 0 3rem;
   }
   .promo-block .container {
     margin: 1rem 5rem;

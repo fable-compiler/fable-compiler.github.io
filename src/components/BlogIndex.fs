@@ -83,7 +83,7 @@ let renderPost (post: Post) =
                       p [ Class "subtitle is-6 article-subtitle" ]
                         [ a [ Href post.Author.Link ]
                             [ str post.Author.Name ]
-                          str (String.Format(" on {0:dd/MM/yyy}", post.Date)) ] ] ]
+                          str (String.Format(" on {0:dd/MM, yyyy}", post.Date)) ] ] ]
               parseMarkdownAsReactEl "content article-body" post.Abstract
             ]
         ]
@@ -93,7 +93,7 @@ let renderBody (info: PageInfo) =
   // This fixes the problem with the double scrollbar on Windows
   div [ Style [ Overflow "hidden" ] ]
     [ Header.render()
-      div [ Class "container blog index" ]
+      div [ Class "container blog-index" ]
         [ section [ Class "articles" ]
             [ div [ Class "column is-8 is-offset-2" ]
                   [ yield parseMarkdownAsReactEl "" introText
