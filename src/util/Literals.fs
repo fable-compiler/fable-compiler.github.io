@@ -9,10 +9,10 @@ module Navbar =
   let [<Literal>] Home = Fable.Root
   let [<Literal>] Repl = Fable.Root + "repl"
   let [<Literal>] Blog = Fable.Root + "blog"
-  let [<Literal>] Docs = "https://fable.io/fable-doc/introduction/foreword.html" //Fable.Root + "docs"
+  let [<Literal>] Docs = "/docs/introduction/foreword.html" //Fable.Root + "docs"
   let [<Literal>] FAQ = Fable.Root + "faq"
 
-  let [<Literal>] FableConf = "https://fable.io/fableconf" //Fable.Root + "fableconf"
+  let [<Literal>] FableConf = "/fableconf" //Fable.Root + "fableconf"
   let [<Literal>] MenuId = "navMenu"
   let [<Literal>] GitHub = "https://github.com/fable-compiler/Fable"
 

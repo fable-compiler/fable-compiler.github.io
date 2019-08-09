@@ -1,0 +1,81 @@
+{
+    "url": "https://fable.io",
+    "baseUrl": "/docs/",
+    "source": "./docsrc",
+    "output": "./deploy/docs",
+    "title": "Fable",
+    "version": "2.0.0",
+    "navbar": {
+        "showVersion": false,
+        "links": [
+            {
+                "href": "https://fable.io/repl/",
+                "label": "Try it out"
+            },
+            {
+                "href": "https://gitter.im/fable-compiler/Fable",
+                "label": "Chat",
+                "icon": "fab fa-gitter",
+                "isExternal": true,
+                "color": "#24292e"
+            },
+            {
+                "href": "https://github.com/fable-compiler/fable",
+                "icon": "fab fa-github",
+                "isExternal": true,
+                "color": "#24292e"
+            },
+            {
+                "href": "https://twitter.com/FableCompiler",
+                "icon": "fab fa-twitter",
+                "isExternal": true,
+                "color": "#55acee"
+            }
+        ]
+    },
+    "menu": {
+        "Introduction": [
+            "introduction/foreword",
+            "introduction/net-users-read-this",
+            "introduction/js-users-read-this"
+        ],
+        "Fable in 3 steps": [
+            "3-steps/discover",
+            "3-steps/setup",
+            "3-steps/choose-a-template"
+        ],
+        "Your Fable project": [
+            "your-fable-project/add-a-fsharp-file",
+            "your-fable-project/use-a-fable-library",
+            "your-fable-project/build-and-run"
+        ],
+        "Communicate with Javascript": [
+            "communicate/js-from-fable",
+            "communicate/fable-from-js",
+            "communicate/numbers"
+        ],
+        "From .NET to Fable" : [
+            "dotnet/numbers",
+            "dotnet/compatibility"
+        ],
+        "Miscellaneous": [
+            "miscellaneous/official-samples",
+            "miscellaneous/awesome-list",
+            "miscellaneous/fable-in-videos"
+        ],
+        "New to F#?": ["new-to-fsharp/overview-and-let"]
+    },
+    "lightner": {
+        "backgroundColor": "#FAFAFA",
+        "textColor": "",
+        "themeFile": "./lightner/themes/OneLight.json",
+        "grammars": [
+            "./lightner/grammars/fsharp.json",
+            "./lightner/grammars/JSON.tmLanguage.json",
+            "./lightner/grammars/xml.tmLanguage.json",
+            "./lightner/grammars/JavaScript.tmLanguage.json",
+            "./lightner/grammars/TypeScript.tmLanguage.json",
+            "./lightner/grammars/html.tmLanguage.json"
+        ]
+    }
+}

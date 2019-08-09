@@ -19,9 +19,9 @@ let cardTexts =
     "Clean functional programming", None, "Immutable by default. Powerful pattern matching. Rich types. Units of Measure. No semicolons. No brackets. Lightweight syntax. Enjoy!"
     "Types safety: if it compiles it works", None, "Your code is compiled to Javascript: let the compiler catch the bugs for you before they ever get into runtime!"
     "Modern Javascript output", None, "Fable produces readable JavaScript code compatible with ES2015 standards!"
-    "Great JavaScript interop", None, "Call [JavaScript from Fable](https://fable.io/fable-doc/communicate/js-from-fable.html) or [Fable from JS](https://fable.io/fable-doc/communicate/fable-from-js.html)! Use NPM packages! Bundle your app with Webpack! Everything's ready for you!"
-    "Editors: first class support", None, "Choose your weapon: from [Visual Studio Code](http://ionide.io/) to [Jetbrains Rider](https://www.jetbrains.com/rider/). Check [the whole list here](https://fable.io/fable-doc/3-steps/setup.html#development-tools)."
-    ".NET friendly", None, ".NET user? Fable supports [most of the F# core library and some of most commonly used .NET APIs.](https://fable.io/fable-doc/dotnet/compatibility.html)"
+    "Great JavaScript interop", None, "Call [JavaScript from Fable](/docs/communicate/js-from-fable.html) or [Fable from JS](/docs/communicate/fable-from-js.html)! Use NPM packages! Bundle your app with Webpack! Everything's ready for you!"
+    "Editors: first class support", None, "Choose your weapon: from [Visual Studio Code](http://ionide.io/) to [Jetbrains Rider](https://www.jetbrains.com/rider/). Check [the whole list here](/docs/3-steps/setup.html#development-tools)."
+    ".NET friendly", None, ".NET user? Fable supports [most of the F# core library and some of most commonly used .NET APIs.](/docs/dotnet/compatibility.html)"
   ]
 
 let whereToText: string =
@@ -108,7 +108,7 @@ let actionButtons =
             [ Level.item 
                 [ Level.Item.Props [ Style [ Padding "0.5rem "]]] 
                 [ a 
-                    [ Href "https://fable.io/repl/";Target "_black"] 
+                    [ Href "/repl/";Target "_black"] 
                     [ Button.button 
                         [
                         Button.Color IsSuccess
@@ -119,7 +119,7 @@ let actionButtons =
               Level.item 
                 [] 
                 [ a 
-                    [ Href "https://fable.io/fable-doc/3-steps/setup.html";Target "_black"] 
+                    [ Href "/docs/3-steps/setup.html";Target "_black"] 
                     [ Button.button 
                         [
                         Button.Color IsInfo

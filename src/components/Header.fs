@@ -66,8 +66,8 @@ let render () =
                 ]
             ]
         ] [
-            Helpers.LinkButton("TRY ONLINE", "https://fable.io/repl/", openNewTab=true, margin="10px")
-            Helpers.LinkButton("GET STARTED", "https://fable.io/fable-doc/3-steps/setup.html", color=IsInfo, margin="10px")
-            Helpers.LinkButton("COME TO FABLECONF!", "https://fable.io/fableconf", color=IsDanger, margin="10px")
+            Helpers.LinkButton("TRY ONLINE", "/repl/", openNewTab=true, margin="10px")
+            Helpers.LinkButton("GET STARTED", "/docs/3-steps/setup.html", color=IsInfo, margin="10px")
+            Helpers.LinkButton("COME TO FABLECONF!", "/fableconf", color=IsDanger, margin="10px")
         ]
     ]
