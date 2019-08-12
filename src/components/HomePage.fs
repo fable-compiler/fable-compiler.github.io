@@ -12,7 +12,7 @@ open Fable.Core
 open Fable.Core.JsInterop
 
 let introText =
-  "Fable is an [F#](http://fsharp.org/) to JavaScript compiler powered by [Babel](https://babeljs.io/), designed to produce readable and standard code."
+  "Fable is a compiler powered by [Babel](https://babeljs.io/) designed to make [F#](http://fsharp.org/) a first-class citizen of the JavaScript ecosystem"
 
 let cardTexts =
   [
@@ -210,8 +210,8 @@ let renderBody (info: PageInfo) =
             ]
 
           pre []
-            [ str """git clone https://github.com/fable-compiler/fable2-samples.git
-cd browser  
+            [ str """git clone https://github.com/fable-compiler/fable2-samples
+cd fable2-samples/browser  
 npm install
 npm start"""
             ] ]
@@ -321,7 +321,7 @@ match card with
               [ Heading.Props [ Style [ TextAlign TextAlignOptions.Center ] ] ] 
               [ str "Users of Fable"]
 
-            paragraph "These are some of the projects and companies using Fable. Send us a message to include yours!"
+            paragraph "These are some of the projects and companies using Fable. Send us [a message](https://twitter.com/FableCompiler) to include yours!"
             br []
             div [Class "flex-wrap fable-friends"] [
               linkImage "demetrix.png" "https://demetrixbio.com"
