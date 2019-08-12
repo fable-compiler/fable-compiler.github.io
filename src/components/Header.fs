@@ -68,6 +68,6 @@ let render () =
         ] [
             Helpers.LinkButton("TRY ONLINE", "/repl/", openNewTab=true, margin="10px")
             Helpers.LinkButton("GET STARTED", "/docs/3-steps/setup.html", color=IsInfo, margin="10px")
-            Helpers.LinkButton("COME TO FABLECONF!", "/fableconf", color=IsDanger, margin="10px")
+            Helpers.LinkButton("JOIN FABLECONF!", "/fableconf", color=IsDanger, margin="10px")
         ]
     ]

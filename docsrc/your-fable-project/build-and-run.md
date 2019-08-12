@@ -1,8 +1,8 @@
 ---
-title: Build & Run
+title: Build & run
 ---
 
-# Build & Run
+# Build & run
 
 Your project is ready? Then it's time to build and run it.
 

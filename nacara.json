@@ -10,7 +10,7 @@
         "links": [
             {
                 "href": "https://fable.io/repl/",
-                "label": "Try it out"
+                "label": "Try online"
             },
             {
                 "href": "https://gitter.im/fable-compiler/Fable",
@@ -35,28 +35,27 @@
     },
     "menu": {
         "Introduction": [
-            "introduction/foreword",
+            "index",
             "introduction/net-users-read-this",
             "introduction/js-users-read-this"
         ],
-        "Fable in 3 steps": [
-            "3-steps/discover",
-            "3-steps/setup",
-            "3-steps/choose-a-template"
+        "Fable in 2 steps": [
+            "2-steps/setup",
+            "2-steps/choose-a-template"
         ],
         "Your Fable project": [
             "your-fable-project/add-a-fsharp-file",
             "your-fable-project/use-a-fable-library",
+            "your-fable-project/author-a-fable-library",
             "your-fable-project/build-and-run"
         ],
         "Communicate with Javascript": [
             "communicate/js-from-fable",
-            "communicate/fable-from-js",
-            "communicate/numbers"
+            "communicate/fable-from-js"
         ],
         "From .NET to Fable" : [
-            "dotnet/numbers",
-            "dotnet/compatibility"
+            "dotnet/compatibility",
+            "dotnet/numbers"
         ],
         "Miscellaneous": [
             "miscellaneous/official-samples",

@@ -1,10 +1,10 @@
 ---
-title: .NET and F# Compatibility
+title: .NET and F# compatibility
 ---
 
 [[toc]]
 
-# .NET and F# Compatibility
+# .NET and F# compatibility
 
 Fable provides support for some classes of .NET BCL (Base Class Library) and most of FSharp.Core library. When possible, Fable translates .NET types and methods to native JavaScript APIs for minimum overhead.
 
@@ -41,11 +41,11 @@ The following static methods are also available:
 - `System.Diagnostics.Debugger.Break()`
 - `System.Activator.CreateInstance<'T>()`
 
-There is also support to convert between numeric types and to parse strings, check [the convert tests](https://github.com/fable-compiler/Fable/blob/master/tests/Main/ConvertTests.fs).
+There is also support to convert between numeric types and to parse strings, check [the conversion tests](https://github.com/fable-compiler/Fable/blob/master/tests/Main/ConvertTests.fs).
 
 ### Caveats
 
-- All numeric types become JS `number` (64-bit floating type), except for `int64`, `uint64` and `bigint`. Check [this document](numbers.md) to learn more about the differences in numeric types between .NET and JS.
+- All numeric types become JS `number` (64-bit floating type), except for `int64`, `uint64`, `bigint` and `decimal`. Check the [Numeric Types](numbers.html) section to learn more about the differences between .NET and JS.
 - Numeric arrays are compiled to [Typed Arrays](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray) when possible.
 - No bound checks for numeric types (unless you do explicit conversions like `byte 500`) nor for array indices.
 - `Regex` will always behave as if passed `RegexOptions.ECMAScript` flag (e.g., no negative look-behind or named groups).
@@ -73,18 +73,7 @@ Arrays            | Array / Typed Arrays
 Events            | fable-core/Event
 MailboxProcessor  | fable-core/MailboxProcessor (limited support)
 
-The following F# semantic and syntactic features are also available:
-
-- Records and Unions
-- Structural Equality/Comparison
-- Comprehensions (seq, array, list)
-- Computation Expressions
-- Pattern Matching
-- Active Patterns
-- Object Expressions
-- Units of measure
-
-### Caveats
+### Caveats II
 
 - Options are **erased** in JS (`Some 5` becomes just `5` in JS and `None` translates to `null`). This is needed for example, to represent TypeScript [optional properties](https://www.typescriptlang.org/docs/handbook/interfaces.html#optional-properties). However in a few cases (like nested options) there is an actual representation of the option in the runtime.
 - `Async.RunSynchronously` is not supported.
@@ -92,29 +81,24 @@ The following F# semantic and syntactic features are also available:
 
 ## Object Oriented Programming
 
-**Classes** translate to [ES6 classes](https://github.com/lukehoban/es6features#classes) and most of their .NET/F# characteristics are available: properties, overloads, secondary constructors, custom operators, etc.
+Most of F# OOP features are compatible with Fable: interfaces and abstract classes, structs, inheritance, overloading, etc. However, please note that due to some limitations of [ES2015 classes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes) the generated code uses the [prototype chain](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain) instead. Also note that instance members are not attached to the prototype, which means they won't be accessible from native JS code. The exception to this rule are the implementations of **interface and abstract members**.
 
-**Inheritance** is possible and conforms to [ES2015 inheritance](https://github.com/lukehoban/es6features#classes) but must be done by calling the _primary constructor_ of the base class. Methods can be overridden and call the base implementation. Just note it won't be possible to access the base implementation from outside by casting the object. Example:
+### Caveats III
+
+- It's not possible to type test against interfaces or generic types.
+
+## Reflection and Generics
+
+There is some reflection support in Fable, you can check the [reflection tests](https://github.com/fable-compiler/Fable/blob/master/tests/Main/ReflectionTests.fs) to see what is currently possible.
+
+Generics are erased by default in the generated JS code. However, it is still possible to access generic information (like `typeof<'T>`) at runtime by marking functions with `inline`:
 
 ```fsharp
-type A() =
-    member x.Foo() = "Hello"
+let doesNotCompileInFable(x: 'T) =
+    typeof<'T>.FullName |> printfn "%s"
 
-type B() =
-    inherit A()
-    member x.Foo() = base.Foo() + " World!"
+let inline doesWork(x: 'T) =
+    typeof<'T>.FullName |> printfn "%s"
 
-// This prints "Hello World!" both in .NET and JS
-B().Foo() |> printfn "%s"
-
-// This prints "Hello" in .NET and "Hello World!" in JS
-(B() :> A).Foo() |> printfn "%s"
+doesWork 5
 ```
-
-**Interface** methods are compiled as normal object methods and it's possible to test against an interface (e.g. `x :? IComparable`) for types defined in F# code.
-
-## Generics
-
-Generics are erased by default in generated code. However, it is still possible to access generic information in _inline_ functions (like `typeof<'T>`) or methods decorated with `PassGenerics` attribute.
-
-> **Caveat**: Functions decorated with `PassGenericsAttribute` may work unexpectedly if called from external JS code.

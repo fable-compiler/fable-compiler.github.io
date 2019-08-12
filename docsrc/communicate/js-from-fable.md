@@ -4,7 +4,7 @@ title: Call JS from Fable
 
 [[toc]]
 
-## Call JS from Fable
+## Call JavaScript from Fable
 
 Interoperability is a matter of trust between your statically typed F# code and your untyped dynamic JS code. In order to mitigate risks, Fable gives you several possibilities, amongst them type safety through inteface contracts. Sometimes it may sound more convenient to just call JS code in a more dynamic fashion, although be aware by doing this potential bugs will not be discovered until runtime.
 

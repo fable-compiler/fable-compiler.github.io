@@ -202,8 +202,8 @@ let renderBody (info: PageInfo) =
             [ p [] [ str "Get started with our set of samples!"]
               ol 
                 []
-                [ li [] [ a [ Href "https://dotnet.microsoft.com/download"; Target "_blank"] [ str "Download and install .NET Core SDK"] ] 
-                  li [] [ a [ Href "https://nodejs.org/en/"; Target "_blank"] [ str "Download and install Node.js"] ] 
+                [ li [] [ a [ Href "https://dotnet.microsoft.com"; Target "_blank"] [ str "Install .NET Core SDK"] ] 
+                  li [] [ a [ Href "https://nodejs.org/en/"; Target "_blank"] [ str "Install Node.js"] ] 
                   li [] [ str "Then type in a terminal:"]
                 ]
 
