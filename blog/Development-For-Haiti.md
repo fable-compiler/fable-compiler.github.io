@@ -30,7 +30,8 @@ The main constraint being time: nothing, neither texts nor videos,  sounds or ph
 Being a long time partner of [Atelier BienSür](http://www.biensuratelier.com/graphisme.html), Elsa Miquel contacted me to see what could be done technically in less than a month.
 
 So with a very early mockup we gathered a list of requirements:
-- full responsive
+
+- fully responsive
 - dynamic and responsive navigation bar
 - full screen photo display
 - photos slideshows
@@ -58,10 +59,10 @@ type Page =
   | WelcomePage
 ```
 
-The documentary part is split into 2 sections which are :
+The documentary part is split into 2 sections which are:
+
 1. [Jalousie](http://www.casquenoir.com/#jalousie)
 2. [Montreal](http://www.casquenoir.com/#montreal)
-
 
 Since each section uses the same layout I decided I would create reusable components such as video embeds:
 
@@ -135,7 +136,7 @@ This is a very important component in the application since it allows user to sw
 
 The links to modal popups works like this:
 
-```
+```fsharp
     a [
       ClassName "nav-item"
       OnClick (fun _ ->
@@ -150,9 +151,7 @@ The ```DisplayCredits``` message simply toggles the display of the modal window 
 
 The ```HideBurger``` message hides the burger when the navbar is displayed on mobile phones. Again through the use of ```is-active``` css class as specified in [Bulma doc](http://bulma.io/documentation/components/nav/)
 
-
 The most interesting part being the subsections. Clicking on a chapter number scrolls down the page to the section. So I created *scrollableTo* component:
-
 
 ```fsharp
 let scrollableTo css tag elems dispatch=
@@ -176,10 +175,10 @@ The code is pretty straightforward. We ask for the content through the ```scroll
 
 ![nav bar](https://img15.hostingpics.net/pics/904108navbar.gif)
 
-
 Regarding the sounds. Each section plays a sound when loaded. The speaker icon on the navbar mutes the sound through a ```ToggleSound``` message. I created a simple sound component.
 
 *View*:
+
 ```fsharp
 let sound model dispatch =
 
@@ -199,6 +198,7 @@ let sound model dispatch =
 ```
 
 *State*:
+
 ```fsharp
   match msg with
   | ToggleSound  ->
@@ -221,6 +221,7 @@ All the other components were created for the app.
 ![Fable... What else ?](https://i.imgflip.com/1qzmbn.jpg)
 
 As a freelancer I don't have much time for
+
 - debugging runtime errors
 - costly maintenance after release
 

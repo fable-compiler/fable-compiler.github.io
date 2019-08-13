@@ -9,7 +9,7 @@ module Navbar =
   let [<Literal>] Home = Fable.Root
   let [<Literal>] Repl = Fable.Root + "repl"
   let [<Literal>] Blog = Fable.Root + "blog"
-  let [<Literal>] Docs = "/docs/introduction/foreword.html" //Fable.Root + "docs"
+  let [<Literal>] Docs = Fable.Root + "docs"
   let [<Literal>] FAQ = Fable.Root + "faq"
 
   let [<Literal>] FableConf = "/fableconf" //Fable.Root + "fableconf"

@@ -1,14 +1,8 @@
 ---
-title: Overview and let
+title: The let keyword
 ---
 
-# Overview and `let`
-
-F# is a statically typed language and as such it has some primitive types as we'll soon see. We can explicitly declare the type of a value (as we'll also see) but mostly we'll rely on the compiler to infer the types.
-
-But everything starts with...
-
-## The `let` keyword
+# The `let` keyword
 
 `let` is the F# keyword used to bind any value to a name, it's used to bind the so called primitive types such as a `string` or an `integer`, to bind to a function or more complex structures such as arrays or records.
 

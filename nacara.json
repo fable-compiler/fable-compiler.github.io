@@ -43,6 +43,10 @@
             "2-steps/setup",
             "2-steps/choose-a-template"
         ],
+        "New to F#?": [
+            "new-to-fsharp/learning-the-language",
+            "new-to-fsharp/let-keyword"
+        ],
         "Your Fable project": [
             "your-fable-project/add-a-fsharp-file",
             "your-fable-project/use-a-fable-library",
@@ -61,8 +65,7 @@
             "miscellaneous/official-samples",
             "miscellaneous/awesome-list",
             "miscellaneous/fable-in-videos"
-        ],
-        "New to F#?": ["new-to-fsharp/overview-and-let"]
+        ]
     },
     "lightner": {
         "backgroundColor": "#FAFAFA",

@@ -13,7 +13,7 @@ Fable is a solution that lets you write JavaScript applications with F#, a funct
 F# (pronounced f-sharp) is a strongly typed Functional programming language which offers many great features to build robust and maintable code such as:
 
 - Lightweight syntax. It's very easy to get started with the F# language and it's often easy to read code from other people as well.
-- Immutable by default but mutable if needed so you can interop with your JavaScript codebase without any problem.
+- Immutable by default, but mutable if needed so you can interop with your JavaScript codebase without any problem.
 - Rich types which let you represent easily your data or your domain.
 - Powerful pattern matching to define complex behaviors.
 - And so much more...

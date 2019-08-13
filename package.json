@@ -1,12 +1,13 @@
 {
   "private": true,
   "scripts": {
-    "postinstall": "dotnet restore src",
     "start-server": "live-server deploy --port=8000",
     "build-sass": "sass src/styles/main.scss deploy/css/styles.css",
     "start-sass": "npm run build-sass && npm run build-sass -- --watch",
     "build-fable": "fable-splitter src/App.fsproj -o build --run",
     "start-fable": "fable-splitter src/App.fsproj -o build --watch --run",
+    "build-docs": "nacara",
+    "start-docs": "nacara --watch",
     "start": "concurrently npm:start-*",
     "build": "concurrently npm:build-*",
     "deploy": "build && gh-pages -d deploy -b master",
@@ -14,7 +15,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.5.5",
-    "@fable-compiler/nacara": "^0.1.6",
+    "@fable-compiler/nacara": "^0.1.9",
     "bulma": "^0.7.5",
     "concurrently": "^4.1.1",
     "fable-compiler": "^2.3.14",
