@@ -1,0 +1,114 @@
+<html class="has-navbar-fixed-top"><head><title>Build &amp; run · Fable</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" type="text/css" href="/docs/style.css"/><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"/><script src="https://polyfill.app/api/polyfill?features=scroll-behavior"></script><script type="text/javascript">
+var nacara = {};
+                </script><script type="text/javascript">window.onload = function () {
+    // Initialize the menu state
+    // Set as active the menu for the current page
+    document
+        .querySelectorAll(`.menu [data-menu-id='${nacara.pageId}']`)
+        .forEach(function (menuItem) {
+            menuItem.classList.add("is-active")
+        });
+
+    // Collapse menu-group which doesn't concerns the current page
+    document
+        .querySelectorAll(`.menu .menu-group`)
+        .forEach(function (menuGroup) {
+            var parentChildren = Array.from(menuGroup.parentElement.children);
+            var subItems = parentChildren.find(function (child) {
+                        return child.nodeName === "UL";
+                    });
+
+            var activeMenu =
+                    Array.from(subItems.children)
+                        .find(function (child) {
+                        return child.firstChild.classList.contains("is-active")
+                    });
+
+            if (activeMenu === undefined) {
+                menuGroup.classList.remove("is-expanded");
+                subItems.style.display = "none";
+            } else {
+                menuGroup.classList.add("is-expanded");
+                subItems.style.display = "block";
+            }
+        });
+
+    // Register listener to handle menu-group
+    document
+        .querySelectorAll(`.menu .menu-group`)
+        .forEach(function (menuGroup) {
+            menuGroup.addEventListener("click", function (ev) {
+                var parentChildren = Array.from(ev.target.parentElement.children);
+                var subItems =
+                    parentChildren.find(function (child) {
+                        return child.nodeName === "UL";
+                    });
+
+                if (ev.target.classList.contains("is-expanded")) {
+                    ev.target.classList.remove("is-expanded");
+                    subItems.style.display = "none";
+                } else {
+                    ev.target.classList.add("is-expanded");
+                    subItems.style.display = "block";
+                }
+
+            });
+        });
+
+    var burger = document.querySelector(".navbar-burger");
+    burger.addEventListener("click", function () {
+        // Get the target from the "data-target" attribute
+        var target = burger.dataset.target;
+        var $target = document.getElementById(target);
+
+        // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+        burger.classList.toggle('is-active');
+        $target.classList.toggle('is-active');
+    });
+
+    document.getElementById("toc-toggle")
+        .addEventListener("click", function () {
+            document.getElementById("toc-column").classList.toggle("is-hidden-mobile");
+            document.getElementById("content-column").classList.toggle("is-hidden-mobile");
+        });
+};
+</script></head><body><nav class="navbar is-fixed-top"><div class="container"><div class="navbar-brand"><div class="navbar-item title is-4" style="margin-bottom:0">Fable</div><div class="navbar-burger" data-target="navMenu"><span></span><span></span><span></span></div></div><div class="navbar-menu" id="navMenu"><div class="navbar-start"></div><div class="navbar-end"><a class="navbar-item" href="https://fable.io/repl/" target="_self"><span>Try online</span></a><a class="navbar-item" href="https://gitter.im/fable-compiler/Fable" target="_blank" style="color:#24292e"><span class="icon"><i class=" fab fa-gitter fa-lg"></i></span><span>Chat</span></a><a class="navbar-item" href="https://github.com/fable-compiler/fable" target="_blank" style="color:#24292e"><span class="icon"><i class=" fab fa-github fa-lg"></i></span></a><a class="navbar-item" href="https://twitter.com/FableCompiler" target="_blank" style="color:#55acee"><span class="icon"><i class=" fab fa-twitter fa-lg"></i></span></a></div></div></div></nav><div class="container"><div class="columns is-gapless"><div class="column full-height-scrollable-content is-hidden-mobile is-full-mobile is-3-tablet is-2-desktop" id="toc-column"><aside class="menu"><p class="menu-label">Introduction</p><ul class="menu-list"><li><a class="" href="/docs/index.html" data-menu-id="index">What is Fable?</a></li><li><a class="" href="/docs/introduction/net-users-read-this.html" data-menu-id="introduction/net-users-read-this">Are you a .NET developer?</a></li><li><a class="" href="/docs/introduction/js-users-read-this.html" data-menu-id="introduction/js-users-read-this">Are you a JS developer?</a></li></ul><p class="menu-label">New to F#?</p><ul class="menu-list"><li><a class="" href="/docs/new-to-fsharp/learning-the-language.html" data-menu-id="new-to-fsharp/learning-the-language">Learning the language</a></li><li><a class="" href="/docs/new-to-fsharp/let-keyword.html" data-menu-id="new-to-fsharp/let-keyword">The let keyword</a></li></ul><p class="menu-label">Fable in 2 steps</p><ul class="menu-list"><li><a class="" href="/docs/2-steps/setup.html" data-menu-id="2-steps/setup">Setup</a></li><li><a class="" href="/docs/2-steps/choose-a-template.html" data-menu-id="2-steps/choose-a-template">Start a new project</a></li></ul><p class="menu-label">Your Fable project</p><ul class="menu-list"><li><a class="" href="/docs/your-fable-project/project-file.html" data-menu-id="your-fable-project/project-file">The project file</a></li><li><a class="" href="/docs/your-fable-project/use-a-fable-library.html" data-menu-id="your-fable-project/use-a-fable-library">Use a Fable library</a></li><li><a class="" href="/docs/your-fable-project/author-a-fable-library.html" data-menu-id="your-fable-project/author-a-fable-library">Author a Fable library</a></li><li><a class="" href="/docs/your-fable-project/build-and-run.html" data-menu-id="your-fable-project/build-and-run">Build &amp; run</a></li></ul><p class="menu-label">Communicate with Javascript</p><ul class="menu-list"><li><a class="" href="/docs/communicate/js-from-fable.html" data-menu-id="communicate/js-from-fable">Call JS from Fable</a></li><li><a class="" href="/docs/communicate/fable-from-js.html" data-menu-id="communicate/fable-from-js">Call Fable from JS</a></li></ul><p class="menu-label">From .NET to Fable</p><ul class="menu-list"><li><a class="" href="/docs/dotnet/compatibility.html" data-menu-id="dotnet/compatibility">.NET and F# compatibility</a></li><li><a class="" href="/docs/dotnet/numbers.html" data-menu-id="dotnet/numbers">Numeric types</a></li></ul><p class="menu-label">Miscellaneous</p><ul class="menu-list"><li><a class="" href="/docs/miscellaneous/official-samples.html" data-menu-id="miscellaneous/official-samples">Check official samples</a></li><li><a class="" href="/docs/miscellaneous/awesome-list.html" data-menu-id="miscellaneous/awesome-list">Awesome Fable</a></li><li><a class="" href="/docs/miscellaneous/fable-in-videos.html" data-menu-id="miscellaneous/fable-in-videos">Fable in videos</a></li></ul></aside></div><div class="column full-height-scrollable-content is-full-mobile is-9-tablet is-8-desktop" id="content-column" style="scroll-behavior:smooth"><section class="section"><div class="content"><div><h1><a href="#Build-and-run" aria-hidden="true" style="visibility:hidden"><span class="anchor" id="Build-and-run"></span></a> Build &amp; run</h1>
+<p>Your project is ready? Then it's time to build and run it.</p>
+<p>This process, however, is different depending on whether we are still in development or we are already preparing the project to deploy it to production. In development we don't care so much about optimizations and we want fast builds so we can see the results of our changes on-screen almost immediately. While for production we can endure a slower build in order to get JS code that is more optimized.</p>
+<blockquote>
+<p>In this document we assume you are using <a href="https://www.npmjs.com/package/fable-loader">fable-loader</a> with <a href="https://webpack.js.org/">Webpack</a> to build your Fable web app. If you use other tools, like <a href="https://www.npmjs.com/package/fable-splitter">fable-splitter</a>, please refer to their documentation.</p>
+</blockquote>
+<p>Webpack can be a bit difficult to configure. Most of the <a href="https://github.com/fable-compiler/fable2-samples">samples</a> have a <code>webpack.config.js</code> file that you can use for reference. And there's also a <a href="https://github.com/fable-compiler/webpack-config-template/blob/master/webpack.config.js">webpack config template for Fable</a> that is prepared to work in most projects.</p>
+<p>Whenever Webpack encounters an F# file, it will call the fable-loader which in turn spawns a <a href="https://www.npmjs.com/package/fable-compiler">fable-compiler</a> process to translate the F# files to JS. The generated code will be sent back to Webpack that will merge it into the final bundle.</p>
+<blockquote>
+<p>Whenever you want to use a new version of Fable in your project, you only need to update the fable-compiler package: <code>npm update fable-compiler</code>.</p>
+</blockquote>
+<h2><a href="#Development" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Development"></span>#</a> Development</h2>
+<p>Even if we already have our own server, when developing our frontend we want a server that is capable of detecting changes in the code and load them without restarting the app! This what <a href="https://github.com/webpack/webpack-dev-server">webpack-dev-server</a> does, so normally we'll be running it during development: <code>npx webpack-dev-server --mode development</code>.</p>
+<blockquote>
+<p>In most Fable projects, we just <a href="https://github.com/fable-compiler/webpack-config-template/blob/34c04e8474e1a6e94698dd1e14e5a197733a65f2/webpack.config.js#L42-L44">assume webpack-dev-server runs in development</a> so you won't see the <code>--mode</code> argument explicitly set very often.</p>
+</blockquote>
+<p>If you use <a href="https://docs.npmjs.com/misc/scripts">npm-scripts</a> as shortcuts for common actions, it's customary to use <code>npm start</code> to run in development mode. In npm scripts, you can call executables from <code>node_modules/.bin</code> directly, so in order to call webpack-dev-server with the start command you only need to add the following to your <code>package.json</code>:</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span>  </span><span style="color: #50A14F">&quot;scripts&quot;</span><span>: {</span>
+<span>    </span><span style="color: #E45649">&quot;start&quot;</span><span>: </span><span style="color: #50A14F">&quot;webpack-dev-server&quot;</span>
+<span>  },</span></code></pre>
+<blockquote>
+<p>If you also have your own server, you probably want to redirect API calls to it. You can use the <a href="https://webpack.js.org/configuration/dev-server#devserverproxy">devServer.proxy</a> Webpack configuration option for that.</p>
+</blockquote>
+<p>The webpack-dev-server will keep running until you kill the process, picking up the changes in your code after you save a file. If you use <a href="https://elmish.github.io/hmr/">Hot Module Replacement</a> it will try to inject the changes without restarting the app. Otherwise it will just refresh the web page.</p>
+<p>Note that webpack-dev-server serves the generated files from memory and doesn't actually write to disk. We will do that in the next step: building for production!</p>
+<h2><a href="#Production" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Production"></span>#</a> Production</h2>
+<p>When preparing the files for deployment, we don't need a special server. We can call Webpack CLI directly in production mode to enable optimizations like <a href="https://webpack.js.org/configuration/optimization#optimizationminimize">JS minification</a>: <code>npx webpack --mode production</code>.</p>
+<blockquote>
+<p>As before, in most configurations you don't need to set the <code>--mode</code> argument explicitly. And it's also customary to have a &quot;build&quot; (or sometimes &quot;deploy&quot;) npm-script for this operation:</p>
+</blockquote>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span>  </span><span style="color: #50A14F">&quot;scripts&quot;</span><span>: {</span>
+<span>    </span><span style="color: #E45649">&quot;start&quot;</span><span>: </span><span style="color: #50A14F">&quot;webpack-dev-server&quot;</span><span>,</span>
+<span>    </span><span style="color: #E45649">&quot;build&quot;</span><span>: </span><span style="color: #50A14F">&quot;webpack&quot;</span>
+<span>  },</span></code></pre>
+<p>Webpack will run only once and will write the generated files in the <a href="https://webpack.js.org/configuration/output#outputpath">output.path</a>. This is the directory you fave to deploy to your host!</p>
+<h2><a href="#I-don't-want-to-use-Webpack" aria-hidden="true" style="visibility:visible"><span class="anchor" id="I-don't-want-to-use-Webpack"></span>#</a> I don't want to use Webpack</h2>
+<p>Then, depending on the sample you've chosen, build options may differ. Please refer to the README file for the chosen sample to get more information.</p>
+</div></div></section></div><div class="column full-height-scrollable-content is-hidden-tablet is-2-desktop"><div><nav class="toc-container"></nav></div></div><span class="fa-stack fa-2x is-hidden-tablet" id="toc-toggle" style="position:fixed;bottom:0;right:0;margin:10px"><i class=" far fa-circle fa-stack-2x"></i><i class=" fas fa-sync fa-stack-1x"></i></span></div><script type="text/javascript">
+nacara.pageId = 'ur-fable-project/build-and-run';
+                </script></div></body></html>

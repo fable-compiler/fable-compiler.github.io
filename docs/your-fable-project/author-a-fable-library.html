@@ -1,0 +1,93 @@
+<html class="has-navbar-fixed-top"><head><title>Author a Fable library · Fable</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" type="text/css" href="/docs/style.css"/><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"/><script src="https://polyfill.app/api/polyfill?features=scroll-behavior"></script><script type="text/javascript">
+var nacara = {};
+                </script><script type="text/javascript">window.onload = function () {
+    // Initialize the menu state
+    // Set as active the menu for the current page
+    document
+        .querySelectorAll(`.menu [data-menu-id='${nacara.pageId}']`)
+        .forEach(function (menuItem) {
+            menuItem.classList.add("is-active")
+        });
+
+    // Collapse menu-group which doesn't concerns the current page
+    document
+        .querySelectorAll(`.menu .menu-group`)
+        .forEach(function (menuGroup) {
+            var parentChildren = Array.from(menuGroup.parentElement.children);
+            var subItems = parentChildren.find(function (child) {
+                        return child.nodeName === "UL";
+                    });
+
+            var activeMenu =
+                    Array.from(subItems.children)
+                        .find(function (child) {
+                        return child.firstChild.classList.contains("is-active")
+                    });
+
+            if (activeMenu === undefined) {
+                menuGroup.classList.remove("is-expanded");
+                subItems.style.display = "none";
+            } else {
+                menuGroup.classList.add("is-expanded");
+                subItems.style.display = "block";
+            }
+        });
+
+    // Register listener to handle menu-group
+    document
+        .querySelectorAll(`.menu .menu-group`)
+        .forEach(function (menuGroup) {
+            menuGroup.addEventListener("click", function (ev) {
+                var parentChildren = Array.from(ev.target.parentElement.children);
+                var subItems =
+                    parentChildren.find(function (child) {
+                        return child.nodeName === "UL";
+                    });
+
+                if (ev.target.classList.contains("is-expanded")) {
+                    ev.target.classList.remove("is-expanded");
+                    subItems.style.display = "none";
+                } else {
+                    ev.target.classList.add("is-expanded");
+                    subItems.style.display = "block";
+                }
+
+            });
+        });
+
+    var burger = document.querySelector(".navbar-burger");
+    burger.addEventListener("click", function () {
+        // Get the target from the "data-target" attribute
+        var target = burger.dataset.target;
+        var $target = document.getElementById(target);
+
+        // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+        burger.classList.toggle('is-active');
+        $target.classList.toggle('is-active');
+    });
+
+    document.getElementById("toc-toggle")
+        .addEventListener("click", function () {
+            document.getElementById("toc-column").classList.toggle("is-hidden-mobile");
+            document.getElementById("content-column").classList.toggle("is-hidden-mobile");
+        });
+};
+</script></head><body><nav class="navbar is-fixed-top"><div class="container"><div class="navbar-brand"><div class="navbar-item title is-4" style="margin-bottom:0">Fable</div><div class="navbar-burger" data-target="navMenu"><span></span><span></span><span></span></div></div><div class="navbar-menu" id="navMenu"><div class="navbar-start"></div><div class="navbar-end"><a class="navbar-item" href="https://fable.io/repl/" target="_self"><span>Try online</span></a><a class="navbar-item" href="https://gitter.im/fable-compiler/Fable" target="_blank" style="color:#24292e"><span class="icon"><i class=" fab fa-gitter fa-lg"></i></span><span>Chat</span></a><a class="navbar-item" href="https://github.com/fable-compiler/fable" target="_blank" style="color:#24292e"><span class="icon"><i class=" fab fa-github fa-lg"></i></span></a><a class="navbar-item" href="https://twitter.com/FableCompiler" target="_blank" style="color:#55acee"><span class="icon"><i class=" fab fa-twitter fa-lg"></i></span></a></div></div></div></nav><div class="container"><div class="columns is-gapless"><div class="column full-height-scrollable-content is-hidden-mobile is-full-mobile is-3-tablet is-2-desktop" id="toc-column"><aside class="menu"><p class="menu-label">Introduction</p><ul class="menu-list"><li><a class="" href="/docs/index.html" data-menu-id="index">What is Fable?</a></li><li><a class="" href="/docs/introduction/net-users-read-this.html" data-menu-id="introduction/net-users-read-this">Are you a .NET developer?</a></li><li><a class="" href="/docs/introduction/js-users-read-this.html" data-menu-id="introduction/js-users-read-this">Are you a JS developer?</a></li></ul><p class="menu-label">New to F#?</p><ul class="menu-list"><li><a class="" href="/docs/new-to-fsharp/learning-the-language.html" data-menu-id="new-to-fsharp/learning-the-language">Learning the language</a></li><li><a class="" href="/docs/new-to-fsharp/let-keyword.html" data-menu-id="new-to-fsharp/let-keyword">The let keyword</a></li></ul><p class="menu-label">Fable in 2 steps</p><ul class="menu-list"><li><a class="" href="/docs/2-steps/setup.html" data-menu-id="2-steps/setup">Setup</a></li><li><a class="" href="/docs/2-steps/choose-a-template.html" data-menu-id="2-steps/choose-a-template">Start a new project</a></li></ul><p class="menu-label">Your Fable project</p><ul class="menu-list"><li><a class="" href="/docs/your-fable-project/project-file.html" data-menu-id="your-fable-project/project-file">The project file</a></li><li><a class="" href="/docs/your-fable-project/use-a-fable-library.html" data-menu-id="your-fable-project/use-a-fable-library">Use a Fable library</a></li><li><a class="" href="/docs/your-fable-project/author-a-fable-library.html" data-menu-id="your-fable-project/author-a-fable-library">Author a Fable library</a></li><li><a class="" href="/docs/your-fable-project/build-and-run.html" data-menu-id="your-fable-project/build-and-run">Build &amp; run</a></li></ul><p class="menu-label">Communicate with Javascript</p><ul class="menu-list"><li><a class="" href="/docs/communicate/js-from-fable.html" data-menu-id="communicate/js-from-fable">Call JS from Fable</a></li><li><a class="" href="/docs/communicate/fable-from-js.html" data-menu-id="communicate/fable-from-js">Call Fable from JS</a></li></ul><p class="menu-label">From .NET to Fable</p><ul class="menu-list"><li><a class="" href="/docs/dotnet/compatibility.html" data-menu-id="dotnet/compatibility">.NET and F# compatibility</a></li><li><a class="" href="/docs/dotnet/numbers.html" data-menu-id="dotnet/numbers">Numeric types</a></li></ul><p class="menu-label">Miscellaneous</p><ul class="menu-list"><li><a class="" href="/docs/miscellaneous/official-samples.html" data-menu-id="miscellaneous/official-samples">Check official samples</a></li><li><a class="" href="/docs/miscellaneous/awesome-list.html" data-menu-id="miscellaneous/awesome-list">Awesome Fable</a></li><li><a class="" href="/docs/miscellaneous/fable-in-videos.html" data-menu-id="miscellaneous/fable-in-videos">Fable in videos</a></li></ul></aside></div><div class="column full-height-scrollable-content is-full-mobile is-9-tablet is-8-desktop" id="content-column" style="scroll-behavior:smooth"><section class="section"><div class="content"><div><p></p>
+<h2><a href="#Author-a-Fable-library" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Author-a-Fable-library"></span>#</a> Author a Fable library</h2>
+<p>To write a library that can be used in Fable you only need to fulfill a few conditions:</p>
+<ul>
+<li>Don't use FSharp.Core/BCL APIs that are not <a href="../dotnet/compatibility.html">compatible with Fable</a>.</li>
+<li>Keep a simple <code>.fsproj</code> file: don't use MSBuild conditions or similar.</li>
+<li>Include the source files in the Nuget package in a folder named <code>fable</code>.</li>
+</ul>
+<p>The last point may sound complicated but it's only a matter of adding a couple of lines to your project file and let the <code>dotnet pack</code> command do all the rest.</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A0A1A7;font-style: italic">&lt;!-- Add source files to &quot;fable&quot; folder in Nuget package --&gt;</span>
+<span style="color: #383A42">&lt;</span><span style="color: #E45649">ItemGroup</span><span style="color: #383A42">&gt;</span>
+<span>    </span><span style="color: #383A42">&lt;</span><span style="color: #E45649">Content</span><span style="color: #383A42"> </span><span style="color: #986801">Include</span><span style="color: #383A42">=</span><span style="color: #50A14F">&quot;*.fsproj; **\*.fs&quot;</span><span style="color: #383A42"> </span><span style="color: #986801">PackagePath</span><span style="color: #383A42">=</span><span style="color: #50A14F">&quot;fable\&quot;</span><span style="color: #383A42"> /&gt;</span>
+<span style="color: #383A42">&lt;/</span><span style="color: #E45649">ItemGroup</span><span style="color: #383A42">&gt;</span></code></pre>
+<p>That's all it takes to make your library compatible with Fable! In order to publish the package to Nuget check <a href="https://docs.microsoft.com/en-us/nuget/quickstart/create-and-publish-a-package-using-the-dotnet-cli">the Microsoft documentation</a> or alternatively you can also <a href="https://fake.build/dotnet-nuget.html#Creating-NuGet-packages">use Fake</a>.</p>
+<h3><a href="#Testing" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Testing"></span>#</a> Testing</h3>
+<p>It's a good idea to write unit tests for your library to make sure everything works as expected before publishing. The simplest way for that is to use a JS test runner like <a href="https://mochajs.org/">Mocha</a>, as in <a href="https://github.com/fable-compiler/fable2-samples/tree/master/mocha">this sample</a>. Or you can also use a library like <a href="https://github.com/Zaid-Ajaj/Fable.Mocha">Fable.Mocha</a> containing more tools for Fable projects.</p>
+</div></div></section></div><div class="column full-height-scrollable-content is-hidden-tablet is-2-desktop"><div><nav class="toc-container"><ul class="toc-headings"><div class="toc-label"><a href="#Author-a-Fable-library">Author a Fable library</a></div><ul class="toc-headings"><li><a href="#Testing">Testing</a></li></ul></li></ul></nav></div></div><span class="fa-stack fa-2x is-hidden-tablet" id="toc-toggle" style="position:fixed;bottom:0;right:0;margin:10px"><i class=" far fa-circle fa-stack-2x"></i><i class=" fas fa-sync fa-stack-1x"></i></span></div><script type="text/javascript">
+nacara.pageId = 'ur-fable-project/author-a-fable-library';
+                </script></div></body></html>

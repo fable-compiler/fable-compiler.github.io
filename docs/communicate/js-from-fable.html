@@ -1,0 +1,394 @@
+<html class="has-navbar-fixed-top"><head><title>Call JS from Fable · Fable</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" type="text/css" href="/docs/style.css"/><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"/><script src="https://polyfill.app/api/polyfill?features=scroll-behavior"></script><script type="text/javascript">
+var nacara = {};
+                </script><script type="text/javascript">window.onload = function () {
+    // Initialize the menu state
+    // Set as active the menu for the current page
+    document
+        .querySelectorAll(`.menu [data-menu-id='${nacara.pageId}']`)
+        .forEach(function (menuItem) {
+            menuItem.classList.add("is-active")
+        });
+
+    // Collapse menu-group which doesn't concerns the current page
+    document
+        .querySelectorAll(`.menu .menu-group`)
+        .forEach(function (menuGroup) {
+            var parentChildren = Array.from(menuGroup.parentElement.children);
+            var subItems = parentChildren.find(function (child) {
+                        return child.nodeName === "UL";
+                    });
+
+            var activeMenu =
+                    Array.from(subItems.children)
+                        .find(function (child) {
+                        return child.firstChild.classList.contains("is-active")
+                    });
+
+            if (activeMenu === undefined) {
+                menuGroup.classList.remove("is-expanded");
+                subItems.style.display = "none";
+            } else {
+                menuGroup.classList.add("is-expanded");
+                subItems.style.display = "block";
+            }
+        });
+
+    // Register listener to handle menu-group
+    document
+        .querySelectorAll(`.menu .menu-group`)
+        .forEach(function (menuGroup) {
+            menuGroup.addEventListener("click", function (ev) {
+                var parentChildren = Array.from(ev.target.parentElement.children);
+                var subItems =
+                    parentChildren.find(function (child) {
+                        return child.nodeName === "UL";
+                    });
+
+                if (ev.target.classList.contains("is-expanded")) {
+                    ev.target.classList.remove("is-expanded");
+                    subItems.style.display = "none";
+                } else {
+                    ev.target.classList.add("is-expanded");
+                    subItems.style.display = "block";
+                }
+
+            });
+        });
+
+    var burger = document.querySelector(".navbar-burger");
+    burger.addEventListener("click", function () {
+        // Get the target from the "data-target" attribute
+        var target = burger.dataset.target;
+        var $target = document.getElementById(target);
+
+        // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+        burger.classList.toggle('is-active');
+        $target.classList.toggle('is-active');
+    });
+
+    document.getElementById("toc-toggle")
+        .addEventListener("click", function () {
+            document.getElementById("toc-column").classList.toggle("is-hidden-mobile");
+            document.getElementById("content-column").classList.toggle("is-hidden-mobile");
+        });
+};
+</script></head><body><nav class="navbar is-fixed-top"><div class="container"><div class="navbar-brand"><div class="navbar-item title is-4" style="margin-bottom:0">Fable</div><div class="navbar-burger" data-target="navMenu"><span></span><span></span><span></span></div></div><div class="navbar-menu" id="navMenu"><div class="navbar-start"></div><div class="navbar-end"><a class="navbar-item" href="https://fable.io/repl/" target="_self"><span>Try online</span></a><a class="navbar-item" href="https://gitter.im/fable-compiler/Fable" target="_blank" style="color:#24292e"><span class="icon"><i class=" fab fa-gitter fa-lg"></i></span><span>Chat</span></a><a class="navbar-item" href="https://github.com/fable-compiler/fable" target="_blank" style="color:#24292e"><span class="icon"><i class=" fab fa-github fa-lg"></i></span></a><a class="navbar-item" href="https://twitter.com/FableCompiler" target="_blank" style="color:#55acee"><span class="icon"><i class=" fab fa-twitter fa-lg"></i></span></a></div></div></div></nav><div class="container"><div class="columns is-gapless"><div class="column full-height-scrollable-content is-hidden-mobile is-full-mobile is-3-tablet is-2-desktop" id="toc-column"><aside class="menu"><p class="menu-label">Introduction</p><ul class="menu-list"><li><a class="" href="/docs/index.html" data-menu-id="index">What is Fable?</a></li><li><a class="" href="/docs/introduction/net-users-read-this.html" data-menu-id="introduction/net-users-read-this">Are you a .NET developer?</a></li><li><a class="" href="/docs/introduction/js-users-read-this.html" data-menu-id="introduction/js-users-read-this">Are you a JS developer?</a></li></ul><p class="menu-label">New to F#?</p><ul class="menu-list"><li><a class="" href="/docs/new-to-fsharp/learning-the-language.html" data-menu-id="new-to-fsharp/learning-the-language">Learning the language</a></li><li><a class="" href="/docs/new-to-fsharp/let-keyword.html" data-menu-id="new-to-fsharp/let-keyword">The let keyword</a></li></ul><p class="menu-label">Fable in 2 steps</p><ul class="menu-list"><li><a class="" href="/docs/2-steps/setup.html" data-menu-id="2-steps/setup">Setup</a></li><li><a class="" href="/docs/2-steps/choose-a-template.html" data-menu-id="2-steps/choose-a-template">Start a new project</a></li></ul><p class="menu-label">Your Fable project</p><ul class="menu-list"><li><a class="" href="/docs/your-fable-project/project-file.html" data-menu-id="your-fable-project/project-file">The project file</a></li><li><a class="" href="/docs/your-fable-project/use-a-fable-library.html" data-menu-id="your-fable-project/use-a-fable-library">Use a Fable library</a></li><li><a class="" href="/docs/your-fable-project/author-a-fable-library.html" data-menu-id="your-fable-project/author-a-fable-library">Author a Fable library</a></li><li><a class="" href="/docs/your-fable-project/build-and-run.html" data-menu-id="your-fable-project/build-and-run">Build &amp; run</a></li></ul><p class="menu-label">Communicate with Javascript</p><ul class="menu-list"><li><a class="" href="/docs/communicate/js-from-fable.html" data-menu-id="communicate/js-from-fable">Call JS from Fable</a></li><li><a class="" href="/docs/communicate/fable-from-js.html" data-menu-id="communicate/fable-from-js">Call Fable from JS</a></li></ul><p class="menu-label">From .NET to Fable</p><ul class="menu-list"><li><a class="" href="/docs/dotnet/compatibility.html" data-menu-id="dotnet/compatibility">.NET and F# compatibility</a></li><li><a class="" href="/docs/dotnet/numbers.html" data-menu-id="dotnet/numbers">Numeric types</a></li></ul><p class="menu-label">Miscellaneous</p><ul class="menu-list"><li><a class="" href="/docs/miscellaneous/official-samples.html" data-menu-id="miscellaneous/official-samples">Check official samples</a></li><li><a class="" href="/docs/miscellaneous/awesome-list.html" data-menu-id="miscellaneous/awesome-list">Awesome Fable</a></li><li><a class="" href="/docs/miscellaneous/fable-in-videos.html" data-menu-id="miscellaneous/fable-in-videos">Fable in videos</a></li></ul></aside></div><div class="column full-height-scrollable-content is-full-mobile is-9-tablet is-8-desktop" id="content-column" style="scroll-behavior:smooth"><section class="section"><div class="content"><div><p></p>
+<h2><a href="#Call-JavaScript-from-Fable" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Call-JavaScript-from-Fable"></span>#</a> Call JavaScript from Fable</h2>
+<p>Interoperability is a matter of trust between your statically typed F# code and your untyped dynamic JS code. In order to mitigate risks, Fable gives you several possibilities, amongst them type safety through inteface contracts. Sometimes it may sound more convenient to just call JS code in a more dynamic fashion, although be aware by doing this potential bugs will not be discovered until runtime.</p>
+<p>We'll describe both the safe way and the dynamic way and then it will be up to you to decide. Let's start!</p>
+<h3><a href="#Adding-the-JS-library-to-the-project" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Adding-the-JS-library-to-the-project"></span>#</a> Adding the JS library to the project</h3>
+<p>The very first thing to do is add the library to our project. Since we always have a <code>package.json</code> file, we'll just add the wanted library to our project using either <code>npm install my-awesome-js-library</code>. The library will then be available in the <code>node_modules</code> folder.</p>
+<blockquote>
+<p>If your library is in a file, just skip this step.</p>
+</blockquote>
+<h3><a href="#Type-safety-with-Imports-and-Interfaces" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Type-safety-with-Imports-and-Interfaces"></span>#</a> Type safety with Imports and Interfaces</h3>
+<p>To use code from JS libraries first you need to import it into F#. For this Fables uses <a href="https://developer.mozilla.org/en/docs/web/JavaScript/reference/statements/import">ES2015 imports</a>, which can be later transformed to other JS module systems like <code>commonjs</code> or <code>amd</code> by <a href="https://babeljs.io/docs/en/plugins#modules">Babel</a>.</p>
+<p>There are two ways to declare ES2015 imports in the Fable: by using either the <strong>Import attribute</strong> or the <strong>import expressions</strong>. The <code>ImportAttribute</code> can decorate members, types or modules and works as follows:</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A0A1A7;font-style: italic">// Namespace imports</span>
+<span style="color: #0184BC">[&lt;Import</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;*&quot;</span><span style="color: #A626A4">,</span><span style="color: #0184BC"> from</span><span style="color: #A626A4">=</span><span style="color: #50A14F">&quot;my-module&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span>
+<span style="color: #A0A1A7;font-style: italic">// import * from &quot;my-module&quot;</span>
+
+<span style="color: #A0A1A7;font-style: italic">// Member imports</span>
+<span style="color: #0184BC">[&lt;Import</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;myFunction&quot;</span><span style="color: #A626A4">,</span><span style="color: #0184BC"> from</span><span style="color: #A626A4">=</span><span style="color: #50A14F">&quot;my-module&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span>
+<span style="color: #A0A1A7;font-style: italic">// import { myFunction } from &quot;my-module&quot;</span>
+
+<span style="color: #A0A1A7;font-style: italic">// Default imports</span>
+<span style="color: #0184BC">[&lt;Import</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;default&quot;</span><span style="color: #A626A4">,</span><span style="color: #0184BC"> from</span><span style="color: #A626A4">=</span><span style="color: #50A14F">&quot;express&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span>
+<span style="color: #A0A1A7;font-style: italic">// import Express from &quot;express&quot;</span></code></pre>
+<p>You can also use the following alias attributes:</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core</span>
+<span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core.JsInterop</span>
+
+<span style="color: #A0A1A7;font-style: italic">// Same as Import(&quot;*&quot;, &quot;my-module&quot;)</span>
+<span style="color: #0184BC">[&lt;ImportAll</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;my-module&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span>
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">myModule</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">obj </span><span style="color: #A626A4">=</span><span> jsNative</span>
+
+<span style="color: #A0A1A7;font-style: italic">// Same as Import(&quot;default&quot;, &quot;my-module&quot;)</span>
+<span style="color: #0184BC">[&lt;Import</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;default&quot;</span><span style="color: #A626A4">,</span><span style="color: #0184BC"> from</span><span style="color: #A626A4">=</span><span style="color: #50A14F">&quot;express&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span>
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">myModuleDefaultExport</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">obj </span><span style="color: #A626A4">=</span><span> jsNative</span>
+
+<span style="color: #A0A1A7;font-style: italic">// The member name is taken from decorated value, here `myFunction`</span>
+<span style="color: #0184BC">[&lt;ImportMember</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;my-module&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span>
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">myFunction</span><span style="color: #A626A4">(</span><span style="color: #383A42">x</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">int</span><span style="color: #A626A4">):</span><span> </span><span style="color: #C18401">int </span><span style="color: #A626A4">=</span><span> jsNative</span></code></pre>
+<p>If the value is globally accessible in JS, you can use the <code>Global</code> attribute with an optional name parameter instead.</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span> </span><span style="color: #A626A4">let</span><span style="color: #0184BC"> [&lt;Global&gt;]</span><span> </span><span style="color: #E45649">console</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">JS.Console </span><span style="color: #A626A4">=</span><span> jsNative</span></code></pre>
+<h4><a href="#Let's-practice!-1st-try!" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Let's-practice!-1st-try!"></span>#</a> Let's practice! 1st try!</h4>
+<p>Now that we've seen this, let's review the code in the <a href="https://github.com/fable-compiler/fable2-samples/tree/master/interop">interop</a> sample</p>
+<p>Let's say we have an <code>alert.js</code> file that we'd like to use in our Fable project.</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">function</span><span> </span><span style="color: #4078F2">triggerAlert</span><span style="color: #383A42">(message)</span><span> </span><span style="color: #383A42">{</span>
+<span>  </span><span style="color: #4078F2">alert</span><span style="color: #383A42">(message);</span>
+<span style="color: #383A42">}</span>
+
+<span style="color: #A626A4">const</span><span> </span><span style="color: #986801">someString</span><span> </span><span style="color: #0184BC">=</span><span> </span><span style="color: #50A14F">&quot;And I Like that!&quot;</span><span style="color: #383A42">;</span>
+
+<span style="color: #A626A4">export</span><span> </span><span style="color: #383A42">{</span><span> </span><span style="color: #E45649">triggerAlert</span><span style="color: #383A42">,</span><span> </span><span style="color: #E45649">someString</span><span> </span><span style="color: #383A42">};</span></code></pre>
+<p>As you can see we've got one function, <code>triggerAlert</code> and one constant <code>someString</code>. Both are exported using the ES6 <code>export</code> keyword.</p>
+<p>In order to use this in our Fable code, let's create an <code>interface</code> that will mimic this:</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span>  </span><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core.JsInterop</span><span> </span><span style="color: #A0A1A7;font-style: italic">// needed to call interop tools</span>
+
+<span>  </span><span style="color: #A626A4">type</span><span> </span><span style="color: #C18401">IAlert</span><span> </span><span style="color: #A626A4">=</span>
+<span>    </span><span style="color: #A626A4">abstract</span><span> triggerAlert </span><span style="color: #A626A4">:</span><span style="color: #383A42"> message</span><span style="color: #A626A4">:</span><span style="color: #C18401">string </span><span style="color: #A626A4">-&gt;</span><span> </span><span style="color: #C18401">unit</span>
+<span>    </span><span style="color: #A626A4">abstract</span><span> someString</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">string</span></code></pre>
+<p>As you can see the process is quite easy. The <code>I</code> in <code>IAlert</code> is not mandatory but it's a precious hint that we're going to use an interface. The <code>abstract</code> keyword only indicates that there's no actual implementation in F#. That's true, since we rely on the JavaScript one.</p>
+<p>Now let's use this:</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span>  </span><span style="color: #0184BC">[&lt;ImportAll</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;path/to/alert.js&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span>
+<span>  </span><span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">mylib</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">IAlert </span><span style="color: #A626A4">=</span><span> jsNative</span></code></pre>
+<p>Here we use the <code>Import</code> attribute, just like we described earlier.</p>
+<ul>
+<li>step 1: We specify the elements we wish to use. Here<code>*</code> means: &quot;take everything that's been exported&quot;</li>
+<li>step 2: we set the path to our js library.</li>
+<li>step 3: we create a let binding called <code>mylib</code> to map the js library.</li>
+<li>step 4: we use the <code>jsNative</code> keyword to say that <code>mylib</code> is just a placeholder for the JavaScript native implementation.</li>
+</ul>
+<p>Now we can use this:</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span>mylib.triggerAlert </span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;Hey I&#039;m calling my js library from Fable &gt; &quot;</span><span> </span><span style="color: #A626A4">+</span><span> mylib.someString</span><span style="color: #A626A4">)</span></code></pre>
+<p>If everything's working correctly, it should create an alert popup in your browser! Of course this sample is intended for web apps, but you could do the same in a Node.js app.</p>
+<h4><a href="#Let's-practice!-2nd-try!" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Let's-practice!-2nd-try!"></span>#</a> Let's practice! 2nd try!</h4>
+<p>Assuming we've got two exported functions from a <code>Canvas.js</code> file: <code>drawSmiley</code> and <code>drawBubble</code>:</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">export</span><span> </span><span style="color: #A626A4">function</span><span> </span><span style="color: #4078F2">drawSmiley</span><span style="color: #383A42">()</span><span> </span><span style="color: #383A42">{</span>
+<span>  </span><span style="color: #A0A1A7;font-style: italic">// do something</span>
+<span style="color: #383A42">}</span>
+<span style="color: #A626A4">export</span><span> </span><span style="color: #A626A4">function</span><span> </span><span style="color: #4078F2">drawBubble</span><span style="color: #383A42">()</span><span> </span><span style="color: #383A42">{</span>
+<span>  </span><span style="color: #A0A1A7;font-style: italic">// do something</span>
+<span style="color: #383A42">}</span></code></pre>
+<p>we could use the same method we used with <code>alert.js</code>:</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span>  </span><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core.JsInterop</span><span> </span><span style="color: #A0A1A7;font-style: italic">// needed to call interop tools</span>
+
+<span>  </span><span style="color: #A626A4">type</span><span> </span><span style="color: #C18401">ICanvas</span><span> </span><span style="color: #A626A4">=</span>
+<span>    </span><span style="color: #A626A4">abstract</span><span> drawSmiley</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">unit</span><span> </span><span style="color: #A626A4">-&gt;</span><span> </span><span style="color: #C18401">unit</span>
+<span>    </span><span style="color: #A626A4">abstract</span><span> drawBubble</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">unit</span><span> </span><span style="color: #A626A4">-&gt;</span><span> </span><span style="color: #C18401">unit</span>
+
+<span>  </span><span style="color: #0184BC">[&lt;ImportAll</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;path/to/Canvas.js&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span>
+<span>  </span><span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">mylib</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">ICanvas </span><span style="color: #A626A4">=</span><span> jsNative</span>
+
+<span>  mylib.drawSmiley</span><span style="color: #986801">()</span><span> </span><span style="color: #A0A1A7;font-style: italic">// etc..</span></code></pre>
+<p>or we could do the same things a little bit differently, by using the <code>importMember</code> helper function to directly map the js function to the F# function.</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core.JsInterop</span><span> </span><span style="color: #A0A1A7;font-style: italic">// needed to call interop tools</span>
+
+<span style="color: #A626A4">module</span><span style="color: #4078F2"> Canvas </span><span style="color: #A626A4">=</span>
+<span>  </span><span style="color: #A0A1A7;font-style: italic">// here we just import a member function from canvas.js called drawSmiley.</span>
+<span>  </span><span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">drawSmiley</span><span style="color: #A626A4">(</span><span style="color: #383A42">id</span><span style="color: #A626A4">:</span><span style="color: #C18401">string</span><span style="color: #A626A4">):</span><span> </span><span style="color: #C18401">unit </span><span style="color: #A626A4">=</span><span> importMember </span><span style="color: #50A14F">&quot;path/to/Canvas.js&quot;</span>
+<span>  </span><span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">drawBubble</span><span style="color: #A626A4">(</span><span style="color: #383A42">id</span><span style="color: #A626A4">:</span><span style="color: #C18401">string</span><span style="color: #A626A4">):</span><span> </span><span style="color: #C18401">unit </span><span style="color: #A626A4">=</span><span> importMember </span><span style="color: #50A14F">&quot;path/to/Canvas.js&quot;</span>
+
+<span>Canvas.drawSmiley</span><span style="color: #986801">()</span></code></pre>
+<p>The result would be the same, but the philosophy is slightly different. That's basically up to you to make a choice 😉</p>
+<h4><a href="#Miscelaneous-import-helpers" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Miscelaneous-import-helpers"></span>#</a> Miscelaneous import helpers</h4>
+<p>There are other interop helpers you can use thanks to <code>Fable.Core.JsInterop</code>:</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core.JsInterop</span>
+
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">buttons</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">obj </span><span style="color: #A626A4">=</span><span> importAll </span><span style="color: #50A14F">&quot;my-lib/buttons&quot;</span>
+<span style="color: #A0A1A7;font-style: italic">// JS: import * as buttons from &quot;my-lib/buttons&quot;</span>
+
+<span style="color: #A0A1A7;font-style: italic">// It works for function declarations too</span>
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">getTheme</span><span style="color: #A626A4">(</span><span style="color: #383A42">x</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">int</span><span style="color: #A626A4">):</span><span> </span><span style="color: #C18401">IInterface </span><span style="color: #A626A4">=</span><span> importDefault </span><span style="color: #50A14F">&quot;my-lib&quot;</span>
+<span style="color: #A0A1A7;font-style: italic">// JS: import getTheme from &quot;my-lib&quot;</span>
+
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">myString</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">string </span><span style="color: #A626A4">=</span><span> importMember </span><span style="color: #50A14F">&quot;my-lib&quot;</span>
+<span style="color: #A0A1A7;font-style: italic">// JS: import { myString } from &quot;my-lib&quot;</span>
+
+<span style="color: #A0A1A7;font-style: italic">// Use just `import` to make the member name explicit</span>
+<span style="color: #A0A1A7;font-style: italic">// as with the ImportAttribute</span>
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">aDifferentName</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">string </span><span style="color: #A626A4">=</span><span> import </span><span style="color: #50A14F">&quot;myString&quot;</span><span> </span><span style="color: #50A14F">&quot;my-lib&quot;</span>
+<span style="color: #A0A1A7;font-style: italic">// import { myString } from &quot;my-lib&quot;</span></code></pre>
+<h3><a href="#Emit-when-F-is-not-enough" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Emit-when-F-is-not-enough"></span>#</a> Emit, when F# is not enough</h3>
+<p>You can use the <code>Emit</code> attribute to decorate a function. Every call to the function will then be replaced inline by the content of the attribute with the placeholders <code>$0, $1, $2...</code> replaced by the arguments. For example, the following code will generate JavaScript as seen below.</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core</span>
+
+<span style="color: #0184BC">[&lt;Emit</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;$0 + $1&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span>
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">add</span><span style="color: #383A42"> </span><span style="color: #A626A4">(</span><span style="color: #383A42">x</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">int</span><span style="color: #A626A4">)</span><span> </span><span style="color: #A626A4">(</span><span style="color: #383A42">y</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">string</span><span style="color: #A626A4">):</span><span> </span><span style="color: #C18401">string </span><span style="color: #A626A4">=</span><span> jsNative</span>
+
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">result</span><span> </span><span style="color: #A626A4">=</span><span> add </span><span style="color: #986801">1</span><span> </span><span style="color: #50A14F">&quot;2&quot;</span></code></pre>
+<p>When you don't know the exact number of arguments you can use the following syntax:</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">type</span><span> </span><span style="color: #C18401">Test</span><span style="color: #986801">()</span><span> </span><span style="color: #A626A4">=</span>
+<span>    </span><span style="color: #0184BC">[&lt;Emit</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;$0($1...)&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span>
+<span>    </span><span style="color: #A626A4">member</span><span> </span><span style="color: #E45649">__.Invoke</span><span style="color: #A626A4">(</span><span style="color: #0184BC">[&lt;ParamArray&gt;]</span><span> </span><span style="color: #383A42">args</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">int</span><span style="color: #A626A4">[]):</span><span> </span><span style="color: #C18401">obj </span><span style="color: #A626A4">=</span><span> jsNative</span></code></pre>
+<p>It's also possible to pass syntax conditioned to optional parameters:</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">type</span><span> </span><span style="color: #C18401">Test</span><span style="color: #986801">()</span><span> </span><span style="color: #A626A4">=</span>
+<span>    </span><span style="color: #0184BC">[&lt;Emit</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;$0[$1]{{=$2}}&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span>
+<span>    </span><span style="color: #A626A4">member</span><span> </span><span style="color: #E45649">__.Item</span><span> </span><span style="color: #A626A4">with</span><span> get</span><span style="color: #986801">()</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">float </span><span style="color: #A626A4">=</span><span> jsNative </span><span style="color: #A626A4">and</span><span> set</span><span style="color: #A626A4">(</span><span style="color: #383A42">v</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">float</span><span style="color: #A626A4">):</span><span> </span><span style="color: #C18401">unit </span><span style="color: #A626A4">=</span><span> jsNative</span>
+
+<span>    </span><span style="color: #A0A1A7;font-style: italic">// This syntax means: if second arg evals to true in JS print &#039;i&#039; and nothing otherwise</span>
+<span>    </span><span style="color: #0184BC">[&lt;Emit</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;new RegExp($0,&#039;g{{$1?i:}}&#039;)&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span>
+<span>    </span><span style="color: #A626A4">member</span><span> </span><span style="color: #E45649">__.ParseRegex</span><span style="color: #A626A4">(</span><span style="color: #383A42">pattern</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">string</span><span style="color: #A626A4">,</span><span> </span><span style="color: #A626A4">?</span><span style="color: #383A42">ignoreCase</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">bool</span><span style="color: #A626A4">):</span><span> </span><span style="color: #C18401">Regex </span><span style="color: #A626A4">=</span><span> jsNative</span></code></pre>
+<p>The content of <code>Emit</code> will actually be parsed by <a href="https://babeljs.io/">Babel</a> so it will still be validated somehow. However, it's not advised to abuse this method, as the code won't be checked by the F# compiler.</p>
+<h4><a href="#Let's-do-it!-Use-Emit" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Let's-do-it!-Use-Emit"></span>#</a> Let's do it! Use Emit</h4>
+<p>Now let's work with Emit and take a new example with the following <code>MyClass.js</code>:</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">export</span><span> </span><span style="color: #E45649">default</span><span> </span><span style="color: #A626A4">class</span><span style="color: #383A42"> </span><span style="color: #C18401">MyClass</span><span style="color: #383A42"> {</span>
+<span style="color: #383A42">  </span><span style="color: #A0A1A7;font-style: italic">// Note the constructors accepts an object</span>
+<span style="color: #383A42">  </span><span style="color: #A0A1A7;font-style: italic">// with the `value` and `awesomeness` fields</span>
+<span style="color: #383A42">  </span><span style="color: #A626A4">constructor</span><span style="color: #383A42">({ value, awesomeness }) {</span>
+<span style="color: #383A42">    </span><span style="color: #E45649">this</span><span style="color: #383A42">.</span><span style="color: #E45649">_value</span><span style="color: #383A42"> </span><span style="color: #0184BC">=</span><span style="color: #383A42"> </span><span style="color: #E45649">value</span><span style="color: #383A42">;</span>
+<span style="color: #383A42">    </span><span style="color: #E45649">this</span><span style="color: #383A42">.</span><span style="color: #E45649">_awesomeness</span><span style="color: #383A42"> </span><span style="color: #0184BC">=</span><span style="color: #383A42"> </span><span style="color: #E45649">awesomeness</span><span style="color: #383A42">;</span>
+<span style="color: #383A42">  }</span>
+
+<span style="color: #383A42">  </span><span style="color: #0184BC">get</span><span style="color: #383A42"> </span><span style="color: #4078F2">value</span><span style="color: #383A42">() {</span>
+<span style="color: #383A42">    </span><span style="color: #A626A4">return</span><span style="color: #383A42"> </span><span style="color: #E45649">this</span><span style="color: #383A42">.</span><span style="color: #E45649">_value</span><span style="color: #383A42">;</span>
+<span style="color: #383A42">  }</span>
+
+<span style="color: #383A42">  </span><span style="color: #0184BC">set</span><span style="color: #383A42"> </span><span style="color: #4078F2">value</span><span style="color: #383A42">( newValue ) {</span>
+<span style="color: #383A42">    </span><span style="color: #E45649">this</span><span style="color: #383A42">.</span><span style="color: #E45649">_value</span><span style="color: #383A42"> </span><span style="color: #0184BC">=</span><span style="color: #383A42"> </span><span style="color: #E45649">newValue</span><span style="color: #383A42">;</span>
+<span style="color: #383A42">  }</span>
+
+<span style="color: #383A42">  </span><span style="color: #4078F2">isAwesome</span><span style="color: #383A42">() {</span>
+<span style="color: #383A42">    </span><span style="color: #A626A4">return</span><span style="color: #383A42"> </span><span style="color: #E45649">this</span><span style="color: #383A42">.</span><span style="color: #E45649">_value</span><span style="color: #383A42"> </span><span style="color: #0184BC">===</span><span style="color: #383A42"> </span><span style="color: #E45649">this</span><span style="color: #383A42">.</span><span style="color: #E45649">_awesomeness</span><span style="color: #383A42">;</span>
+<span style="color: #383A42">  }</span>
+
+<span style="color: #383A42">  </span><span style="color: #A626A4">static</span><span style="color: #383A42"> </span><span style="color: #4078F2">getPI</span><span style="color: #383A42">() {</span>
+<span style="color: #383A42">    </span><span style="color: #A626A4">return</span><span style="color: #383A42"> </span><span style="color: #986801">Math</span><span style="color: #383A42">.</span><span style="color: #986801">PI</span><span style="color: #383A42">;</span>
+<span style="color: #383A42">  }</span>
+<span style="color: #383A42">}</span></code></pre>
+<p>Let's list its members:</p>
+<ul>
+<li>a <code>value</code> member which returns the current value with a getter and a setter</li>
+<li>a method, <code>isAwesome</code>, that checks if the current value equals the awesome value</li>
+<li>a static method <code>getPi()</code> that just returns the value of <code>Math.PI</code></li>
+</ul>
+<p>Here's the Fable implementation. Let's start with the members:</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">type</span><span> </span><span style="color: #C18401">MyClass</span><span style="color: #A626A4">&lt;</span><span style="color: #C18401">&#039;T</span><span style="color: #A626A4">&gt;</span><span> </span><span style="color: #A626A4">=</span>
+<span>  </span><span style="color: #A0A1A7;font-style: italic">// Note we specify this property has also a setter</span>
+<span>  </span><span style="color: #A626A4">abstract</span><span> value</span><span style="color: #A626A4">:</span><span> &#039;</span><span style="color: #C18401">T</span><span> </span><span style="color: #A626A4">with</span><span> get</span><span style="color: #A626A4">,</span><span> set</span>
+<span>  </span><span style="color: #A626A4">abstract</span><span> isAwesome</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">unit</span><span> </span><span style="color: #A626A4">-&gt;</span><span> </span><span style="color: #C18401">bool</span></code></pre>
+<p>Now we need to be able to call the static functions, including the constructor. So we write another interface for that:</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">type</span><span> </span><span style="color: #C18401">MyClassStatic</span><span> </span><span style="color: #A626A4">=</span>
+<span>  </span><span style="color: #0184BC">[&lt;Emit</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;new $0({ value: $1, awesomeness: $2 })&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span>
+<span>  </span><span style="color: #A626A4">abstract</span><span> Create</span><span style="color: #A626A4">:</span><span> &#039;</span><span style="color: #C18401">T</span><span> </span><span style="color: #A626A4">*</span><span> &#039;</span><span style="color: #C18401">T</span><span> </span><span style="color: #A626A4">-&gt;</span><span> </span><span style="color: #C18401">MyClass</span><span style="color: #A626A4">&lt;</span><span style="color: #C18401">&#039;T</span><span style="color: #A626A4">&gt;</span>
+<span>  </span><span style="color: #A626A4">abstract</span><span> getPI </span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">unit</span><span style="color: #A626A4">-&gt;</span><span> </span><span style="color: #C18401">float</span></code></pre>
+<p>Here we used the <code>Emit</code> attribute to apply the JS <code>new</code> keyword and to build a JS object with the arguments, because that's what MyClass constructor accepts. Note that here <code>$0</code> represents the interface object (in this case, MyClass static).</p>
+<p>Last but not least, let's import MyClass:</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #0184BC">[&lt;ImportDefault</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;../public/MyClass.js&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span>
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">MyClass</span><span style="color: #383A42"> </span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">MyClassStatic </span><span style="color: #A626A4">=</span><span> jsNative</span></code></pre>
+<p>Now it's possible to use our JS class. Let's see the complete code:</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">type</span><span> </span><span style="color: #C18401">MyClass</span><span style="color: #A626A4">&lt;</span><span style="color: #C18401">&#039;T</span><span style="color: #A626A4">&gt;</span><span> </span><span style="color: #A626A4">=</span>
+<span>  </span><span style="color: #A626A4">abstract</span><span> value</span><span style="color: #A626A4">:</span><span> &#039;</span><span style="color: #C18401">T</span><span> </span><span style="color: #A626A4">with</span><span> get</span><span style="color: #A626A4">,</span><span> set</span>
+<span>  </span><span style="color: #A626A4">abstract</span><span> isAwesome</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">unit</span><span> </span><span style="color: #A626A4">-&gt;</span><span> </span><span style="color: #C18401">bool</span>
+
+<span style="color: #A626A4">type</span><span> </span><span style="color: #C18401">MyClassStatic</span><span> </span><span style="color: #A626A4">=</span>
+<span>  </span><span style="color: #0184BC">[&lt;Emit</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;new $0({ value: $1, awesomeness: $2 })&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span>
+<span>  </span><span style="color: #A626A4">abstract</span><span> Create</span><span style="color: #A626A4">:</span><span> &#039;</span><span style="color: #C18401">T</span><span> </span><span style="color: #A626A4">*</span><span> &#039;</span><span style="color: #C18401">T</span><span> </span><span style="color: #A626A4">-&gt;</span><span> </span><span style="color: #C18401">MyClass</span><span style="color: #A626A4">&lt;</span><span style="color: #C18401">&#039;T</span><span style="color: #A626A4">&gt;</span>
+<span>  </span><span style="color: #A626A4">abstract</span><span> getPI </span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">unit</span><span style="color: #A626A4">-&gt;</span><span> </span><span style="color: #C18401">float</span>
+
+<span style="color: #0184BC">[&lt;ImportDefault</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;../public/MyClass.js&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span>
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">MyClass</span><span style="color: #383A42"> </span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">MyClassStatic </span><span style="color: #A626A4">=</span><span> jsNative</span>
+
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">myObject</span><span> </span><span style="color: #A626A4">=</span><span> MyClass.Create</span><span style="color: #A626A4">(</span><span style="color: #986801">40</span><span style="color: #A626A4">,</span><span> </span><span style="color: #986801">42</span><span style="color: #A626A4">)</span>
+
+<span style="color: #A0A1A7;font-style: italic">// using getter</span>
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">whatDoIget</span><span> </span><span style="color: #A626A4">=</span><span> myObject.value </span><span style="color: #A0A1A7;font-style: italic">// using getter</span>
+<span>mylib.triggerAlert </span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;Hey I&#039;m calling my js class from Fable. It gives &quot;</span><span> </span><span style="color: #A626A4">+</span><span> </span><span style="color: #A626A4">(</span><span>string whatDoIget</span><span style="color: #A626A4">))</span>
+
+<span style="color: #A0A1A7;font-style: italic">// using setter</span>
+<span>myObject.value </span><span style="color: #A626A4">&lt;-</span><span> </span><span style="color: #986801">42</span>
+<span>mylib.triggerAlert </span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;Now it&#039;s better. It gives &quot;</span><span> </span><span style="color: #A626A4">+</span><span> </span><span style="color: #A626A4">(</span><span>string myObject.value</span><span style="color: #A626A4">))</span>
+
+<span style="color: #A0A1A7;font-style: italic">// calling member function</span>
+<span>mylib.triggerAlert </span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;Isn&#039;t it awesome? &quot;</span><span> </span><span style="color: #A626A4">+</span><span> </span><span style="color: #A626A4">(</span><span>string </span><span style="color: #A626A4">(</span><span>myObject.isAwesome</span><span style="color: #A626A4">())))</span>
+
+<span style="color: #A0A1A7;font-style: italic">// call our static function</span>
+<span>mylib.triggerAlert </span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;PI is &quot;</span><span> </span><span style="color: #A626A4">+</span><span> </span><span style="color: #A626A4">(</span><span>string </span><span style="color: #A626A4">(</span><span>MyClass.getPI</span><span style="color: #A626A4">())))</span></code></pre>
+<p>It's possible to combine the <code>Import</code> and <code>Emit</code> attributes. So we can import and build MyClass in one go. Note that in this case <code>$0</code> is replaced by the imported element:</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #0184BC">[&lt;ImportDefault</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;../public/MyClass.js&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span>
+<span style="color: #0184BC">[&lt;Emit</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;new $0({ value: $1, awesomeness: $2 })&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span>
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">createMyClass</span><span style="color: #A626A4">(</span><span style="color: #383A42">value</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">&#039;T</span><span style="color: #A626A4">,</span><span> </span><span style="color: #383A42">awesomeness</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">&#039;T</span><span style="color: #A626A4">)</span><span> </span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">MyClass</span><span style="color: #A626A4">&lt;</span><span style="color: #C18401">&#039;T</span><span style="color: #A626A4">&gt;</span><span> </span><span style="color: #A626A4">=</span><span> jsNative</span></code></pre>
+<h3><a href="#StringEnum:-Union-types-compiled-to-strings!" aria-hidden="true" style="visibility:visible"><span class="anchor" id="StringEnum:-Union-types-compiled-to-strings!"></span>#</a> StringEnum: Union types compiled to strings!</h3>
+<p>In TypeScript is possible to define <a href="https://mariusschulz.com/blog/string-literal-types-in-typescript">String Literal Types</a> which are similar to enumerations with an underlying string value. Fable allows the same feature by using union types and the <code>StringEnum</code> attribute. These union types must not have any data fields as they will be compiled to a string matching the name of the union case.</p>
+<p>By default, the compiled string will have the first letter lowered. If you want to prevent this or use a different text than the union case name, use the <code>CompiledName</code> attribute:</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core</span>
+
+<span style="color: #0184BC">[&lt;StringEnum&gt;]</span>
+<span style="color: #A626A4">type</span><span> </span><span style="color: #C18401">MyStrings</span><span> </span><span style="color: #A626A4">=</span>
+<span>    </span><span style="color: #A626A4">|</span><span> Vertical</span>
+<span>    </span><span style="color: #A626A4">|</span><span> </span><span style="color: #0184BC">[&lt;CompiledName</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;Horizontal&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span><span> Horizontal</span>
+
+<span>myLib.myMethod</span><span style="color: #A626A4">(</span><span>Vertical</span><span style="color: #A626A4">,</span><span> Horizontal</span><span style="color: #A626A4">)</span></code></pre>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A0A1A7;font-style: italic">// js output</span>
+<span style="color: #E45649">myLib</span><span style="color: #383A42">.</span><span style="color: #4078F2">myMethod</span><span style="color: #383A42">(</span><span style="color: #50A14F">&quot;vertical&quot;</span><span style="color: #383A42">,</span><span> </span><span style="color: #50A14F">&quot;Horizontal&quot;</span><span style="color: #383A42">)</span></code></pre>
+<h3><a href="#Plain-Old-JavaScript-Objects" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Plain-Old-JavaScript-Objects"></span>#</a> Plain Old JavaScript Objects</h3>
+<p>To create a plain JS object (aka POJO), use <code>createObj</code>:</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core.JsInterop</span>
+
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">data</span><span> </span><span style="color: #A626A4">=</span>
+<span>    createObj </span><span style="color: #A626A4">[</span>
+<span>        </span><span style="color: #50A14F">&quot;todos&quot;</span><span> </span><span style="color: #A626A4">==&gt;</span><span> Storage.fetch</span><span style="color: #986801">()</span>
+<span>        </span><span style="color: #50A14F">&quot;editedTodo&quot;</span><span> </span><span style="color: #A626A4">==&gt;</span><span> Option</span><span style="color: #A626A4">&lt;</span><span>Todo</span><span style="color: #A626A4">&gt;</span><span>.None</span>
+<span>        </span><span style="color: #50A14F">&quot;visibility&quot;</span><span> </span><span style="color: #A626A4">==&gt;</span><span> </span><span style="color: #50A14F">&quot;all&quot;</span>
+<span>    </span><span style="color: #A626A4">]</span></code></pre>
+<p>A similar effect can be achieved with the new F# <a href="https://devblogs.microsoft.com/dotnet/announcing-f-4-6-preview/">anonymous records</a>:</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">data</span><span> </span><span style="color: #A626A4">=</span>
+<span>    </span><span style="color: #A626A4">{|</span><span> todos </span><span style="color: #A626A4">=</span><span> Storage.fetch</span><span style="color: #986801">()</span>
+<span>       editedTodo </span><span style="color: #A626A4">=</span><span> Option</span><span style="color: #A626A4">&lt;</span><span>Todo</span><span style="color: #A626A4">&gt;</span><span>.None</span>
+<span>       visibility </span><span style="color: #A626A4">=</span><span> </span><span style="color: #50A14F">&quot;all&quot;</span><span> </span><span style="color: #A626A4">|}</span></code></pre>
+<p>You can also create a JS object from an interface by using <code>createEmpty</code> and then assigning manually:</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">type</span><span> </span><span style="color: #C18401">IMyInterface</span><span> </span><span style="color: #A626A4">=</span>
+<span>    </span><span style="color: #A626A4">abstract</span><span> foo</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">string</span><span> </span><span style="color: #A626A4">with</span><span> get</span><span style="color: #A626A4">,</span><span> set</span>
+<span>    </span><span style="color: #A626A4">abstract</span><span> bar</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">float</span><span> </span><span style="color: #A626A4">with</span><span> get</span><span style="color: #A626A4">,</span><span> set</span>
+<span>    </span><span style="color: #A626A4">abstract</span><span> baz</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">int</span><span> </span><span style="color: #C18401">option</span><span> </span><span style="color: #A626A4">with</span><span> get</span><span style="color: #A626A4">,</span><span> set</span>
+
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">x</span><span> </span><span style="color: #A626A4">=</span><span> createEmpty</span><span style="color: #A626A4">&lt;</span><span>IMyInterface</span><span style="color: #A626A4">&gt;</span><span> </span><span style="color: #A0A1A7;font-style: italic">// var x = {}</span>
+<span>x.foo </span><span style="color: #A626A4">&lt;-</span><span> </span><span style="color: #50A14F">&quot;abc&quot;</span><span>                    </span><span style="color: #A0A1A7;font-style: italic">// x.foo = &quot;abc&quot;</span>
+<span>x.bar </span><span style="color: #A626A4">&lt;-</span><span> </span><span style="color: #986801">8.5</span><span>                      </span><span style="color: #A0A1A7;font-style: italic">// val.bar = 8.5</span></code></pre>
+<p>Since fable-compiler 2.3.6, when using the dynamic cast operator <code>!!</code> to cast an anonymous record to an interface, Fable will raise a warning if the fields in the anonymous don't match those of the interface. Use this feature only to interop with JS, in F# code the proper way to instantiate an interface without an implementing type is an <a href="https://fsharpforfunandprofit.com/posts/object-expressions/">object expression</a>.</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A0A1A7;font-style: italic">// Warning, &quot;foo&quot; must be a string</span>
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">x</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">IMyInterface </span><span style="color: #A626A4">=</span><span> </span><span style="color: #A626A4">!!{|</span><span> foo </span><span style="color: #A626A4">=</span><span> </span><span style="color: #986801">5</span><span style="color: #A626A4">;</span><span> bar </span><span style="color: #A626A4">=</span><span> </span><span style="color: #986801">4.</span><span style="color: #A626A4">;</span><span> baz </span><span style="color: #A626A4">=</span><span> Some </span><span style="color: #986801">0</span><span> </span><span style="color: #A626A4">|}</span>
+
+<span style="color: #A0A1A7;font-style: italic">// Warning, &quot;bar&quot; field is missing</span>
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">y</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">IMyInterface </span><span style="color: #A626A4">=</span><span> </span><span style="color: #A626A4">!!{|</span><span> foo </span><span style="color: #A626A4">=</span><span> </span><span style="color: #50A14F">&quot;5&quot;</span><span style="color: #A626A4">;</span><span> bAr </span><span style="color: #A626A4">=</span><span> </span><span style="color: #986801">4.</span><span style="color: #A626A4">;</span><span> baz </span><span style="color: #A626A4">=</span><span> Some </span><span style="color: #986801">0</span><span> </span><span style="color: #A626A4">|}</span>
+
+<span style="color: #A0A1A7;font-style: italic">// Ok, &quot;baz&quot; can be missing because it&#039;s optional</span>
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">z</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">IMyInterface </span><span style="color: #A626A4">=</span><span> </span><span style="color: #A626A4">!!{|</span><span> foo </span><span style="color: #A626A4">=</span><span> </span><span style="color: #50A14F">&quot;5&quot;</span><span style="color: #A626A4">;</span><span> bar </span><span style="color: #A626A4">=</span><span> </span><span style="color: #986801">4.</span><span> </span><span style="color: #A626A4">|}</span></code></pre>
+<h3><a href="#Dynamic-typing:-don't-read-this!" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Dynamic-typing:-don't-read-this!"></span>#</a> Dynamic typing: don't read this!</h3>
+<p>Through the use of the tools we just described above, Fable guarantees you shouldn't run into nasty bugs (as long as the interface contracts are correct) because all the code will be checked by the compiler. If it does not compile it either means your JS library does not exists or its path is not good or that your F# implementation lacks something. We do rely on Fable on systems that are used 24/7, web apps or Node.js apps. We know that if it compiles, it means a 99% chance of running without any problems.</p>
+<p>Our motto is: &quot;If it compiles, it works!&quot;</p>
+<p>Still, like we stated, <strong>interop is a question of trust</strong>. If you trust your JS code and F# code, then maybe it's ok to do things together without further checks. Maybe.</p>
+<article class="message is-warning">
+                <div class="message-body"><p>Disclaimer: use this at your own risk</p>
+</div>
+</article>
+<h4><a href="#What-is-dynamic-typing" aria-hidden="true" style="visibility:visible"><span class="anchor" id="What-is-dynamic-typing"></span>#</a> What is dynamic typing?</h4>
+<p>Fable.Core.JsInterop implements the F# dynamic operators so you can easily access an object property by name (without static check) as follows:</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core.JsInterop</span>
+
+<span>printfn </span><span style="color: #50A14F">&quot;Value: </span><span style="color: #A626A4">%O</span><span style="color: #50A14F">&quot;</span><span> jsObject?myProperty</span>
+<span style="color: #A0A1A7;font-style: italic">// JS: jsObject?myProperty</span>
+
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">pname</span><span> </span><span style="color: #A626A4">=</span><span> </span><span style="color: #50A14F">&quot;myProperty&quot;</span>
+
+<span>printfn </span><span style="color: #50A14F">&quot;Value: </span><span style="color: #A626A4">%O</span><span style="color: #50A14F">&quot;</span><span> jsObject?</span><span style="color: #A626A4">(</span><span>pname</span><span style="color: #A626A4">)</span><span> </span><span style="color: #A0A1A7;font-style: italic">// Access with a reference</span>
+<span style="color: #A0A1A7;font-style: italic">// JS: jsObject[pname]</span>
+
+<span>jsObject?myProperty </span><span style="color: #A626A4">&lt;-</span><span> </span><span style="color: #986801">5</span><span> </span><span style="color: #A0A1A7;font-style: italic">// Assignment is also possible</span></code></pre>
+<p>When you combine the dynamic operator with application, Fable will destructure tuple arguments as with normal method calls. These operations can also be chained to replicate JS fluent APIs.</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">result</span><span> </span><span style="color: #A626A4">=</span><span> jsObject?myMethod</span><span style="color: #A626A4">(</span><span style="color: #986801">1</span><span style="color: #A626A4">,</span><span> </span><span style="color: #986801">2</span><span style="color: #A626A4">)</span>
+<span style="color: #A0A1A7;font-style: italic">// JS: jsObject.myMethod(1, 2)</span>
+
+<span>chart</span>
+<span>    ?width</span><span style="color: #A626A4">(</span><span style="color: #986801">768.</span><span style="color: #A626A4">)</span>
+<span>    ?height</span><span style="color: #A626A4">(</span><span style="color: #986801">480.</span><span style="color: #A626A4">)</span>
+<span>    ?group</span><span style="color: #A626A4">(</span><span>speedSumGroup</span><span style="color: #A626A4">)</span>
+<span>    ?on</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;renderlet&quot;</span><span style="color: #A626A4">,</span><span> </span><span style="color: #A626A4">fun</span><span style="color: #383A42"> chart </span><span style="color: #A626A4">-&gt;</span>
+<span>        chart?selectAll</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;rect&quot;</span><span style="color: #A626A4">)</span><span>?on</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;click&quot;</span><span style="color: #A626A4">,</span><span> </span><span style="color: #A626A4">fun</span><span style="color: #383A42"> sender args </span><span style="color: #A626A4">-&gt;</span>
+<span>            Browser.console.log</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;click!&quot;</span><span style="color: #A626A4">,</span><span> args</span><span style="color: #A626A4">))</span>
+
+<span style="color: #A0A1A7;font-style: italic">// chart</span>
+<span style="color: #A0A1A7;font-style: italic">//     .width(768)</span>
+<span style="color: #A0A1A7;font-style: italic">//     .height(480)</span>
+<span style="color: #A0A1A7;font-style: italic">//     .group(speedSumGroup)</span>
+<span style="color: #A0A1A7;font-style: italic">//     .on(&quot;renderlet&quot;, function (chart) {</span>
+<span style="color: #A0A1A7;font-style: italic">//         return chart.selectAll(&quot;rect&quot;).on(&quot;click&quot;, function (sender, args) {</span>
+<span style="color: #A0A1A7;font-style: italic">//             return console.log(&quot;click!&quot;, args);</span>
+<span style="color: #A0A1A7;font-style: italic">//         });</span>
+<span style="color: #A0A1A7;font-style: italic">//      });</span></code></pre>
+<p>When you have to call a function with the new keyword in JS, use <code>createNew</code>.</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core.JsInterop</span>
+
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">instance</span><span> </span><span style="color: #A626A4">=</span><span> createNew jsObject</span><span style="color: #A626A4">(</span><span style="color: #986801">1</span><span style="color: #A626A4">,</span><span> </span><span style="color: #986801">2</span><span style="color: #A626A4">)</span>
+<span style="color: #A0A1A7;font-style: italic">// JS: new jsObject(1, 2)</span></code></pre>
+<p>If you prefer member extensions rather than operators for dynamic typing, you can open <code>Fable.Core.DynamicExtensions</code> to have the methods <code>.Item</code> and <code>.Invoke</code> available on any object.</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core.DynamicExtensions</span>
+
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">foo</span><span> </span><span style="color: #A626A4">=</span><span> obj</span><span style="color: #986801">()</span>
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">bar1</span><span> </span><span style="color: #A626A4">=</span><span> foo.</span><span style="color: #A626A4">[</span><span style="color: #50A14F">&quot;b&quot;</span><span style="color: #A626A4">]</span><span>  </span><span style="color: #A0A1A7;font-style: italic">// Same as foo.Item(&quot;b&quot;)</span>
+<span>foo.</span><span style="color: #A626A4">[</span><span style="color: #50A14F">&quot;c&quot;</span><span style="color: #A626A4">]</span><span> </span><span style="color: #A626A4">&lt;-</span><span> </span><span style="color: #986801">14</span>
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">bar2</span><span> </span><span style="color: #A626A4">=</span><span> foo.Invoke</span><span style="color: #A626A4">(</span><span style="color: #986801">4</span><span style="color: #A626A4">,</span><span> </span><span style="color: #50A14F">&quot;a&quot;</span><span style="color: #A626A4">)</span></code></pre>
+</div></div></section></div><div class="column full-height-scrollable-content is-hidden-tablet is-2-desktop"><div><nav class="toc-container"><ul class="toc-headings"><div class="toc-label"><a href="#Call-JavaScript-from-Fable">Call JavaScript from Fable</a></div><ul class="toc-headings"><li><a href="#Adding-the-JS-library-to-the-project">Adding the JS library to the project</a></li><li><a href="#Type-safety-with-Imports-and-Interfaces">Type safety with Imports and Interfaces</a><ul class="toc-headings"><li><a href="#Let's-practice!-1st-try!">Let's practice! 1st try!</a></li><li><a href="#Let's-practice!-2nd-try!">Let's practice! 2nd try!</a></li><li><a href="#Miscelaneous-import-helpers">Miscelaneous import helpers</a></li></ul></li><li><a href="#Emit-when-F-is-not-enough">Emit, when F# is not enough</a><ul class="toc-headings"><li><a href="#Let's-do-it!-Use-Emit">Let's do it! Use Emit</a></li></ul></li><li><a href="#StringEnum:-Union-types-compiled-to-strings!">StringEnum: Union types compiled to strings!</a></li><li><a href="#Plain-Old-JavaScript-Objects">Plain Old JavaScript Objects</a></li><li><a href="#Dynamic-typing:-don't-read-this!">Dynamic typing: don't read this!</a><ul class="toc-headings"><li><a href="#What-is-dynamic-typing">What is dynamic typing?</a></li></ul></li></ul></li></ul></nav></div></div><span class="fa-stack fa-2x is-hidden-tablet" id="toc-toggle" style="position:fixed;bottom:0;right:0;margin:10px"><i class=" far fa-circle fa-stack-2x"></i><i class=" fas fa-sync fa-stack-1x"></i></span></div><script type="text/javascript">
+nacara.pageId = 'mmunicate/js-from-fable';
+                </script></div></body></html>
