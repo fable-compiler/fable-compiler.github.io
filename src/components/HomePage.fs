@@ -170,12 +170,12 @@ let aceOfHearts = Ace,Hearts
 let tenOfSpades = (Number 10), Spades
 
 match card with 
-| Hearts,Ace -> printfn "Ace Of Hearts!"
-| Hearts, _ -> printfn "A lovely heart"
-| Spades,(Number 10) -> printfn "10 of Spades"
-| (Diamonds|Clubs), _ -> printfn "Diamonds or clubs"
+| Ace, Hearts -> printfn "Ace Of Hearts!"
+| _, Hearts -> printfn "A lovely heart"
+| (Number 10), Spades -> printfn "10 of Spades"
+| _, (Diamonds|Clubs) -> printfn "Diamonds or clubs"
 // warning: Incomplete pattern matches on this expression.
-// For example, the value '(_,Number (0))' may indicate
+// For example, the value '(_,Spades)' may indicate
 // a case not covered by the pattern(s).
 """     )
 
