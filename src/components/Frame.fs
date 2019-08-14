@@ -31,11 +31,10 @@ document.addEventListener('DOMContentLoaded', function () {
 let twitterCard () =
   fragment [] [
       meta [Name "twitter:title"; HTMLAttr.Content "Fable"]
-      meta [Name "twitter:description"; HTMLAttr.Content "F# to JS"]
+      meta [Name "twitter:description"; HTMLAttr.Content "F# to JS compiler"]
       meta [Name "twitter:image"; HTMLAttr.Content "https://fable.io/img/fable_logo.png"]
       meta [Name "twitter:card"; HTMLAttr.Content "summary_large_image"]
   ]
-
 
 let render titleText navbar contents =
     html [] [
@@ -45,6 +44,7 @@ let render titleText navbar contents =
                    HTMLAttr.Content "text/html; charset=utf-8" ]
             meta [ Name "viewport"
                    HTMLAttr.Content "width=device-width, initial-scale=1" ]
+            twitterCard()
             cssLink "https://fonts.googleapis.com/css?family=Josefin+Sans:400,300,600,700|Roboto+Mono|Fira+Code|Open+Sans:400,300,600,700"
             jsLink "https://kit.fontawesome.com/f1c8a90b9d.js"
             cssLink "/css/styles.css"

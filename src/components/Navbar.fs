@@ -5,21 +5,59 @@ open Fable.React.Props
 open Fulma
 open Util.Helpers
 open Util.Literals
+open Fable.FontAwesome
 
-let navButton classy href faClass txt =
-  Control.div [] 
-    [ a 
-        [ Class (sprintf "button %s" classy); Href href ] 
-        [ span [Class "icon"] [ i [Class (sprintf "fa %s" faClass)] [] ]
-          span [] [str txt ]
-        ] ]
+type Link =
+    { Href : string
+      Label : string option
+      Icon : string option
+      Color : string option
+      IsExternal : bool }
 
-let navButtons =
-  Navbar.Item.div []
-    [ Field.div [ Field.IsGrouped ]
-        [ navButton "twitter" "https://twitter.com/FableCompiler" "fa-twitter" "Share the love!"
-          navButton "github" "https://gitter.im/fable-compiler/Fable" "fa-comments" "Chat"
-          navButton "github" "https://github.com/fable-compiler/Fable" "fa-github" "Github" ] ]
+let private renderLink (link : Link) =
+    let color = Option.defaultValue null link.Color
+    let target = if link.IsExternal then "_blank" else "_self"
+
+    let iconItem =
+        match link.Icon with
+        | Some iconClass ->
+            Icon.icon [ ] [ Fa.i [ Fa.Icon iconClass ] [ ] ]
+        | None -> nothing
+
+    let labelItem =
+        match link.Label with
+        | Some labelText ->
+            span [ ] [ str labelText ]
+        | None -> nothing
+
+    Navbar.Item.a [ Navbar.Item.Props [ Href link.Href
+                                        Target target
+                                        Style [ Color color ] ] ]
+        [ iconItem
+          labelItem ]
+
+
+let navbarEndLinks = [
+    { Href = "https://gitter.im/fable-compiler/Fable"
+      Label = None
+      Icon = Some "fab fa-gitter"
+    //   Color = Some "#24292e"
+      Color = Some "white"
+      IsExternal = true }
+    { Href = "https://github.com/fable-compiler/fable"
+      Label = None
+      Icon = Some "fab fa-github"
+    //   Color = Some "#24292e"
+      Color = Some "white"
+      IsExternal = true }
+    { Href = "https://twitter.com/FableCompiler"
+      Label = None
+      Icon = Some "fab fa-twitter"
+    //   Color = Some "#55acee"
+      Color = Some "white"
+      IsExternal = true }
+]
+
 
 let menuItem label page currentPage =
 
@@ -60,8 +98,10 @@ let root currentPage =
             menuItem "Blog" Navbar.Blog currentPage
     //        menuItem "FAQ" Navbar.FAQ currentPage
             menuItem "FableConf" Navbar.FableConf currentPage
-            menuItem "GitHub" Navbar.GitHub currentPage
+            // menuItem "GitHub" Navbar.GitHub currentPage
         ]
-        //div [Class "navbar-end"] [navButtons]
+        Navbar.End.div [] [
+            Field.div [Field.IsGrouped] (List.map renderLink navbarEndLinks)
+        ]
     ]
   ]

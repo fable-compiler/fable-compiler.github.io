@@ -10,7 +10,7 @@
     "start-docs": "nacara --watch",
     "start": "concurrently npm:start-*",
     "build": "concurrently npm:build-*",
-    "deploy": "build && gh-pages -d deploy -b master",
+    "deploy": "rm -rf deploy && npm run build && gh-pages -d deploy -b master",
     "deploy-fast": "node build/Main.js && gh-pages -d deploy -b master"
   },
   "dependencies": {
