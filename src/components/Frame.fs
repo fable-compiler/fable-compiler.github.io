@@ -28,6 +28,15 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });"""
 
+let twitterCard () =
+  fragment [] [
+      meta [Name "twitter:title"; HTMLAttr.Content "Fable"]
+      meta [Name "twitter:description"; HTMLAttr.Content "F# to JS"]
+      meta [Name "twitter:image"; HTMLAttr.Content "https://fable.io/img/fable_logo.png"]
+      meta [Name "twitter:card"; HTMLAttr.Content "summary_large_image"]
+  ]
+
+
 let render titleText navbar contents =
     html [] [
         head [] [
@@ -42,6 +51,7 @@ let render titleText navbar contents =
             cssLink "/css/prism.css" // Code highlighting
             link [ Rel "shortcut icon"
                    Href "/img/fable.ico" ]
+                   
         ]
         body [] [
             navbar

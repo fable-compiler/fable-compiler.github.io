@@ -109,13 +109,19 @@ pre {
   align-items: center;
 }
 
-/* prism.js helper to get numbers the right way*/
+// prism.js helpers
 span.token.number {
   font-size: 0.8rem;
   padding: 0;
   margin: 0;
-  padding-bottom: 6px;
+  background-color: inherit;
+//   padding-bottom: 6px;
 }
+
+span.token.tag {
+    background-color: white;
+  }
+// ------------------------
 
 .flex-wrap {
   display: flex;
@@ -151,13 +157,32 @@ span.token.number {
   //   font-weight: normal;
 }
 
-.fable-introduction {
+.fable-catchphrase {
   @extend .has-text-centered;
   font-size: 1.3em;
-  p:not(:last-child) {
-    margin-bottom: 20px;
+  margin: 10px 5px;
+  p {
+    max-width: $tablet;
+    margin: 0 auto;
   }
 }
+
+.fableconf-promo {
+    @extend .has-text-centered;
+    font-size: 1.2em;
+    margin: 20px 0;
+    padding: 20px 5px;
+    background-color: dodgerblue;
+    p {
+      color: white;
+      max-width: $tablet;
+      margin: 0 auto;
+    }
+    a {
+        color: white;
+    }
+  }
+  
 
 .fable-samples {
   margin: 0 5px;
@@ -214,11 +239,6 @@ li > code {
 h3 > a.anchor,
 h2 > a.anchor {
   color: dodgerblue;
-}
-
-/* prism.js helper */
-span.token.tag {
-  background-color: white;
 }
 
 .blog {

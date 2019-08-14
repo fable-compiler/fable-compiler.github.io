@@ -39,16 +39,16 @@
             "introduction/net-users-read-this",
             "introduction/js-users-read-this"
         ],
-        "Fable in 2 steps": [
-            "2-steps/setup",
-            "2-steps/choose-a-template"
-        ],
         "New to F#?": [
             "new-to-fsharp/learning-the-language",
             "new-to-fsharp/let-keyword"
         ],
+        "Fable in 2 steps": [
+            "2-steps/setup",
+            "2-steps/choose-a-template"
+        ],
         "Your Fable project": [
-            "your-fable-project/add-a-fsharp-file",
+            "your-fable-project/project-file",
             "your-fable-project/use-a-fable-library",
             "your-fable-project/author-a-fable-library",
             "your-fable-project/build-and-run"

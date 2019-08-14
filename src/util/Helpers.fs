@@ -6,17 +6,6 @@ open Fulma
 open Fable.FontAwesome
 open GlobalHelpers
 
-let renderIntro (markdownParagraphs: string list): ReactElement =
-  let paragraphs =
-    List.map (parseMarkdownAsReactEl "") markdownParagraphs
-  div [Class "columns"; Style [MarginTop "10px"]] [
-    div [Class "column"; Style [Padding 0]] []
-    div [Class "column is-two-thirds"] [
-      div [Class "fable-introduction"] paragraphs
-    ]
-    div [Class "column"; Style [Padding 0]] []
-  ]
-
 type ImgOrFa = Img of string | FaIcon of Fa.IconOption
 
 let renderCard icon title link text =

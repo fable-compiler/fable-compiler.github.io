@@ -19,8 +19,8 @@ So we do need libraries. And Fable proposes a great variety of libraries ready f
 
 There are 2 ways to call Fable libraries:
 
-1 - Reference them directly in your project file
-2 - Use [Paket](https://fsprojects.github.io/Paket/)
+1. Reference them directly in your project file
+2. Use [Paket](https://fsprojects.github.io/Paket/)
 
 ### Option 1: reference a library manually in your project file
 

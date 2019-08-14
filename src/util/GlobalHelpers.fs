@@ -15,7 +15,7 @@ module private Util =
   let marked: obj = importDefault "marked"
   let loadLanguages(langs: string array) = importDefault "prismjs/components/"
 
-  loadLanguages [|"fsharp"; "json"; "css"; "bash"|]
+  loadLanguages [|"clike"; "fsharp"; "json"; "css"; "bash"|]
   
   marked?setOptions(createObj [
     "highlight" ==> fun code (lang:string) ->     

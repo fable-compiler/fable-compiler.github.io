@@ -8,13 +8,13 @@ Your project is ready? Then it's time to build and run it.
 
 This process, however, is different depending on whether we are still in development or we are already preparing the project to deploy it to production. In development we don't care so much about optimizations and we want fast builds so we can see the results of our changes on-screen almost immediately. While for production we can endure a slower build in order to get JS code that is more optimized.
 
-> In this document we assume you are using [fable-loader](https://www.npmjs.com/package/fable-loader) with [Webpack](https://webpack.js.org/) to build your Fable web app. If you use other tools, [like fable-splitter](https://www.npmjs.com/package/fable-splitter), please refer to their documentation.
+> In this document we assume you are using [fable-loader](https://www.npmjs.com/package/fable-loader) with [Webpack](https://webpack.js.org/) to build your Fable web app. If you use other tools, like [fable-splitter](https://www.npmjs.com/package/fable-splitter), please refer to their documentation.
 
 Webpack can be a bit difficult to configure. Most of the [samples](https://github.com/fable-compiler/fable2-samples) have a `webpack.config.js` file that you can use for reference. And there's also a [webpack config template for Fable](https://github.com/fable-compiler/webpack-config-template/blob/master/webpack.config.js) that is prepared to work in most projects.
 
 Whenever Webpack encounters an F# file, it will call the fable-loader which in turn spawns a [fable-compiler](https://www.npmjs.com/package/fable-compiler) process to translate the F# files to JS. The generated code will be sent back to Webpack that will merge it into the final bundle.
 
-> Whenever you want to use a new version of Fable in your project, you only to update the fable-compiler package: `npm update fable-compiler`.
+> Whenever you want to use a new version of Fable in your project, you only need to update the fable-compiler package: `npm update fable-compiler`.
 
 ## Development
 

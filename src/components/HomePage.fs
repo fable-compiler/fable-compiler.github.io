@@ -14,29 +14,22 @@ open Fable.Core.JsInterop
 let introText =
   "Fable is a compiler powered by [Babel](https://babeljs.io/) designed to make [F#](http://fsharp.org/) a first-class citizen of the JavaScript ecosystem"
 
+let fableConfPromo =
+  "FableConf 2019 is happening in Antwerp on September 6/7th. **[Get your ticket soon!](/fableconf)**"
+
 let cardTexts =
   [
-    "Clean functional programming", None, "Immutable by default. Powerful pattern matching. Rich types. Units of Measure. No semicolons. No brackets. Lightweight syntax. Enjoy!"
-    "Types safety: if it compiles it works", None, "Your code is compiled to Javascript: let the compiler catch the bugs for you before they ever get into runtime!"
-    "Modern Javascript output", None, "Fable produces readable JavaScript code compatible with ES2015 standards!"
-    "Great JavaScript interop", None, "Call [JavaScript from Fable](/docs/communicate/js-from-fable.html) or [Fable from JS](/docs/communicate/fable-from-js.html)! Use NPM packages! Bundle your app with Webpack! Everything's ready for you!"
-    "Editors: first class support", None, "Choose your weapon: from [Visual Studio Code](http://ionide.io/) to [Jetbrains Rider](https://www.jetbrains.com/rider/). Check [the whole list here](/docs/3-steps/setup.html#development-tools)."
-    ".NET friendly", None, ".NET user? Fable supports [most of the F# core library and some of most commonly used .NET APIs.](/docs/dotnet/compatibility.html)"
+    "Functional programming and more", None, "Immutable by default. Powerful pattern matching. Lightweight syntax. Units of measure. Type providers. Enjoy!"
+    "Type safety without the hassle", None, "Don't panic about verbose signatures. Let the compiler infer the types and catch the bugs for you before they ever get into runtime!"
+    "Modern Javascript output", None, "Fable produces readable JavaScript code compatible with ES2015 standards and popular tooling like [Webpack](https://webpack.js.org/)!"
+    "Easy JavaScript interop", None, "Call [JavaScript from Fable](/docs/communicate/js-from-fable.html) or [Fable from JS](/docs/communicate/fable-from-js.html)! Use NPM packages! Everything's ready for you!"
+    "Editors: first class support", None, "Choose your favorite tool: from [Visual Studio Code](http://ionide.io/) to [Jetbrains Rider](https://www.jetbrains.com/rider/). Check [the whole list here](/docs/2-steps/setup.html#development-tools)."
+    "Batteries charged", None, "Fable supports [most of the F# core library and some of most commonly used .NET APIs](/docs/dotnet/compatibility.html). But don't worry about huge bundle sizes, you only pay for what you get."
   ]
 
 let whereToText: string =
   sprintf "[Try Fable online](%s), [check the docs](%s) or visit [fable-awesome](https://github.com/kunjee17/awesome-fable) for a curated list of Fable resources, join the community at [FableConf](%s) or watch the [Channel9 interview with Seth Juarez](https://channel9.msdn.com/events/NDC/NDC-Oslo-2017/C9L13?term=fable)."
     Navbar.Repl Navbar.Docs Navbar.FableConf
-
-let featuresText = 
-  [
-    "The Fable APIs have been written to avoid any situation where you would have to test for a null value. The F# language gives us the ability to wrap ``null`` into a nice ``Option``"      
-    "Express your code in an elegant an powerful fashion using computation expressions "
-    "Let the compiler verify arithmetic relationships for you to help prevent programming errors."
-    "Use compiler directives to change the behavior of your program."
-    "Type your data with Discriminated Unions to allow for better Domain understanding and compiler safety."
-    "An area where F# shines is its powerful pattern matching, ready to match any domain model!"
-  ]
 
 let linkImage src href =
   div [
@@ -98,96 +91,27 @@ module Features =
           Column.column [] []
         ]
 
-let actionButtons = 
-  Columns.columns 
-    []
-    [ Column.column [] [] 
-      Column.column [] 
-        [ Level.level 
-            [ Level.Level.IsMobile ] 
-            [ Level.item 
-                [ Level.Item.Props [ Style [ Padding "0.5rem "]]] 
-                [ a 
-                    [ Href "/repl/";Target "_black"] 
-                    [ Button.button 
-                        [
-                        Button.Color IsSuccess
-                        Button.Size IsMedium 
-                        Button.IsOutlined
-                        ]
-                        [ str "TRY ONLINE" ] ] ]
-              Level.item 
-                [] 
-                [ a 
-                    [ Href "/docs/3-steps/setup.html";Target "_black"] 
-                    [ Button.button 
-                        [
-                        Button.Color IsInfo
-                        Button.Size IsMedium 
-                        Button.IsOutlined
-                        ]
-                        [ str "GET STARTED" ] ] ]
-          ] ] 
-      Column.column [] [] 
-    ]
-
-let renderSample () =
-    Section.section [] [
-      actionButtons 
-      Columns.columns [ Columns.IsVCentered ] [
-        Column.column [Column.Modifiers [ Modifier.IsHidden (Screen.Tablet, true)]] []
-        Column.column [] [
-          Container.container [
-          ] [
-            (prepareCode """
-type AppKind = Browser | React | Node | App of string
-
-let myApp = 
-  function 
-  | Browser -> "DOM idea of fun!"
-  | React -> "React frontend"
-  | Node -> "Node.js project"
-  | App "Three.js" -> "3D!"
-  | App x -> "My super Fable app: " + x
-
-              """)
-          ]
-        ]
-        Column.column [] 
-          [ Container.container [] 
-              [ Content.content 
-                  [ Content.Modifiers 
-                      [ Modifier.TextSize (Screen.All, TextSize.Is5) 
-                        Modifier.TextAlignment (Screen.All, TextAlignment.Centered)
-                      ]] 
-                  [ p [] 
-                      [ str "Fable lets you write JS apps using F# easy yet powerful syntax."] ] ] ]
-        Column.column [Column.Modifiers [ Modifier.IsHidden (Screen.Tablet, true)]] []
-      ]
-    ]
-
 let renderBody (info: PageInfo) =
   // This fixes the problem with the double scrollbar on Windows
   div [Style [Overflow "hidden"]] [
 
     Header.render()
 
-    renderIntro [introText]
-
-    // renderSample ()
+    parseMarkdownAsReactEl "fable-catchphrase" introText
+    parseMarkdownAsReactEl "fableconf-promo" fableConfPromo
 
     Container.container [] [
       Columns.columns []
         [ Column.column [] [cardTexts.[0] |||> renderCard (Img "./img/fsharp.png")]
-          Column.column [] [cardTexts.[1] |||> renderCard (FaIcon Fa.Solid.BatteryFull)]
+          Column.column [] [cardTexts.[1] |||> renderCard (FaIcon Fa.Solid.Lock)]
       ]
       Columns.columns []
         [ Column.column [] [cardTexts.[2] |||> renderCard (FaIcon Fa.Solid.Wrench)]
           Column.column []  [cardTexts.[3] |||> renderCard (FaIcon Fa.Solid.PuzzlePiece)]
       ]
       Columns.columns []
-        [ Column.column [] [cardTexts.[4] |||> renderCard (FaIcon Fa.Solid.KiwiBird)]
-          Column.column []  [cardTexts.[5] |||> renderCard (FaIcon Fa.Solid.BoxOpen)]
+        [ Column.column [] [cardTexts.[4] |||> renderCard (FaIcon Fa.Solid.Edit)]
+          Column.column []  [cardTexts.[5] |||> renderCard (FaIcon Fa.Solid.BatteryFull)]
       ]
       Columns.columns []
         [ //Column.column [] [cardTexts.[6] |||> renderCard (FaIcon Fa.Solid.Language)]
@@ -199,7 +123,7 @@ let renderBody (info: PageInfo) =
           Heading.h4 [] [ str "Quick start"]
           Content.content 
             [] 
-            [ p [] [ str "Get started with our set of samples!"]
+            [ parseMarkdownAsReactEl "" "[Try Fable online](/repl) or get started in your local machine with our set of samples ([more info](/docs/2-steps/setup.html)):"
               ol 
                 []
                 [ li [] [ a [ Href "https://dotnet.microsoft.com"; Target "_blank"] [ str "Install .NET Core SDK"] ] 
@@ -233,65 +157,10 @@ npm start"""
           p [] [ str "The Fable community is working hard to make sure you won't run into a nasty runtime bug. Thanks to the F# language we also offer great tools to fit any Domain and make sure the compiler checks everything before shipping your app!"]
         ]
         hr []
-        (Features.prepare 
-          "The end of null?"
-          featuresText.[0]
-"""
-// Is geolocation available for our navigator?
-let geolocation = Browser.navigator.geolocation
-
-match geolocation with 
-| Some geolocation -> JS.console.log "Geolocation enabled 😊"
-| None -> JS.console.log "Geolocation not enabled 😥"
-"""     )
 
         (Features.prepare 
-          "Master of Monads!"
-          featuresText.[1]
-"""
-// Fetch & promises made easy with computation expressions
-promise {
-    let! res = fetch url []
-    let! txt = res.text()
-    return txt.Length
-}
-"""     )
-
-        (Features.prepare 
-          "Fireproof arithmetics"
-          featuresText.[2]
-"""
-[<Measure>] type cm
-let length = 12.0<cm>
-
-[<Measure>] type kg
-let weight = 9.2<kg>
-
-let thisWillFail = length + weight 
-// ERROR: The unit of measure 'kg' does 
-// not match the unit of measure 'cm'
-"""     )
-
-        (Features.prepare 
-          "Conditional compilation"
-          featuresText.[3]
-"""
-#if VERSION1
-let addition x y = 
-  x + y + 100
-
-#else
-let addition x y = 
-  x + y
-
-#endif
-
-let result = addition 1 1
-"""     )
-
-        (Features.prepare 
-          "Discriminated Unions"
-          featuresText.[4]
+          "Powerful pattern matching"
+          "Model your domain with discriminated unions and match complex patterns with ease. The compiler will warn you if you're forgetting some cases!"
 """
 type Face = Ace | King | Queen | Jack | Number of int
 type Color = Spades | Hearts | Diamonds | Clubs 
@@ -299,19 +168,104 @@ type Card = Face * Color
 
 let aceOfHearts = Ace,Hearts
 let tenOfSpades = (Number 10), Spades
+
+match card with 
+| Hearts,Ace -> printfn "Ace Of Hearts!"
+| Hearts, _ -> printfn "A lovely heart"
+| Spades,(Number 10) -> printfn "10 of Spades"
+| (Diamonds|Clubs), _ -> printfn "Diamonds or clubs"
+// warning: Incomplete pattern matches on this expression.
+// For example, the value '(_,Number (0))' may indicate
+// a case not covered by the pattern(s).
 """     )
 
         (Features.prepare 
-          "Powerful pattern matching"
-          featuresText.[5]
+          "Master of Monads!"
+          "There's a lot of code involving continuations out there, like asynchronous or undeterministic operations. Other languages bake specific solutions into the syntax, with F# you can use built-in computation expressions and easily extend them yourself."
 """
-match card with 
-| Hearts,Ace -> JS.console.log "Ace Of Hearts!"
-| _,Ace -> JS.console.log "Ace of any color"
-| Spades,(Number 10) -> JS.console.log "10 of Spades"
-| Spades,_ -> JS.console.log "any card of Spades"
-| _ -> JS.console.log  "any other card"
+// JS promises made easy
+promise {
+    let! res = fetch url []
+    let! txt = res.text()
+    return txt.Length
+}
+
+// Declare your own computation expression
+type OptionBuilder =
+  member __.Bind(opt, binder) =
+    match opt with
+    | Some value -> binder value
+    | None -> None
+  member __.Return(value) = Some value
+    
+let option = OptionBuilder()
+
+option {
+  let! x = trySomething()
+  let! y = trySomethingElse()
+  let! z = andYetTrySomethingElse()
+  // Code will only hit this point if the three
+  // operations above return Some
+  return x + y + z
+}
 """     )
+
+        (Features.prepare 
+          "Fireproof arithmetics"
+          "Let the compiler verify arithmetic relationships for you to help prevent programming errors."
+"""
+[<Measure>] type m
+[<Measure>] type s
+
+let distance = 12.0<m>
+let time = 6.0<s>
+
+let thisWillFail = distance + time 
+// ERROR: The unit of measure 'm' does 
+// not match the unit of measure 's'
+
+let thisWorks = distance / time
+// 2.0<m/s>
+"""     )
+
+        (Features.prepare 
+          "Type providers"
+          "Build your types using real-world conditions and make the compiler warn you if those conditions change."
+"""
+let [<Literal>] JSON_URL = "https://jsonplaceholder.typicode.com/todos"
+
+// Type is created automatically from the url
+type Todos = Fable.JsonProvider.Generator<JSON_URL>
+
+async {
+    let! (_, res) = Fable.SimpleHttp.Http.get url
+    let todos = Todos.ParseArray res
+    for todo in todos do
+        // If the JSON schema changes, this will fail compilation
+        printfn "ID %i, USER: %i, TITLE %s, COMPLETED %b"
+            todo.id
+            todo.userId
+            todo.title
+            todo.completed
+}
+"""     )
+
+//         (Features.prepare 
+//           "Conditional compilation"
+//           "Use compiler directives to change the behavior of your program."
+// """
+// #if VERSION1
+// let addition x y = 
+//   x + y + 100
+
+// #else
+// let addition x y = 
+//   x + y
+
+// #endif
+
+// let result = addition 1 1
+// """     )
 
       ]
 
