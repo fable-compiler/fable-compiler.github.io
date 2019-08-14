@@ -9197,10 +9197,13 @@ footer a:active {
   color: white;
 }
 .navbar .navbar-start .navbar-item.is-active {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5) !important;
 }
 .navbar .navbar-start .navbar-item:hover {
   color: dodgerblue;
+}
+.navbar .navbar-end .navbar-item:hover {
+  color: dodgerblue !important;
 }
 
 pre {
