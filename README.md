@@ -14,7 +14,3 @@ For deployment run:
 ```shell
 npm run deploy
 ```
-
-## Other repositories
-
-The tool expects the [Fable](https://github.com/fable-compiler/Fable) repository to be cloned on the same directory level as this one.
