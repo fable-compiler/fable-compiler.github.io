@@ -23,3 +23,8 @@ $navbar-breakpoint: 400px;
         margin-right: 10px;
     }
 }
+
+// We need some padding or the last menu item will be hidden
+aside {
+    padding-bottom: 50px;
+}
