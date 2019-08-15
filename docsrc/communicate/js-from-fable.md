@@ -6,7 +6,7 @@ title: Call JS from Fable
 
 ## Call JavaScript from Fable
 
-Interoperability is a matter of trust between your statically typed F# code and your untyped dynamic JS code. In order to mitigate risks, Fable gives you several possibilities, amongst them type safety through inteface contracts. Sometimes it may sound more convenient to just call JS code in a more dynamic fashion, although be aware by doing this potential bugs will not be discovered until runtime.
+Interoperability is a matter of trust between your statically typed F# code and your untyped dynamic JS code. In order to mitigate risks, Fable gives you several possibilities, amongst them type safety through interface contracts. Sometimes it may sound more convenient to just call JS code in a more dynamic fashion, although be aware by doing this potential bugs will not be discovered until runtime.
 
 We'll describe both the safe way and the dynamic way and then it will be up to you to decide. Let's start!
 
@@ -156,7 +156,7 @@ Canvas.drawSmiley()
 
 The result would be the same, but the philosophy is slightly different. That's basically up to you to make a choice 😉
 
-#### Miscelaneous import helpers
+#### Miscellaneous import helpers
 
 There are other interop helpers you can use thanks to `Fable.Core.JsInterop`:
 

@@ -11,14 +11,14 @@ Sometimes, we'd like to use the power of Fable into our JavaScript apps. For ins
 
 It may allow you to play with Fable and add features, one at a time. So what does it take to call Fable from JavaScript? First you need to understand a bit how the generated JS code looks like so you can call it correctly.
 
-> Remember you can use the [Fable REPL](https://fable.io/repl/) to easily check how the generated JS for your F# code looks like!
+> Remember you can use the [Fable REPL](https://fable.io/repl/) to easily check the generated JS for your F# code!
 
 ## Name mangling
 
-Because JS doesn't support overloading or multiple modules in a single file, Fable needs mangles the name of some members to avoid clashes, which makes it difficult to call such functions or values from JS. However, there're some cases where Fable in ortder to improve interop guarantees names won't change:
+Because JS doesn't support overloading or multiple modules in a single file, Fable needs to mangle the name of some members to avoid clashes, which makes it difficult to call such functions or values from JS. However, there're some cases where Fable guarantees names won't change in order to improve interop:
 
 - Record fields
-- Interface members
+- Interface and abstract members
 - Functions and values in the root module
 
 What's a root module? Because F# accepts multiple modules in the same file, we consider the root module the first one containing actual members and is not nested by any other.
@@ -36,7 +36,7 @@ module Nested =
     let add (x: int) (y: int) = x * y
 ```
 
-Sometimes it's possible to have more than one file root module in F#, in that case everything will be mangled. You should avoid this pattern if you want to expose code to JS:
+In F# it's possible to have more than one root module in a single file, in that case everything will be mangled. You should avoid this pattern if you want to expose code to JS:
 
 ```fsharp
 namespace SharedNamespace
@@ -56,7 +56,7 @@ Some F#/.NET types have [counterparts in JS](/../dotnet/compatibility.html). Fab
 
 - **Strings and booleans** behave the same in F# and JS.
 - **Numeric types** compile to JS numbers, except for `long`, `decimal` and `bigint`.
-- **Arrays** (and `ResizeArray`) compile to JS arrays. _Numeric arrays_ compile to [Typed Arrays](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray) in most situations, thouth this shouldn't make a difference for most common operations like indexing, iterating or mapping.
+- **Arrays** (and `ResizeArray`) compile to JS arrays. _Numeric arrays_ compile to [Typed Arrays](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray) in most situations, though this shouldn't make a difference for most common operations like indexing, iterating or mapping.
 - Any **IEnumerable** (or `seq`) can be traversed in JS as if it were an [Iterable](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators#Iterables).
 - **DateTime** compiles to JS `Date`.
 - **Regex** compiles to JS `RegExp`.
@@ -95,7 +95,7 @@ import { createRecord, createClass } from "./Tests.fs"
 
 var record = createRecord(2);
 
-// Ok, we're calling record fields
+// Ok, we're calling a record field
 record.Add(record.Value, 2); // 4
 
 // Fails, this member is not actually attached to the object
@@ -125,6 +125,8 @@ import { execute } from "./TestFunctions.fs"
 execute(function (x, y) { return x * y }, 3, 5) // 15
 ```
 
+> Check [this](https://fsharpforfunandprofit.com/posts/currying/) for more information on function currying in F# (and other functional languages).
+
 ## Call Fable source code from a JS file
 
 Webpack makes it very easy to include files in different programming languages in your project by using loaders. Because in a Fable project we assume you're already using the [fable-loader](https://www.npmjs.com/package/fable-loader), if you have a file like the following:
@@ -152,7 +154,7 @@ For better or worse, Typescript wants to check your imported modules and because
 import { sayHelloFable } from "./HelloFable.fs"
 ```
 
-To appease the Typescript compiler, we need a [declaration file](https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html), which also gives the opportunity to tell Typescript what is actually exported by our Fable code. If you place a `HelloFable.d.ts` file like the following, the import above will work:
+To appease the Typescript compiler, we need a [declaration file](https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html), which also gives us the opportunity to tell Typescript what is actually exported by our Fable code. If you place a `HelloFable.d.ts` file like the following, the import above will work:
 
 ```ts
 // Unfortunately declaration files don't accept relative paths
@@ -166,7 +168,7 @@ declare module "*HelloFable.fs" {
 
 ### ..from your web app
 
-If your project is a web project and you're using webpack, it just takes 2 lines of code in the webpack configuration in the `output` section of `module.exports`:
+If your project is a web app and you're using Webpack, it just takes two lines of code in the Webpack configuration in the `output` section of `module.exports`:
 
 ```js
 libraryTarget: 'var',
@@ -184,13 +186,15 @@ For instance:
     },
 ```
 
-This just tell webpack that we want our Fable code to be available from a global variable named `MyFableLib`. That's it!
+This tells Webpack that we want our Fable code to be available from a global variable named `MyFableLib`. That's it!
 
-> Only the public functions and values in the **last file of the project** will be exposed.
+:::info
+Only the public functions and values in the **last file of the project** will be exposed.
+:::
 
 #### Let's try!
 
-Let's compile the HelloFable app from above with webpack.config.js that includes the following:
+Let's compile the HelloFable app from above with a webpack.config.js that includes the following:
 
 ```js
 output: {
@@ -201,6 +205,7 @@ output: {
 ```
 
 Now let's try this directly in our `index.html` file:
+
 ```html
 <body>
     <script src="bundle.js"></script>
@@ -214,9 +219,7 @@ Et voilà! We're done! You can find a [full sample here](https://github.com/fabl
 
 ### ...from your Node.js app
 
-Basically it's the same thing. If you want to see a complete sample using a `commonjs` output instead of `var` (the one we used for the web app sample, please [check this project](https://github.com/fable-compiler/fable2-samples/tree/master/nodejsbundle).
-
-There you'll see that we've added the following lines to the webpack config:
+Basically it's the same thing. If you want to see a complete sample using a `commonjs` output instead of `var`, please [check this project](https://github.com/fable-compiler/fable2-samples/tree/master/nodejsbundle). There you'll see that we've added the following lines to the Webpack config:
 
 ```js
     library:"app",
@@ -229,6 +232,6 @@ and then you can call your code from JavaScript like this:
 let app = require("./App.js");
 ```
 
-### Learn more about webpack `libraryTarget`
+### Learn more about Webpack `libraryTarget`
 
 If you want to know what your options are, please consult the [official documentation](https://webpack.js.org/configuration/output/#outputlibrarytarget).
