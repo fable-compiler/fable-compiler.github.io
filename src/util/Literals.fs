@@ -1,6 +1,6 @@
 namespace Util.Literals
 
-open StaticWebGenerator
+open GlobalHelpers
 
 module Fable =
   let [<Literal>] Root = "/" //"http://fable.io/"
@@ -12,8 +12,9 @@ module Navbar =
   let [<Literal>] Docs = Fable.Root + "docs"
   let [<Literal>] FAQ = Fable.Root + "faq"
 
-  let [<Literal>] FableConf = Fable.Root + "fableconf"
+  let [<Literal>] FableConf = "/fableconf" //Fable.Root + "fableconf"
   let [<Literal>] MenuId = "navMenu"
+  let [<Literal>] GitHub = "https://github.com/fable-compiler/Fable"
 
 module Paths =
   // Make sure to always resolve paths to avoid conflicts in generated JS files

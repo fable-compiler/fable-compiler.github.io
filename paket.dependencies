@@ -2,11 +2,8 @@ source https://nuget.org/api/v2
 storage:none
 framework:netstandard2.0,netcoreapp2.0
 
-clitool dotnet-fable
 nuget Fable.Core
-nuget Fable.PowerPack
 nuget Fable.React
-nuget Fable.Import.Browser
-nuget Fable.Import.Node
+nuget Fable.Node
 nuget Fulma
-github fable-compiler/static-web-generator src/Helpers.fs
+nuget Fable.FontAwesome.Free

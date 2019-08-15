@@ -2,13 +2,13 @@ module Util.Types
 
 open System
 open Fable.Core
-open Fable.Import
+open Fable.React
 
 type PageInfo =
   { Title: string
     TargetPath: string
     NavbarActivePage: string
-    RenderBody: PageInfo -> React.ReactElement }
+    RenderBody: PageInfo -> ReactElement }
 
 type SampleInfo =
   abstract entry: string

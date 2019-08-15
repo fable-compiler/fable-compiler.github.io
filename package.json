@@ -1,30 +1,33 @@
 {
   "private": true,
   "scripts": {
-    "postinstall": "dotnet restore src",
-    "start-server": "live-server deploy",
-    "build-sass": "sass src/styles/main.sass deploy/css/styles.css",
-    "start-sass": "build-sass --watch",
+    "start-server": "live-server deploy --port=8000",
+    "build-sass": "sass src/styles/main.scss deploy/css/styles.css",
+    "start-sass": "npm run build-sass && npm run build-sass -- --watch",
     "build-fable": "fable-splitter src/App.fsproj -o build --run",
     "start-fable": "fable-splitter src/App.fsproj -o build --watch --run",
+    "build-docs": "nacara",
+    "start-docs": "nacara --watch",
     "start": "concurrently npm:start-*",
     "build": "concurrently npm:build-*",
-    "deploy": "build && gh-pages -d deploy -b master",
+    "deploy": "rm -rf deploy && npm run build && gh-pages -d deploy -b master",
     "deploy-fast": "node build/Main.js && gh-pages -d deploy -b master"
   },
   "dependencies": {
-    "@babel/core": "^7.4.0",
-    "bulma": "^0.7.4",
-    "concurrently": "^4.1.0",
-    "fable-compiler": "^2.2.2",
-    "fable-splitter": "^2.1.7",
-    "fs-extra": "^7.0.1",
+    "@babel/core": "^7.5.5",
+    "@fable-compiler/nacara": "^0.1.9",
+    "bulma": "^0.7.5",
+    "concurrently": "^4.1.1",
+    "fable-compiler": "^2.3.14",
+    "fable-splitter": "^2.1.10",
+    "fs-extra": "^8.1.0",
     "gh-pages": "^2.0.1",
-    "highlight.js": "^9.15.6",
+    "highlight.js": "^9.15.9",
     "live-server": "^1.2.1",
-    "marked": "^0.6.2",
+    "marked": "^0.7.0",
+    "prismjs": "^1.17.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "sass": "^1.17.3"
+    "sass": "^1.22.7"
   }
 }

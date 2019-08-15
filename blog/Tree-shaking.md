@@ -7,7 +7,7 @@ Hi everybody! This is my first contribution to the [F# advent calendar](https://
 
 From the very fist version, Fable compiles F# code to JavaScript using [ES2015 features](https://babeljs.io/docs/learn-es2015/) like classes or iterators, and then uses [Babel](https://babeljs.io/) (hence the name) to convert the code to something old browsers don't have that much trouble understanding. Among ES2015 features we find a new [module system](http://www.2ality.com/2014/09/es6-modules-final.html) that it's been designed to standardize the different solutions that tried to emulate modules in JS so far, like [commonjs](https://nodejs.org/docs/latest/api/modules.html) or [amd](http://requirejs.org/docs/whyamd.html). But why create a new standard instead of taking one of existing ones?
 
-![How standards proliferate](/img/standards.png)
+![How standards proliferate](/img/blog/standards.png)
 
 > Image courtesy of [xkcd.com](https://xkcd.com/927/)
 
@@ -24,7 +24,8 @@ Bundlers are nice but the obvious gotcha is we need to be careful not to convert
 The killer feature of ES2015 modules is they allow to make **individual exports and imports**. This means you can reference a library without importing the whole package, only the functions you need. And most importantly, library authors are encouraged to structure their code having this in mind. Then, bundlers (and browsers soon) can easily eliminate anything that's not being imported. Consider this simplistic JS project and the generated bundle.
 
 maths.js
-```[lang=js]
+
+```js
 export function square ( x ) {
   return x * x;
 }
@@ -35,13 +36,15 @@ export function cube ( x ) {
 ```
 
 main.js (entry module)
-```[lang=js]
+
+```js
 import { cube } from './maths.js';
 console.log( cube( 5 ) ); // 125
 ```
 
 bundle.js (`square` is excluded)
-```[lang=js]
+
+```js
 function cube ( x ) {
   return x * x * x;
 }
@@ -68,7 +71,7 @@ let bar y =
   y * y
 ```
 
-```[lang=js]
+```js
 export function foo(x) {
   return x + x;
 }
@@ -92,7 +95,7 @@ let private test() =
 test()
 ```
 
-```[lang=js]
+```js
 import { fsFormat } from "fable-core/String";
 import { bar } from "./MyLib"
 
@@ -108,11 +111,11 @@ Fable is just importing the function we need, the way ES2015 modules are intende
 
 The example was just to show that opening a module doesn't import everything, but in order to get autocompletion we just need to qualify the module name instead. The generated JS code will be the same.
 
-![Autocompletion](/img/capture2.png)
+![Autocompletion](/img/blog/capture2.png)
 
 This means we can do exploratory programming while still having all the advantages of tree-shaking: the best of two worlds! (my favourite sentence). And, as you probably know, F# has many tools to write and read documentation directly in code. With [Ionide](http://ionide.io/) you even get formatting for markdown comments!
 
-![Markdown](/img/capture1.jpg)
+![Markdown](/img/blog/capture1.jpg)
 
 Have I convinced you yet to use the Fable + ES2015 bundler combo? Great! Now you just need to do is to find the right bundler, install it, learn how to configure it, make sure to run it after every Fable compilation... No, wait! [Fable 0.7 comes with Rollup embedded](http://fable.io/blog/Introducing-0-7.html#ES2015-Modules-and-Bundling) so the only thing you need to bundle your code and dependencies with tree shaking is:
 

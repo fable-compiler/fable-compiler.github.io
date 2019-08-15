@@ -5,7 +5,7 @@
 
 Every year, kids all over the world, try to learn how to build their own startup from scratch and promote their work through a contest organized by regional branches of [JA Worldwide](https://www.jaworldwide.org/aboutja/), one of the world’s largest youth-serving NGOs.
 
-![JA Worldwide](/img/jaworldwide.jpg)
+![JA Worldwide](/img/blog/jaworldwide.jpg)
 
 The [Collège de la Cité de la Formation](http://www.collegecitescolaire.com/) in Marmande, France was participating for the 6th time to this contest with a clear motivation: **make something that could help the environmental cause**, and of course, since they were creating a startup, find a way to make some profit.
 
@@ -31,20 +31,20 @@ We decided to postpone the back-office since it was clear that due to our planni
 Overall, the development was a no-brainer.
 Of course the prototype was not meant to be complicated. We just wanted to show the overall concept: **It was not a difficult project. Here the main problem was the lack of time**.
 
-![Awesome Ionide](/img/ionide.png)
+![Awesome Ionide](/img/blog/ionide.png)
 
 However coding with the [Ionide](http://ionide.io/) [plugin](https://marketplace.visualstudio.com/items?itemName=Ionide.Ionide-fsharp) on [Visual Studio Code](https://code.visualstudio.com/) just streamlined my workflow. The IDE would give me completion and hints when I did not know some API methods. It would also help me correct my errors on fly. And the only difficult issues I stumbled on with Fable-Elmish were rapidly solved thanks to the awesome Fable community.
 
-![Real Awesome Ionide](/img/ionide_vscode.png)
+![Real Awesome Ionide](/img/blog/ionide_vscode.png)
 
 I also needed to use my **javascript components**. Here again Fable allowed me to **integrate them in F# like a breeze and of course, definitely typed**. This is what I call real [javascript interoperability](https://medium.com/fable-compiler/f-interop-with-javascript-in-fable-the-complete-guide-ccc5b896a59f).
 So in a few hours I checked all the boxes in my Todo. Responsive web app: check. Navbar: check. Sticky footer: check. Accordion components: check. Mobile drag out side menu: check. Mapbox integration in react component: check.
 
-![Components](/img/shot0.png)
+![Components](/img/blog/shot0.png)
 
 Of course, I would not have coded the prototype without Fable’s watch mode. During the development, my screen was split into two windows: the IDE on the left, the browser on the right. Each time I saved my files, the browser would refresh the display.
 
-![Split screen](/img/splitscreen.png)
+![Split screen](/img/blog/splitscreen.png)
 
 I have been using many languages to build web and mobile apps through the years: Javascript, Java, Scala, Haxe, and lately F#.I would like to stress the fact that the F# language solves a lot of cognitive overhead I had with pure object apps.
 
@@ -58,7 +58,7 @@ And here I had the opportunity to live that more than once. On one side: **Kids 
 
 In the end, I could have done it differently with other tech stacks. But I would like to stress that on the path I chose, **it’s the sum of all the benefits from these tools and the support of the community that allowed me to help the kids reach their goal in due time**.
 
-![Kids receiving their Business Model Prize](/img/winners.png)
+![Kids receiving their Business Model Prize](/img/blog/winners.png)
 
 **In the end, Kids, as a team, reached their goal.**
 **And once more, F# and the awesome Fable community won my respect.**

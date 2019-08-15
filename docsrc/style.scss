@@ -1,0 +1,30 @@
+@import "./../node_modules/bulma/sass/utilities/initial-variables";
+
+$primary: rgb(175, 64, 133);
+$text: #2d2d2d;
+$orange: #bb4321;
+
+$body-size: 14px;
+$navbar-background-color: $white;
+$navbar-item-color: $orange;
+$content-heading-color: $orange;
+$menu-item-active-background-color: $orange;
+$navbar-breakpoint: 400px;
+
+@import './../node_modules/bulma/bulma.sass';
+@import './../node_modules/@fable-compiler/nacara/scss/nacara.scss';
+
+.navbar {
+    box-shadow: 0 2px 0 0 #f5f5f5;
+    .navbar-brand {
+        margin-left: 5px !important;
+    }
+    .navbar-end {
+        margin-right: 10px;
+    }
+}
+
+// We need some padding or the last menu item will be hidden
+aside {
+    padding-bottom: 50px;
+}
