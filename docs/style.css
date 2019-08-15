@@ -9317,3 +9317,7 @@ body .full-height-scrollable-content {
 .navbar .navbar-end {
   margin-right: 10px;
 }
+
+aside {
+  padding-bottom: 50px;
+}
