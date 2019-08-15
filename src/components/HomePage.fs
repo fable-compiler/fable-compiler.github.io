@@ -23,7 +23,7 @@ let cardTexts =
     "Type safety without the hassle", None, "Don't panic about verbose signatures. Let the compiler infer the types and catch the bugs for you before they ever get into runtime!"
     "Modern Javascript output", None, "Fable produces readable JavaScript code compatible with ES2015 standards and popular tooling like [Webpack](https://webpack.js.org/)!"
     "Easy JavaScript interop", None, "Call [JavaScript from Fable](/docs/communicate/js-from-fable.html) or [Fable from JS](/docs/communicate/fable-from-js.html)! Use NPM packages! Everything's ready for you!"
-    "Editors: first class support", None, "Choose your favorite tool: from [Visual Studio Code](http://ionide.io/) to [Jetbrains Rider](https://www.jetbrains.com/rider/). Check [the whole list here](/docs/2-steps/setup.html#development-tools)."
+    "Editors: first class support", None, "Choose your favorite tool: from [Visual Studio Code](http://ionide.io/) to [JetBrains Rider](https://www.jetbrains.com/rider/). Check [the whole list here](/docs/2-steps/setup.html#development-tools)."
     "Batteries charged", None, "Fable supports [most of the F# core library and some of most commonly used .NET APIs](/docs/dotnet/compatibility.html). But don't worry about huge bundle sizes, you only pay for what you get."
   ]
 
