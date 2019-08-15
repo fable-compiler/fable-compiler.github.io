@@ -154,13 +154,13 @@ npm start"""
         Content.content [
           Content.Modifiers [Modifier.TextAlignment (Screen.All, TextAlignment.Centered)]          
         ] [
-          p [] [ str "The Fable community is working hard to make sure you won't run into a nasty runtime bug. Thanks to the F# language we also offer great tools to fit any Domain and make sure the compiler checks everything before shipping your app!"]
+          p [] [ str "These are some of the main F# features that you can use in your web apps with Fable."]
         ]
         hr []
 
         (Features.prepare 
           "Powerful pattern matching"
-          "Model your domain with discriminated unions and match complex patterns with ease. The compiler will warn you if you're forgetting some cases!"
+          "Model your domain with union types and match complex patterns with ease. The compiler will warn you if you're forgetting some cases!"
 """
 type Face = Ace | King | Queen | Jack | Number of int
 type Color = Spades | Hearts | Diamonds | Clubs 
@@ -180,22 +180,20 @@ match card with
 """     )
 
         (Features.prepare 
-          "Master of Monads!"
-          "There's a lot of code involving continuations out there, like asynchronous or undeterministic operations. Other languages bake specific solutions into the syntax, with F# you can use built-in computation expressions and easily extend them yourself."
+          "Computation expressions"
+          "There's a lot of code involving continuations out there, like asynchronous or undeterministic operations. Other languages bake specific solutions into the syntax, with F# you can use built-in computation expressions and also extend them yourself."
 """
 // JS promises made easy
 promise {
-    let! res = fetch url []
+    let! res = Fetch.fetch url []
     let! txt = res.text()
     return txt.Length
 }
 
 // Declare your own computation expression
-type OptionBuilder =
+type OptionBuilder() =
   member __.Bind(opt, binder) =
-    match opt with
-    | Some value -> binder value
-    | None -> None
+    match opt with Some value -> binder value | None -> None
   member __.Return(value) = Some value
     
 let option = OptionBuilder()
@@ -211,7 +209,7 @@ option {
 """     )
 
         (Features.prepare 
-          "Fireproof arithmetics"
+          "Units of measure"
           "Let the compiler verify arithmetic relationships for you to help prevent programming errors."
 """
 [<Measure>] type m
