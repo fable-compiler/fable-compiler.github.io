@@ -9,6 +9,8 @@ npm install
 npm start
 ```
 
+> If you've trouble building some native dependencies (like oniguruma) on your system, check the [requirements for node-gyp installation](https://github.com/nodejs/node-gyp#installation).
+
 For deployment run:
 
 ```shell
