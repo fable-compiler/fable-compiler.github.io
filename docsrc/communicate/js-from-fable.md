@@ -47,7 +47,7 @@ open Fable.Core.JsInterop
 let myModule: obj = jsNative
 
 // Same as Import("default", "my-module")
-[<Import("default", from="express")>]
+[<ImportDefault("express")>]
 let myModuleDefaultExport: obj = jsNative
 
 // The member name is taken from decorated value, here `myFunction`

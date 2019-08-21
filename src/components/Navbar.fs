@@ -94,11 +94,10 @@ let root currentPage =
       div [Id Navbar.MenuId; classList ["navbar-menu", true] ] [
         Navbar.Start.div [] [
             menuItem "Docs" Navbar.Docs currentPage
-            menuItem "Try" Navbar.Repl currentPage
             menuItem "Blog" Navbar.Blog currentPage
-    //        menuItem "FAQ" Navbar.FAQ currentPage
+            menuItem "REPL" Navbar.Repl currentPage
+            menuItem "Community" Navbar.Community currentPage
             menuItem "FableConf" Navbar.FableConf currentPage
-            // menuItem "GitHub" Navbar.GitHub currentPage
         ]
         Navbar.End.div [] [
             Field.div [Field.IsGrouped] (List.map renderLink navbarEndLinks)

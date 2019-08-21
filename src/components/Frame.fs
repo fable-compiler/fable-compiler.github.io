@@ -71,7 +71,7 @@ let render titleText navbar contents =
                     [ str "MIT" ]
                   str "."
             ] ] ]
-            // Activate navbar burget button
+            // Activate navbar burger button
             script [DangerouslySetInnerHTML { __html = burgerJsCode }] []
         ]
     ]
