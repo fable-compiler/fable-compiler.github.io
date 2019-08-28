@@ -4,8 +4,6 @@ title: Author a Fable library
 
 [[toc]]
 
-## Author a Fable library
-
 To write a library that can be used in Fable you only need to fulfill a few conditions:
 
 - Don't use FSharp.Core/BCL APIs that are not [compatible with Fable](../dotnet/compatibility.html).

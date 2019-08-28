@@ -2,9 +2,7 @@
 title: Foreword
 ---
 
-# About the Fable compiler project. Goals & perspective.
-
-## Foreword
+*About the Fable compiler project. Goals & perspective.*
 
 Initiated by [Alfonso Garcia Caro](https://github.com/alfonsogarciacaro) in 2016, the Fable project federates developers from very different fields to allow the use of F# in JavaScript projects.
 

@@ -4,8 +4,6 @@ title: Start a new project
 
 [[toc]]
 
-## Start a new project
-
 Now we're ready, let's start a new project using Fable!
 
 <ul class="textual-steps">

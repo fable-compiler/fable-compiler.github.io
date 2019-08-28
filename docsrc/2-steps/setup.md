@@ -4,8 +4,6 @@ title: Setup
 
 [[toc]]
 
-## Setup
-
 ### Prerequisites
 
 In order to use Fable you will need the following tools:

@@ -1,18 +1,20 @@
 @import "./../node_modules/bulma/sass/utilities/initial-variables";
 
-$primary: rgb(175, 64, 133);
+$primary: #bb4321;
 $text: #2d2d2d;
-$orange: #bb4321;
 
 $body-size: 14px;
 $navbar-background-color: $white;
-$navbar-item-color: $orange;
-$content-heading-color: $orange;
-$menu-item-active-background-color: $orange;
+$navbar-item-color: $primary;
+$content-heading-color: $primary;
+$menu-item-active-background-color: $primary;
 $navbar-breakpoint: 400px;
 
+$toc-item-active-color: $primary;
+$toc-item-hover-color: $primary;
+
 @import './../node_modules/bulma/bulma.sass';
-@import './../node_modules/@fable-compiler/nacara/scss/nacara.scss';
+@import './../node_modules/nacara/scss/nacara.scss';
 
 .navbar {
     box-shadow: 0 2px 0 0 #f5f5f5;

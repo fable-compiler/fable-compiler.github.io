@@ -1,10 +1,8 @@
 ---
-title: Call Fable from JS
+title: Call Fable from JavaScript
 ---
 
 [[toc]]
-
-## Call Fable from JavaScript
 
 Sometimes, we'd like to use the power of Fable into our JavaScript apps. For instance, to create a new
 [js node in Node-RED](https://nodered.org/docs/creating-nodes/first-node) or call some handy F# code from our new Node.js serverless function or even call some powerful json parsing into our JavaScript app.

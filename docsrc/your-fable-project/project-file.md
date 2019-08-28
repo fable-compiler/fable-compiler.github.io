@@ -2,8 +2,6 @@
 title: The project file
 ---
 
-# The F# project file
-
 Unlike JS, F# projects requires all sources to be listed **in compilation order** in an `.fsproj` file. This may look quite restrictive at first, but it does have [some advantages](https://fsharpforfunandprofit.com/posts/cyclic-dependencies/).
 Since a F# project takes its roots from the .NET ecosystem, we need to follow a few obligatory steps in order to add a file to F# a Project.
 

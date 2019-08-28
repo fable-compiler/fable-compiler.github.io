@@ -4,8 +4,6 @@ title: Use a Fable library
 
 [[toc]]
 
-## Use a Fable library
-
 We often use libraries using [NuGet](https://www.nuget.org/), which is the defacto .NET package manager.
 
 So we do need libraries. And Fable proposes a great variety of libraries ready for you to use like:

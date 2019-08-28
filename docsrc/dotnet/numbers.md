@@ -2,8 +2,6 @@
 title: Numeric types
 ---
 
-# Numeric types
-
 In Fable, we use F# numeric types, which are all translated to JS Number (64-bit floating type) at the exception of `int64`, `uint64`, `bigint` and `decimal`.
 
 Fable numbers are very nearly compatible with .NET semantics, but translating into Javascript types has consequences:
