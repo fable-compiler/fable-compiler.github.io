@@ -2,8 +2,6 @@
 title: Build & run
 ---
 
-# Build & run
-
 Your project is ready? Then it's time to build and run it.
 
 This process, however, is different depending on whether we are still in development or we are already preparing the project to deploy it to production. In development we don't care so much about optimizations and we want fast builds so we can see the results of our changes on-screen almost immediately. While for production we can endure a slower build in order to get JS code that is more optimized.

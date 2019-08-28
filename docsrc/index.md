@@ -4,8 +4,6 @@ title: What is Fable?
 
 [[toc]]
 
-## What is Fable?
-
 Fable is a solution that lets you write JavaScript applications with F#, a functional programming language.
 
 ### What is FSharp?
