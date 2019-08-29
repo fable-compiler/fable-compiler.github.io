@@ -335,6 +335,26 @@ var nacara = {};
 
 <span style="color: #A0A1A7;font-style: italic">// Ok, &quot;baz&quot; can be missing because it&#039;s optional</span>
 <span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">z</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">IMyInterface </span><span style="color: #A626A4">=</span><span> </span><span style="color: #A626A4">!!{|</span><span> foo </span><span style="color: #A626A4">=</span><span> </span><span style="color: #50A14F">&quot;5&quot;</span><span style="color: #A626A4">;</span><span> bar </span><span style="color: #A626A4">=</span><span> </span><span style="color: #986801">4.</span><span> </span><span style="color: #A626A4">|}</span></code></pre>
+<p>Another option is to use a list (or any sequence) of union cases in combination with the <code>keyValueList</code> helper. This is often used to represent React props. You can specify the case rules for the transformations of the case names (usually lowering the first letter) and if necessary you can also decorate some cases with the <code>CompiledName</code> attribute to change its name in the JS runtime.</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core.JsInterop</span>
+
+<span style="color: #A626A4">type</span><span> </span><span style="color: #C18401">JsOption</span><span> </span><span style="color: #A626A4">=</span>
+<span>    </span><span style="color: #A626A4">|</span><span> Flag1</span>
+<span>    </span><span style="color: #A626A4">|</span><span> Name </span><span style="color: #A626A4">of</span><span> </span><span style="color: #C18401">string</span>
+<span>    </span><span style="color: #A626A4">|</span><span> </span><span style="color: #0184BC">[&lt;CompiledName</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;quantity&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span><span> QTY </span><span style="color: #A626A4">of</span><span> </span><span style="color: #C18401">int</span>
+
+<span style="color: #A626A4">let inline</span><span> </span><span style="color: #E45649">sendToJs</span><span style="color: #383A42"> </span><span style="color: #A626A4">(</span><span style="color: #383A42">opts</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">JsOption list</span><span style="color: #A626A4">)</span><span> </span><span style="color: #A626A4">=</span>
+<span>    keyValueList CaseRules.LowerFirst opts </span><span style="color: #A626A4">|&gt;</span><span> aNativeJsFunction</span>
+
+<span>sendToJs </span><span style="color: #A626A4">[</span>
+<span>    Flag1</span>
+<span>    Name </span><span style="color: #50A14F">&quot;foo&quot;</span>
+<span>    QTY </span><span style="color: #986801">5</span>
+<span style="color: #A626A4">]</span>
+<span style="color: #A0A1A7;font-style: italic">// JS: { flag1: true, name: &quot;foo&quot;, quantity: 5 }</span></code></pre>
+<blockquote>
+<p>Fable can make the transformation at compile time when applying the list literal directly to <code>keyValueList</code>. That's why it's usually a good idea to inline the function containing the helper.</p>
+</blockquote>
 <h3><a href="#Dynamic-typing:-don't-read-this!" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Dynamic-typing:-don't-read-this!"></span>#</a> Dynamic typing: don't read this!</h3>
 <p>Through the use of the tools we just described above, Fable guarantees you shouldn't run into nasty bugs (as long as the interface contracts are correct) because all the code will be checked by the compiler. If it does not compile it either means your JS library does not exists or its path is not good or that your F# implementation lacks something. We do rely on Fable on systems that are used 24/7, web apps or Node.js apps. We know that if it compiles, it means a 99% chance of running without any problems.</p>
 <p>Our motto is: &quot;If it compiles, it works!&quot;</p>
