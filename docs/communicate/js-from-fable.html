@@ -317,17 +317,16 @@ var nacara = {};
 <span>    </span><span style="color: #A626A4">{|</span><span> todos </span><span style="color: #A626A4">=</span><span> Storage.fetch</span><span style="color: #986801">()</span>
 <span>       editedTodo </span><span style="color: #A626A4">=</span><span> Option</span><span style="color: #A626A4">&lt;</span><span>Todo</span><span style="color: #A626A4">&gt;</span><span>.None</span>
 <span>       visibility </span><span style="color: #A626A4">=</span><span> </span><span style="color: #50A14F">&quot;all&quot;</span><span> </span><span style="color: #A626A4">|}</span></code></pre>
-<p>You can also create a JS object from an interface by using <code>createEmpty</code> and then assigning manually:</p>
+<article class="message is-info">
+                <div class="message-body"><p>Since fable-compiler 2.3.6, when using the dynamic cast operator <code>!!</code> to cast an anonymous record to an interface, Fable will raise a warning if the fields in the anonymous don't match those of the interface. Use this feature only to interop with JS, in F# code the proper way to instantiate an interface without an implementing type is an <a href="https://fsharpforfunandprofit.com/posts/object-expressions/">object expression</a>.</p>
+</div>
+</article>
 <pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">type</span><span> </span><span style="color: #C18401">IMyInterface</span><span> </span><span style="color: #A626A4">=</span>
 <span>    </span><span style="color: #A626A4">abstract</span><span> foo</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">string</span><span> </span><span style="color: #A626A4">with</span><span> get</span><span style="color: #A626A4">,</span><span> set</span>
 <span>    </span><span style="color: #A626A4">abstract</span><span> bar</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">float</span><span> </span><span style="color: #A626A4">with</span><span> get</span><span style="color: #A626A4">,</span><span> set</span>
 <span>    </span><span style="color: #A626A4">abstract</span><span> baz</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">int</span><span> </span><span style="color: #C18401">option</span><span> </span><span style="color: #A626A4">with</span><span> get</span><span style="color: #A626A4">,</span><span> set</span>
 
-<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">x</span><span> </span><span style="color: #A626A4">=</span><span> createEmpty</span><span style="color: #A626A4">&lt;</span><span>IMyInterface</span><span style="color: #A626A4">&gt;</span><span> </span><span style="color: #A0A1A7;font-style: italic">// var x = {}</span>
-<span>x.foo </span><span style="color: #A626A4">&lt;-</span><span> </span><span style="color: #50A14F">&quot;abc&quot;</span><span>                    </span><span style="color: #A0A1A7;font-style: italic">// x.foo = &quot;abc&quot;</span>
-<span>x.bar </span><span style="color: #A626A4">&lt;-</span><span> </span><span style="color: #986801">8.5</span><span>                      </span><span style="color: #A0A1A7;font-style: italic">// val.bar = 8.5</span></code></pre>
-<p>Since fable-compiler 2.3.6, when using the dynamic cast operator <code>!!</code> to cast an anonymous record to an interface, Fable will raise a warning if the fields in the anonymous don't match those of the interface. Use this feature only to interop with JS, in F# code the proper way to instantiate an interface without an implementing type is an <a href="https://fsharpforfunandprofit.com/posts/object-expressions/">object expression</a>.</p>
-<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A0A1A7;font-style: italic">// Warning, &quot;foo&quot; must be a string</span>
+<span style="color: #A0A1A7;font-style: italic">// Warning, &quot;foo&quot; must be a string</span>
 <span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">x</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">IMyInterface </span><span style="color: #A626A4">=</span><span> </span><span style="color: #A626A4">!!{|</span><span> foo </span><span style="color: #A626A4">=</span><span> </span><span style="color: #986801">5</span><span style="color: #A626A4">;</span><span> bar </span><span style="color: #A626A4">=</span><span> </span><span style="color: #986801">4.</span><span style="color: #A626A4">;</span><span> baz </span><span style="color: #A626A4">=</span><span> Some </span><span style="color: #986801">0</span><span> </span><span style="color: #A626A4">|}</span>
 
 <span style="color: #A0A1A7;font-style: italic">// Warning, &quot;bar&quot; field is missing</span>
@@ -335,6 +334,14 @@ var nacara = {};
 
 <span style="color: #A0A1A7;font-style: italic">// Ok, &quot;baz&quot; can be missing because it&#039;s optional</span>
 <span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">z</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">IMyInterface </span><span style="color: #A626A4">=</span><span> </span><span style="color: #A626A4">!!{|</span><span> foo </span><span style="color: #A626A4">=</span><span> </span><span style="color: #50A14F">&quot;5&quot;</span><span style="color: #A626A4">;</span><span> bar </span><span style="color: #A626A4">=</span><span> </span><span style="color: #986801">4.</span><span> </span><span style="color: #A626A4">|}</span></code></pre>
+<p>You can also create a JS object from an interface by using <code>createEmpty</code> and then assigning the fields manually:</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">x</span><span> </span><span style="color: #A626A4">=</span><span> createEmpty</span><span style="color: #A626A4">&lt;</span><span>IMyInterface</span><span style="color: #A626A4">&gt;</span><span> </span><span style="color: #A0A1A7;font-style: italic">// var x = {}</span>
+<span>x.foo </span><span style="color: #A626A4">&lt;-</span><span> </span><span style="color: #50A14F">&quot;abc&quot;</span><span>                    </span><span style="color: #A0A1A7;font-style: italic">// x.foo = &quot;abc&quot;</span>
+<span>x.bar </span><span style="color: #A626A4">&lt;-</span><span> </span><span style="color: #986801">8.5</span><span>                      </span><span style="color: #A0A1A7;font-style: italic">// val.bar = 8.5</span></code></pre>
+<p>A similar solution that can also be optimized by Fable directly into a JS object at compile time is to use the <code>jsOptions</code> helper:</p>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">x</span><span> </span><span style="color: #A626A4">=</span><span> jsOptions</span><span style="color: #A626A4">&lt;</span><span>IMyInterface</span><span style="color: #A626A4">&gt;(fun</span><span style="color: #383A42"> x </span><span style="color: #A626A4">-&gt;</span>
+<span>    x.foo </span><span style="color: #A626A4">&lt;-</span><span> </span><span style="color: #50A14F">&quot;abc&quot;</span>
+<span>    x.bar </span><span style="color: #A626A4">&lt;-</span><span> </span><span style="color: #986801">8.5</span><span style="color: #A626A4">)</span></code></pre>
 <p>Another option is to use a list (or any sequence) of union cases in combination with the <code>keyValueList</code> helper. This is often used to represent React props. You can specify the case rules for the transformations of the case names (usually lowering the first letter) and if necessary you can also decorate some cases with the <code>CompiledName</code> attribute to change its name in the JS runtime.</p>
 <pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core.JsInterop</span>
 
@@ -352,9 +359,10 @@ var nacara = {};
 <span>    QTY </span><span style="color: #986801">5</span>
 <span style="color: #A626A4">]</span>
 <span style="color: #A0A1A7;font-style: italic">// JS: { flag1: true, name: &quot;foo&quot;, quantity: 5 }</span></code></pre>
-<blockquote>
-<p>Fable can make the transformation at compile time when applying the list literal directly to <code>keyValueList</code>. That's why it's usually a good idea to inline the function containing the helper.</p>
-</blockquote>
+<article class="message is-info">
+                <div class="message-body"><p>Fable can make the transformation at compile time when applying the list literal directly to <code>keyValueList</code>. That's why it's usually a good idea to inline the function containing the helper.</p>
+</div>
+</article>
 <h3><a href="#Dynamic-typing:-don't-read-this!" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Dynamic-typing:-don't-read-this!"></span>#</a> Dynamic typing: don't read this!</h3>
 <p>Through the use of the tools we just described above, Fable guarantees you shouldn't run into nasty bugs (as long as the interface contracts are correct) because all the code will be checked by the compiler. If it does not compile it either means your JS library does not exists or its path is not good or that your F# implementation lacks something. We do rely on Fable on systems that are used 24/7, web apps or Node.js apps. We know that if it compiles, it means a 99% chance of running without any problems.</p>
 <p>Our motto is: &quot;If it compiles, it works!&quot;</p>
