@@ -391,6 +391,29 @@ let y: IMyInterface = !!{| foo = "5"; bAr = 4.; baz = Some 0 |}
 let z: IMyInterface = !!{| foo = "5"; bar = 4. |}
 ```
 
+Another option is to use a list (or any sequence) of union cases in combination with the `keyValueList` helper. This is often used to represent React props. You can specify the case rules for the transformations of the case names (usually lowering the first letter) and if necessary you can also decorate some cases with the `CompiledName` attribute to change its name in the JS runtime.
+
+```fsharp
+open Fable.Core.JsInterop
+
+type JsOption =
+    | Flag1
+    | Name of string
+    | [<CompiledName("quantity")>] QTY of int
+
+let inline sendToJs (opts: JsOption list) =
+    keyValueList CaseRules.LowerFirst opts |> aNativeJsFunction
+
+sendToJs [
+    Flag1
+    Name "foo"
+    QTY 5
+]
+// JS: { flag1: true, name: "foo", quantity: 5 }
+```
+
+> Fable can make the transformation at compile time when applying the list literal directly to `keyValueList`. That's why it's usually a good idea to inline the function containing the helper.
+
 ### Dynamic typing: don't read this!
 
 Through the use of the tools we just described above, Fable guarantees you shouldn't run into nasty bugs (as long as the interface contracts are correct) because all the code will be checked by the compiler. If it does not compile it either means your JS library does not exists or its path is not good or that your F# implementation lacks something. We do rely on Fable on systems that are used 24/7, web apps or Node.js apps. We know that if it compiles, it means a 99% chance of running without any problems.
