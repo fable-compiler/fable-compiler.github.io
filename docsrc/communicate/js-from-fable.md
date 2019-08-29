@@ -365,7 +365,9 @@ let data =
        visibility = "all" |}
 ```
 
-You can also create a JS object from an interface by using `createEmpty` and then assigning manually:
+:::info
+Since fable-compiler 2.3.6, when using the dynamic cast operator `!!` to cast an anonymous record to an interface, Fable will raise a warning if the fields in the anonymous don't match those of the interface. Use this feature only to interop with JS, in F# code the proper way to instantiate an interface without an implementing type is an [object expression](https://fsharpforfunandprofit.com/posts/object-expressions/).
+:::
 
 ```fsharp
 type IMyInterface =
@@ -373,14 +375,6 @@ type IMyInterface =
     abstract bar: float with get, set
     abstract baz: int option with get, set
 
-let x = createEmpty<IMyInterface> // var x = {}
-x.foo <- "abc"                    // x.foo = "abc"
-x.bar <- 8.5                      // val.bar = 8.5
-```
-
-Since fable-compiler 2.3.6, when using the dynamic cast operator `!!` to cast an anonymous record to an interface, Fable will raise a warning if the fields in the anonymous don't match those of the interface. Use this feature only to interop with JS, in F# code the proper way to instantiate an interface without an implementing type is an [object expression](https://fsharpforfunandprofit.com/posts/object-expressions/).
-
-```fsharp
 // Warning, "foo" must be a string
 let x: IMyInterface = !!{| foo = 5; bar = 4.; baz = Some 0 |}
 
@@ -389,6 +383,22 @@ let y: IMyInterface = !!{| foo = "5"; bAr = 4.; baz = Some 0 |}
 
 // Ok, "baz" can be missing because it's optional
 let z: IMyInterface = !!{| foo = "5"; bar = 4. |}
+```
+
+You can also create a JS object from an interface by using `createEmpty` and then assigning the fields manually:
+
+```fsharp
+let x = createEmpty<IMyInterface> // var x = {}
+x.foo <- "abc"                    // x.foo = "abc"
+x.bar <- 8.5                      // val.bar = 8.5
+```
+
+A similar solution that can also be optimized by Fable directly into a JS object at compile time is to use the `jsOptions` helper:
+
+```fsharp
+let x = jsOptions<IMyInterface>(fun x ->
+    x.foo <- "abc"
+    x.bar <- 8.5)
 ```
 
 Another option is to use a list (or any sequence) of union cases in combination with the `keyValueList` helper. This is often used to represent React props. You can specify the case rules for the transformations of the case names (usually lowering the first letter) and if necessary you can also decorate some cases with the `CompiledName` attribute to change its name in the JS runtime.
@@ -412,7 +422,9 @@ sendToJs [
 // JS: { flag1: true, name: "foo", quantity: 5 }
 ```
 
-> Fable can make the transformation at compile time when applying the list literal directly to `keyValueList`. That's why it's usually a good idea to inline the function containing the helper.
+:::info
+Fable can make the transformation at compile time when applying the list literal directly to `keyValueList`. That's why it's usually a good idea to inline the function containing the helper.
+:::
 
 ### Dynamic typing: don't read this!
 
