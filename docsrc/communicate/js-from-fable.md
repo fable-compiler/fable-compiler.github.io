@@ -319,7 +319,59 @@ It's possible to combine the `Import` and `Emit` attributes. So we can import an
 let createMyClass(value: 'T, awesomeness: 'T) : MyClass<'T> = jsNative
 ```
 
-### StringEnum: Union types compiled to strings!
+### Other special attributes
+
+`Fable.Core` includes other attributes for JS interop, like:
+
+#### Erase attribute
+
+In TypeScript there's a concept of [Union Types](https://www.typescriptlang.org/docs/handbook/advanced-types.html#union-types) which differs from union types in F#. The former are just used to statically check a function argument accepting different types. In Fable, they're translated as **Erased Union Types** whose cases must have one and only one single data field. After compilation, the wrapping will be erased and only the data field will remain. To define an erased union type, just attach the `Erase` attribute to the type. Example:
+
+```fsharp
+open Fable.Core
+
+[<Erase>]
+type MyErasedType =
+    | String of string
+    | Number of int
+
+myLib.myMethod(String "test")
+```
+
+```js
+myLib.myMethod("test")
+```
+
+`Fable.Core` already includes predefined erased types which can be used as follows:
+
+```fsharp
+open Fable.Core
+
+type Test() =
+    member x.Value = "Test"
+
+let myMethod (arg: U3<string, int, Test>) =
+    match arg with
+    | U3.Case1 s -> s
+    | U3.Case2 i -> string i
+    | U3.Case3 t -> t.Value
+```
+
+When passing arguments to a method accepting `U2`, `U3`... you can use the `!^` as syntax sugar so you don't need to type the exact case (the argument will still be type checked):
+
+```fsharp
+open Fable.Core.JsInterop
+
+let myMethod (arg: U3<string, int, Test>) = ...
+
+// This is equivalent to: myMethod (U3.Case2 5)
+myMethod !^5
+
+// This doesn't compile, myMethod doesn't accept floats
+myMethod !^2.3
+```
+
+#### StringEnum
 
 In TypeScript is possible to define [String Literal Types](https://mariusschulz.com/blog/string-literal-types-in-typescript) which are similar to enumerations with an underlying string value. Fable allows the same feature by using union types and the `StringEnum` attribute. These union types must not have any data fields as they will be compiled to a string matching the name of the union case.
 
@@ -500,3 +552,7 @@ let bar1 = foo.["b"]  // Same as foo.Item("b")
 foo.["c"] <- 14
 let bar2 = foo.Invoke(4, "a")
 ```
+
+#### Dynamic casting
+
+In some situations, when receiving an untyped object from JS you may want to cast it to a specific type. For this you can use the F# `unbox` function or the `!!` operator in Fable.Core.JsInterop. This will bypass the F# type checker but please note **Fable will not add any runtime check** to verify the cast is correct.
