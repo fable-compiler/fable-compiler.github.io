@@ -319,7 +319,59 @@ It's possible to combine the `Import` and `Emit` attributes. So we can import an
 let createMyClass(value: 'T, awesomeness: 'T) : MyClass<'T> = jsNative
 ```
 
-### StringEnum: Union types compiled to strings!
+### Other special attributes
+
+`Fable.Core` includes other attributes for JS interop, like:
+
+#### Erase attribute
+
+In TypeScript there's a concept of [Union Types](https://www.typescriptlang.org/docs/handbook/advanced-types.html#union-types) which differs from union types in F#. The former are just used to statically check a function argument accepting different types. In Fable, they're translated as **Erased Union Types** whose cases must have one and only one single data field. After compilation, the wrapping will be erased and only the data field will remain. To define an erased union type, just attach the `Erase` attribute to the type. Example:
+
+```fsharp
+open Fable.Core
+
+[<Erase>]
+type MyErasedType =
+    | String of string
+    | Number of int
+
+myLib.myMethod(String "test")
+```
+
+```js
+myLib.myMethod("test")
+```
+
+`Fable.Core` already includes predefined erased types which can be used as follows:
+
+```fsharp
+open Fable.Core
+
+type Test() =
+    member x.Value = "Test"
+
+let myMethod (arg: U3<string, int, Test>) =
+    match arg with
+    | U3.Case1 s -> s
+    | U3.Case2 i -> string i
+    | U3.Case3 t -> t.Value
+```
+
+When passing arguments to a method accepting `U2`, `U3`... you can use the `!^` as syntax sugar so you don't need to type the exact case (the argument will still be type checked):
+
+```fsharp
+open Fable.Core.JsInterop
+
+let myMethod (arg: U3<string, int, Test>) = ...
+
+// This is equivalent to: myMethod (U3.Case2 5)
+myMethod !^5
+
+// This doesn't compile, myMethod doesn't accept floats
+myMethod !^2.3
+```
+
+#### StringEnum
 
 In TypeScript is possible to define [String Literal Types](https://mariusschulz.com/blog/string-literal-types-in-typescript) which are similar to enumerations with an underlying string value. Fable allows the same feature by using union types and the `StringEnum` attribute. These union types must not have any data fields as they will be compiled to a string matching the name of the union case.
 
@@ -365,7 +417,9 @@ let data =
        visibility = "all" |}
 ```
 
-You can also create a JS object from an interface by using `createEmpty` and then assigning manually:
+:::info
+Since fable-compiler 2.3.6, when using the dynamic cast operator `!!` to cast an anonymous record to an interface, Fable will raise a warning if the fields in the anonymous don't match those of the interface. Use this feature only to interop with JS, in F# code the proper way to instantiate an interface without an implementing type is an [object expression](https://fsharpforfunandprofit.com/posts/object-expressions/).
+:::
 
 ```fsharp
 type IMyInterface =
@@ -373,14 +427,6 @@ type IMyInterface =
     abstract bar: float with get, set
     abstract baz: int option with get, set
 
-let x = createEmpty<IMyInterface> // var x = {}
-x.foo <- "abc"                    // x.foo = "abc"
-x.bar <- 8.5                      // val.bar = 8.5
-```
-
-Since fable-compiler 2.3.6, when using the dynamic cast operator `!!` to cast an anonymous record to an interface, Fable will raise a warning if the fields in the anonymous don't match those of the interface. Use this feature only to interop with JS, in F# code the proper way to instantiate an interface without an implementing type is an [object expression](https://fsharpforfunandprofit.com/posts/object-expressions/).
-
-```fsharp
 // Warning, "foo" must be a string
 let x: IMyInterface = !!{| foo = 5; bar = 4.; baz = Some 0 |}
 
@@ -390,6 +436,47 @@ let y: IMyInterface = !!{| foo = "5"; bAr = 4.; baz = Some 0 |}
 // Ok, "baz" can be missing because it's optional
 let z: IMyInterface = !!{| foo = "5"; bar = 4. |}
 ```
+
+You can also create a JS object from an interface by using `createEmpty` and then assigning the fields manually:
+
+```fsharp
+let x = createEmpty<IMyInterface> // var x = {}
+x.foo <- "abc"                    // x.foo = "abc"
+x.bar <- 8.5                      // val.bar = 8.5
+```
+
+A similar solution that can also be optimized by Fable directly into a JS object at compile time is to use the `jsOptions` helper:
+
+```fsharp
+let x = jsOptions<IMyInterface>(fun x ->
+    x.foo <- "abc"
+    x.bar <- 8.5)
+```
+
+Another option is to use a list (or any sequence) of union cases in combination with the `keyValueList` helper. This is often used to represent React props. You can specify the case rules for the transformations of the case names (usually lowering the first letter) and if necessary you can also decorate some cases with the `CompiledName` attribute to change its name in the JS runtime.
+
+```fsharp
+open Fable.Core.JsInterop
+
+type JsOption =
+    | Flag1
+    | Name of string
+    | [<CompiledName("quantity")>] QTY of int
+
+let inline sendToJs (opts: JsOption list) =
+    keyValueList CaseRules.LowerFirst opts |> aNativeJsFunction
+
+sendToJs [
+    Flag1
+    Name "foo"
+    QTY 5
+]
+// JS: { flag1: true, name: "foo", quantity: 5 }
+```
+
+:::info
+Fable can make the transformation at compile time when applying the list literal directly to `keyValueList`. That's why it's usually a good idea to inline the function containing the helper.
+:::
 
 ### Dynamic typing: don't read this!
 
@@ -465,3 +552,7 @@ let bar1 = foo.["b"]  // Same as foo.Item("b")
 foo.["c"] <- 14
 let bar2 = foo.Invoke(4, "a")
 ```
+
+#### Dynamic casting
+
+In some situations, when receiving an untyped object from JS you may want to cast it to a specific type. For this you can use the F# `unbox` function or the `!!` operator in Fable.Core.JsInterop. This will bypass the F# type checker but please note **Fable will not add any runtime check** to verify the cast is correct.
