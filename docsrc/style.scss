@@ -8,25 +8,9 @@ $navbar-background-color: $white;
 $navbar-item-color: $primary;
 $content-heading-color: $primary;
 $menu-item-active-background-color: $primary;
-$navbar-breakpoint: 400px;
 
 $toc-item-active-color: $primary;
 $toc-item-hover-color: $primary;
 
 @import './../node_modules/bulma/bulma.sass';
 @import './../node_modules/nacara/scss/nacara.scss';
-
-.navbar {
-    box-shadow: 0 2px 0 0 #f5f5f5;
-    .navbar-brand {
-        margin-left: 5px !important;
-    }
-    .navbar-end {
-        margin-right: 10px;
-    }
-}
-
-// We need some padding or the last menu item will be hidden
-aside {
-    padding-bottom: 50px;
-}

@@ -120,10 +120,10 @@ module.exports = {
                 ]
             },
             {
-                path: path.join(__dirname, '../../MangelMaxime/Nacara/dist/js/markdown-it-anchored.js')
+                path: 'nacara/dist/js/markdown-it-anchored.js'
             },
             {
-                path: path.join(__dirname, '../../MangelMaxime/Nacara/dist/js/markdown-it-toc.js')
+                path: 'nacara/dist/js/markdown-it-toc.js'
             }
         ]
     }
