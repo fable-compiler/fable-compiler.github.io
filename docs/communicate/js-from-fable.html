@@ -1,7 +1,10 @@
 <html class="has-navbar-fixed-top"><head><title>Call JS from Fable · Fable</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" type="text/css" href="/docs/style.css"/><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"/><script src="https://polyfill.app/api/polyfill?features=scroll-behavior"></script><script type="text/javascript">
 var nacara = {};
-                </script><script type="text/javascript">window.onload = function () {
-    // Initialize the menu state
+                                    </script><script type="text/javascript">window.addEventListener("DOMContentLoaded", () => {
+    /*
+     * Initialize the menu state
+     */
+
     // Set as active the menu for the current page
     document
         .querySelectorAll(`.menu [data-menu-id='${nacara.pageId}']`)
@@ -15,12 +18,12 @@ var nacara = {};
         .forEach(function (menuGroup) {
             var parentChildren = Array.from(menuGroup.parentElement.children);
             var subItems = parentChildren.find(function (child) {
-                        return child.nodeName === "UL";
-                    });
+                return child.nodeName === "UL";
+            });
 
             var activeMenu =
-                    Array.from(subItems.children)
-                        .find(function (child) {
+                Array.from(subItems.children)
+                    .find(function (child) {
                         return child.firstChild.classList.contains("is-active")
                     });
 
@@ -38,50 +41,180 @@ var nacara = {};
         .querySelectorAll(`.menu .menu-group`)
         .forEach(function (menuGroup) {
             menuGroup.addEventListener("click", function (ev) {
-                var parentChildren = Array.from(ev.target.parentElement.children);
+                // All the menu "calculation" are done relative to the .menu-group element
+                var menuGroup =
+                    ev.target.classList.contains("menu-group")
+                        ? ev.target
+                        : ev.target.closest(".menu-group");
+
+                var parentChildren = Array.from(menuGroup.parentElement.children);
+
                 var subItems =
                     parentChildren.find(function (child) {
                         return child.nodeName === "UL";
                     });
 
-                if (ev.target.classList.contains("is-expanded")) {
-                    ev.target.classList.remove("is-expanded");
+                if (menuGroup.classList.contains("is-expanded")) {
+                    menuGroup.classList.remove("is-expanded");
                     subItems.style.display = "none";
                 } else {
-                    ev.target.classList.add("is-expanded");
+                    menuGroup.classList.add("is-expanded");
                     subItems.style.display = "block";
                 }
 
             });
         });
 
-    var burger = document.querySelector(".navbar-burger");
-    burger.addEventListener("click", function () {
-        // Get the target from the "data-target" attribute
-        var target = burger.dataset.target;
-        var $target = document.getElementById(target);
+    /*
+     * Setup menu navigation via Next and Previous button
+     */
 
-        // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-        burger.classList.toggle('is-active');
-        $target.classList.toggle('is-active');
-    });
+    // Start the counter from -1, but the first menu item will be 0
+    let computedMaxRank = -1;
 
-    document.getElementById("toc-toggle")
-        .addEventListener("click", function () {
-            document.getElementById("toc-column").classList.toggle("is-hidden-mobile");
-            document.getElementById("content-column").classList.toggle("is-hidden-mobile");
+    document
+        .querySelectorAll(`.menu [data-menu-id]`)
+        .forEach(function (menuItem) {
+            computedMaxRank++;
+            menuItem.setAttribute("data-menu-rank", computedMaxRank);
         });
-};
-</script></head><body><nav class="navbar is-fixed-top"><div class="container"><div class="navbar-brand"><div class="navbar-item title is-4" style="margin-bottom:0">Fable</div><div class="navbar-burger" data-target="navMenu"><span></span><span></span><span></span></div></div><div class="navbar-menu" id="navMenu"><div class="navbar-start"></div><div class="navbar-end"><a class="navbar-item" href="https://fable.io/repl/" target="_self"><span>Try online</span></a><a class="navbar-item" href="https://gitter.im/fable-compiler/Fable" target="_blank" style="color:#24292e"><span class="icon"><i class=" fab fa-gitter fa-lg"></i></span><span>Chat</span></a><a class="navbar-item" href="https://github.com/fable-compiler/fable" target="_blank" style="color:#24292e"><span class="icon"><i class=" fab fa-github fa-lg"></i></span></a><a class="navbar-item" href="https://twitter.com/FableCompiler" target="_blank" style="color:#55acee"><span class="icon"><i class=" fab fa-twitter fa-lg"></i></span></a></div></div></div></nav><div class="container"><div class="columns is-gapless"><div class="column full-height-scrollable-content is-hidden-mobile is-full-mobile is-3-tablet is-2-desktop" id="toc-column"><aside class="menu"><p class="menu-label">Introduction</p><ul class="menu-list"><li><a class="" href="/docs/index.html" data-menu-id="index">What is Fable?</a></li><li><a class="" href="/docs/introduction/net-users-read-this.html" data-menu-id="introduction/net-users-read-this">Are you a .NET developer?</a></li><li><a class="" href="/docs/introduction/js-users-read-this.html" data-menu-id="introduction/js-users-read-this">Are you a JS developer?</a></li></ul><p class="menu-label">New to F#?</p><ul class="menu-list"><li><a class="" href="/docs/new-to-fsharp/learning-the-language.html" data-menu-id="new-to-fsharp/learning-the-language">Learning the language</a></li><li><a class="" href="/docs/new-to-fsharp/let-keyword.html" data-menu-id="new-to-fsharp/let-keyword">The let keyword</a></li></ul><p class="menu-label">Fable in 2 steps</p><ul class="menu-list"><li><a class="" href="/docs/2-steps/setup.html" data-menu-id="2-steps/setup">Setup</a></li><li><a class="" href="/docs/2-steps/choose-a-template.html" data-menu-id="2-steps/choose-a-template">Start a new project</a></li></ul><p class="menu-label">Your Fable project</p><ul class="menu-list"><li><a class="" href="/docs/your-fable-project/project-file.html" data-menu-id="your-fable-project/project-file">The project file</a></li><li><a class="" href="/docs/your-fable-project/use-a-fable-library.html" data-menu-id="your-fable-project/use-a-fable-library">Use a Fable library</a></li><li><a class="" href="/docs/your-fable-project/author-a-fable-library.html" data-menu-id="your-fable-project/author-a-fable-library">Author a Fable library</a></li><li><a class="" href="/docs/your-fable-project/build-and-run.html" data-menu-id="your-fable-project/build-and-run">Build &amp; run</a></li></ul><p class="menu-label">Communicate with Javascript</p><ul class="menu-list"><li><a class="" href="/docs/communicate/js-from-fable.html" data-menu-id="communicate/js-from-fable">Call JS from Fable</a></li><li><a class="" href="/docs/communicate/fable-from-js.html" data-menu-id="communicate/fable-from-js">Call Fable from JS</a></li></ul><p class="menu-label">From .NET to Fable</p><ul class="menu-list"><li><a class="" href="/docs/dotnet/compatibility.html" data-menu-id="dotnet/compatibility">.NET and F# compatibility</a></li><li><a class="" href="/docs/dotnet/numbers.html" data-menu-id="dotnet/numbers">Numeric types</a></li></ul><p class="menu-label">Miscellaneous</p><ul class="menu-list"><li><a class="" href="/docs/miscellaneous/official-samples.html" data-menu-id="miscellaneous/official-samples">Check official samples</a></li><li><a class="" href="/docs/miscellaneous/awesome-list.html" data-menu-id="miscellaneous/awesome-list">Awesome Fable</a></li><li><a class="" href="/docs/miscellaneous/fable-in-videos.html" data-menu-id="miscellaneous/fable-in-videos">Fable in videos</a></li></ul></aside></div><div class="column full-height-scrollable-content is-full-mobile is-9-tablet is-8-desktop" id="content-column" style="scroll-behavior:smooth"><section class="section"><div class="content"><div><p></p>
-<h2><a href="#Call-JavaScript-from-Fable" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Call-JavaScript-from-Fable"></span>#</a> Call JavaScript from Fable</h2>
+
+    document
+        .querySelector(".navigate-to-previous")
+        .addEventListener("click", () => {
+            const currentMenuRank =
+                document
+                    .querySelector(`.menu [data-menu-id='${nacara.pageId}']`)
+                    .getAttribute("data-menu-rank");
+
+            const previousRank = parseInt(currentMenuRank) - 1;
+
+            if (previousRank >= 0) {
+                document
+                    .querySelector(`.menu [data-menu-rank='${previousRank}']`)
+                    .click();
+            }
+        });
+
+    document
+        .querySelector(".navigate-to-next")
+        .addEventListener("click", () => {
+            const currentMenuRank =
+                document
+                    .querySelector(`.menu [data-menu-id='${nacara.pageId}']`)
+                    .getAttribute("data-menu-rank")
+
+            const nextRank = parseInt(currentMenuRank) + 1;
+
+            if (nextRank <= computedMaxRank) {
+                document
+                    .querySelector(`.menu [data-menu-rank='${nextRank}']`)
+                    .click();
+            }
+        });
+
+    // IIFE function in order to not pollute the function scope
+    (() => {
+
+        // The menu is an optional element, if no menu found then hide the Next & Previous buttons
+        if (document.querySelector(".menu") === null) {
+            document.querySelector(".navigate-to-next").style.visibility = "hidden"
+            document.querySelector(".navigate-to-previous").style.visibility = "hidden"
+            return;
+        }
+
+        const currentMenuRank =
+            parseInt(
+                document
+                    .querySelector(`.menu [data-menu-id='${nacara.pageId}']`)
+                    .getAttribute("data-menu-rank")
+            );
+
+        // Initialize the text of the Previous button
+        if (currentMenuRank >= 1) {
+            const previousText =
+                document
+                    .querySelector(`.menu [data-menu-rank='${currentMenuRank - 1}']`)
+                    .textContent;
+
+            document
+                .querySelector(".navigate-to-previous .text")
+                .textContent = previousText;
+        }
+
+        // Initialize the text of the Next button
+        if (currentMenuRank < computedMaxRank) {
+            const previousText =
+                document
+                    .querySelector(`.menu [data-menu-rank='${currentMenuRank + 1}']`)
+                    .textContent;
+
+            document
+                .querySelector(".navigate-to-next .text")
+                .textContent = previousText;
+        }
+
+        // Hide the navigation button depending on the page rank
+        if (currentMenuRank == 0) {
+            document.querySelector(".navigate-to-previous").style.visibility = "hidden";
+        } else if (currentMenuRank == computedMaxRank) {
+            document.querySelector(".navigate-to-next").style.visibility = "visibile";
+        }
+    })();
+
+
+    /*
+     * Setup menu burger behaviour
+     */
+
+    // Code copied from Bulma documentation
+    // https://bulma.io/documentation/components/navbar/#navbar-menu
+
+    // Get all "navbar-burger" elements
+    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+    // Check if there are any navbar burgers
+    if ($navbarBurgers.length > 0) {
+
+        // Add a click event on each of them
+        $navbarBurgers.forEach(el => {
+            el.addEventListener('click', () => {
+
+                // Get the target from the "data-target" attribute
+                const target = el.dataset.target;
+                const $target = document.getElementById(target);
+
+                // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                el.classList.toggle('is-active');
+                $target.classList.toggle('is-active');
+
+            });
+        });
+    }
+
+    const mobileMenuTrigger = document.querySelector(".mobile-menu .menu-trigger");
+
+    if (mobileMenuTrigger !== null) {
+        mobileMenuTrigger
+            .addEventListener("click", () => {
+                document
+                    .querySelector(".is-menu-column")
+                    .classList
+                    .toggle("force-show");
+        });
+    }
+
+});
+</script></head><body><nav class="navbar is-fixed-top"><div class="container"><div class="navbar-brand"><a class="navbar-item title is-4" href="https://fable.io/docs/">Fable</a><a class="navbar-item is-hidden-desktop" href="https://github.com/fable-compiler/fable" target="_blank" style="color:#24292e"><span class="icon"><i class=" fab fa-github fa-lg"></i></span></a><a class="navbar-item is-hidden-desktop" href="https://twitter.com/FableCompiler" target="_blank" style="color:#55acee"><span class="icon"><i class=" fab fa-twitter fa-lg"></i></span></a><div class="navbar-burger" data-target="nav-menu"><span></span><span></span><span></span></div></div><div class="navbar-menu" id="nav-menu"><div class="navbar-start"></div><div class="navbar-end"><a class="navbar-item" href="https://fable.io/repl/" target="_self"><span>Try online</span></a><a class="navbar-item" href="https://gitter.im/fable-compiler/Fable" target="_blank" style="color:#24292e"><span class="icon"><i class=" fab fa-gitter fa-lg"></i></span><span>Chat</span></a><a class="navbar-item is-hidden-touch" href="https://github.com/fable-compiler/fable" target="_blank" style="color:#24292e"><span class="icon"><i class=" fab fa-github fa-lg"></i></span></a><a class="navbar-item is-hidden-touch" href="https://twitter.com/FableCompiler" target="_blank" style="color:#55acee"><span class="icon"><i class=" fab fa-twitter fa-lg"></i></span></a></div></div></div></nav><div class="container"><div><div class="mobile-menu is-hidden-desktop"><nav class="breadcrumb"><ul><li class=""><a class="menu-trigger"><span class="icon"><i class=" fas fa-bars"></i></span></a></li><li class="is-active"><a>Communicate with Javascript</a></li><li class="is-active"><a>Call JS from Fable</a></li></ul></nav></div><div class="columns is-mobile is-gapless"><div class="column is-hidden-touch is-menu-column is-2-desktop" style="padding-left:1.5rem !important"><div class="menu-container full-height-scrollable-content"><aside class="menu" style="margin-top:3.25rem"><p class="menu-label">Introduction</p><ul class="menu-list"><li><a class="" href="/docs/index.html" data-menu-id="index">What is Fable?</a></li><li><a class="" href="/docs/introduction/net-users-read-this.html" data-menu-id="introduction/net-users-read-this">Are you a .NET developer?</a></li><li><a class="" href="/docs/introduction/js-users-read-this.html" data-menu-id="introduction/js-users-read-this">Are you a JS developer?</a></li></ul><p class="menu-label">New to F#?</p><ul class="menu-list"><li><a class="" href="/docs/new-to-fsharp/learning-the-language.html" data-menu-id="new-to-fsharp/learning-the-language">Learning the language</a></li><li><a class="" href="/docs/new-to-fsharp/let-keyword.html" data-menu-id="new-to-fsharp/let-keyword">The let keyword</a></li></ul><p class="menu-label">Fable in 2 steps</p><ul class="menu-list"><li><a class="" href="/docs/2-steps/setup.html" data-menu-id="2-steps/setup">Setup</a></li><li><a class="" href="/docs/2-steps/choose-a-template.html" data-menu-id="2-steps/choose-a-template">Start a new project</a></li></ul><p class="menu-label">Your Fable project</p><ul class="menu-list"><li><a class="" href="/docs/your-fable-project/project-file.html" data-menu-id="your-fable-project/project-file">The project file</a></li><li><a class="" href="/docs/your-fable-project/use-a-fable-library.html" data-menu-id="your-fable-project/use-a-fable-library">Use a Fable library</a></li><li><a class="" href="/docs/your-fable-project/author-a-fable-library.html" data-menu-id="your-fable-project/author-a-fable-library">Author a Fable library</a></li><li><a class="" href="/docs/your-fable-project/build-and-run.html" data-menu-id="your-fable-project/build-and-run">Build &amp; run</a></li></ul><p class="menu-label">Communicate with Javascript</p><ul class="menu-list"><li><a class="" href="/docs/communicate/js-from-fable.html" data-menu-id="communicate/js-from-fable">Call JS from Fable</a></li><li><a class="" href="/docs/communicate/fable-from-js.html" data-menu-id="communicate/fable-from-js">Call Fable from JavaScript</a></li></ul><p class="menu-label">From .NET to Fable</p><ul class="menu-list"><li><a class="" href="/docs/dotnet/compatibility.html" data-menu-id="dotnet/compatibility">.NET and F# compatibility</a></li><li><a class="" href="/docs/dotnet/numbers.html" data-menu-id="dotnet/numbers">Numeric types</a></li></ul><p class="menu-label">Miscellaneous</p><ul class="menu-list"><li><a class="" href="/docs/miscellaneous/official-samples.html" data-menu-id="miscellaneous/official-samples">Check official samples</a></li><li><a class="" href="/docs/miscellaneous/awesome-list.html" data-menu-id="miscellaneous/awesome-list">Awesome Fable</a></li><li><a class="" href="/docs/miscellaneous/fable-in-videos.html" data-menu-id="miscellaneous/fable-in-videos">Fable in videos</a></li></ul></aside></div></div><div class="column full-height-scrollable-content toc-scrollable-container is-main-content is-full-touch is-8-desktop" style="scroll-behavior:smooth;overflow-x:hidden"><section class="section"><div class="content"><header class="page-header"><a class="button is-pulled-right is-primary is-outlined is-hidden-touch" target="_blank" href="https://github.com/fable-compiler/fable-compiler.github.io/edit/dev/docsrc/communicate/js-from-fable.md">Edit</a><h1>Call JS from Fable</h1></header><div><p></p>
+<h2>Call JavaScript from Fable <a href="#Call-JavaScript-from-Fable" aria-hidden="true"><span class="anchor" id="Call-JavaScript-from-Fable"></span>#</a></h2>
 <p>Interoperability is a matter of trust between your statically typed F# code and your untyped dynamic JS code. In order to mitigate risks, Fable gives you several possibilities, amongst them type safety through interface contracts. Sometimes it may sound more convenient to just call JS code in a more dynamic fashion, although be aware by doing this potential bugs will not be discovered until runtime.</p>
 <p>We'll describe both the safe way and the dynamic way and then it will be up to you to decide. Let's start!</p>
-<h3><a href="#Adding-the-JS-library-to-the-project" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Adding-the-JS-library-to-the-project"></span>#</a> Adding the JS library to the project</h3>
+<h3>Adding the JS library to the project <a href="#Adding-the-JS-library-to-the-project" aria-hidden="true"><span class="anchor" id="Adding-the-JS-library-to-the-project"></span>#</a></h3>
 <p>The very first thing to do is add the library to our project. Since we always have a <code>package.json</code> file, we'll just add the wanted library to our project using either <code>npm install my-awesome-js-library</code>. The library will then be available in the <code>node_modules</code> folder.</p>
 <blockquote>
 <p>If your library is in a file, just skip this step.</p>
 </blockquote>
-<h3><a href="#Type-safety-with-Imports-and-Interfaces" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Type-safety-with-Imports-and-Interfaces"></span>#</a> Type safety with Imports and Interfaces</h3>
+<h3>Type safety with Imports and Interfaces <a href="#Type-safety-with-Imports-and-Interfaces" aria-hidden="true"><span class="anchor" id="Type-safety-with-Imports-and-Interfaces"></span>#</a></h3>
 <p>To use code from JS libraries first you need to import it into F#. For this Fables uses <a href="https://developer.mozilla.org/en/docs/web/JavaScript/reference/statements/import">ES2015 imports</a>, which can be later transformed to other JS module systems like <code>commonjs</code> or <code>amd</code> by <a href="https://babeljs.io/docs/en/plugins#modules">Babel</a>.</p>
 <p>There are two ways to declare ES2015 imports in the Fable: by using either the <strong>Import attribute</strong> or the <strong>import expressions</strong>. The <code>ImportAttribute</code> can decorate members, types or modules and works as follows:</p>
 <pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A0A1A7;font-style: italic">// Namespace imports</span>
@@ -112,7 +245,7 @@ var nacara = {};
 <span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">myFunction</span><span style="color: #A626A4">(</span><span style="color: #383A42">x</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">int</span><span style="color: #A626A4">):</span><span> </span><span style="color: #C18401">int </span><span style="color: #A626A4">=</span><span> jsNative</span></code></pre>
 <p>If the value is globally accessible in JS, you can use the <code>Global</code> attribute with an optional name parameter instead.</p>
 <pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span> </span><span style="color: #A626A4">let</span><span style="color: #0184BC"> [&lt;Global&gt;]</span><span> </span><span style="color: #E45649">console</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">JS.Console </span><span style="color: #A626A4">=</span><span> jsNative</span></code></pre>
-<h4><a href="#Let's-practice!-1st-try!" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Let's-practice!-1st-try!"></span>#</a> Let's practice! 1st try!</h4>
+<h4>Let's practice! 1st try! <a href="#Let's-practice!-1st-try!" aria-hidden="true"><span class="anchor" id="Let's-practice!-1st-try!"></span>#</a></h4>
 <p>Now that we've seen this, let's review the code in the <a href="https://github.com/fable-compiler/fable2-samples/tree/master/interop">interop</a> sample</p>
 <p>Let's say we have an <code>alert.js</code> file that we'd like to use in our Fable project.</p>
 <pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">function</span><span> </span><span style="color: #4078F2">triggerAlert</span><span style="color: #383A42">(message)</span><span> </span><span style="color: #383A42">{</span>
@@ -143,7 +276,7 @@ var nacara = {};
 <p>Now we can use this:</p>
 <pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span>mylib.triggerAlert </span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;Hey I&#039;m calling my js library from Fable &gt; &quot;</span><span> </span><span style="color: #A626A4">+</span><span> mylib.someString</span><span style="color: #A626A4">)</span></code></pre>
 <p>If everything's working correctly, it should create an alert popup in your browser! Of course this sample is intended for web apps, but you could do the same in a Node.js app.</p>
-<h4><a href="#Let's-practice!-2nd-try!" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Let's-practice!-2nd-try!"></span>#</a> Let's practice! 2nd try!</h4>
+<h4>Let's practice! 2nd try! <a href="#Let's-practice!-2nd-try!" aria-hidden="true"><span class="anchor" id="Let's-practice!-2nd-try!"></span>#</a></h4>
 <p>Assuming we've got two exported functions from a <code>Canvas.js</code> file: <code>drawSmiley</code> and <code>drawBubble</code>:</p>
 <pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">export</span><span> </span><span style="color: #A626A4">function</span><span> </span><span style="color: #4078F2">drawSmiley</span><span style="color: #383A42">()</span><span> </span><span style="color: #383A42">{</span>
 <span>  </span><span style="color: #A0A1A7;font-style: italic">// do something</span>
@@ -172,7 +305,7 @@ var nacara = {};
 
 <span>Canvas.drawSmiley</span><span style="color: #986801">()</span></code></pre>
 <p>The result would be the same, but the philosophy is slightly different. That's basically up to you to make a choice 😉</p>
-<h4><a href="#Miscellaneous-import-helpers" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Miscellaneous-import-helpers"></span>#</a> Miscellaneous import helpers</h4>
+<h4>Miscellaneous import helpers <a href="#Miscellaneous-import-helpers" aria-hidden="true"><span class="anchor" id="Miscellaneous-import-helpers"></span>#</a></h4>
 <p>There are other interop helpers you can use thanks to <code>Fable.Core.JsInterop</code>:</p>
 <pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core.JsInterop</span>
 
@@ -190,7 +323,7 @@ var nacara = {};
 <span style="color: #A0A1A7;font-style: italic">// as with the ImportAttribute</span>
 <span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">aDifferentName</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">string </span><span style="color: #A626A4">=</span><span> import </span><span style="color: #50A14F">&quot;myString&quot;</span><span> </span><span style="color: #50A14F">&quot;my-lib&quot;</span>
 <span style="color: #A0A1A7;font-style: italic">// import { myString } from &quot;my-lib&quot;</span></code></pre>
-<h3><a href="#Emit-when-F-is-not-enough" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Emit-when-F-is-not-enough"></span>#</a> Emit, when F# is not enough</h3>
+<h3>Emit, when F# is not enough <a href="#Emit-when-F-is-not-enough" aria-hidden="true"><span class="anchor" id="Emit-when-F-is-not-enough"></span>#</a></h3>
 <p>You can use the <code>Emit</code> attribute to decorate a function. Every call to the function will then be replaced inline by the content of the attribute with the placeholders <code>$0, $1, $2...</code> replaced by the arguments. For example, the following code will generate JavaScript as seen below.</p>
 <pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core</span>
 
@@ -211,7 +344,7 @@ var nacara = {};
 <span>    </span><span style="color: #0184BC">[&lt;Emit</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;new RegExp($0,&#039;g{{$1?i:}}&#039;)&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span>
 <span>    </span><span style="color: #A626A4">member</span><span> </span><span style="color: #E45649">__.ParseRegex</span><span style="color: #A626A4">(</span><span style="color: #383A42">pattern</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">string</span><span style="color: #A626A4">,</span><span> </span><span style="color: #A626A4">?</span><span style="color: #383A42">ignoreCase</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">bool</span><span style="color: #A626A4">):</span><span> </span><span style="color: #C18401">Regex </span><span style="color: #A626A4">=</span><span> jsNative</span></code></pre>
 <p>The content of <code>Emit</code> will actually be parsed by <a href="https://babeljs.io/">Babel</a> so it will still be validated somehow. However, it's not advised to abuse this method, as the code won't be checked by the F# compiler.</p>
-<h4><a href="#Let's-do-it!-Use-Emit" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Let's-do-it!-Use-Emit"></span>#</a> Let's do it! Use Emit</h4>
+<h4>Let's do it! Use Emit <a href="#Let's-do-it!-Use-Emit" aria-hidden="true"><span class="anchor" id="Let's-do-it!-Use-Emit"></span>#</a></h4>
 <p>Now let's work with Emit and take a new example with the following <code>MyClass.js</code>:</p>
 <pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">export</span><span> </span><span style="color: #E45649">default</span><span> </span><span style="color: #A626A4">class</span><span style="color: #383A42"> </span><span style="color: #C18401">MyClass</span><span style="color: #383A42"> {</span>
 <span style="color: #383A42">  </span><span style="color: #A0A1A7;font-style: italic">// Note the constructors accepts an object</span>
@@ -289,9 +422,9 @@ var nacara = {};
 <pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #0184BC">[&lt;ImportDefault</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;../public/MyClass.js&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span>
 <span style="color: #0184BC">[&lt;Emit</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;new $0({ value: $1, awesomeness: $2 })&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span>
 <span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">createMyClass</span><span style="color: #A626A4">(</span><span style="color: #383A42">value</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">&#039;T</span><span style="color: #A626A4">,</span><span> </span><span style="color: #383A42">awesomeness</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">&#039;T</span><span style="color: #A626A4">)</span><span> </span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">MyClass</span><span style="color: #A626A4">&lt;</span><span style="color: #C18401">&#039;T</span><span style="color: #A626A4">&gt;</span><span> </span><span style="color: #A626A4">=</span><span> jsNative</span></code></pre>
-<h3><a href="#Other-special-attributes" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Other-special-attributes"></span>#</a> Other special attributes</h3>
+<h3>Other special attributes <a href="#Other-special-attributes" aria-hidden="true"><span class="anchor" id="Other-special-attributes"></span>#</a></h3>
 <p><code>Fable.Core</code> includes other attributes for JS interop, like:</p>
-<h4><a href="#Erase-attribute" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Erase-attribute"></span>#</a> Erase attribute</h4>
+<h4>Erase attribute <a href="#Erase-attribute" aria-hidden="true"><span class="anchor" id="Erase-attribute"></span>#</a></h4>
 <p>In TypeScript there's a concept of <a href="https://www.typescriptlang.org/docs/handbook/advanced-types.html#union-types">Union Types</a> which differs from union types in F#. The former are just used to statically check a function argument accepting different types. In Fable, they're translated as <strong>Erased Union Types</strong> whose cases must have one and only one single data field. After compilation, the wrapping will be erased and only the data field will remain. To define an erased union type, just attach the <code>Erase</code> attribute to the type. Example:</p>
 <pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core</span>
 
@@ -323,7 +456,7 @@ var nacara = {};
 
 <span style="color: #A0A1A7;font-style: italic">// This doesn&#039;t compile, myMethod doesn&#039;t accept floats</span>
 <span>myMethod </span><span style="color: #A626A4">!^</span><span style="color: #986801">2.3</span></code></pre>
-<h4><a href="#StringEnum" aria-hidden="true" style="visibility:visible"><span class="anchor" id="StringEnum"></span>#</a> StringEnum</h4>
+<h4>StringEnum <a href="#StringEnum" aria-hidden="true"><span class="anchor" id="StringEnum"></span>#</a></h4>
 <p>In TypeScript is possible to define <a href="https://mariusschulz.com/blog/string-literal-types-in-typescript">String Literal Types</a> which are similar to enumerations with an underlying string value. Fable allows the same feature by using union types and the <code>StringEnum</code> attribute. These union types must not have any data fields as they will be compiled to a string matching the name of the union case.</p>
 <p>By default, the compiled string will have the first letter lowered. If you want to prevent this or use a different text than the union case name, use the <code>CompiledName</code> attribute:</p>
 <pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core</span>
@@ -336,7 +469,7 @@ var nacara = {};
 <span>myLib.myMethod</span><span style="color: #A626A4">(</span><span>Vertical</span><span style="color: #A626A4">,</span><span> Horizontal</span><span style="color: #A626A4">)</span></code></pre>
 <pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A0A1A7;font-style: italic">// js output</span>
 <span style="color: #E45649">myLib</span><span style="color: #383A42">.</span><span style="color: #4078F2">myMethod</span><span style="color: #383A42">(</span><span style="color: #50A14F">&quot;vertical&quot;</span><span style="color: #383A42">,</span><span> </span><span style="color: #50A14F">&quot;Horizontal&quot;</span><span style="color: #383A42">)</span></code></pre>
-<h3><a href="#Plain-Old-JavaScript-Objects" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Plain-Old-JavaScript-Objects"></span>#</a> Plain Old JavaScript Objects</h3>
+<h3>Plain Old JavaScript Objects <a href="#Plain-Old-JavaScript-Objects" aria-hidden="true"><span class="anchor" id="Plain-Old-JavaScript-Objects"></span>#</a></h3>
 <p>To create a plain JS object (aka POJO), use <code>createObj</code>:</p>
 <pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core.JsInterop</span>
 
@@ -397,7 +530,7 @@ var nacara = {};
                 <div class="message-body"><p>Fable can make the transformation at compile time when applying the list literal directly to <code>keyValueList</code>. That's why it's usually a good idea to inline the function containing the helper.</p>
 </div>
 </article>
-<h3><a href="#Dynamic-typing:-don't-read-this!" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Dynamic-typing:-don't-read-this!"></span>#</a> Dynamic typing: don't read this!</h3>
+<h3>Dynamic typing: don't read this! <a href="#Dynamic-typing:-don't-read-this!" aria-hidden="true"><span class="anchor" id="Dynamic-typing:-don't-read-this!"></span>#</a></h3>
 <p>Through the use of the tools we just described above, Fable guarantees you shouldn't run into nasty bugs (as long as the interface contracts are correct) because all the code will be checked by the compiler. If it does not compile it either means your JS library does not exists or its path is not good or that your F# implementation lacks something. We do rely on Fable on systems that are used 24/7, web apps or Node.js apps. We know that if it compiles, it means a 99% chance of running without any problems.</p>
 <p>Our motto is: &quot;If it compiles, it works!&quot;</p>
 <p>Still, like we stated, <strong>interop is a question of trust</strong>. If you trust your JS code and F# code, then maybe it's ok to do things together without further checks. Maybe.</p>
@@ -405,7 +538,7 @@ var nacara = {};
                 <div class="message-body"><p>Disclaimer: use this at your own risk</p>
 </div>
 </article>
-<h4><a href="#What-is-dynamic-typing" aria-hidden="true" style="visibility:visible"><span class="anchor" id="What-is-dynamic-typing"></span>#</a> What is dynamic typing?</h4>
+<h4>What is dynamic typing? <a href="#What-is-dynamic-typing" aria-hidden="true"><span class="anchor" id="What-is-dynamic-typing"></span>#</a></h4>
 <p>Fable.Core.JsInterop implements the F# dynamic operators so you can easily access an object property by name (without static check) as follows:</p>
 <pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core.JsInterop</span>
 
@@ -451,8 +584,112 @@ var nacara = {};
 <span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">bar1</span><span> </span><span style="color: #A626A4">=</span><span> foo.</span><span style="color: #A626A4">[</span><span style="color: #50A14F">&quot;b&quot;</span><span style="color: #A626A4">]</span><span>  </span><span style="color: #A0A1A7;font-style: italic">// Same as foo.Item(&quot;b&quot;)</span>
 <span>foo.</span><span style="color: #A626A4">[</span><span style="color: #50A14F">&quot;c&quot;</span><span style="color: #A626A4">]</span><span> </span><span style="color: #A626A4">&lt;-</span><span> </span><span style="color: #986801">14</span>
 <span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">bar2</span><span> </span><span style="color: #A626A4">=</span><span> foo.Invoke</span><span style="color: #A626A4">(</span><span style="color: #986801">4</span><span style="color: #A626A4">,</span><span> </span><span style="color: #50A14F">&quot;a&quot;</span><span style="color: #A626A4">)</span></code></pre>
-<h4><a href="#Dynamic-casting" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Dynamic-casting"></span>#</a> Dynamic casting</h4>
+<h4>Dynamic casting <a href="#Dynamic-casting" aria-hidden="true"><span class="anchor" id="Dynamic-casting"></span>#</a></h4>
 <p>In some situations, when receiving an untyped object from JS you may want to cast it to a specific type. For this you can use the F# <code>unbox</code> function or the <code>!!</code> operator in Fable.Core.JsInterop. This will bypass the F# type checker but please note <strong>Fable will not add any runtime check</strong> to verify the cast is correct.</p>
-</div></div></section></div><div class="column full-height-scrollable-content is-hidden-tablet is-2-desktop"><div><nav class="toc-container"><ul class="toc-headings"><div class="toc-label"><a href="#Call-JavaScript-from-Fable">Call JavaScript from Fable</a></div><ul class="toc-headings"><li><a href="#Adding-the-JS-library-to-the-project">Adding the JS library to the project</a></li><li><a href="#Type-safety-with-Imports-and-Interfaces">Type safety with Imports and Interfaces</a><ul class="toc-headings"><li><a href="#Let's-practice!-1st-try!">Let's practice! 1st try!</a></li><li><a href="#Let's-practice!-2nd-try!">Let's practice! 2nd try!</a></li><li><a href="#Miscellaneous-import-helpers">Miscellaneous import helpers</a></li></ul></li><li><a href="#Emit-when-F-is-not-enough">Emit, when F# is not enough</a><ul class="toc-headings"><li><a href="#Let's-do-it!-Use-Emit">Let's do it! Use Emit</a></li></ul></li><li><a href="#Other-special-attributes">Other special attributes</a><ul class="toc-headings"><li><a href="#Erase-attribute">Erase attribute</a></li><li><a href="#StringEnum">StringEnum</a></li></ul></li><li><a href="#Plain-Old-JavaScript-Objects">Plain Old JavaScript Objects</a></li><li><a href="#Dynamic-typing:-don't-read-this!">Dynamic typing: don't read this!</a><ul class="toc-headings"><li><a href="#What-is-dynamic-typing">What is dynamic typing?</a></li><li><a href="#Dynamic-casting">Dynamic casting</a></li></ul></li></ul></li></ul></nav></div></div><span class="fa-stack fa-2x is-hidden-tablet" id="toc-toggle" style="position:fixed;bottom:0;right:0;margin:10px"><i class=" far fa-circle fa-stack-2x"></i><i class=" fas fa-sync fa-stack-1x"></i></span></div><script type="text/javascript">
-nacara.pageId = 'mmunicate/js-from-fable';
-                </script></div></body></html>
+</div></div></section><div class="navigation-container"><button class="button is-outlined is-primary navigate-to-previous"><span class="icon"><i class=" fas fa-arrow-left"></i></span><span class="is-uppercase text">Previous</span></button><button class="button is-outlined is-primary navigate-to-next"><span class="is-uppercase text">Next</span><span class="icon"><i class=" fas fa-arrow-right"></i></span></button></div></div><div class="column full-height-scrollable-content toc-column is-hidden-touch is-2-desktop"><div><nav class="toc-container"><ul class="toc-headings"><div class="toc-label"><a href="#Call-JavaScript-from-Fable">Call JavaScript from Fable</a></div><ul class="toc-headings"><li><a href="#Adding-the-JS-library-to-the-project">Adding the JS library to the project</a></li><li><a href="#Type-safety-with-Imports-and-Interfaces">Type safety with Imports and Interfaces</a><ul class="toc-headings"><li><a href="#Let's-practice!-1st-try!">Let's practice! 1st try!</a></li><li><a href="#Let's-practice!-2nd-try!">Let's practice! 2nd try!</a></li><li><a href="#Miscellaneous-import-helpers">Miscellaneous import helpers</a></li></ul></li><li><a href="#Emit-when-F-is-not-enough">Emit, when F# is not enough</a><ul class="toc-headings"><li><a href="#Let's-do-it!-Use-Emit">Let's do it! Use Emit</a></li></ul></li><li><a href="#Other-special-attributes">Other special attributes</a><ul class="toc-headings"><li><a href="#Erase-attribute">Erase attribute</a></li><li><a href="#StringEnum">StringEnum</a></li></ul></li><li><a href="#Plain-Old-JavaScript-Objects">Plain Old JavaScript Objects</a></li><li><a href="#Dynamic-typing:-don't-read-this!">Dynamic typing: don't read this!</a><ul class="toc-headings"><li><a href="#What-is-dynamic-typing">What is dynamic typing?</a></li><li><a href="#Dynamic-casting">Dynamic casting</a></li></ul></li></ul></li></ul></nav></div></div></div><div class="is-hidden-touch material-like-container is-for-desktop"><div class="material-like-button scroll-to-top"><span class="icon is-medium"><i class=" fas fa-angle-up fa-lg"></i></span></div></div><div class="is-hidden-desktop material-like-container is-for-touch"><div class="material-like-container-body"><div class="material-like-button toggle-toc"><span class="icon is-medium"><i class=" fas fa-ellipsis-v fa-lg"></i></span><div class="material-like-button-label">Table of content</div></div><div class="material-like-button scroll-to-top"><span class="icon is-medium"><i class=" fas fa-angle-up fa-lg"></i></span><div class="material-like-button-label">Scroll to top</div></div></div><div class="material-like-button close-open-button"><span class="icon is-medium"><i class=" fas fa-plus fa-lg"></i></span></div></div></div><script type="text/javascript">
+nacara.pageId = 'communicate/js-from-fable';
+                                        </script><script type="text/javascript">window.addEventListener("DOMContentLoaded", () => {
+
+    const refContainer = document.querySelector(".toc-scrollable-container");
+
+    // Listener used to update the active section in the TOC
+    refContainer.addEventListener("scroll", () => {
+        const headers = document.querySelectorAll("h2, h3, h4");
+
+        // In order tof in the active section, we iterate over all the header
+        // from the bottom to the top.
+        // We take the first header that is "above" the top position of the window + 60px
+        const inversedHeaders =
+            [...headers]
+                .sort( (headerA, headerB) => {
+                    return headerB.getBoundingClientRect().top - headerA.getBoundingClientRect().top;
+                });
+
+        let activeHeader = null;
+
+        for (let index = 0; index < inversedHeaders.length; index++) {
+            const header = inversedHeaders[index];
+            if (header.getBoundingClientRect().top < 60) {
+                activeHeader = header;
+                break;
+            }
+        }
+
+
+        if (activeHeader === null)
+            return;
+
+        const anchorTag = activeHeader.querySelector("a").getAttribute("href");
+
+        // Make sure to remove `is-active` to all the TOC anchor elements
+        document
+            .querySelectorAll(".toc-container a")
+            .forEach(anchor => {
+                anchor.classList.remove("is-active");
+            });
+
+        // Set `is-active` to the current section
+        document
+            .querySelector(`.toc-container a[href="${anchorTag}"]`)
+            .classList.add("is-active");
+    });
+
+    document
+        .querySelector(".material-like-button.toggle-toc")
+        .addEventListener("click", () => {
+            document
+                .querySelector(".toc-container")
+                .classList.toggle("force-show");
+
+            document
+                .querySelector(".column.toc-column")
+                .classList.toggle("force-show");
+        });
+
+});
+</script><script type="text/javascript">window.addEventListener("DOMContentLoaded", () => {
+
+    const refContainer = document.querySelector(".toc-scrollable-container");
+
+    // Register scroll to top button
+    document
+        .querySelectorAll(".scroll-to-top")
+        .forEach(element => {
+            element.addEventListener("click", () => {
+                document
+                    .querySelector(".toc-scrollable-container")
+                    .scrollTo(0, 0);
+            });
+        });
+
+    // Listener used to update the position of TOC button at the bottom of the page
+    refContainer.addEventListener("scroll", () => {
+
+        // If we are at the end of the element
+        // Source: https://developer.mozilla.org/fr/docs/Web/API/Element/scrollHeight#D%C3%A9terminer_si_un_%C3%A9l%C3%A9ment_a_compl%C3%A8tement_%C3%A9t%C3%A9_d%C3%A9fil%C3%A9
+        if (refContainer.scrollTop > 30) {
+            document
+                .querySelector(".material-like-container.is-for-desktop")
+                .classList
+                .remove("hide");
+        } else {
+            document
+                .querySelector(".material-like-container.is-for-desktop")
+                .classList
+                .add("hide");
+        }
+    });
+
+    const bodyContainer = document.querySelector(".material-like-container.is-for-touch .material-like-container-body");
+
+    document
+        .querySelector(".material-like-button.close-open-button")
+        .addEventListener("click", () => {
+            bodyContainer.classList.toggle("show");
+            document
+                .querySelector(".material-like-button.close-open-button")
+                .classList.toggle("is-open");
+    });
+
+});
+</script></div></body></html>

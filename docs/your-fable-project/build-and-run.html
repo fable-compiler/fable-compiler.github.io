@@ -1,7 +1,10 @@
 <html class="has-navbar-fixed-top"><head><title>Build &amp; run · Fable</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" type="text/css" href="/docs/style.css"/><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"/><script src="https://polyfill.app/api/polyfill?features=scroll-behavior"></script><script type="text/javascript">
 var nacara = {};
-                </script><script type="text/javascript">window.onload = function () {
-    // Initialize the menu state
+                                    </script><script type="text/javascript">window.addEventListener("DOMContentLoaded", () => {
+    /*
+     * Initialize the menu state
+     */
+
     // Set as active the menu for the current page
     document
         .querySelectorAll(`.menu [data-menu-id='${nacara.pageId}']`)
@@ -15,12 +18,12 @@ var nacara = {};
         .forEach(function (menuGroup) {
             var parentChildren = Array.from(menuGroup.parentElement.children);
             var subItems = parentChildren.find(function (child) {
-                        return child.nodeName === "UL";
-                    });
+                return child.nodeName === "UL";
+            });
 
             var activeMenu =
-                    Array.from(subItems.children)
-                        .find(function (child) {
+                Array.from(subItems.children)
+                    .find(function (child) {
                         return child.firstChild.classList.contains("is-active")
                     });
 
@@ -38,42 +41,171 @@ var nacara = {};
         .querySelectorAll(`.menu .menu-group`)
         .forEach(function (menuGroup) {
             menuGroup.addEventListener("click", function (ev) {
-                var parentChildren = Array.from(ev.target.parentElement.children);
+                // All the menu "calculation" are done relative to the .menu-group element
+                var menuGroup =
+                    ev.target.classList.contains("menu-group")
+                        ? ev.target
+                        : ev.target.closest(".menu-group");
+
+                var parentChildren = Array.from(menuGroup.parentElement.children);
+
                 var subItems =
                     parentChildren.find(function (child) {
                         return child.nodeName === "UL";
                     });
 
-                if (ev.target.classList.contains("is-expanded")) {
-                    ev.target.classList.remove("is-expanded");
+                if (menuGroup.classList.contains("is-expanded")) {
+                    menuGroup.classList.remove("is-expanded");
                     subItems.style.display = "none";
                 } else {
-                    ev.target.classList.add("is-expanded");
+                    menuGroup.classList.add("is-expanded");
                     subItems.style.display = "block";
                 }
 
             });
         });
 
-    var burger = document.querySelector(".navbar-burger");
-    burger.addEventListener("click", function () {
-        // Get the target from the "data-target" attribute
-        var target = burger.dataset.target;
-        var $target = document.getElementById(target);
+    /*
+     * Setup menu navigation via Next and Previous button
+     */
 
-        // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-        burger.classList.toggle('is-active');
-        $target.classList.toggle('is-active');
-    });
+    // Start the counter from -1, but the first menu item will be 0
+    let computedMaxRank = -1;
 
-    document.getElementById("toc-toggle")
-        .addEventListener("click", function () {
-            document.getElementById("toc-column").classList.toggle("is-hidden-mobile");
-            document.getElementById("content-column").classList.toggle("is-hidden-mobile");
+    document
+        .querySelectorAll(`.menu [data-menu-id]`)
+        .forEach(function (menuItem) {
+            computedMaxRank++;
+            menuItem.setAttribute("data-menu-rank", computedMaxRank);
         });
-};
-</script></head><body><nav class="navbar is-fixed-top"><div class="container"><div class="navbar-brand"><div class="navbar-item title is-4" style="margin-bottom:0">Fable</div><div class="navbar-burger" data-target="navMenu"><span></span><span></span><span></span></div></div><div class="navbar-menu" id="navMenu"><div class="navbar-start"></div><div class="navbar-end"><a class="navbar-item" href="https://fable.io/repl/" target="_self"><span>Try online</span></a><a class="navbar-item" href="https://gitter.im/fable-compiler/Fable" target="_blank" style="color:#24292e"><span class="icon"><i class=" fab fa-gitter fa-lg"></i></span><span>Chat</span></a><a class="navbar-item" href="https://github.com/fable-compiler/fable" target="_blank" style="color:#24292e"><span class="icon"><i class=" fab fa-github fa-lg"></i></span></a><a class="navbar-item" href="https://twitter.com/FableCompiler" target="_blank" style="color:#55acee"><span class="icon"><i class=" fab fa-twitter fa-lg"></i></span></a></div></div></div></nav><div class="container"><div class="columns is-gapless"><div class="column full-height-scrollable-content is-hidden-mobile is-full-mobile is-3-tablet is-2-desktop" id="toc-column"><aside class="menu"><p class="menu-label">Introduction</p><ul class="menu-list"><li><a class="" href="/docs/index.html" data-menu-id="index">What is Fable?</a></li><li><a class="" href="/docs/introduction/net-users-read-this.html" data-menu-id="introduction/net-users-read-this">Are you a .NET developer?</a></li><li><a class="" href="/docs/introduction/js-users-read-this.html" data-menu-id="introduction/js-users-read-this">Are you a JS developer?</a></li></ul><p class="menu-label">New to F#?</p><ul class="menu-list"><li><a class="" href="/docs/new-to-fsharp/learning-the-language.html" data-menu-id="new-to-fsharp/learning-the-language">Learning the language</a></li><li><a class="" href="/docs/new-to-fsharp/let-keyword.html" data-menu-id="new-to-fsharp/let-keyword">The let keyword</a></li></ul><p class="menu-label">Fable in 2 steps</p><ul class="menu-list"><li><a class="" href="/docs/2-steps/setup.html" data-menu-id="2-steps/setup">Setup</a></li><li><a class="" href="/docs/2-steps/choose-a-template.html" data-menu-id="2-steps/choose-a-template">Start a new project</a></li></ul><p class="menu-label">Your Fable project</p><ul class="menu-list"><li><a class="" href="/docs/your-fable-project/project-file.html" data-menu-id="your-fable-project/project-file">The project file</a></li><li><a class="" href="/docs/your-fable-project/use-a-fable-library.html" data-menu-id="your-fable-project/use-a-fable-library">Use a Fable library</a></li><li><a class="" href="/docs/your-fable-project/author-a-fable-library.html" data-menu-id="your-fable-project/author-a-fable-library">Author a Fable library</a></li><li><a class="" href="/docs/your-fable-project/build-and-run.html" data-menu-id="your-fable-project/build-and-run">Build &amp; run</a></li></ul><p class="menu-label">Communicate with Javascript</p><ul class="menu-list"><li><a class="" href="/docs/communicate/js-from-fable.html" data-menu-id="communicate/js-from-fable">Call JS from Fable</a></li><li><a class="" href="/docs/communicate/fable-from-js.html" data-menu-id="communicate/fable-from-js">Call Fable from JS</a></li></ul><p class="menu-label">From .NET to Fable</p><ul class="menu-list"><li><a class="" href="/docs/dotnet/compatibility.html" data-menu-id="dotnet/compatibility">.NET and F# compatibility</a></li><li><a class="" href="/docs/dotnet/numbers.html" data-menu-id="dotnet/numbers">Numeric types</a></li></ul><p class="menu-label">Miscellaneous</p><ul class="menu-list"><li><a class="" href="/docs/miscellaneous/official-samples.html" data-menu-id="miscellaneous/official-samples">Check official samples</a></li><li><a class="" href="/docs/miscellaneous/awesome-list.html" data-menu-id="miscellaneous/awesome-list">Awesome Fable</a></li><li><a class="" href="/docs/miscellaneous/fable-in-videos.html" data-menu-id="miscellaneous/fable-in-videos">Fable in videos</a></li></ul></aside></div><div class="column full-height-scrollable-content is-full-mobile is-9-tablet is-8-desktop" id="content-column" style="scroll-behavior:smooth"><section class="section"><div class="content"><div><h1><a href="#Build-and-run" aria-hidden="true" style="visibility:hidden"><span class="anchor" id="Build-and-run"></span></a> Build &amp; run</h1>
-<p>Your project is ready? Then it's time to build and run it.</p>
+
+    document
+        .querySelector(".navigate-to-previous")
+        .addEventListener("click", () => {
+            const currentMenuRank =
+                document
+                    .querySelector(`.menu [data-menu-id='${nacara.pageId}']`)
+                    .getAttribute("data-menu-rank");
+
+            const previousRank = parseInt(currentMenuRank) - 1;
+
+            if (previousRank >= 0) {
+                document
+                    .querySelector(`.menu [data-menu-rank='${previousRank}']`)
+                    .click();
+            }
+        });
+
+    document
+        .querySelector(".navigate-to-next")
+        .addEventListener("click", () => {
+            const currentMenuRank =
+                document
+                    .querySelector(`.menu [data-menu-id='${nacara.pageId}']`)
+                    .getAttribute("data-menu-rank")
+
+            const nextRank = parseInt(currentMenuRank) + 1;
+
+            if (nextRank <= computedMaxRank) {
+                document
+                    .querySelector(`.menu [data-menu-rank='${nextRank}']`)
+                    .click();
+            }
+        });
+
+    // IIFE function in order to not pollute the function scope
+    (() => {
+
+        // The menu is an optional element, if no menu found then hide the Next & Previous buttons
+        if (document.querySelector(".menu") === null) {
+            document.querySelector(".navigate-to-next").style.visibility = "hidden"
+            document.querySelector(".navigate-to-previous").style.visibility = "hidden"
+            return;
+        }
+
+        const currentMenuRank =
+            parseInt(
+                document
+                    .querySelector(`.menu [data-menu-id='${nacara.pageId}']`)
+                    .getAttribute("data-menu-rank")
+            );
+
+        // Initialize the text of the Previous button
+        if (currentMenuRank >= 1) {
+            const previousText =
+                document
+                    .querySelector(`.menu [data-menu-rank='${currentMenuRank - 1}']`)
+                    .textContent;
+
+            document
+                .querySelector(".navigate-to-previous .text")
+                .textContent = previousText;
+        }
+
+        // Initialize the text of the Next button
+        if (currentMenuRank < computedMaxRank) {
+            const previousText =
+                document
+                    .querySelector(`.menu [data-menu-rank='${currentMenuRank + 1}']`)
+                    .textContent;
+
+            document
+                .querySelector(".navigate-to-next .text")
+                .textContent = previousText;
+        }
+
+        // Hide the navigation button depending on the page rank
+        if (currentMenuRank == 0) {
+            document.querySelector(".navigate-to-previous").style.visibility = "hidden";
+        } else if (currentMenuRank == computedMaxRank) {
+            document.querySelector(".navigate-to-next").style.visibility = "visibile";
+        }
+    })();
+
+
+    /*
+     * Setup menu burger behaviour
+     */
+
+    // Code copied from Bulma documentation
+    // https://bulma.io/documentation/components/navbar/#navbar-menu
+
+    // Get all "navbar-burger" elements
+    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+    // Check if there are any navbar burgers
+    if ($navbarBurgers.length > 0) {
+
+        // Add a click event on each of them
+        $navbarBurgers.forEach(el => {
+            el.addEventListener('click', () => {
+
+                // Get the target from the "data-target" attribute
+                const target = el.dataset.target;
+                const $target = document.getElementById(target);
+
+                // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                el.classList.toggle('is-active');
+                $target.classList.toggle('is-active');
+
+            });
+        });
+    }
+
+    const mobileMenuTrigger = document.querySelector(".mobile-menu .menu-trigger");
+
+    if (mobileMenuTrigger !== null) {
+        mobileMenuTrigger
+            .addEventListener("click", () => {
+                document
+                    .querySelector(".is-menu-column")
+                    .classList
+                    .toggle("force-show");
+        });
+    }
+
+});
+</script></head><body><nav class="navbar is-fixed-top"><div class="container"><div class="navbar-brand"><a class="navbar-item title is-4" href="https://fable.io/docs/">Fable</a><a class="navbar-item is-hidden-desktop" href="https://github.com/fable-compiler/fable" target="_blank" style="color:#24292e"><span class="icon"><i class=" fab fa-github fa-lg"></i></span></a><a class="navbar-item is-hidden-desktop" href="https://twitter.com/FableCompiler" target="_blank" style="color:#55acee"><span class="icon"><i class=" fab fa-twitter fa-lg"></i></span></a><div class="navbar-burger" data-target="nav-menu"><span></span><span></span><span></span></div></div><div class="navbar-menu" id="nav-menu"><div class="navbar-start"></div><div class="navbar-end"><a class="navbar-item" href="https://fable.io/repl/" target="_self"><span>Try online</span></a><a class="navbar-item" href="https://gitter.im/fable-compiler/Fable" target="_blank" style="color:#24292e"><span class="icon"><i class=" fab fa-gitter fa-lg"></i></span><span>Chat</span></a><a class="navbar-item is-hidden-touch" href="https://github.com/fable-compiler/fable" target="_blank" style="color:#24292e"><span class="icon"><i class=" fab fa-github fa-lg"></i></span></a><a class="navbar-item is-hidden-touch" href="https://twitter.com/FableCompiler" target="_blank" style="color:#55acee"><span class="icon"><i class=" fab fa-twitter fa-lg"></i></span></a></div></div></div></nav><div class="container"><div><div class="mobile-menu is-hidden-desktop"><nav class="breadcrumb"><ul><li class=""><a class="menu-trigger"><span class="icon"><i class=" fas fa-bars"></i></span></a></li><li class="is-active"><a>Your Fable project</a></li><li class="is-active"><a>Build &amp; run</a></li></ul></nav></div><div class="columns is-mobile is-gapless"><div class="column is-hidden-touch is-menu-column is-2-desktop" style="padding-left:1.5rem !important"><div class="menu-container full-height-scrollable-content"><aside class="menu" style="margin-top:3.25rem"><p class="menu-label">Introduction</p><ul class="menu-list"><li><a class="" href="/docs/index.html" data-menu-id="index">What is Fable?</a></li><li><a class="" href="/docs/introduction/net-users-read-this.html" data-menu-id="introduction/net-users-read-this">Are you a .NET developer?</a></li><li><a class="" href="/docs/introduction/js-users-read-this.html" data-menu-id="introduction/js-users-read-this">Are you a JS developer?</a></li></ul><p class="menu-label">New to F#?</p><ul class="menu-list"><li><a class="" href="/docs/new-to-fsharp/learning-the-language.html" data-menu-id="new-to-fsharp/learning-the-language">Learning the language</a></li><li><a class="" href="/docs/new-to-fsharp/let-keyword.html" data-menu-id="new-to-fsharp/let-keyword">The let keyword</a></li></ul><p class="menu-label">Fable in 2 steps</p><ul class="menu-list"><li><a class="" href="/docs/2-steps/setup.html" data-menu-id="2-steps/setup">Setup</a></li><li><a class="" href="/docs/2-steps/choose-a-template.html" data-menu-id="2-steps/choose-a-template">Start a new project</a></li></ul><p class="menu-label">Your Fable project</p><ul class="menu-list"><li><a class="" href="/docs/your-fable-project/project-file.html" data-menu-id="your-fable-project/project-file">The project file</a></li><li><a class="" href="/docs/your-fable-project/use-a-fable-library.html" data-menu-id="your-fable-project/use-a-fable-library">Use a Fable library</a></li><li><a class="" href="/docs/your-fable-project/author-a-fable-library.html" data-menu-id="your-fable-project/author-a-fable-library">Author a Fable library</a></li><li><a class="" href="/docs/your-fable-project/build-and-run.html" data-menu-id="your-fable-project/build-and-run">Build &amp; run</a></li></ul><p class="menu-label">Communicate with Javascript</p><ul class="menu-list"><li><a class="" href="/docs/communicate/js-from-fable.html" data-menu-id="communicate/js-from-fable">Call JS from Fable</a></li><li><a class="" href="/docs/communicate/fable-from-js.html" data-menu-id="communicate/fable-from-js">Call Fable from JavaScript</a></li></ul><p class="menu-label">From .NET to Fable</p><ul class="menu-list"><li><a class="" href="/docs/dotnet/compatibility.html" data-menu-id="dotnet/compatibility">.NET and F# compatibility</a></li><li><a class="" href="/docs/dotnet/numbers.html" data-menu-id="dotnet/numbers">Numeric types</a></li></ul><p class="menu-label">Miscellaneous</p><ul class="menu-list"><li><a class="" href="/docs/miscellaneous/official-samples.html" data-menu-id="miscellaneous/official-samples">Check official samples</a></li><li><a class="" href="/docs/miscellaneous/awesome-list.html" data-menu-id="miscellaneous/awesome-list">Awesome Fable</a></li><li><a class="" href="/docs/miscellaneous/fable-in-videos.html" data-menu-id="miscellaneous/fable-in-videos">Fable in videos</a></li></ul></aside></div></div><div class="column full-height-scrollable-content toc-scrollable-container is-main-content is-full-touch is-8-desktop" style="scroll-behavior:smooth;overflow-x:hidden"><section class="section"><div class="content"><header class="page-header"><a class="button is-pulled-right is-primary is-outlined is-hidden-touch" target="_blank" href="https://github.com/fable-compiler/fable-compiler.github.io/edit/dev/docsrc/your-fable-project/build-and-run.md">Edit</a><h1>Build &amp; run</h1></header><div><p>Your project is ready? Then it's time to build and run it.</p>
 <p>This process, however, is different depending on whether we are still in development or we are already preparing the project to deploy it to production. In development we don't care so much about optimizations and we want fast builds so we can see the results of our changes on-screen almost immediately. While for production we can endure a slower build in order to get JS code that is more optimized.</p>
 <blockquote>
 <p>In this document we assume you are using <a href="https://www.npmjs.com/package/fable-loader">fable-loader</a> with <a href="https://webpack.js.org/">Webpack</a> to build your Fable web app. If you use other tools, like <a href="https://www.npmjs.com/package/fable-splitter">fable-splitter</a>, please refer to their documentation.</p>
@@ -83,7 +215,7 @@ var nacara = {};
 <blockquote>
 <p>Whenever you want to use a new version of Fable in your project, you only need to update the fable-compiler package: <code>npm update fable-compiler</code>.</p>
 </blockquote>
-<h2><a href="#Development" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Development"></span>#</a> Development</h2>
+<h2>Development <a href="#Development" aria-hidden="true"><span class="anchor" id="Development"></span>#</a></h2>
 <p>Even if we already have our own server, when developing our frontend we want a server that is capable of detecting changes in the code and load them without restarting the app! This what <a href="https://github.com/webpack/webpack-dev-server">webpack-dev-server</a> does, so normally we'll be running it during development: <code>npx webpack-dev-server --mode development</code>.</p>
 <blockquote>
 <p>In most Fable projects, we just <a href="https://github.com/fable-compiler/webpack-config-template/blob/34c04e8474e1a6e94698dd1e14e5a197733a65f2/webpack.config.js#L42-L44">assume webpack-dev-server runs in development</a> so you won't see the <code>--mode</code> argument explicitly set very often.</p>
@@ -97,7 +229,7 @@ var nacara = {};
 </blockquote>
 <p>The webpack-dev-server will keep running until you kill the process, picking up the changes in your code after you save a file. If you use <a href="https://elmish.github.io/hmr/">Hot Module Replacement</a> it will try to inject the changes without restarting the app. Otherwise it will just refresh the web page.</p>
 <p>Note that webpack-dev-server serves the generated files from memory and doesn't actually write to disk. We will do that in the next step: building for production!</p>
-<h2><a href="#Production" aria-hidden="true" style="visibility:visible"><span class="anchor" id="Production"></span>#</a> Production</h2>
+<h2>Production <a href="#Production" aria-hidden="true"><span class="anchor" id="Production"></span>#</a></h2>
 <p>When preparing the files for deployment, we don't need a special server. We can call Webpack CLI directly in production mode to enable optimizations like <a href="https://webpack.js.org/configuration/optimization#optimizationminimize">JS minification</a>: <code>npx webpack --mode production</code>.</p>
 <blockquote>
 <p>As before, in most configurations you don't need to set the <code>--mode</code> argument explicitly. And it's also customary to have a &quot;build&quot; (or sometimes &quot;deploy&quot;) npm-script for this operation:</p>
@@ -107,8 +239,53 @@ var nacara = {};
 <span>    </span><span style="color: #E45649">&quot;build&quot;</span><span>: </span><span style="color: #50A14F">&quot;webpack&quot;</span>
 <span>  },</span></code></pre>
 <p>Webpack will run only once and will write the generated files in the <a href="https://webpack.js.org/configuration/output#outputpath">output.path</a>. This is the directory you fave to deploy to your host!</p>
-<h2><a href="#I-don't-want-to-use-Webpack" aria-hidden="true" style="visibility:visible"><span class="anchor" id="I-don't-want-to-use-Webpack"></span>#</a> I don't want to use Webpack</h2>
+<h2>I don't want to use Webpack <a href="#I-don't-want-to-use-Webpack" aria-hidden="true"><span class="anchor" id="I-don't-want-to-use-Webpack"></span>#</a></h2>
 <p>Then, depending on the sample you've chosen, build options may differ. Please refer to the README file for the chosen sample to get more information.</p>
-</div></div></section></div><div class="column full-height-scrollable-content is-hidden-tablet is-2-desktop"><div><nav class="toc-container"></nav></div></div><span class="fa-stack fa-2x is-hidden-tablet" id="toc-toggle" style="position:fixed;bottom:0;right:0;margin:10px"><i class=" far fa-circle fa-stack-2x"></i><i class=" fas fa-sync fa-stack-1x"></i></span></div><script type="text/javascript">
-nacara.pageId = 'ur-fable-project/build-and-run';
-                </script></div></body></html>
+</div></div></section><div class="navigation-container"><button class="button is-outlined is-primary navigate-to-previous"><span class="icon"><i class=" fas fa-arrow-left"></i></span><span class="is-uppercase text">Previous</span></button><button class="button is-outlined is-primary navigate-to-next"><span class="is-uppercase text">Next</span><span class="icon"><i class=" fas fa-arrow-right"></i></span></button></div></div></div><div class="is-hidden-touch material-like-container is-for-desktop"><div class="material-like-button scroll-to-top"><span class="icon is-medium"><i class=" fas fa-angle-up fa-lg"></i></span></div></div><div class="is-hidden-desktop material-like-container is-for-touch"><div class="material-like-container-body"><div class="is-hidden material-like-button toggle-toc"><span class="icon is-medium"><i class=" fas fa-ellipsis-v fa-lg"></i></span><div class="material-like-button-label">Table of content</div></div><div class="material-like-button scroll-to-top"><span class="icon is-medium"><i class=" fas fa-angle-up fa-lg"></i></span><div class="material-like-button-label">Scroll to top</div></div></div><div class="material-like-button close-open-button"><span class="icon is-medium"><i class=" fas fa-plus fa-lg"></i></span></div></div></div><script type="text/javascript">
+nacara.pageId = 'your-fable-project/build-and-run';
+                                        </script><script type="text/javascript">window.addEventListener("DOMContentLoaded", () => {
+
+    const refContainer = document.querySelector(".toc-scrollable-container");
+
+    // Register scroll to top button
+    document
+        .querySelectorAll(".scroll-to-top")
+        .forEach(element => {
+            element.addEventListener("click", () => {
+                document
+                    .querySelector(".toc-scrollable-container")
+                    .scrollTo(0, 0);
+            });
+        });
+
+    // Listener used to update the position of TOC button at the bottom of the page
+    refContainer.addEventListener("scroll", () => {
+
+        // If we are at the end of the element
+        // Source: https://developer.mozilla.org/fr/docs/Web/API/Element/scrollHeight#D%C3%A9terminer_si_un_%C3%A9l%C3%A9ment_a_compl%C3%A8tement_%C3%A9t%C3%A9_d%C3%A9fil%C3%A9
+        if (refContainer.scrollTop > 30) {
+            document
+                .querySelector(".material-like-container.is-for-desktop")
+                .classList
+                .remove("hide");
+        } else {
+            document
+                .querySelector(".material-like-container.is-for-desktop")
+                .classList
+                .add("hide");
+        }
+    });
+
+    const bodyContainer = document.querySelector(".material-like-container.is-for-touch .material-like-container-body");
+
+    document
+        .querySelector(".material-like-button.close-open-button")
+        .addEventListener("click", () => {
+            bodyContainer.classList.toggle("show");
+            document
+                .querySelector(".material-like-button.close-open-button")
+                .classList.toggle("is-open");
+    });
+
+});
+</script></div></body></html>
