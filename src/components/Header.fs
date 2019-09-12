@@ -71,3 +71,20 @@ let render () =
             Helpers.LinkButton("JOIN FABLECONF!", "/fableconf", color=IsDanger, margin="10px")
         ]
     ]
+
+let renderMinimal () =
+    div [Class "fable-header-minimal"] [
+        Image.image [
+            Image.Props [
+                Style [
+                    MaxWidth "200px"
+                    Margin "20px auto"
+                ]
+            ]
+        ] [
+            img [
+                Class "fable-logo"
+                Src WebAssets.FableLogo
+            ]
+        ]
+    ]

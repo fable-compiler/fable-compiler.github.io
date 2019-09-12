@@ -177,7 +177,7 @@ let renderPost (post: Post) =
 let renderBody (info: PageInfo) =
   // This fixes the problem with the double scrollbar on Windows
   div [ Style [ Overflow "hidden" ] ]
-    [ Header.render()
+    [ Header.renderMinimal()
       div [ Class "container blog-index" ]
         [ section [ Class "articles" ]
             [ div [ Class "column is-8 is-offset-2" ]

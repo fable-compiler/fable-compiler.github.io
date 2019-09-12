@@ -22,7 +22,7 @@ let render (info: PageInfo) =
 let renderMarkdown pageTitle navbar className targetFullPath content =
     let body =
       div [Class ("markdown " + className); Style [Overflow "hidden"]] [
-        Header.render()
+        Header.renderMinimal()
         div [Style [MarginTop "1.6rem"]] [
           div [Class "columns"] [
             div [Class "column"] []
