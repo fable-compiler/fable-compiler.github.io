@@ -54,7 +54,7 @@ Some F#/.NET types have [counterparts in JS](/../dotnet/compatibility.html). Fab
 
 - **Strings and booleans** behave the same in F# and JS.
 - **Numeric types** compile to JS numbers, except for `long`, `decimal` and `bigint`.
-- **Arrays** (and `ResizeArray`) compile to JS arrays. _Numeric arrays_ compile to [Typed Arrays](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray) in most situations, though this shouldn't make a difference for most common operations like indexing, iterating or mapping.
+- **Arrays** (and `ResizeArray`) compile to JS arrays. _Numeric arrays_ compile to [Typed Arrays](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray) in most situations, though this shouldn't make a difference for most common operations like indexing, iterating or mapping. You can disable this behavior with [the `typedArrays` option](https://www.npmjs.com/package/fable-loader#options).
 - Any **IEnumerable** (or `seq`) can be traversed in JS as if it were an [Iterable](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators#Iterables).
 - **DateTime** compiles to JS `Date`.
 - **Regex** compiles to JS `RegExp`.
