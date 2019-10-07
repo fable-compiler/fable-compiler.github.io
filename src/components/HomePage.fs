@@ -98,7 +98,7 @@ let renderBody (info: PageInfo) =
     Header.render()
 
     parseMarkdownAsReactEl "fable-catchphrase" introText
-    parseMarkdownAsReactEl "fableconf-promo" fableConfPromo
+    // parseMarkdownAsReactEl "fableconf-promo" fableConfPromo
 
     Container.container [] [
       Columns.columns []
