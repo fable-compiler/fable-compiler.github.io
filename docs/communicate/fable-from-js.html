@@ -245,7 +245,7 @@ var nacara = {};
 <ul>
 <li><strong>Strings and booleans</strong> behave the same in F# and JS.</li>
 <li><strong>Numeric types</strong> compile to JS numbers, except for <code>long</code>, <code>decimal</code> and <code>bigint</code>.</li>
-<li><strong>Arrays</strong> (and <code>ResizeArray</code>) compile to JS arrays. <em>Numeric arrays</em> compile to <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray">Typed Arrays</a> in most situations, though this shouldn't make a difference for most common operations like indexing, iterating or mapping.</li>
+<li><strong>Arrays</strong> (and <code>ResizeArray</code>) compile to JS arrays. <em>Numeric arrays</em> compile to <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray">Typed Arrays</a> in most situations, though this shouldn't make a difference for most common operations like indexing, iterating or mapping. You can disable this behavior with <a href="https://www.npmjs.com/package/fable-loader#options">the <code>typedArrays</code> option</a>.</li>
 <li>Any <strong>IEnumerable</strong> (or <code>seq</code>) can be traversed in JS as if it were an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators#Iterables">Iterable</a>.</li>
 <li><strong>DateTime</strong> compiles to JS <code>Date</code>.</li>
 <li><strong>Regex</strong> compiles to JS <code>RegExp</code>.</li>
