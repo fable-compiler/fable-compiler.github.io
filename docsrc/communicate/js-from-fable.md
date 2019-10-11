@@ -347,14 +347,11 @@ myLib.myMethod("test")
 ```fsharp
 open Fable.Core
 
-type Test() =
-    member x.Value = "Test"
+type Test = abstract Value: string
+let myMethod(arg: U3<string, int, Test>): unit = importMember "./myJsLib"
 
-let myMethod (arg: U3<string, int, Test>) =
-    match arg with
-    | U3.Case1 s -> s
-    | U3.Case2 i -> string i
-    | U3.Case3 t -> t.Value
+let testValue = { new Test with member __.Value = "Test" }
+myMethod(U3.Case3 testValue)
 ```
 
 When passing arguments to a method accepting `U2`, `U3`... you can use the `!^` as syntax sugar so you don't need to type the exact case (the argument will still be type checked):
@@ -362,13 +359,35 @@ When passing arguments to a method accepting `U2`, `U3`... you can use the `!^` 
 ```fsharp
 open Fable.Core.JsInterop
 
-let myMethod (arg: U3<string, int, Test>) = ...
-
-// This is equivalent to: myMethod (U3.Case2 5)
-myMethod !^5
+myMethod !^5 // Equivalent to: myMethod(U3.Case2 5)
+myMethod !^testValue
 
 // This doesn't compile, myMethod doesn't accept floats
 myMethod !^2.3
+```
+
+:::info
+Please note erased unions are mainly intended for typing the signature of imported JS functions and not as a cheap replacement of `Choice`. It's possible to do pattern matching against an erased union type but this will be compiled as type testing, and since **type testing is very weak in Fable**, this is only recommended if the generic arguments of the erased union are types that can be easily told apart in the JS runtime (like a string, a number and an array).
+:::
+
+```fsharp
+let test(arg: U3<string, int, float[]>) =
+    match arg with
+    | U3.Case1 x -> printfn "A string %s" x
+    | U3.Case2 x -> printfn "An int %i" x
+    | U3.Case3 xs -> Array.sum xs |> printfn "An array with sum %f"
+
+// In JS roughly translated as:
+
+// function test(arg) {
+//   if (typeof arg === "number") {
+//     toConsole(printf("An int %i"))(arg);
+//   } else if (isArray(arg)) {
+//     toConsole(printf("An array with sum %f"))(sum(arg));
+//   } else {
+//     toConsole(printf("A string %s"))(arg);
+//   }
+// }
 ```
 
 #### StringEnum
