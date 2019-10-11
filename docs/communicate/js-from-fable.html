@@ -438,24 +438,40 @@ var nacara = {};
 <p><code>Fable.Core</code> already includes predefined erased types which can be used as follows:</p>
 <pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core</span>
 
-<span style="color: #A626A4">type</span><span> </span><span style="color: #C18401">Test</span><span style="color: #986801">()</span><span> </span><span style="color: #A626A4">=</span>
-<span>    </span><span style="color: #A626A4">member</span><span> </span><span style="color: #E45649">x.Value</span><span> </span><span style="color: #A626A4">=</span><span> </span><span style="color: #50A14F">&quot;Test&quot;</span>
+<span style="color: #A626A4">type</span><span> </span><span style="color: #C18401">Test</span><span> </span><span style="color: #A626A4">=</span><span> </span><span style="color: #A626A4">abstract</span><span> Value</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">string</span>
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">myMethod</span><span style="color: #A626A4">(</span><span style="color: #383A42">arg</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">U3</span><span style="color: #A626A4">&lt;</span><span style="color: #C18401">string</span><span style="color: #A626A4">,</span><span> </span><span style="color: #C18401">int</span><span style="color: #A626A4">,</span><span> </span><span style="color: #C18401">Test</span><span style="color: #A626A4">&gt;):</span><span> </span><span style="color: #C18401">unit </span><span style="color: #A626A4">=</span><span> importMember </span><span style="color: #50A14F">&quot;./myJsLib&quot;</span>
 
-<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">myMethod</span><span style="color: #383A42"> </span><span style="color: #A626A4">(</span><span style="color: #383A42">arg</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">U3</span><span style="color: #A626A4">&lt;</span><span style="color: #C18401">string</span><span style="color: #A626A4">,</span><span> </span><span style="color: #C18401">int</span><span style="color: #A626A4">,</span><span> </span><span style="color: #C18401">Test</span><span style="color: #A626A4">&gt;)</span><span> </span><span style="color: #A626A4">=</span>
-<span>    </span><span style="color: #A626A4">match</span><span> arg </span><span style="color: #A626A4">with</span>
-<span>    </span><span style="color: #A626A4">|</span><span> U3.Case1 s </span><span style="color: #A626A4">-&gt;</span><span> s</span>
-<span>    </span><span style="color: #A626A4">|</span><span> U3.Case2 i </span><span style="color: #A626A4">-&gt;</span><span> string i</span>
-<span>    </span><span style="color: #A626A4">|</span><span> U3.Case3 t </span><span style="color: #A626A4">-&gt;</span><span> t.Value</span></code></pre>
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">testValue</span><span> </span><span style="color: #A626A4">=</span><span> </span><span style="color: #A626A4">{</span><span> </span><span style="color: #A626A4">new</span><span> Test </span><span style="color: #A626A4">with</span><span> </span><span style="color: #A626A4">member</span><span> </span><span style="color: #E45649">__.Value</span><span> </span><span style="color: #A626A4">=</span><span> </span><span style="color: #50A14F">&quot;Test&quot;</span><span> </span><span style="color: #A626A4">}</span>
+<span>myMethod</span><span style="color: #A626A4">(</span><span>U3.Case3 testValue</span><span style="color: #A626A4">)</span></code></pre>
 <p>When passing arguments to a method accepting <code>U2</code>, <code>U3</code>... you can use the <code>!^</code> as syntax sugar so you don't need to type the exact case (the argument will still be type checked):</p>
 <pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core.JsInterop</span>
 
-<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">myMethod</span><span style="color: #383A42"> </span><span style="color: #A626A4">(</span><span style="color: #383A42">arg</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">U3</span><span style="color: #A626A4">&lt;</span><span style="color: #C18401">string</span><span style="color: #A626A4">,</span><span> </span><span style="color: #C18401">int</span><span style="color: #A626A4">,</span><span> </span><span style="color: #C18401">Test</span><span style="color: #A626A4">&gt;)</span><span> </span><span style="color: #A626A4">=</span><span> </span><span style="color: #A626A4">..</span><span>.</span>
-
-<span style="color: #A0A1A7;font-style: italic">// This is equivalent to: myMethod (U3.Case2 5)</span>
-<span>myMethod </span><span style="color: #A626A4">!^</span><span style="color: #986801">5</span>
+<span>myMethod </span><span style="color: #A626A4">!^</span><span style="color: #986801">5</span><span> </span><span style="color: #A0A1A7;font-style: italic">// Equivalent to: myMethod(U3.Case2 5)</span>
+<span>myMethod </span><span style="color: #A626A4">!^</span><span>testValue</span>
 
 <span style="color: #A0A1A7;font-style: italic">// This doesn&#039;t compile, myMethod doesn&#039;t accept floats</span>
 <span>myMethod </span><span style="color: #A626A4">!^</span><span style="color: #986801">2.3</span></code></pre>
+<article class="message is-info">
+                <div class="message-body"><p>Please note erased unions are mainly intended for typing the signature of imported JS functions and not as a cheap replacement of <code>Choice</code>. It's possible to do pattern matching against an erased union type but this will be compiled as type testing, and since <strong>type testing is very weak in Fable</strong>, this is only recommended if the generic arguments of the erased union are types that can be easily told apart in the JS runtime (like a string, a number and an array).</p>
+</div>
+</article>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">test</span><span style="color: #A626A4">(</span><span style="color: #383A42">arg</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">U3</span><span style="color: #A626A4">&lt;</span><span style="color: #C18401">string</span><span style="color: #A626A4">,</span><span> </span><span style="color: #C18401">int</span><span style="color: #A626A4">,</span><span> </span><span style="color: #C18401">float</span><span style="color: #A626A4">[]&gt;)</span><span> </span><span style="color: #A626A4">=</span>
+<span>    </span><span style="color: #A626A4">match</span><span> arg </span><span style="color: #A626A4">with</span>
+<span>    </span><span style="color: #A626A4">|</span><span> U3.Case1 x </span><span style="color: #A626A4">-&gt;</span><span> printfn </span><span style="color: #50A14F">&quot;A string </span><span style="color: #A626A4">%s</span><span style="color: #50A14F">&quot;</span><span> x</span>
+<span>    </span><span style="color: #A626A4">|</span><span> U3.Case2 x </span><span style="color: #A626A4">-&gt;</span><span> printfn </span><span style="color: #50A14F">&quot;An int </span><span style="color: #A626A4">%i</span><span style="color: #50A14F">&quot;</span><span> x</span>
+<span>    </span><span style="color: #A626A4">|</span><span> U3.Case3 xs </span><span style="color: #A626A4">-&gt;</span><span> Array.sum xs </span><span style="color: #A626A4">|&gt;</span><span> printfn </span><span style="color: #50A14F">&quot;An array with sum </span><span style="color: #A626A4">%f</span><span style="color: #50A14F">&quot;</span>
+
+<span style="color: #A0A1A7;font-style: italic">// In JS roughly translated as:</span>
+
+<span style="color: #A0A1A7;font-style: italic">// function test(arg) {</span>
+<span style="color: #A0A1A7;font-style: italic">//   if (typeof arg === &quot;number&quot;) {</span>
+<span style="color: #A0A1A7;font-style: italic">//     toConsole(printf(&quot;An int %i&quot;))(arg);</span>
+<span style="color: #A0A1A7;font-style: italic">//   } else if (isArray(arg)) {</span>
+<span style="color: #A0A1A7;font-style: italic">//     toConsole(printf(&quot;An array with sum %f&quot;))(sum(arg));</span>
+<span style="color: #A0A1A7;font-style: italic">//   } else {</span>
+<span style="color: #A0A1A7;font-style: italic">//     toConsole(printf(&quot;A string %s&quot;))(arg);</span>
+<span style="color: #A0A1A7;font-style: italic">//   }</span>
+<span style="color: #A0A1A7;font-style: italic">// }</span></code></pre>
 <h4>StringEnum <a href="#StringEnum" aria-hidden="true"><span class="anchor" id="StringEnum"></span>#</a></h4>
 <p>In TypeScript is possible to define <a href="https://mariusschulz.com/blog/string-literal-types-in-typescript">String Literal Types</a> which are similar to enumerations with an underlying string value. Fable allows the same feature by using union types and the <code>StringEnum</code> attribute. These union types must not have any data fields as they will be compiled to a string matching the name of the union case.</p>
 <p>By default, the compiled string will have the first letter lowered. If you want to prevent this or use a different text than the union case name, use the <code>CompiledName</code> attribute:</p>

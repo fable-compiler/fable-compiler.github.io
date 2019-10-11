@@ -244,6 +244,7 @@ var nacara = {};
 <p>Some F#/.NET types have <a href="/../dotnet/compatibility.html">counterparts in JS</a>. Fable takes advantage of this to compile to native types that are more performant and reduce bundle size. You can also use this to improve interop when exchanging data between F# and JS. The most important common types are:</p>
 <ul>
 <li><strong>Strings and booleans</strong> behave the same in F# and JS.</li>
+<li><strong>Chars</strong> are compiled as JS strings of length 1. This is mainly because string indexing in JS gives you another string. But you can use a char as a number with a explicit conversion like <code>int16 '家'</code>.</li>
 <li><strong>Numeric types</strong> compile to JS numbers, except for <code>long</code>, <code>decimal</code> and <code>bigint</code>.</li>
 <li><strong>Arrays</strong> (and <code>ResizeArray</code>) compile to JS arrays. <em>Numeric arrays</em> compile to <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray">Typed Arrays</a> in most situations, though this shouldn't make a difference for most common operations like indexing, iterating or mapping. You can disable this behavior with <a href="https://www.npmjs.com/package/fable-loader#options">the <code>typedArrays</code> option</a>.</li>
 <li>Any <strong>IEnumerable</strong> (or <code>seq</code>) can be traversed in JS as if it were an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators#Iterables">Iterable</a>.</li>
