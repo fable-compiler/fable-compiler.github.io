@@ -56,6 +56,11 @@ let navbarEndLinks = [
     //   Color = Some "#55acee"
       Color = Some "white"
       IsExternal = true }
+    { Href = "https://www.youtube.com/channel/UC6m70Jyr65ogDySbK7aMmzg/videos"
+      Label = None
+      Icon = Some "fab fa-youtube"
+      Color = Some "white"
+      IsExternal = true }      
 ]
 
 
