@@ -1,15 +1,19 @@
 module Main
 
+open System
 open System.Text.RegularExpressions
 open Fable.Core.JsInterop
 open Fable.React
 open Fable.React.Props
+open Fable.FontAwesome
+open Fable.FontAwesome.Free
 open GlobalHelpers
 open Components
 open Util.Literals
 open Util.Types
 open Fable.Core
 open Fulma
+open System.Globalization
 module Node = Node.Api
 
 let render (info: PageInfo) =
@@ -19,7 +23,7 @@ let render (info: PageInfo) =
     |> parseReactStatic
     |> IO.writeFile info.TargetPath
 
-let renderMarkdown pageTitle navbar className targetFullPath content =
+let renderMarkdown pageTitle navbar className targetFullPath (date: DateTime option) content =
     let body =
       div [Class ("markdown " + className); Style [Overflow "hidden"]] [
         Header.renderMinimal()
@@ -27,7 +31,16 @@ let renderMarkdown pageTitle navbar className targetFullPath content =
           div [Class "columns"] [
             div [Class "column"] []
             div [Class "column is-two-thirds"] [
-                div [
+                match date with
+                | Some date ->
+                  yield div [
+                    Class "post_date"
+                    Style [Margin "5px"; MarginBottom "2em"]
+                    ] [
+                      Fa.i [Fa.Regular.Calendar] []
+                      str (Date.Format.localFormat Date.Local.englishUS " MMMM dd, yyyy" date)]
+                | None -> ()
+                yield div [
                   Class "content"
                   Style [Margin "5px"]
                   DangerouslySetInnerHTML { __html = parseMarkdown content }] []
@@ -42,7 +55,7 @@ let renderMarkdown pageTitle navbar className targetFullPath content =
 
 let renderMarkdownFrom pageTitle navbar className fileFullPath targetFullPath =
   let content = IO.readFile fileFullPath
-  renderMarkdown pageTitle navbar className targetFullPath content
+  renderMarkdown pageTitle navbar className targetFullPath None content
 
 // let renderDocs() =
 //   let pageTitle, header, subheader = "Fable Docs", "Documentation", "Learn how Fable works & how to use it"
@@ -68,9 +81,14 @@ let renderFaq() =
   renderMarkdownFrom "Fable FAQ" Navbar.FAQ "faq" fullPath targetPath
   printfn "FAQ generated"
 
+
 let renderBlog() =
   let reg = Regex(@"^\s*-\s*title\s*:(.+)\n\s*-\s*subtitle\s*:(.+)\n")
   let pageTitle, header, subheader = "Fable Blog", "Blog", "Read about latest Fable news"
+  let blogPostsByLink : Map<string,BlogIndex.Post> =
+    BlogIndex.posts
+    |> Seq.map (fun post -> post.Link, post)
+    |> Map.ofSeq
   render
     { Title = "Fable Blog"
       TargetPath = Node.path.join(Paths.DeployDir, "blog", "index.html")
@@ -84,8 +102,10 @@ let renderBlog() =
       if m.Success
       then m.Groups.[1].Value.Trim(), m.Groups.[2].Value.Trim(), text.Substring(m.Index + m.Length)
       else header, subheader, text
-    let targetPath = Node.path.join(Paths.DeployDir, "blog", blog.Replace(".md", ".html"))
-    renderMarkdown pageTitle Navbar.Blog "blog" targetPath text
+    let blogLink = blog.Replace(".md", ".html")
+    let date = blogPostsByLink |> Map.tryFind blogLink |> Option.map (fun post -> post.Date)
+    let targetPath = Node.path.join(Paths.DeployDir, "blog", blogLink)
+    renderMarkdown pageTitle Navbar.Blog "blog" targetPath date text
   printfn "Blog generated"
 
 let renderHomePage() =

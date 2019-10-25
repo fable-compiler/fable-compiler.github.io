@@ -51,7 +51,7 @@ type Post =
       Link: string }
       
 let posts = [
-    { Title = "Introducting Femto"
+    { Title = "Introducing Femto"
       Abstract = "In this blog post, we will introduce a new tool called Femto that will hopefully make the lives of Fable users a lot easier when it comes to the npm packages they depend upon."
       Author = Authors.zaid
       Date = DateTime(2019, 6, 29)
