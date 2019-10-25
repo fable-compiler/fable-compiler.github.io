@@ -6,14 +6,12 @@ open Fable.Core.JsInterop
 open Fable.React
 open Fable.React.Props
 open Fable.FontAwesome
-open Fable.FontAwesome.Free
 open GlobalHelpers
 open Components
 open Util.Literals
 open Util.Types
 open Fable.Core
 open Fulma
-open System.Globalization
 module Node = Node.Api
 
 let render (info: PageInfo) =
@@ -80,7 +78,6 @@ let renderFaq() =
   let targetPath = Node.path.join(Paths.DeployDir, "faq/index.html")
   renderMarkdownFrom "Fable FAQ" Navbar.FAQ "faq" fullPath targetPath
   printfn "FAQ generated"
-
 
 let renderBlog() =
   let reg = Regex(@"^\s*-\s*title\s*:(.+)\n\s*-\s*subtitle\s*:(.+)\n")
