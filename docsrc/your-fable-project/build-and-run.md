@@ -47,7 +47,7 @@ When preparing the files for deployment, we don't need a special server. We can 
   },
 ```
 
-Webpack will run only once and will write the generated files in the [output.path](https://webpack.js.org/configuration/output#outputpath). This is the directory you fave to deploy to your host!
+Webpack will run only once and will write the generated files in the [output.path](https://webpack.js.org/configuration/output#outputpath). This is the directory you have to deploy to your host!
 
 ## I don't want to use Webpack
 
