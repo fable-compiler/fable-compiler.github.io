@@ -128,7 +128,7 @@ let renderBody (info: PageInfo) =
                 []
                 [ li [] [ a [ Href "https://dotnet.microsoft.com"; Target "_blank"] [ str "Install .NET Core SDK"] ] 
                   li [] [ a [ Href "https://nodejs.org/en/"; Target "_blank"] [ str "Install Node.js"] ] 
-                  li [] [ str "Then type in a terminal:"]
+                  li [] [ str "Then type the following in a terminal and open http://localhost:8080 in your browser after compilation finishes:"]
                 ]
 
             ]
