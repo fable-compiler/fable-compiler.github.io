@@ -55,7 +55,7 @@ Don't worry too much if you don't fully grasp the above code, the main goal of t
 
 The main differences that the `let` keyword in F# has from the same keyword in JavaScript are:
 
-- In JavaScript one would use `let` to define a named variable, an its value can be reassigned which is not the case in F#.
+- In JavaScript one would use `let` to define a named variable, and its value can be reassigned which is not the case in F#.
 - In JavaScript `let` is scope bound, so one can declare a new variable with an already used name as long as it is in a different scope, in F# that can be done within the same scope.
 
 ### References
