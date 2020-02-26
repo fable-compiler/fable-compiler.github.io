@@ -93,7 +93,7 @@ module Features =
 
 let renderBody (info: PageInfo) =
   // This fixes the problem with the double scrollbar on Windows
-  div [Style [Overflow "hidden"]] [
+  div [Style [ CSSProp.Overflow OverflowOptions.Hidden ]] [
 
     Header.render()
 
