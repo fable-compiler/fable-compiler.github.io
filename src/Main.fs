@@ -23,12 +23,12 @@ let render (info: PageInfo) =
 
 let renderMarkdown pageTitle navbar className targetFullPath (date: DateTime option) content =
     let body =
-      div [Class ("markdown " + className); Style [Overflow "hidden"]] [
+      div [Class ("markdown " + className); Style [ CSSProp.Overflow OverflowOptions.Hidden ]] [
         Header.renderMinimal()
         div [Style [MarginTop "1.6rem"]] [
           div [Class "columns"] [
             div [Class "column"] []
-            div [Class "column is-two-thirds"] [
+            div [Class "column is-two-thirds"] [ 
                 match date with
                 | Some date ->
                   yield div [

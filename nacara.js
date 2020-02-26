@@ -50,7 +50,7 @@ module.exports = {
         ],
         "Fable in 2 steps": [
             "2-steps/setup",
-            "2-steps/choose-a-template"
+            "2-steps/your-first-fable-project"
         ],
         "Your Fable project": [
             "your-fable-project/project-file",

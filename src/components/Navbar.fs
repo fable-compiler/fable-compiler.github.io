@@ -91,7 +91,7 @@ let root currentPage =
           ] [ str "Fable" ]
             
           Navbar.burger
-            [ Props [ Data("target", Navbar.MenuId) ]]
+            [ Navbar.Burger.Props [ Data("target", Navbar.MenuId) ]]
             [ span [] []
               span [] []
               span [] [] ] ]

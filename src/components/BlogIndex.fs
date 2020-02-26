@@ -176,7 +176,7 @@ let renderPost (post: Post) =
 // Using template from https://bulmatemplates.github.io/bulma-templates/templates/blog.html
 let renderBody (info: PageInfo) =
   // This fixes the problem with the double scrollbar on Windows
-  div [ Style [ Overflow "hidden" ] ]
+  div [ Style [ CSSProp.Overflow OverflowOptions.Hidden ] ]
     [ Header.renderMinimal()
       div [ Class "container blog-index" ]
         [ section [ Class "articles" ]
