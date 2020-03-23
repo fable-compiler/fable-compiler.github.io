@@ -25,4 +25,4 @@ Basically you will need an editor that lets you code in F# with features like hi
 
 ### Next step
 
-[> Start your project](choose-a-template.html)
+[> Start your project](your-first-fable-project.html)
