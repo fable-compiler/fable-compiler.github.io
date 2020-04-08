@@ -22,6 +22,6 @@ F# is used in fields like [Data Science](https://fsharp.org/guides/data-science)
 
 After years of using JavaScript and OOP languages we felt it was a good time to use a mature language like F# to reduce the overall number of bugs in our applications, especially runtime bugs and thus build more robust applications.
 
-The fact that F# is a language of choice to model complex business models appeared to us a good fit to enhance code readability and lessen maintenance problems.
+The fact that F# is a language of choice to capture complex business models appeared to us to be a good fit to enhance code readability and lessen maintenance problems.
 
 So we built Fable, with the desire of giving everyone the best of these two worlds. We now offer you the ability to access the whole JS world from F#.
