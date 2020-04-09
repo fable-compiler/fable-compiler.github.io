@@ -3,6 +3,8 @@ image:
 
 ports:
   - port: 8000
+  - port: 8080
+    onOpen: ignore
 
 tasks:
   - before: npm install
