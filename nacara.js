@@ -56,7 +56,8 @@ module.exports = {
             "your-fable-project/project-file",
             "your-fable-project/use-a-fable-library",
             "your-fable-project/author-a-fable-library",
-            "your-fable-project/build-and-run"
+            "your-fable-project/build-and-run",
+            "your-fable-project/testing"
         ],
         "Communicate with Javascript": [
             "communicate/js-from-fable",
