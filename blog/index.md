@@ -1,6 +1,11 @@
 Check our blog to be up-to-date with recent developments in Fable community and if you have cool stuff to share (and we're sure you do) [send us a PR](https://github.com/fable-compiler/fable-compiler.github.io/tree/dev/blog) with your post or a link to your personal web.
 
 -------------------------------------------------------------------
+## [Introducing Feliz v1.0](Introducing-Feliz-v1.0.html)
+
+> By [Zaid Ajaj](https://github.com/Zaid-Ajaj) on May 16, 2020
+
+Announcing the official release of Feliz and what it means for the Fable community.
 
 ## [Introducing Femto](Introducing-Femto.html)
 
