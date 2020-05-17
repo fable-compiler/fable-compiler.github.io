@@ -3,7 +3,7 @@
 
 ## Introducing Feliz v1.0
 
-Today, we are happy to announce the official stable release of [Feliz](https://github.com/Zaid-Ajaj/Feliz). This comes after 10 months of development since the initial version and after more than 100 packages in between where we kept adding support for more and more React APIs as well as increasing the API coverage for Html, SVG and CSS elements.
+Today, we are happy to announce the official stable release of [Feliz](https://github.com/Zaid-Ajaj/Feliz). This comes after 10 months of development since the initial version and more than 100 releases in between where we kept adding support for more and more React APIs as well as increasing the API coverage for Html, SVG and CSS elements.
 
 Since its inception, Feliz has strived to become both a high-quality and developer-friendly library for building React applications in Fable. The stable release summarizes our efforts for reaching that goal and the work we have done in documenting, testing and expanding Feliz along with its ecosystem of libraries. Let us break down that work into the following sections.
 
