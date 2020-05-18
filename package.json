@@ -11,8 +11,8 @@
         "build-fast-fable": "node build/Main.js",
         "start-server": "live-server deploy --port=8000 --no-browser",
         "start": "concurrently npm:start-*",
-        "build": "rm -rf deploy && concurrently npm:build-*",
-        "build-fast": "rm -rf deploy && concurrently \"npm:build-sass\" \"npm:build-docs\" \"npm:build-fast-fable\"",
+        "build": "npx rimraf deploy && concurrently npm:build-*",
+        "build-fast": "npx rimraf deploy && concurrently \"npm:build-sass\" \"npm:build-docs\" \"npm:build-fast-fable\"",
         "deploy": "npm run build && gh-pages -d deploy -b master",
         "deploy-fast": "npm run build-fast && gh-pages -d deploy -b master"
     },
@@ -31,6 +31,7 @@
         "prismjs": "^1.19.0",
         "react": "^16.12.0",
         "react-dom": "^16.12.0",
+        "rimraf": "^3.0.2",
         "sass": "^1.26.1"
     }
 }

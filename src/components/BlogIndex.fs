@@ -14,12 +14,12 @@ open System
 
 module Authors =
     type Author =
-        { Name : string 
+        { Name : string
           AvatarSrc : string
           Link : string }
-    
+
     let alfonso =
-        { Name = "Alfonso García-Caro" 
+        { Name = "Alfonso García-Caro"
           AvatarSrc = "https://github.com/alfonsogarciacaro.png"
           Link = "https://twitter.com/alfonsogcnunez" }
 
@@ -49,8 +49,14 @@ type Post =
       Author: Authors.Author
       Date: DateTime
       Link: string }
-      
+
 let posts = [
+    { Title = "Introducing Feliz v1.0"
+      Abstract = "Announcing the official release of Feliz and what it means for the Fable community."
+      Author = Authors.zaid
+      Date = DateTime(2020, 5, 18)
+      Link = "Introducing-Feliz-v1.0.html"
+    }
     { Title = "Introducing Femto"
       Abstract = "In this blog post, we will introduce a new tool called Femto that will hopefully make the lives of Fable users a lot easier when it comes to the npm packages they depend upon."
       Author = Authors.zaid
@@ -80,31 +86,31 @@ let posts = [
       Author = Authors.maxime
       Date = DateTime(2018, 10, 1)
       Link = "Migration-to-Fable2.html"
-    }    
+    }
     { Title = "Introducing Fable 2.0 beta"
       Abstract = "Fable 2? Really? I want to try it out! NOW!"
       Author = Authors.alfonso
       Date = DateTime(2018, 8, 3)
       Link = "Introducing-2-0-beta.html"
-    }    
+    }
     { Title = "FableConf or where the magic happened"
       Abstract = "Hi everybody! This is going to be my small and not too stunning contribution to the [F# Advent Calendar in English 2017](https://sergeytihon.com/2017/10/22/f-advent-calendar-in-english-2017/) (remember the original and still running version is [in Japanese](https://qiita.com/advent-calendar/2017/fsharp)) and I'm planning to talk about [FableConf](http://fable.io/fableconf)."
       Author = Authors.alfonso
       Date = DateTime(2017, 12, 6)
       Link = "FableConf.html"
-    }    
+    }
     { Title = "Casque Noir: Raising awareness on Haïti social and environmental issues"
       Abstract = "For several years, Casque Noir, a Canadian non-profit organization, has been researching about urban mutations of Haïti Island's capital, Port-au-Prince's most famous deprived urban neighbourhood: Jalousie"
       Author = Authors.françois
       Date = DateTime(2017, 6, 20)
       Link = "Development-For-Haiti.html"
-    }    
+    }
     { Title = "How Fable helped kids win a contest"
       Abstract = "Yesterday, when I fell asleep, it was with the clear memory of smiles shining on the faces of our kids. After several months of hard work, they did it. They **won the Junior Achievement Young Entreprise** regional contest organized in Bordeaux and were qualified for the National contest!"
       Author = Authors.françois
       Date = DateTime(2017, 5, 19)
       Link = "How-Fable-Helped-Kids.html"
-    }    
+    }
     { Title = "Paket Integration"
       Abstract = "Fable 1.0 beta has been out in the wild for several weeks now and the community has already provided very valuable feedback. Some people are concerned about the mix of .NET and JS tools and it's true there were some friction points we had to fix. The main one concerned Fable libraries: by nature they belong to the .NET ecosystem, but their destiny is to be converted to JS."
       Author = Authors.alfonso
@@ -149,7 +155,7 @@ Being motivated by Super Fable Mario, I thought creating a simple game myself mi
       Date = DateTime(2016, 11, 22)
       Link = "Introducing-0-7.html"
     }
-]      
+]
 
 let introText = "Check our blog to be up-to-date with recent developments in Fable community and if you have cool stuff to share (and we're sure you do) [send us a PR](https://github.com/fable-compiler/fable-compiler.github.io/tree/dev/blog) with your post or a link to your personal web."
 
