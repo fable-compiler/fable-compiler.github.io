@@ -12,7 +12,6 @@
         "start-server": "live-server deploy --port=8000 --no-browser",
         "start": "concurrently npm:start-*",
         "build": "npx rimraf deploy && concurrently npm:build-*",
-        "build-fast": "npx rimraf deploy && concurrently \"npm:build-sass\" \"npm:build-docs\" \"npm:build-fast-fable\"",
         "deploy": "npm run build && gh-pages -d deploy -b master",
         "deploy-fast": "npm run build-fast && gh-pages -d deploy -b master"
     },
