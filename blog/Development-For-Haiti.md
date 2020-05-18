@@ -1,6 +1,3 @@
-- title: Casque Noir: Raising awareness on Haïti social and environmental issues
-- subtitle: How Fable and Fable-elmish helped Casque Noir, A non profit organization
-
 For several years, Casque Noir, a Canadian non-profit organization, has been researching about urban mutations of Haïti Island's capital, Port-au-Prince's most famous deprived urban neighbourhood: Jalousie
 
 <img src="http://www.casquenoir.com/img/jalousie/j_1_1a.jpg" alt="Jalousie" width="800px" />

@@ -1,6 +1,3 @@
-- title: Introducing Feliz v1.0
-- subtitle: Announcing the official stable release of Feliz
-
 ## Introducing Feliz v1.0
 
 Today, we are happy to announce the official stable release of [Feliz](https://github.com/Zaid-Ajaj/Feliz). This comes after 10 months of development since the initial version and more than 100 releases in between where we kept adding support for more and more React APIs as well as increasing the API coverage for Html, SVG and CSS elements.

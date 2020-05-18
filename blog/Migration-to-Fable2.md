@@ -1,6 +1,3 @@
-- title: Migration to Fable 2
-- subtitle: Everything you need to know to migrate
-
 ## TL;DR
 
 With this document we are going to convert a Fable 1 project into a Fable 2 project.

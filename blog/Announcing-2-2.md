@@ -1,6 +1,3 @@
-- title: Announcing fable-compiler 2.2, Fable.Core 3 and more
-- subtitle: Making maintainer's life a bit easier
-
 ## fable-compiler 2.2
 
 Hi everybody! We've many announcements to do today. Together with a minor (but big) release of fable-compiler, we're launching new beta versions of the packages most used by the community, like Fable.Core, Elmish, Fulma or Fable.SimpleHttp. The main goal of these releases is to restructure the packages to make maintenance easier and lower the bar for contributions.

@@ -1,6 +1,3 @@
-- title: Tree Shaking with Fable
-- subtitle: Light webs load faster!
-
 Hi everybody! This is my first contribution to the [F# advent calendar](https://sergeytihon.wordpress.com/2016/10/23/f-advent-calendar-in-english-2016/) and you'll probably be very surprised to know it will be about... Fable! Yes, the lightweight F# compiler that emits JavaScript you can be proud of (or at least I'll be). This time I want to talk you about one of the exciting new features introduced in [Fable 0.7](blog/Introducing-0-7.html): tree shaking.
 
 ----------------

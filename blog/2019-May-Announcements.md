@@ -1,6 +1,3 @@
-- title: May Announcements
-- subtitle: Get your ticket for FableConf!
-
 Hi there! Just a very quick post to share with you some of the things that have been happening for the last few weeks in Fable World. Here we go!
 
 ## New version of fable-compiler: 2.3.10

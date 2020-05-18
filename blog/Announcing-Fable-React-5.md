@@ -1,6 +1,3 @@
-- title: Fable.React 5
-- subtitle: Componentize your functions!
-
 Fable.React 5 has just been released with new additions to help write your Fable/Elmish apps with React. Before going into detail, I want to thank Julien Roncaglia (@vbfox) who has contributed most of the ideas for this release since [his talk at latest FableConf](https://www.youtube.com/watch?v=9VJoaNoutm4), as well as the React team for their great work in the latest releases. And also to Don Syme and the other F# compiler contributors who have added features like anonymous records to make F# even more suitable to write UIs!
 
 > Note this release depends on Fable.Core 3 and Fable.Browser.Dom, please [read the previous post](https://fable.io/blog/Announcing-2-2.html) to learn about the changes in the ecosystem.

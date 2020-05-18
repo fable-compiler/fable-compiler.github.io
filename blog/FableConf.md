@@ -1,6 +1,3 @@
-- title: FableConf
-- subtitle: Where the magic happened
-
 Hi everybody! This is going to be my small and not-really-stunning contribution to the [F# Advent Calendar in English 2017](https://sergeytihon.com/2017/10/22/f-advent-calendar-in-english-2017/) (remember the original version is [in Japanese](https://qiita.com/advent-calendar/2017/fsharp)) and I'm planning to talk about [FableConf](http://fable.io/fableconf). Yes, that thing that happened two months ago, or one zillion years in Twitter time. But they say better late than never, so here we go! And you may have noticed this also brings back [the blog](http://fable.io/blog/) to the new Fable site so you can review our previous entries and more importantly you can also [send a PR with your post](https://github.com/fable-compiler/fable-compiler.github.io/tree/dev/blog) or a link to your personal website with anything Fable related, the community is eager to hear you!
 
 > BTW, [Florian Verdonck](https://twitter.com/verdonckflorian) did my homework before myself, you can read his report on the conference [here](https://axxes.com/net-2/conference-report-of-fableconf/).

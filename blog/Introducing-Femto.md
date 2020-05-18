@@ -1,6 +1,3 @@
-- title: Introducing Femto
-- subtitle: Automatic npm package resolution used by Fable bindings
-
 ## Introducing Femto
 
 In this blog post, we will introduce a new tool called Femto that will hopefully make the lives of Fable users a lot easier when it comes to the npm packages they depend upon. First things first: let's go through the problem context to understand what Femto is trying to solve.

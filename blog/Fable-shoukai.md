@@ -1,6 +1,3 @@
-- title: Fable(F#からJSへコンパイラー)の紹介
-- subtitle: どこでもF#を使いましょう！
-
 皆さま、スペインからこんにちは！これは日本語の「[F# Advent Calendar 2016](http://qiita.com/advent-calendar/2016/fsharp)」
 の2５日目の記事です、一日遅れましたがご了承ください(;^_^A ｱｾｱｾ･･･
 

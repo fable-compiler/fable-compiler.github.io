@@ -1,6 +1,3 @@
-- title: Paket integration
-- subtitle: Manage your Fable libraries like a pro
-
 Fable 1.0 beta has been out in the wild for several weeks now and the community has already provided very valuable feedback. Some people are concerned about the mix of .NET and JS tools, as it can be a bit confusing if you are used to a single ecosystem. This is actually a good thing(TM), because the effort you put to learn about dotnet SDK or Webpack is not exclusive to Fable, and can be reused for other .NET/JS projects. There are already big communities where you can get support from if you have an issue with the tooling as well.
 
 However it's true there were some friction points we had to fix. The main one concerned Fable libraries: by nature they belong to the .NET ecosystem, but their destiny is to be converted to JS and must be distributed by source (Fable cannot read assemblies, only raw F# code), something Nuget (the register for .NET libraries) is not designed for. Because of these reasons, we've been distributing libraries through npm so far, though this wasn't ideal either as npm obviously is not prepared for F# packages and it was creating other problems on its own.

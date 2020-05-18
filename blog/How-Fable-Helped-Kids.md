@@ -1,6 +1,3 @@
-- title: How Fable helped kids win a contest
-- subtitle: How Fable allows for rapid and robust development
-
 > Yesterday, when I fell asleep, it was with the clear memory of smiles shining on the faces of our kids. After several months of hard work, they did it. They **won the Junior Achievement Young Entreprise** regional contest organized in Bordeaux and were qualified for the National contest!
 
 Every year, kids all over the world, try to learn how to build their own startup from scratch and promote their work through a contest organized by regional branches of [JA Worldwide](https://www.jaworldwide.org/aboutja/), one of the world’s largest youth-serving NGOs.
