@@ -8,9 +8,9 @@ While most web applications implement data exchange protocols between backend an
 
 ### Type-Safe GrapQL Clients
 
-When a client communicates with a GraphQL backend, it sends a query. The query must has to be compatible with the exposed GraphQL schema from the backend in order to return the requested data (much like SQL queries).
+When a client communicates with a GraphQL backend, it sends a query. The query must be compatible with the exposed GraphQL schema from the backend in order to return the requested data (much like SQL queries).
 
-The shape and structure of the data is very much dependent on the written query. This means that data returned from a query has a unique shape. For example, the following query:
+The shape and structure of the data is very much dependent on the written query. This means that data returned from a query has a unique shape and type. For example, the following query:
 
 ```
 query {
@@ -48,7 +48,7 @@ Modelling the shape of the queries via F# types by hand can be a cumbersome task
 
 ### Type-Providers to the rescue...?
 
-The first idea that F# developers get when looking at such problem is: "There must be a type provider for this!" and they would be right. In F# land, the awesome [FSharp.Data.GraphQL](https://github.com/fsprojects/FSharp.Data.GraphQL) library gives the ability to write GraphQL backends and includes a type provider for type-safe clients in F#. However, unfortunately since Fable 2.0 came out a long time ago around late 2018, the type provider [has been incompatible](https://github.com/fsprojects/FSharp.Data.GraphQL/issues/204) with Fable applications. I thought I could give it a try and fix the problem in the repository, even the maintainer [John Berzy](https://github.com/johnberzy-bazinga) generously offered to help out but I couldn't get my head around the code base: type providers are really hard to write and to understand what exactly they are doing. Not to mention, I didn't enough experience in GraphQL itself to understand how the mapping worked by that time.
+The first idea that F# developers get when looking at such problem is: "There must be a type provider for this!" and they would be right. In F# land, the awesome [FSharp.Data.GraphQL](https://github.com/fsprojects/FSharp.Data.GraphQL) library gives the ability to write GraphQL backends and includes a type provider for type-safe clients in F#. Unfortunately, ever since Fable 2.0 came out around late 2018, that type provider [was no longer compatible](https://github.com/fsprojects/FSharp.Data.GraphQL/issues/204) with Fable applications. I thought I could give it a try and fix the problem in the repository, even the maintainer [John Berzy](https://github.com/johnberzy-bazinga) generously offered to help out but I couldn't get my head around the code base: type providers are really hard to write and to understand what exactly they are doing. Not to mention, I didn't enough experience in GraphQL itself to understand how the mapping worked by that time.
 
 ### Snowflaqe: code-gen back to business
 
