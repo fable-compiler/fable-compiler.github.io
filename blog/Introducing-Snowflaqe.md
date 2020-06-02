@@ -1,6 +1,6 @@
 ## Introducing Snowflaqe
 
-In this blog post, we will introduce a new tool for Fable called [Snowflaqe](https://github.com/Zaid-Ajaj/Snowflaqe) which will allow generating type-safe clients for Fable applications. Though at first, let us talk about what the problem is that Snowflaqe solves and why it is needed.
+In this blog post, we will introduce a new tool for Fable called [Snowflaqe](https://github.com/Zaid-Ajaj/Snowflaqe) which will allow generating type-safe GraphQL clients for Fable applications. Though at first, let us talk about what the problem is that Snowflaqe solves and why it is needed.
 
 ### GraphQL Backends
 
