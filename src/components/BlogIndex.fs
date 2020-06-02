@@ -52,9 +52,9 @@ type Post =
 
 let posts = [
     { Title = "Introducing Snowflaqe"
-      Abstract = "In this blog post, we will introduce a new tool for Fable called Snowflaqe which will allow generating type-safe clients for Fable applications."
+      Abstract = "In this blog post, we will introduce a new tool for Fable called Snowflaqe which will allow generating type-safe GraphQL clients for Fable applications."
       Author = Authors.zaid
-      Date = DateTime(2021, 6, 2)
+      Date = DateTime(2020, 6, 2)
       Link = "Introducing-Snowflaqe.html"
     }
     { Title = "Introducing Feliz v1.0"
