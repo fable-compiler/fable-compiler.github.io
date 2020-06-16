@@ -16,7 +16,7 @@ Now we're ready, let's start a new project using Fable!
 
 The easiest way to get starting with Fable is by using Fable official template.
 
-1. `dotnet new -i Fable.Template::*`
+1. `dotnet new -i "Fable.Template::*"`
 2. `dotnet new fable -n MyFirstFableProject`
 3. `cd MyFirstFableProject`
 
