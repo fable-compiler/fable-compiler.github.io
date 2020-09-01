@@ -15,7 +15,7 @@ Fable can target different JavaScript runtimes like Node.js, Browser, etc. To ma
 This repository contains several samples ready to use, each located in its own folder.
 
 :::info
-If you are interested in a full-stack F# solution that covers both the backend (using .NET) and the frontend (using Fable), check also the [SAFE-Stack](https://safe-stack.github.io/).
+If you are interested in a full-stack F# solution that covers both the backend (using .NET) and the frontend (using Fable), check out the [SAFE-Stack](https://safe-stack.github.io/).
 :::
 
 * **Browser samples**
