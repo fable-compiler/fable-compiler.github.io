@@ -18,9 +18,9 @@ The very first thing to do is add the library to our project. Since we always ha
 
 ### Type safety with Imports and Interfaces
 
-To use code from JS libraries first you need to import it into F#. For this Fables uses [ES2015 imports](https://developer.mozilla.org/en/docs/web/JavaScript/reference/statements/import), which can be later transformed to other JS module systems like `commonjs` or `amd` by [Babel](https://babeljs.io/docs/en/plugins#modules).
+To use code from JS libraries first you need to import it into F#. For this Fable uses [ES2015 imports](https://developer.mozilla.org/en/docs/web/JavaScript/reference/statements/import), which can be later transformed to other JS module systems like `commonjs` or `amd` by [Babel](https://babeljs.io/docs/en/plugins#modules).
 
-There are two ways to declare ES2015 imports in the Fable: by using either the **Import attribute** or the **import expressions**. The `ImportAttribute` can decorate members, types or modules and works as follows:
+There are two ways to declare ES2015 imports in Fable: by using either the **Import attribute** or the **import expressions**. The `ImportAttribute` can decorate members, types or modules and works as follows:
 
 ```fsharp
 // Namespace imports
@@ -216,7 +216,7 @@ The content of `Emit` will actually be parsed by [Babel](https://babeljs.io/) so
 
 #### Let's do it! Use Emit
 
-Now let's work with Emit and take a new example with the following `MyClass.js`:
+Now let's work with Emit and look at a new example with the following `MyClass.js`:
 
 ```js
 export default class MyClass {
