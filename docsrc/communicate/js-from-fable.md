@@ -141,7 +141,7 @@ we could use the same method we used with `alert.js`:
   mylib.drawSmiley() // etc..
 ```
 
-or we could do the same things a little bit differently, by using the `importMember` helper function to directly map the js function to the F# function.
+or we could use the `importMember` helper function to directly map the js function to the F# function.
 
 ```fsharp
 open Fable.Core.JsInterop // needed to call interop tools
