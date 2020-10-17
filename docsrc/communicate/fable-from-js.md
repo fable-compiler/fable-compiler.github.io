@@ -111,7 +111,7 @@ myClass.Square(); // 25
 
 ## Functions: automatic uncurrying
 
-Fable will automatically uncurry functions in many situations: when they're passed as functions, when set as a record field... So in most cases you can use pass them to and from JS as if they were functions without curried arguments.
+Fable will automatically uncurry functions in many situations: when they're passed as functions, when set as a record field... So in most cases you can pass them to and from JS as if they were functions without curried arguments.
 
 ```fsharp
 let execute (f: int->int->int) x y =
