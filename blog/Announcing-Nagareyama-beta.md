@@ -19,7 +19,7 @@ The problem with version pinning was not the only reason to distribute Fable thr
 
 Babel made Fable possible, and the name will always be a tribute to the Babel team. It was not only a source of inspiration (I was using Babel at work for several months before starting writing Fable), but when the very first version of Fable appeared "modern" JS was still not widely supported and there were several competing standards for the "module" system. Thanks to Babel we didn't have to worry about this, users were free to choose the kind of JS they wanted to generate and we could focus on the F# transformation. Nowadays, luckily the "import/export" module and modern syntax is supported by most browsers, so we can be sure the code we generate is compatible with most environments and tooling.
 
-BTW, if you do need Babel in your workflow to transform the generated code to a version of JS that is supported in older browsers, it's absolutely fine. If you're using Webpack just keep the `babel-loader` in place an you're done!
+BTW, if you do need Babel in your workflow to transform the generated code to a version of JS that is supported in older browsers, it's absolutely fine. If you're using Webpack just keep the `babel-loader` in place and you're done!
 
 ## Speed improvements
 
