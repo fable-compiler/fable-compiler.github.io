@@ -47,7 +47,7 @@ open Fable.Core.JsInterop
 let myModule: obj = jsNative
 
 // Same as Import("default", "my-module")
-[<ImportDefault("express")>]
+[<ImportDefault("my-module")>]
 let myModuleDefaultExport: obj = jsNative
 
 // The member name is taken from decorated value, here `myFunction`
@@ -98,9 +98,9 @@ Now let's use this:
   let mylib: IAlert = jsNative
 ```
 
-Here we use the `Import` attribute, just like we described earlier.
+Here we use the `ImportAll` attribute, just like we described earlier.
 
-- step 1: We specify the elements we wish to use. Here`*` means: "take everything that's been exported"
+- step 1: We specify the elements we wish to use. As shown above, `ImportAll("path/to/alert.js")` is the same as `Import("*", "path/to/alert.js")`, so we specified "*" which means: "take everything that's been exported"
 - step 2: we set the path to our js library.
 - step 3: we create a let binding called `mylib` to map the js library.
 - step 4: we use the `jsNative` keyword to say that `mylib` is just a placeholder for the JavaScript native implementation.
@@ -118,10 +118,10 @@ If everything's working correctly, it should create an alert popup in your brows
 Assuming we've got two exported functions from a `Canvas.js` file: `drawSmiley` and `drawBubble`:
 
 ```js
-export function drawSmiley() {
+export function drawSmiley(id) {
   // do something
 }
-export function drawBubble() {
+export function drawBubble(id) {
   // do something
 }
 ```
@@ -132,13 +132,13 @@ we could use the same method we used with `alert.js`:
   open Fable.Core.JsInterop // needed to call interop tools
 
   type ICanvas =
-    abstract drawSmiley: unit -> unit
-    abstract drawBubble: unit -> unit
+    abstract drawSmiley: (id:string) -> unit
+    abstract drawBubble: (id:string) -> unit
 
   [<ImportAll("path/to/Canvas.js")>]
   let mylib: ICanvas = jsNative
 
-  mylib.drawSmiley() // etc..
+  mylib.drawSmiley "smiley" // etc..
 ```
 
 or we could use the `importMember` helper function to directly map the js function to the F# function.
@@ -151,7 +151,7 @@ module Canvas =
   let drawSmiley(id:string): unit = importMember "path/to/Canvas.js"
   let drawBubble(id:string): unit = importMember "path/to/Canvas.js"
 
-Canvas.drawSmiley()
+Canvas.drawSmiley "smiley"
 ```
 
 The result would be the same, but the philosophy is slightly different. That's basically up to you to make a choice 😉
