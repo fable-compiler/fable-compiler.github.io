@@ -98,9 +98,9 @@ Now let's use this:
   let mylib: IAlert = jsNative
 ```
 
-Here we use the `ImportAll` attribute, just like we described earlier.
+Here we use the `ImportAll` attribute, which is the same as `Import("*", "path/to/alert.js")` just like we described earlier.
 
-- step 1: We specify the elements we wish to use. As shown above, `ImportAll("path/to/alert.js")` is the same as `Import("*", "path/to/alert.js")`, so we specified "*" which means: "take everything that's been exported"
+- step 1: We specify the elements we wish to use. Here `*` means: "take everything that's been exported"
 - step 2: we set the path to our js library.
 - step 3: we create a let binding called `mylib` to map the js library.
 - step 4: we use the `jsNative` keyword to say that `mylib` is just a placeholder for the JavaScript native implementation.
