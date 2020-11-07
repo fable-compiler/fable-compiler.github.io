@@ -51,11 +51,17 @@ type Post =
       Link: string }
 
 let posts = [
-    { Title = "Announcing Nagareyama (Fable 3) beta (I)"
+    { Title = "Announcing Nagareyama (Fable 3) (II)"
+      Abstract = "I hope you already tried out the new Fable and are enjoying it! The release candidate has just been published and in this post we will also dive into the differences when generating JS code compared to Fable 2."
+      Author = Authors.alfonso
+      Date = DateTime(2020, 11, 7)
+      Link = "Announcing-Nagareyama-2.html"
+    }
+    { Title = "Announcing Nagareyama (Fable 3) (I)"
       Abstract = "Next-gen Fable is here! This is the first of a series of posts to introduce the improvements this new major release brings."
       Author = Authors.alfonso
       Date = DateTime(2020, 10, 23)
-      Link = "Announcing-Nagareyama-beta.html"
+      Link = "Announcing-Nagareyama-1.html"
     }
     { Title = "Introducing Snowflaqe"
       Abstract = "In this blog post, we will introduce a new tool for Fable called Snowflaqe which will allow generating type-safe GraphQL clients for Fable applications."
