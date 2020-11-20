@@ -237,7 +237,7 @@ var nacara = {};
 <span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">myModule</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">obj </span><span style="color: #A626A4">=</span><span> jsNative</span>
 
 <span style="color: #A0A1A7;font-style: italic">// Same as Import(&quot;default&quot;, &quot;my-module&quot;)</span>
-<span style="color: #0184BC">[&lt;ImportDefault</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;express&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span>
+<span style="color: #0184BC">[&lt;ImportDefault</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;my-module&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span>
 <span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">myModuleDefaultExport</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">obj </span><span style="color: #A626A4">=</span><span> jsNative</span>
 
 <span style="color: #A0A1A7;font-style: italic">// The member name is taken from decorated value, here `myFunction`</span>
@@ -266,9 +266,9 @@ var nacara = {};
 <p>Now let's use this:</p>
 <pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span>  </span><span style="color: #0184BC">[&lt;ImportAll</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;path/to/alert.js&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span>
 <span>  </span><span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">mylib</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">IAlert </span><span style="color: #A626A4">=</span><span> jsNative</span></code></pre>
-<p>Here we use the <code>Import</code> attribute, just like we described earlier.</p>
+<p>Here we use the <code>ImportAll</code> attribute, which is the same as <code>Import(&quot;*&quot;, &quot;path/to/alert.js&quot;)</code> just like we described earlier.</p>
 <ul>
-<li>step 1: We specify the elements we wish to use. Here<code>*</code> means: &quot;take everything that's been exported&quot;</li>
+<li>step 1: We specify the elements we wish to use. Here <code>*</code> means: &quot;take everything that's been exported&quot;</li>
 <li>step 2: we set the path to our js library.</li>
 <li>step 3: we create a let binding called <code>mylib</code> to map the js library.</li>
 <li>step 4: we use the <code>jsNative</code> keyword to say that <code>mylib</code> is just a placeholder for the JavaScript native implementation.</li>
@@ -278,23 +278,23 @@ var nacara = {};
 <p>If everything's working correctly, it should create an alert popup in your browser! Of course this sample is intended for web apps, but you could do the same in a Node.js app.</p>
 <h4>Let's practice! 2nd try! <a href="#Let's-practice!-2nd-try!" aria-hidden="true"><span class="anchor" id="Let's-practice!-2nd-try!"></span>#</a></h4>
 <p>Assuming we've got two exported functions from a <code>Canvas.js</code> file: <code>drawSmiley</code> and <code>drawBubble</code>:</p>
-<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">export</span><span> </span><span style="color: #A626A4">function</span><span> </span><span style="color: #4078F2">drawSmiley</span><span style="color: #383A42">()</span><span> </span><span style="color: #383A42">{</span>
+<pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">export</span><span> </span><span style="color: #A626A4">function</span><span> </span><span style="color: #4078F2">drawSmiley</span><span style="color: #383A42">(id)</span><span> </span><span style="color: #383A42">{</span>
 <span>  </span><span style="color: #A0A1A7;font-style: italic">// do something</span>
 <span style="color: #383A42">}</span>
-<span style="color: #A626A4">export</span><span> </span><span style="color: #A626A4">function</span><span> </span><span style="color: #4078F2">drawBubble</span><span style="color: #383A42">()</span><span> </span><span style="color: #383A42">{</span>
+<span style="color: #A626A4">export</span><span> </span><span style="color: #A626A4">function</span><span> </span><span style="color: #4078F2">drawBubble</span><span style="color: #383A42">(id)</span><span> </span><span style="color: #383A42">{</span>
 <span>  </span><span style="color: #A0A1A7;font-style: italic">// do something</span>
 <span style="color: #383A42">}</span></code></pre>
 <p>we could use the same method we used with <code>alert.js</code>:</p>
 <pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span>  </span><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core.JsInterop</span><span> </span><span style="color: #A0A1A7;font-style: italic">// needed to call interop tools</span>
 
 <span>  </span><span style="color: #A626A4">type</span><span> </span><span style="color: #C18401">ICanvas</span><span> </span><span style="color: #A626A4">=</span>
-<span>    </span><span style="color: #A626A4">abstract</span><span> drawSmiley</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">unit</span><span> </span><span style="color: #A626A4">-&gt;</span><span> </span><span style="color: #C18401">unit</span>
-<span>    </span><span style="color: #A626A4">abstract</span><span> drawBubble</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">unit</span><span> </span><span style="color: #A626A4">-&gt;</span><span> </span><span style="color: #C18401">unit</span>
+<span>    </span><span style="color: #A626A4">abstract</span><span> drawSmiley</span><span style="color: #A626A4">:</span><span> </span><span style="color: #A626A4">(</span><span style="color: #383A42">id</span><span style="color: #A626A4">:</span><span style="color: #C18401">string</span><span style="color: #A626A4">)</span><span> </span><span style="color: #A626A4">-&gt;</span><span> </span><span style="color: #C18401">unit</span>
+<span>    </span><span style="color: #A626A4">abstract</span><span> drawBubble</span><span style="color: #A626A4">:</span><span> </span><span style="color: #A626A4">(</span><span style="color: #383A42">id</span><span style="color: #A626A4">:</span><span style="color: #C18401">string</span><span style="color: #A626A4">)</span><span> </span><span style="color: #A626A4">-&gt;</span><span> </span><span style="color: #C18401">unit</span>
 
 <span>  </span><span style="color: #0184BC">[&lt;ImportAll</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;path/to/Canvas.js&quot;</span><span style="color: #A626A4">)</span><span style="color: #0184BC">&gt;]</span>
 <span>  </span><span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">mylib</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">ICanvas </span><span style="color: #A626A4">=</span><span> jsNative</span>
 
-<span>  mylib.drawSmiley</span><span style="color: #986801">()</span><span> </span><span style="color: #A0A1A7;font-style: italic">// etc..</span></code></pre>
+<span>  mylib.drawSmiley </span><span style="color: #50A14F">&quot;smiley&quot;</span><span> </span><span style="color: #A0A1A7;font-style: italic">// etc..</span></code></pre>
 <p>or we could use the <code>importMember</code> helper function to directly map the js function to the F# function.</p>
 <pre style="background-color: #FAFAFA;color: ;padding: 1em"><code><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core.JsInterop</span><span> </span><span style="color: #A0A1A7;font-style: italic">// needed to call interop tools</span>
 
@@ -303,7 +303,7 @@ var nacara = {};
 <span>  </span><span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">drawSmiley</span><span style="color: #A626A4">(</span><span style="color: #383A42">id</span><span style="color: #A626A4">:</span><span style="color: #C18401">string</span><span style="color: #A626A4">):</span><span> </span><span style="color: #C18401">unit </span><span style="color: #A626A4">=</span><span> importMember </span><span style="color: #50A14F">&quot;path/to/Canvas.js&quot;</span>
 <span>  </span><span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">drawBubble</span><span style="color: #A626A4">(</span><span style="color: #383A42">id</span><span style="color: #A626A4">:</span><span style="color: #C18401">string</span><span style="color: #A626A4">):</span><span> </span><span style="color: #C18401">unit </span><span style="color: #A626A4">=</span><span> importMember </span><span style="color: #50A14F">&quot;path/to/Canvas.js&quot;</span>
 
-<span>Canvas.drawSmiley</span><span style="color: #986801">()</span></code></pre>
+<span>Canvas.drawSmiley </span><span style="color: #50A14F">&quot;smiley&quot;</span></code></pre>
 <p>The result would be the same, but the philosophy is slightly different. That's basically up to you to make a choice 😉</p>
 <h4>Miscellaneous import helpers <a href="#Miscellaneous-import-helpers" aria-hidden="true"><span class="anchor" id="Miscellaneous-import-helpers"></span>#</a></h4>
 <p>There are other interop helpers you can use thanks to <code>Fable.Core.JsInterop</code>:</p>
