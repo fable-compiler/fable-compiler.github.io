@@ -51,6 +51,12 @@ type Post =
       Link: string }
 
 let posts = [
+    { Title = "Announcing Nagareyama (Fable 3) (III)"
+      Abstract = "This is the third post in the \"Announcing Nagareyama (Fable 3)\" series. This time we will be focusing on the actual new features of Nagareyama."
+      Author = Authors.alfonso
+      Date = DateTime(2020, 11, 20)
+      Link = "Announcing-Nagareyama-3.html"
+    }
     { Title = "Announcing Nagareyama (Fable 3) (II)"
       Abstract = "I hope you already tried out the new Fable and are enjoying it! The release candidate has just been published and in this post we will also dive into the differences when generating JS code compared to Fable 2."
       Author = Authors.alfonso
