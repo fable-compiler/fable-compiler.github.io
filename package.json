@@ -23,7 +23,7 @@
         "fable-splitter": "^2.1.12",
         "fs-extra": "^8.1.0",
         "gh-pages": "^2.2.0",
-        "highlight.js": "^9.18.1",
+        "highlight.js": "^10.1.2",
         "live-server": "^1.2.1",
         "marked": "^0.8.0",
         "nacara": "^0.2.1",
