@@ -210,35 +210,50 @@ var nacara = {};
 <h2>Use the official templates <a href="#Use-the-official-templates" aria-hidden="true"><span class="anchor" id="Use-the-official-templates"></span>#</a></h2>
 <ul class="textual-steps">
 <li>
-<h3>Use Fable template <a href="#Use-Fable-template" aria-hidden="true"><span class="anchor" id="Use-Fable-template"></span>#</a></h3>
-<p>The easiest way to get starting with Fable is by using Fable official template.</p>
+<h3>Use a Fable template <a href="#Use-a-Fable-template" aria-hidden="true"><span class="anchor" id="Use-a-Fable-template"></span>#</a></h3>
+<p>The easiest way to get started with Fable is to use one of the Fable official templates. First list them, then pick a template with a name that starts with &quot;fable&quot; to create a new project.</p>
 <ol>
-<li><code>dotnet new -i &quot;Fable.Template::*&quot;</code></li>
-<li><code>dotnet new fable -n MyFirstFableProject</code></li>
-<li><code>cd MyFirstFableProject</code></li>
+<li><code>dotnet new -i 'Fable.Template::*'</code></li>
+<li><code>mkdir MyFirstFableProject ; cd MyFirstFableProject</code></li>
+<li><code>dotnet new fable</code></li>
+</ol>
+<p>or, for example,</p>
+<ol start="3">
+<li><code>dotnet new fable-react-elmish</code></li>
 </ol>
 </li>
 <li>
 <h3>Install dependencies <a href="#Install-dependencies" aria-hidden="true"><span class="anchor" id="Install-dependencies"></span>#</a></h3>
-<p><strong>JS dependencies</strong> are listed in the <code>package.json</code> file. You can run <code>npm install</code>, which will download the packages to the <code>node_modules</code> folder and create a lock file.</p>
+<p><strong>JS dependencies</strong> are listed in the <code>package.json</code> file. You can run <code>npm install</code>, which will download the needed packages to the <code>node_modules</code> folder and create a lock file.</p>
 <p><strong>.NET dependencies</strong> are listed in the <code>src/App.fsproj</code> file. You can install them by running <code>dotnet restore</code>, but this is already automatically done by Fable.</p>
 <article class="message is-info">
-                <div class="message-body"><p>Lock files (like <code>package-lock.json</code> if you're using npm) should be committed to ensure reproducible builds whenever anybody clones the repo.</p>
+                <div class="message-body"><p>Lock files (like <code>package-lock.json</code> if you're using npm) should be committed to ensure reproducible builds whenever anybody clones your repo.</p>
 </div>
 </article>
 </li>
 <li>
 <h3>Build &amp; run the app <a href="#Build-and-run-the-app" aria-hidden="true"><span class="anchor" id="Build-and-run-the-app"></span>#</a></h3>
-<p>Now that we're done with the dependencies, let's start our app in watch mode.</p>
-<p>Execute <code>npm start</code> when the compilation is done, you'll be able to access your project from <a href="http://localhost:8080/">http://localhost:8080/</a> with your favorite browser.</p>
-<p>If you now open the project with your code editor, you can make some changes in the <code>App.fs</code> file located in the <code>src</code> folder. Save it and if the compilation succeeds you should be able to see your changes directly in your browser.</p>
+<p>Here we go.</p>
+<ol>
+<li><code>cd src</code></li>
+<li><code>dotnet build</code></li>
+<li><code>cd ..</code></li>
+<li><code>npm start</code></li>
+</ol>
+<p>Your web server app is now running in foreground until you kill it.</p>
+<p>While the server is running</p>
+<ul>
+<li>You can access your project at <a href="http://localhost:8080/">http://localhost:8080/</a> with your favorite browser.</li>
+<li>The server is in “watch” mode, so you will see server console output in the terminal window.</li>
+<li>You can edit the <code>App.fs</code> file located in the <code>src</code> folder. Each time you save the file, Fable rebuilds the project automatically. If the build succeeds, you will see your changes in the browser without refreshing the page; if not, nothing changes in the browser, and you can see the build errors in the server’s console output.</li>
+</ul>
 <article class="message is-info">
                 <div class="message-body"><p>Always check the <code>README.md</code> file shipped with the template to get up-to-date instructions.</p>
 </div>
 </article>
 </li>
 </ul>
-</div></div></section><div class="navigation-container"><button class="button is-outlined is-primary navigate-to-previous"><span class="icon"><i class=" fas fa-arrow-left"></i></span><span class="is-uppercase text">Previous</span></button><button class="button is-outlined is-primary navigate-to-next"><span class="is-uppercase text">Next</span><span class="icon"><i class=" fas fa-arrow-right"></i></span></button></div></div><div class="column full-height-scrollable-content toc-column is-hidden-touch is-2-desktop"><div><nav class="toc-container"><ul class="toc-headings"><div class="toc-label"><a href="#Use-the-official-templates">Use the official templates</a></div><ul class="toc-headings"><li><a href="#Use-Fable-template">Use Fable template</a></li><li><a href="#Install-dependencies">Install dependencies</a></li><li><a href="#Build-and-run-the-app">Build & run the app</a></li></ul></li></ul></nav></div></div></div><div class="is-hidden-touch material-like-container is-for-desktop"><div class="material-like-button scroll-to-top"><span class="icon is-medium"><i class=" fas fa-angle-up fa-lg"></i></span></div></div><div class="is-hidden-desktop material-like-container is-for-touch"><div class="material-like-container-body"><div class="material-like-button toggle-toc"><span class="icon is-medium"><i class=" fas fa-ellipsis-v fa-lg"></i></span><div class="material-like-button-label">Table of content</div></div><div class="material-like-button scroll-to-top"><span class="icon is-medium"><i class=" fas fa-angle-up fa-lg"></i></span><div class="material-like-button-label">Scroll to top</div></div></div><div class="material-like-button close-open-button"><span class="icon is-medium"><i class=" fas fa-plus fa-lg"></i></span></div></div></div><script type="text/javascript">
+</div></div></section><div class="navigation-container"><button class="button is-outlined is-primary navigate-to-previous"><span class="icon"><i class=" fas fa-arrow-left"></i></span><span class="is-uppercase text">Previous</span></button><button class="button is-outlined is-primary navigate-to-next"><span class="is-uppercase text">Next</span><span class="icon"><i class=" fas fa-arrow-right"></i></span></button></div></div><div class="column full-height-scrollable-content toc-column is-hidden-touch is-2-desktop"><div><nav class="toc-container"><ul class="toc-headings"><div class="toc-label"><a href="#Use-the-official-templates">Use the official templates</a></div><ul class="toc-headings"><li><a href="#Use-a-Fable-template">Use a Fable template</a></li><li><a href="#Install-dependencies">Install dependencies</a></li><li><a href="#Build-and-run-the-app">Build & run the app</a></li></ul></li></ul></nav></div></div></div><div class="is-hidden-touch material-like-container is-for-desktop"><div class="material-like-button scroll-to-top"><span class="icon is-medium"><i class=" fas fa-angle-up fa-lg"></i></span></div></div><div class="is-hidden-desktop material-like-container is-for-touch"><div class="material-like-container-body"><div class="material-like-button toggle-toc"><span class="icon is-medium"><i class=" fas fa-ellipsis-v fa-lg"></i></span><div class="material-like-button-label">Table of content</div></div><div class="material-like-button scroll-to-top"><span class="icon is-medium"><i class=" fas fa-angle-up fa-lg"></i></span><div class="material-like-button-label">Scroll to top</div></div></div><div class="material-like-button close-open-button"><span class="icon is-medium"><i class=" fas fa-plus fa-lg"></i></span></div></div></div><script type="text/javascript">
 nacara.pageId = '2-steps/your-first-fable-project';
                                         </script><script type="text/javascript">window.addEventListener("DOMContentLoaded", () => {
 
