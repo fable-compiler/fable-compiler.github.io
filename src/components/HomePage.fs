@@ -276,6 +276,7 @@ async {
             paragraph "These are some of the projects and companies using Fable. Send us [a message](https://twitter.com/FableCompiler) to include yours!"
             br []
             div [Class "flex-wrap fable-friends"] [
+              linkImage "resoptima.png" "https://resoptima.com/"
               linkImage "demetrix.png" "https://demetrixbio.com"
               linkImage "compraga.jpeg" "https://www.compraga.de/"
               linkImage "aimtec.jpg" "https://www.aimtecglobal.com/en/"
