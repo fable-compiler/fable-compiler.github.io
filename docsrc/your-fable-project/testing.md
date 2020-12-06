@@ -33,7 +33,7 @@ Jest.describe("can run basic tests", fun () ->
     )
 )
 ```
-See Jester documentation to more informations : [https://shmew.github.io/Fable.Jester/](https://jestjs.io/docs/en/configuration)
+See Jester documentation to more informations : [https://shmew.github.io/Fable.Jester/](https://shmew.github.io/Fable.Jester/)
 
 ## Run
 Like all transpiled languages to JS, you have to convert your project to JS.  
