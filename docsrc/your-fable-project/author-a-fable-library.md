@@ -15,7 +15,7 @@ The last point may sound complicated but it's only a matter of adding a couple o
 ```xml
 <!-- Add source files to "fable" folder in Nuget package -->
 <ItemGroup>
-    <Content Include="*.fsproj; **\*.fs" PackagePath="fable\" />
+    <Content Include="*.fsproj; **\*.fs; **\*.fsi" PackagePath="fable\" />
 </ItemGroup>
 ```
 
