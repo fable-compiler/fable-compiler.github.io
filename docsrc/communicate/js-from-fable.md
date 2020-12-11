@@ -61,6 +61,28 @@ If the value is globally accessible in JS, you can use the `Global` attribute wi
  let [<Global>] console: JS.Console = jsNative
 ```
 
+
+#### OOP Class definition and inheritance
+
+Assuming we need to import an ES6 class or even a typescript class from which we only know the types, it is advised to attacj it to a class with an abstract member defining the types and a default implementation which points to the jsNative reference:
+
+```fsharp
+[<Import("DataManager", from="library/data")>]
+type DataManager<'Model> (conf:obj) =
+     class
+         abstract member delete: 'Model -> Promise<obj>
+         default this.delete(_:'Model):Promise<obj> = jsNative
+
+         abstract member insert: 'Model -> Promise<obj>
+         default this.insert(_:'Model):Promise<obj> = jsNative
+
+         abstract member update:'Model -> Promise<obj>
+         default this.update (_:'Model):Promise<obj> = jsNative
+     end
+```
+
+From this point it is possible to use it or even to inherit from it and use the keyword `override` as it is usually done on regular F#, [https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/inheritance](see the official F# documentation).
+
 #### Let's practice! 1st try!
 
 Now that we've seen this, let's review the code in the [interop](https://github.com/fable-compiler/fable2-samples/tree/master/interop) sample
@@ -155,6 +177,7 @@ Canvas.drawSmiley "smiley"
 ```
 
 The result would be the same, but the philosophy is slightly different. That's basically up to you to make a choice 😉
+
 
 #### Miscellaneous import helpers
 
