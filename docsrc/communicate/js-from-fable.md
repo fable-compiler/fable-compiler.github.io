@@ -81,7 +81,7 @@ type DataManager<'Model> (conf:obj) =
      end
 ```
 
-From this point it is possible to use it or even to inherit from it and use the keyword `override` as it is usually done on regular F#, [https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/inheritance](see the official F# documentation).
+From this point it is possible to use it or even to inherit from it and use the keyword `override` as it is usually done on regular F#, [see the official F# documentation](https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/inheritance).
 
 #### Let's practice! 1st try!
 
