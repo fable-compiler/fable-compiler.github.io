@@ -178,7 +178,6 @@ Canvas.drawSmiley "smiley"
 
 The result would be the same, but the philosophy is slightly different. That's basically up to you to make a choice 😉
 
-
 #### Miscellaneous import helpers
 
 There are other interop helpers you can use thanks to `Fable.Core.JsInterop`:
