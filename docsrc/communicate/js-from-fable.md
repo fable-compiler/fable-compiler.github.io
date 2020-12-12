@@ -64,7 +64,7 @@ If the value is globally accessible in JS, you can use the `Global` attribute wi
 
 #### OOP Class definition and inheritance
 
-Assuming we need to import an ES6 class or even a typescript class from which we only know the types, it is advised to attacj it to a class with an abstract member defining the types and a default implementation which points to the jsNative reference:
+Assuming we need to import an ES6 class or even a typescript class from which we only know the types, it is advised to attach it to a class with an abstract member defining the types and a default implementation which points to the `jsNative` reference:
 
 ```fsharp
 [<Import("DataManager", from="library/data")>]
