@@ -12,7 +12,7 @@ open Fable.Core
 open Fable.Core.JsInterop
 
 let introText =
-  "Fable is a compiler powered by [Babel](https://babeljs.io/) designed to make [F#](http://fsharp.org/) a first-class citizen of the JavaScript ecosystem"
+  "Fable is a compiler designed to make [F#](http://fsharp.org/) a first-class citizen of the JavaScript ecosystem"
 
 let fableConfPromo =
   "FableConf 2019 is happening in Antwerp on September 6/7th. **[Get your ticket soon!](/fableconf)**"
@@ -134,8 +134,8 @@ let renderBody (info: PageInfo) =
             ]
 
           pre []
-            [ str """git clone https://github.com/fable-compiler/fable2-samples
-cd fable2-samples/browser  
+            [ str """git clone https://github.com/fable-compiler/fable3-samples
+cd fable3-samples/browser  
 npm install
 npm start"""
             ] ]

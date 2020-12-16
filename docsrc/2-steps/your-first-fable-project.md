@@ -14,6 +14,8 @@ Now we're ready, let's start a new project using Fable!
 
 ### Use a Fable template
 
+**ATTENTION: Templates may not be yet updated to Fable 3**
+
 The easiest way to get started with Fable is to use one of the Fable official templates. First list them, then pick a template with a name that starts with "fable" to create a new project.
 
 1. `dotnet new -i 'Fable.Template::*'`
