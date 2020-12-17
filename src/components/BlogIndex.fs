@@ -51,6 +51,12 @@ type Post =
       Link: string }
 
 let posts = [
+    { Title = "It was observables all this time"
+      Abstract = "Reviewing, and rethinking, UI architectures."
+      Author = Authors.alfonso
+      Date = DateTime(2020, 12, 17)
+      Link = "It-was-observables-all-this-time.html"
+    }
     { Title = "Announcing Nagareyama (Fable 3) (and IV)"
       Abstract = "Today is the day, Fable 3 Nagareyama is officially released!"
       Author = Authors.alfonso
