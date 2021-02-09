@@ -12,7 +12,7 @@ open Fable.Core
 open Fable.Core.JsInterop
 
 let introText =
-  "Fable is a compiler designed to make [F#](http://fsharp.org/) a first-class citizen of the JavaScript ecosystem"
+  "Fable is a compiler that makes [F#](http://fsharp.org/) a first-class citizen of the JavaScript ecosystem"
 
 let fableConfPromo =
   "FableConf 2019 is happening in Antwerp on September 6/7th. **[Get your ticket soon!](/fableconf)**"
