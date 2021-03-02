@@ -51,6 +51,12 @@ type Post =
       Link: string }
 
 let posts = [
+    { Title = "Announcing Elmish.Snabbdom"
+      Abstract = "I've been recently playing with Feliz.Engine and wanted to check how easy was to adapt it to an alternative Virtual-DOM implementation, like Snabbdom. This started just as an experiment but I've been pleasantly surprised by how simple yet powerful Snabbdom is, and more importantly how well it fits with the Elmish architecture"
+      Author = Authors.alfonso
+      Date = DateTime(2021, 3, 2)
+      Link = "Announcing-Elmish-Snabbdom.html"
+    }
     { Title = "It was observables all this time"
       Abstract = "Reviewing, and rethinking, UI architectures."
       Author = Authors.alfonso
