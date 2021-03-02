@@ -5,7 +5,7 @@
 <p>Because the changes are so big, we&#39;re currently evaluating the impact on the compiler. Things are looking good and most likely the PR will be merged soon. (The only drawback is the bundle size may go up a bit due to the additional reflection info.)</p>
 <p>But it&#39;s already possible for you to check out this shinny feature! You only need to install the <code>fable-compiler-quotations</code> package from npm and tell fable-loader to use this version instead by adding &quot;compiler&quot; to your Fable options like:</p>
 <pre><code class="language-js">    <span class="token punctuation">{</span>
-        test<span class="token operator">:</span> <span class="token regex">/\.fs(x|proj)?$/</span><span class="token punctuation">,</span>
+        test<span class="token operator">:</span> <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">\.fs(x|proj)?$</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">,</span>
         use<span class="token operator">:</span> <span class="token punctuation">{</span>
             loader<span class="token operator">:</span> <span class="token string">"fable-loader"</span><span class="token punctuation">,</span>
             options<span class="token operator">:</span> <span class="token punctuation">{</span>
