@@ -12,19 +12,19 @@ open Fable.Core
 open Fable.Core.JsInterop
 
 let introText =
-  "Fable is a compiler that makes [F#](http://fsharp.org/) a first-class citizen of the JavaScript ecosystem"
+  "Fable is a compiler that brings [F#](http://fsharp.org/) into the JavaScript ecosystem"
 
 let fableConfPromo =
   "FableConf 2019 is happening in Antwerp on September 6/7th. **[Get your ticket soon!](/fableconf)**"
 
 let cardTexts =
   [
-    "Functional programming and more", None, "Immutable by default. Powerful pattern matching. Lightweight syntax. Units of measure. Type providers. Enjoy!"
-    "Type safety without the hassle", None, "Don't panic about verbose signatures. Let the compiler infer the types and catch the bugs for you before they ever get into runtime!"
-    "Modern Javascript output", None, "Fable produces readable JavaScript code compatible with ES2015 standards and popular tooling like [Webpack](https://webpack.js.org/)!"
-    "Easy JavaScript interop", None, "Call [JavaScript from Fable](/docs/communicate/js-from-fable.html) or [Fable from JS](/docs/communicate/fable-from-js.html)! Use NPM packages! Everything's ready for you!"
-    "Editors: first class support", None, "Choose your favorite tool: from [Visual Studio Code](http://ionide.io/) to [JetBrains Rider](https://www.jetbrains.com/rider/). Check [the whole list here](/docs/2-steps/setup.html#development-tools)."
-    "Batteries charged", None, "Fable supports [most of the F# core library and some of most commonly used .NET APIs](/docs/dotnet/compatibility.html). But don't worry about huge bundle sizes, you only pay for what you get."
+    "Functional programming and more", None, "Immutable by default. Powerful pattern matching. Lightweight syntax. Units of measure. Type providers. Enjoy."
+    "Type safety without the hassle", None, "Type inference provides robustness and correctness, but without the cost of additional code. Let the compiler catch bugs for you."
+    "Modern Javascript output", None, "Fable produces readable JavaScript code compatible with ES2015 standards and popular tooling like [Webpack](https://webpack.js.org/)."
+    "Easy JavaScript interop", None, "Call [JavaScript from Fable](/docs/communicate/js-from-fable.html) or [Fable from JS](/docs/communicate/fable-from-js.html). Use NPM packages. The entire JavaScript ecosystem is at your fingertips."
+    "First-class editor tools", None, "Choose your favorite tool: from [Visual Studio Code](http://ionide.io/) to [JetBrains Rider](https://www.jetbrains.com/rider/). Check [the whole list here](/docs/2-steps/setup.html#development-tools)."
+    "Batteries included", None, "Fable supports [the F# core library and some common .NET libraries](/docs/dotnet/compatibility.html) to supplement the JavaScript ecosystem."
   ]
 
 let whereToText: string =
