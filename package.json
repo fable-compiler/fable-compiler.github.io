@@ -4,7 +4,6 @@
         "postinstall": "dotnet tool restore && dotnet paket restore",
         "start-sass": "npm run build-sass && npm run build-sass -- --watch",
         "build-sass": "sass src/styles/main.scss deploy/css/styles.css",
-        "start-docs": "nacara --watch",
         "build-docs": "nacara",
         "start-fable": "fable-splitter src/App.fsproj -o build --watch --run",
         "build-fable": "fable-splitter src/App.fsproj -o build --run",

@@ -11,11 +11,8 @@ open GlobalHelpers
 open Fable.Core
 open Fable.Core.JsInterop
 
-let introText =
-  "Fable is a compiler that brings [F#](http://fsharp.org/) into the JavaScript ecosystem"
-
-let fableConfPromo =
-  "FableConf 2019 is happening in Antwerp on September 6/7th. **[Get your ticket soon!](/fableconf)**"
+let twitterFeed =
+  """<a class="twitter-timeline" data-lang="en" data-width="400" data-height="600" data-theme="light" href="https://twitter.com/FableCompiler?ref_src=twsrc%5Etfw">Tweets by FableCompiler</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>"""
 
 let cardTexts =
   [
@@ -51,24 +48,24 @@ let linkImage src href =
 let paragraph text =
   parseMarkdownAsReactEl "fable-introduction" text
 
-let prepareCode snippet = 
+let prepareCode snippet =
   parseMarkdownAsReactEl "" ("```fsharp\n" + snippet + "\n```")
-//   pre  
-//     [ Style [ BackgroundColor "whitesmoke" ] ] 
-//     [ code 
+//   pre
+//     [ Style [ BackgroundColor "whitesmoke" ] ]
+//     [ code
 //         [
 //           Class "lang-fsharp"
 //           Style [
 //             BackgroundColor "whitesmoke"
 //             FontFamily "Fira Code"
 //             FontSize "0.8rem"
-//           ] ] 
+//           ] ]
 //         [ str snippet ] ]
 
-module Features = 
+module Features =
 
-  let prepare title text snippet = 
-        Columns.columns [ 
+  let prepare title text snippet =
+        Columns.columns [
           Columns.IsVCentered
           Columns.Props [
             Style [
@@ -95,12 +92,25 @@ let renderBody (info: PageInfo) =
   // This fixes the problem with the double scrollbar on Windows
   div [Style [ CSSProp.Overflow OverflowOptions.Hidden ]] [
 
-    Header.render()
-
-    parseMarkdownAsReactEl "fable-catchphrase" introText
-    // parseMarkdownAsReactEl "fableconf-promo" fableConfPromo
-
     Container.container [] [
+      Columns.columns [ Columns.IsVCentered ] [
+        Column.column [
+          Column.Width (Screen.All, Column.IsTwoThirds)
+        ] [
+          Header.render()
+        ]
+
+        Column.column [ Column.Width (Screen.All, Column.IsOneThird) ] [
+          div [
+            Style [
+              Margin "10px auto"
+              Width "fit-content"
+            ]
+            DangerouslySetInnerHTML { __html = parseMarkdown twitterFeed }
+          ] []
+        ]
+      ]
+
       Columns.columns []
         [ Column.column [] [cardTexts.[0] |||> renderCard (Img "./img/fsharp.png")]
           Column.column [] [cardTexts.[1] |||> renderCard (FaIcon Fa.Solid.Lock)]
@@ -119,15 +129,15 @@ let renderBody (info: PageInfo) =
       ]
 
       Section.section [Section.CustomClass "quickstart"]
-        [  
+        [
           Heading.h4 [] [ str "Quick start"]
-          Content.content 
-            [] 
+          Content.content
+            []
             [ parseMarkdownAsReactEl "" "[Try Fable online](/repl) or get started in your local machine with our set of samples ([more info](/docs/2-steps/setup.html)):"
-              ol 
+              ol
                 []
-                [ li [] [ a [ Href "https://dotnet.microsoft.com"; Target "_blank"] [ str "Install .NET Core SDK"] ] 
-                  li [] [ a [ Href "https://nodejs.org/en/"; Target "_blank"] [ str "Install Node.js"] ] 
+                [ li [] [ a [ Href "https://dotnet.microsoft.com"; Target "_blank"] [ str "Install .NET Core SDK"] ]
+                  li [] [ a [ Href "https://nodejs.org/en/"; Target "_blank"] [ str "Install Node.js"] ]
                   li [] [ str "Then type the following in a terminal and open http://localhost:8080 in your browser after compilation finishes:"]
                 ]
 
@@ -135,7 +145,7 @@ let renderBody (info: PageInfo) =
 
           pre []
             [ str """git clone https://github.com/fable-compiler/fable3-samples
-cd fable3-samples/browser  
+cd fable3-samples/browser
 npm install
 npm start"""
             ] ]
@@ -146,30 +156,30 @@ npm start"""
           Modifier.BackgroundColor IsWhite
         ]
       ] [
-        Heading.h2 [ 
+        Heading.h2 [
           Heading.Props [Style [ Color "dodgerblue" ] ]
           Heading.Modifiers [Modifier.TextAlignment (Screen.All, TextAlignment.Centered)]
-          ] 
+          ]
           [ str "Features"]
         Content.content [
-          Content.Modifiers [Modifier.TextAlignment (Screen.All, TextAlignment.Centered)]          
+          Content.Modifiers [Modifier.TextAlignment (Screen.All, TextAlignment.Centered)]
         ] [
           p [] [ str "These are some of the main F# features that you can use in your web apps with Fable."]
         ]
         hr []
 
-        (Features.prepare 
+        (Features.prepare
           "Powerful pattern matching"
           "Model your domain with union types and match complex patterns with ease. The compiler will warn you if you're forgetting some cases!"
 """
 type Face = Ace | King | Queen | Jack | Number of int
-type Color = Spades | Hearts | Diamonds | Clubs 
+type Color = Spades | Hearts | Diamonds | Clubs
 type Card = Face * Color
 
 let aceOfHearts = Ace,Hearts
 let tenOfSpades = (Number 10), Spades
 
-match card with 
+match card with
 | Ace, Hearts -> printfn "Ace Of Hearts!"
 | _, Hearts -> printfn "A lovely heart"
 | (Number 10), Spades -> printfn "10 of Spades"
@@ -179,7 +189,7 @@ match card with
 // a case not covered by the pattern(s).
 """     )
 
-        (Features.prepare 
+        (Features.prepare
           "Computation expressions"
           "There's a lot of code involving continuations out there, like asynchronous or undeterministic operations. Other languages bake specific solutions into the syntax, with F# you can use built-in computation expressions and also extend them yourself."
 """
@@ -195,7 +205,7 @@ type OptionBuilder() =
   member __.Bind(opt, binder) =
     match opt with Some value -> binder value | None -> None
   member __.Return(value) = Some value
-    
+
 let option = OptionBuilder()
 
 option {
@@ -208,7 +218,7 @@ option {
 }
 """     )
 
-        (Features.prepare 
+        (Features.prepare
           "Units of measure"
           "Let the compiler verify arithmetic relationships for you to help prevent programming errors."
 """
@@ -218,15 +228,15 @@ option {
 let distance = 12.0<m>
 let time = 6.0<s>
 
-let thisWillFail = distance + time 
-// ERROR: The unit of measure 'm' does 
+let thisWillFail = distance + time
+// ERROR: The unit of measure 'm' does
 // not match the unit of measure 's'
 
 let thisWorks = distance / time
 // 2.0<m/s>
 """     )
 
-        (Features.prepare 
+        (Features.prepare
           "Type providers"
           "Build your types using real-world conditions and make the compiler warn you if those conditions change."
 """
@@ -248,16 +258,16 @@ async {
 }
 """     )
 
-//         (Features.prepare 
+//         (Features.prepare
 //           "Conditional compilation"
 //           "Use compiler directives to change the behavior of your program."
 // """
 // #if VERSION1
-// let addition x y = 
+// let addition x y =
 //   x + y + 100
 
 // #else
-// let addition x y = 
+// let addition x y =
 //   x + y
 
 // #endif
@@ -267,10 +277,10 @@ async {
 
       ]
 
-      Section.section 
-          [] 
-          [ Heading.h4 
-              [ Heading.Props [ Style [ TextAlign TextAlignOptions.Center ] ] ] 
+      Section.section
+          []
+          [ Heading.h4
+              [ Heading.Props [ Style [ TextAlign TextAlignOptions.Center ] ] ]
               [ str "Users of Fable"]
 
             paragraph "These are some of the projects and companies using Fable. Send us [a message](https://twitter.com/FableCompiler) to include yours!"
@@ -294,6 +304,6 @@ async {
               linkImage "BTS.svg" "https://www.bluetradingsystems.com/"
               linkImage "umc.png" "https://www.who-umc.org/"
             ]
-        ] 
+        ]
     ]
   ]

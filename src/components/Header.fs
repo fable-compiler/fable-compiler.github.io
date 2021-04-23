@@ -11,7 +11,7 @@ type Helpers =
         div [
             Style [
                 Width "250px"
-                Margin "0.5rem 0"
+                Margin "0 0.5rem"
             ]
         ] [
             a [
@@ -25,7 +25,7 @@ type Helpers =
             ] [
                 Button.button  [
                     Button.Color color
-                    Button.Size IsMedium 
+                    Button.Size IsMedium
                     Button.IsOutlined
                     Button.IsFullWidth
                     Button.Props [ Style [ FontSize "1rem"]]
@@ -33,43 +33,45 @@ type Helpers =
             ]
         ]
 
+let introText =
+  "Fable is a compiler that brings [F#](http://fsharp.org/) into the JavaScript ecosystem"
+
+let fableConfPromo =
+  "FableConf 2019 is happening in Antwerp on September 6/7th. **[Get your ticket soon!](/fableconf)**"
+
 let render () =
-    Columns.columns [
-        Columns.CustomClass "fable-header"
-        Columns.Props [Style [ Margin "20px 0" ]]
+    div [
+        Class "fable-header"
+        Style [ Margin "20px 0" ]
     ] [
-        Column.column [
-            Column.Offset (Screen.All, Column.IsOneQuarter)            
-        ] [
-            Image.image [
-                Image.Props [
-                    Style [
-                        MaxWidth "500px"
-                        MarginLeft "auto"
-                        MarginRight "auto"
-                    ]
-                ]
-            ] [
-                img [
-                    Class "fable-logo"
-                    Src WebAssets.FableLogo
+        Image.image [
+            Image.Props [
+                Style [
+                    MaxWidth "500px"
+                    MarginLeft "auto"
+                    MarginRight "auto"
                 ]
             ]
+        ] [
+            img [
+                Class "fable-logo"
+                Src WebAssets.FableLogo
+            ]
         ]
-        Column.column [
-            Column.CustomClass "fable-header-buttons"
-            Column.Props [
-                Style [
-                    Display DisplayOptions.Flex    
-                    FlexDirection "column"
-                    JustifyContent "center"
-                ]
+
+        div [
+            Style [
+                Display DisplayOptions.Flex
+                JustifyContent "center"
             ]
         ] [
             Helpers.LinkButton("TRY ONLINE", "/repl/", openNewTab=true, margin="10px")
             Helpers.LinkButton("GET STARTED", "/docs/2-steps/setup.html", color=IsInfo, margin="10px")
             // Helpers.LinkButton("JOIN FABLECONF!", "/fableconf", color=IsDanger, margin="10px")
         ]
+
+        GlobalHelpers.parseMarkdownAsReactEl "fable-catchphrase" introText
+        // GlobalHelpers.parseMarkdownAsReactEl "fableconf-promo" fableConfPromo
     ]
 
 let renderMinimal () =
