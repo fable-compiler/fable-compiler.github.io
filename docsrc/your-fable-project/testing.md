@@ -55,7 +55,7 @@ module.exports = {
 };
 ```
 
-You should config Jest with a another config file `jest.config.js` :
+You should config Jest with another config file `jest.config.js` :
 ```js
 module.exports = {
   moduleFileExtensions: ['js'],
@@ -81,7 +81,7 @@ And run test:
   npx jest --config=jest.config.js
 ```
 
-Youhou! You can see test result :)
+Youhou! You can see the test result :)
 
 You can specify this command on npm in `package.json` :
 ```json
@@ -91,7 +91,7 @@ You can specify this command on npm in `package.json` :
   },
 }
 ```
-And now run with single command :
+And now run with a single command:
 ```bash
   npm test
 ```
@@ -118,7 +118,7 @@ You add a npm script in `package.json` :
   },
 }
 ```
-I use `npm-run-all` to run several command in parallel. You should install with :
+I use `npm-run-all` to run several commands in parallel. You should install with:
 ```bash
   npm install --save-dev npm-run-all
 ```
