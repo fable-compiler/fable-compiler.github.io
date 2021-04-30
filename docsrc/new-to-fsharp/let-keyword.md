@@ -21,7 +21,7 @@ let add x y =
     x + y
 ```
 
-In the above snippet a function that adds two integers is being bound to an identifier named `add` and them two values are being bound to the identifiers `x` and `y`.
+In the above snippet a function that adds two integers is being bound to an identifier named `add` and then two values are being bound to the identifiers `x` and `y`.
 
 ## Shadowing
 
