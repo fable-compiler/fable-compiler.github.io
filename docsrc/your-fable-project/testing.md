@@ -2,7 +2,7 @@
 title: Testing
 ---
 
-You can use all tools of the JS ecosystem.  
+You can use all tools of the JS ecosystem.
 
 Several js libs already have a Fable binding :
 - mocha: [https://github.com/Zaid-Ajaj/Fable.Mocha](https://github.com/Zaid-Ajaj/Fable.Mocha)
@@ -11,11 +11,11 @@ Several js libs already have a Fable binding :
 # Example with jest
 ## Setup
 You should install js test runner :
-```bash
+```shell
   npm install jest --save-dev
 ```
 And Fable binding :
-```bash
+```shell
   # nuget
   dotnet add package Fable.Jester
   # paket
@@ -36,10 +36,10 @@ Jest.describe("can run basic tests", fun () ->
 See Jester documentation to more informations : [https://shmew.github.io/Fable.Jester/](https://shmew.github.io/Fable.Jester/)
 
 ## Run
-Like all transpiled languages to JS, you have to convert your project to JS.  
+Like all transpiled languages to JS, you have to convert your project to JS.
 For this, you can use Webpack, but it isn't the ideal solution, because test runners generally prefer to have small files rather than a single big file.
 You can use the compiler directly via the `fable-splitter` tool.
-```bash
+```shell
   npm install fable-splitter --save-dev
 ```
 
@@ -66,18 +66,18 @@ module.exports = {
   transform: {}
 };
 ```
-`roots` should be equals to `outDir` of compilator.  
+`roots` should be equals to `outDir` of compilator.
 `testMatch` indicate file pattern name with test.
 `coveragePathIgnorePatterns`, `testEnvironment`, `transform` improve performance of runner.
 You can read Jest doc to see more : [https://jestjs.io/docs/en/configuration](https://jestjs.io/docs/en/configuration)
 
 Now, you can build:
-```bash
+```shell
   npx fable-splitter -c splitter.config.js
 ```
 
 And run test:
-```bash
+```shell
   npx jest --config=jest.config.js
 ```
 
@@ -92,17 +92,17 @@ You can specify this command on npm in `package.json` :
 }
 ```
 And now run with a single command:
-```bash
+```shell
   npm test
 ```
 
 ## Watch mode
-Running each time is slow.  
-You can use the watch feature to take advantage of the compiler and runner cache, and run tests whenever a file changes.  
+Running each time is slow.
+You can use the watch feature to take advantage of the compiler and runner cache, and run tests whenever a file changes.
 
-Currently, Fable doesn't have official plugins for the different runners.  
+Currently, Fable doesn't have official plugins for the different runners.
 So you have to execute these two commands in parallel:
-```bash
+```shell
   npx fable-splitter -c splitter.config.js -w
   npx jest --config=jest.config.js --watchAll
 ```
@@ -119,12 +119,12 @@ You add a npm script in `package.json` :
 }
 ```
 I use `npm-run-all` to run several commands in parallel. You should install with:
-```bash
+```shell
   npm install --save-dev npm-run-all
 ```
 
 Now, run
-```bash
+```shell
   npm run-script watch-test
 ```
 

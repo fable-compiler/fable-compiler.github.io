@@ -83,7 +83,8 @@ module.exports = {
             "./lightner/grammars/xml.tmLanguage.json",
             "./lightner/grammars/JavaScript.tmLanguage.json",
             "./lightner/grammars/TypeScript.tmLanguage.json",
-            "./lightner/grammars/html.tmLanguage.json"
+            "./lightner/grammars/html.tmLanguage.json",
+            "./lightner/grammars/shell-unix-bash.tmLanguage.json"
         ]
     },
     layouts: {
