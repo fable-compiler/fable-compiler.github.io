@@ -1,6 +1,6 @@
 <html class="has-navbar-fixed-top"><head><title>What is Fable? · Fable</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" type="text/css" href="/docs/style.css"/><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"/><script src="https://polyfill.app/api/polyfill?features=scroll-behavior"></script><script type="text/javascript">
 var nacara = {};
-                                    </script><script type="text/javascript">window.addEventListener("DOMContentLoaded", () => {
+                                    </script><script type="text/javascript">const setupMenuNavigation = () => {
     /*
      * Initialize the menu state
      */
@@ -161,7 +161,17 @@ var nacara = {};
             document.querySelector(".navigate-to-next").style.visibility = "visibile";
         }
     })();
+}
 
+
+window.addEventListener("DOMContentLoaded", () => {
+
+    if (document.querySelector(".menu") !== null
+            && document.querySelector(".navigate-to-previous") !== null
+            && document.querySelector(".navigate-to-next") !== null) {
+
+        setupMenuNavigation();
+    }
 
     /*
      * Setup menu burger behaviour
