@@ -10,7 +10,7 @@
         "build-fast-fable": "node build/Main.js",
         "start-server": "live-server deploy --port=8000 --no-browser",
         "start": "concurrently npm:start-*",
-        "build": "npx rimraf deploy && concurrently npm:build-*",
+        "build": "npx rimraf deploy && concurrently 'npm:build-sass' 'npm:build-docs' 'npm:build-fable'",
         "deploy": "npm run build && gh-pages -d deploy -b master",
         "deploy-fast": "npm run build-fast && gh-pages -d deploy -b master"
     },
