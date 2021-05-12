@@ -4,24 +4,43 @@ title: What is Fable?
 
 [[toc]]
 
-Fable is a solution that lets you write JavaScript applications with F#, a functional programming language.
+Fable is a compiler that lets you use [F#](https://fsharp.org/) to build applications that run in the JavaScript ecosystem.
 
-### What is FSharp?
+```fsharp
+type Shape =
+    | Square of side: double
+    | Rectangle of width: double * length: double
+
+let getArea shape =
+    match shape with
+    | Square side -> side * side
+    | Rectangle (width, length) -> width * length
+
+let square = Square 2.0
+printfn $"The area of the square is {getArea square}"
+```
+
+### What is F#?
 
 F# (pronounced f-sharp) is a strongly typed Functional programming language which offers many great features to build robust and maintable code such as:
 
-- Lightweight syntax. It's very easy to get started with the F# language and it's often easy to read code from other people as well.
-- Immutable by default, but mutable if needed so you can interop with your JavaScript codebase without any problem.
-- Rich types which let you represent easily your data or your domain.
-- Powerful pattern matching to define complex behaviors.
+- Lightweight syntax
+- Immutability baked into the language by default
+- Rich types which let you represent easily your data or your domain
+- Powerful pattern matching to define complex behaviors
 - And so much more...
 
-F# is used in fields like [Data Science](https://fsharp.org/guides/data-science), [Machine learning](https://fsharp.org/guides/machine-learning), [Cloud Programming](https://fsharp.org/guides/cloud), [Financial Computing](http://www.tryfsharp.org/Learn/financial-computing) and much more.
+F# is already used on the server for web and cloud apps, and it's also used quite a lot for data science and machine learning. It's a great general-purpose language, and also a great fit for building beautiful UIs that run in the browser.
 
 ### Why use F# for your next JavaScript project?
 
-After years of using JavaScript and OOP languages we felt it was a good time to use a mature language like F# to reduce the overall number of bugs in our applications, especially runtime bugs and thus build more robust applications.
+F# is a great choice to build beautiful apps that run in the browser. F# is:
 
-The fact that F# is a language of choice to capture complex business models appeared to us to be a good fit to enhance code readability and lessen maintenance problems.
+* Succinct with lightweight syntax
+* Robust with a great type system and pattern matching
+* Safe with immutability baked into the language
+* Supported by large companies (such as Microsoft and Jetbrains) and comes with commercial tooling support
 
-So we built Fable, with the desire of giving everyone the best of these two worlds. We now offer you the ability to access the whole JS world from F#.
+When compared with JavaScript, F# is safer, more robust, and more pleasant to read and write.
+
+F# is a mature language with functional programming and object programming capabilities, but it doesn't sacrifice readability or simplicity to offer these things. Because of that, we think it's a great choice for your next JavaScript application.
