@@ -1,9 +1,11 @@
-FROM gitpod/workspace-full:latest
+FROM gitpod/workspace-dotnet:latest
 
-USER root
+USER gitpod
 
-RUN wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb && \
-    dpkg -i packages-microsoft-prod.deb && rm -rf packages-microsoft-prod.deb && \
-    add-apt-repository universe && \
-    apt-get update && apt-get -y -o APT::Install-Suggests="true" install dotnet-sdk-3.1 && \
-    apt -y clean;
+# Install & use custom Node.js version
+ENV NODE_VERSION=14
+RUN bash -c ". .nvm/nvm.sh && \
+        nvm install ${NODE_VERSION} && \
+        nvm alias default ${NODE_VERSION}"
+
+RUN npm i -g npm@7
