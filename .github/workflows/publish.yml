@@ -15,7 +15,5 @@ jobs:
         run: npm i -g npm@7
       - name: Package restore
         run: npm install
-      - name: Build docs
-        run: npm run build-docs
       - name: Build site
         run: npm run deploy
