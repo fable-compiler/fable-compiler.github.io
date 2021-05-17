@@ -19,7 +19,8 @@
     Css<span class="token punctuation">.</span>remove <span class="token punctuation">[</span>
         Css<span class="token punctuation">.</span>opacity <span class="token number">0</span><span class="token punctuation">.</span>
         Css<span class="token punctuation">.</span>transformScale <span class="token number">0.1</span>
-    <span class="token punctuation">]</span></code></pre>
+    <span class="token punctuation">]</span>
+</code></pre>
 <p><img src="/img/blog/snabbdom-css-transitions.gif" alt="Snabbdom CSS transitions"></p>
 <p>Learn more about Snabbdom CSS transitions <a href="https://github.com/snabbdom/snabbdom#delayed-properties">here</a>.</p>
 <h4><a name="memoization" class="anchor" href="#memoization">Memoization</a></h4><p>In theory, given that a pure Elmish app fully recreates the whole virtual DOM for every tiny change it&#39;s important to be able to skip the parts of your app that don&#39;t need to change (in reality, this usually is not a performance issue thankfully). But memoization has been one of the biggest pain-points when writing Fable/React bindings (still is). Because of nuances of how JS/F# languages work and the way React expects you to declare a memoized component. a <a href="https://zaid-ajaj.github.io/Feliz/#/Feliz/React/CommonPitfalls">common pitfall</a> is to recreate the component for every function call rendering memoization useless. With Feliz.Snabbdom we just need to wrap a call with the <code>memoize</code> helper. For example, if we are displaying a list of Todos:</p>
@@ -31,7 +32,8 @@
             todo<span class="token punctuation">,</span>
             state<span class="token punctuation">.</span>Editing <span class="token operator">|></span> Option<span class="token punctuation">.</span>bind <span class="token punctuation">(</span><span class="token keyword">fun</span> <span class="token punctuation">(</span>i<span class="token punctuation">,</span> e<span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token keyword">if</span> i <span class="token operator">=</span> todo<span class="token punctuation">.</span>Id <span class="token keyword">then</span> Some e <span class="token keyword">else</span> None<span class="token punctuation">)</span><span class="token punctuation">)</span>
         <span class="token operator">|></span> List<span class="token punctuation">.</span>map <span class="token punctuation">(</span>renderTodo dispatch<span class="token punctuation">)</span>
-    <span class="token punctuation">)</span></code></pre>
+    <span class="token punctuation">)</span>
+</code></pre>
 <p>We just need to wrap the <code>renderTodo</code> call (here also provide a way to get a unique id from the arguments). Note that we don&#39;t need to check <code>dispatch</code> for the memoization, so we can just partially apply it before the wrapping:</p>
 <pre><code class="language-fsharp"><span class="token keyword">let</span> renderTodoList <span class="token punctuation">(</span>state<span class="token punctuation">:</span> <span class="token class-name">State</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>dispatch<span class="token punctuation">:</span> <span class="token class-name">Msg <span class="token operator">-></span> unit</span><span class="token punctuation">)</span> <span class="token operator">=</span>
     Html<span class="token punctuation">.</span>ul <span class="token punctuation">(</span>
@@ -39,7 +41,8 @@
             todo<span class="token punctuation">,</span>
             state<span class="token punctuation">.</span>Editing <span class="token operator">|></span> Option<span class="token punctuation">.</span>bind <span class="token punctuation">(</span><span class="token keyword">fun</span> <span class="token punctuation">(</span>i<span class="token punctuation">,</span> e<span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token keyword">if</span> i <span class="token operator">=</span> todo<span class="token punctuation">.</span>Id <span class="token keyword">then</span> Some e <span class="token keyword">else</span> None<span class="token punctuation">)</span><span class="token punctuation">)</span>
         <span class="token operator">|></span> List<span class="token punctuation">.</span>map <span class="token punctuation">(</span>memoizeWithId <span class="token punctuation">(</span>renderTodo dispatch<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">fun</span> <span class="token punctuation">(</span>t<span class="token punctuation">,</span> _<span class="token punctuation">)</span> <span class="token operator">-></span> t<span class="token punctuation">.</span>Id<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token punctuation">)</span></code></pre>
+    <span class="token punctuation">)</span>
+</code></pre>
 <h4><a name="lifecycle-hooks" class="anchor" href="#lifecycle-hooks">Lifecycle hooks</a></h4><p>Unlike React ones, <a href="https://github.com/snabbdom/snabbdom#hooks">hooks in Snabbdom</a> are very easy to understand. They are just events fired at different points of the lifecycle of a virtual node, as when they get inserted into or removed from the actual DOM. Very conveniently, the virtual node holding a reference to the actual DOM element is passed as argument to the event handler so it&#39;s easy for example to get the actual height of an element.</p>
 <p>React hooks allow you to do similar things, but they&#39;re designed in a way that forces you to translate your thinking into the React way of doing things. Let&#39;s say you want to turn some text into an input on double click, then select all the text and attach an event to the document so if you click outside the containing box you cancel the edit. For this, in React you need to (forgive me if there&#39;s a more clever way of doing this that I&#39;m missing):</p>
 <ol>
@@ -72,7 +75,8 @@
             <span class="token keyword">if</span> <span class="token keyword">not</span> <span class="token punctuation">(</span>parentBox<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>ev<span class="token punctuation">.</span>target <span class="token operator">:?></span> <span class="token class-name">_</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">then</span>
                 CancelEdit <span class="token operator">|></span> dispatch<span class="token punctuation">)</span>
     <span class="token punctuation">)</span>
-<span class="token punctuation">]</span></code></pre>
+<span class="token punctuation">]</span>
+</code></pre>
 <blockquote>
 <p>Did you notice <code>BodyEv.onMouseDown</code>? This is another nice use-case of <a href="https://github.com/alfonsogarciacaro/Feliz.Engine/blob/cbf4b90de929d7202f941ef091436a8845634b80/src/Feliz.Snabbdom/Feliz.Snabbdom.fs#L163-L168">Feliz.Engine abstract classes</a>, it implements <code>EventEngine</code> by making it return a disposable.</p>
 </blockquote>

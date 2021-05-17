@@ -21,7 +21,8 @@
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>PackageReference</span> <span class="token attr-name">Include</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Fable.Core<span class="token punctuation">"</span></span> <span class="token attr-name">Version</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1.0.0-narumi-*<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>DotNetCliToolReference</span> <span class="token attr-name">Include</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>dotnet-fable<span class="token punctuation">"</span></span> <span class="token attr-name">Version</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1.0.0-narumi-*<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ItemGroup</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Project</span><span class="token punctuation">></span></span></code></pre>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Project</span><span class="token punctuation">></span></span>
+</code></pre>
 <p>Still XML, not a fancy modern markup language, but with a glance we can see now our list of files, references and CLI tools, that can be easily edited without fear to break anything in the build. Did I say CLI tools? Yes, in addition to project and <a href="https://www.nuget.org/">nuget</a> references, the dotnet SDK accepts references for CLI tools. And this is how Fable will be distributed now, <strong>no more npm&#39;s fable-compiler</strong>. With a project file such as the one above after running <code>dotnet restore</code> we will be able to run Fable commands (from the project directory) prefixing them with <code>dotnet fable</code>. For example to start the Fable server you just need to type: <code>dotnet fable start</code>.</p>
 <blockquote>
 <p>At the moment, the only editor that supports the new .fsproj format is <a href="http://ionide.io/">Ionide</a> so you may need to wait a bit until it&#39;s supported in other IDEs. Also, if you have problems with Ionide recognizing the project references, try setting the environment variable <code>UseCommonOutputDirectory</code> to <code>true</code>.</p>
@@ -41,7 +42,7 @@
 <p>Check <a href="https://github.com/fable-compiler/Fable/blob/f3fa826f4e7faf382383daf1e9af5e89dec7fe13/src/templates/simple/Content/webpack.config.js#L27-L30">this example</a> to see how can you pass options to fable-loader. The currently available options are:</p>
 <ul>
 <li><code>babel</code>: Babel options in the same format as you would pass them to the babel-loader.</li>
-<li><code>define</code>: Array of define constants for conditional compilation (like <code>#if DEBUG</code>). The <code>FABLE_COMPILER</code> constant is always added by default. Please note that Fable won&#39;t use the <code>DefineConstants</code> property in the .fsproj file. (This option was named <code>symbols</code> in Fable 0.7.)</li>
+<li><code>define</code>: Array of define constants for conditional compilation (like <code>#if DEBUG</code>). The <code>FABLE_COMPILER</code> constant is always added by default. Please note that Fable won&#39;t use the <code>DefineConstants</code> property in the .fsproj file. (This option was named <code>symbols </code> in Fable 0.7.)</li>
 <li><code>plugins</code>: Array of Fable plugins, same as in Fable 0.7.</li>
 <li><code>typedArrays</code>: Set it to false if you don&#39;t want Fable to generate <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays">Typed Arrays</a>, true by default.</li>
 <li><code>clampByteArrays</code>: When generating typed arrays yo can set this to true to use <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray">UInt8ClampedArray</a> for byte arrays.</li>
@@ -50,8 +51,12 @@
 <h2><a name="libraries" class="anchor" href="#libraries">Libraries</a></h2><p>With Fable 0.7 a system was put in place to distribute .dll assemblies together with precompiled JS files. This had some advantages and make the F# tooling (autocompletion, type checking...) faster. However distributing precompiled JS files has proven to be problematic, as final users of the library may want to generate JS code with different parameters (modules, polyfills...). To solve this problem, Fable 1.0 libraries will distribute the F# source (still as npm packages) and let the final user generate the JS code to their taste. Instead of .dll references, project references (which has become much simpler in the new .fsproj as there&#39;re no guids anymore) will be used. You can check the <code>fable-powerpack</code> project reference in the sample above. In general, to add a Fable package you&#39;ll only have to install it with npm and add the reference to your F# project:</p>
 <pre><code>npm install --save-dev fable-powerpack@next
 dotnet add reference ./node_modules/fable-powerpack/Fable.PowerPack.fsproj
-dotnet restore</code></pre><p>To make things even simpler, the Fable CLI tool provides a command to do these three steps in one:</p>
-<pre><code>dotnet fable add fable-powerpack@next</code></pre><blockquote>
+dotnet restore
+</code></pre>
+<p>To make things even simpler, the Fable CLI tool provides a command to do these three steps in one:</p>
+<pre><code>dotnet fable add fable-powerpack@next
+</code></pre>
+<blockquote>
 <p>The command must be executed in the same directory as the F# project. The npm package.json can be in a parent folder (for example, if it&#39;s shared with other projects). Several packages can be passed at the same time.</p>
 </blockquote>
 <p>Currently, there are Fable 1.0 prereleases for the following packages: fable-powerpack, fable-react, fable-elmish, fable-elmish-react and fable-elmish-snabbdom. Please install them using the <code>next</code> tag (e.g. <code>fable-elmish-react@next</code>).</p>
@@ -63,23 +68,28 @@ dotnet restore</code></pre><p>To make things even simpler, the Fable CLI tool pr
 <h3><a name="-code-keyvaluelist-code-attribute-has-been-deprecated" class="anchor" href="#-code-keyvaluelist-code-attribute-has-been-deprecated"><code>KeyValueList</code> attribute has been deprecated</a></h3><p>So far, in order to make the interaction with JS more idiomatic in F# I&#39;ve introduced some attributes to change the runtime representation of certain types. This is nice because you can have the types we know and love from F# like unions and records, while they behave as JS objects, strings, etc. in runtime. But on the other hand, this was also problematic because developers had some expectations about these types that behave differently in runtime.</p>
 <p>In order to avoid these frictions, Fable 1.0 won&#39;t introduce more <em>hacky</em> attributes and will explore other ways to improve the interaction with JS that don&#39;t break from standard F#. In order to keep compatibility old attributes are still supported with the exception of <code>KeyValueList</code> that was used to represent options in JS (by transforming a list of union cases into a JS object). This is because this attribute was mainly used in libraries (like <code>fable-react</code>) and it&#39;s been possible to change it without modifying the API. Moreover the new solution (a <code>keyValueList</code> function) can be inlined to make the transformation happen in compile time and avoid any performance penalty in runtime.</p>
 <h2><a name="how-do-i-start-" class="anchor" href="#how-do-i-start-">How do I start?</a></h2><p>Wow, I started the post saying that Fable 1.0 would make things easier but there are too many new things to learn! Luckily one of the cool features of the dotnet SDK that&#39;s been also a long request for Fable users is the template system. Thanks to that you can get a simple working project with a few commands. First, if you haven&#39;t already, install the latest <a href="https://www.microsoft.com/net/download/core">dotnet SDK</a> and then type:</p>
-<pre><code class="language-shell">dotnet new -i Fable.Template::*</code></pre>
+<pre><code class="language-shell">dotnet new -i Fable.Template::*
+</code></pre>
 <p>You only need to do this the first time or when you want to update the template (<code>::*</code> points to the latest version). Then create a directory and invoke the Fable template.</p>
 <pre><code class="language-shell"><span class="token function">mkdir</span> myfableapp
 <span class="token builtin class-name">cd</span> myfableapp
-dotnet new fable</code></pre>
+dotnet new fable
+</code></pre>
 <p>It&#39;s better to avoid hyphens or periods in the directory name, as this can confuse the template system (you can add them later if needed). Now you only have to install npm and nuget dependencies:</p>
 <pre><code class="language-shell">dotnet restore
-<span class="token function">npm</span> <span class="token function">install</span></code></pre>
+<span class="token function">npm</span> <span class="token function">install</span>
+</code></pre>
 <p>Now it depends on your project configuration, in the simple project created you can type <code>dotnet fable npm-run start</code> (see above) to start a web server that hot reloads on code changes (the npm <code>start</code> script in package.json just invokes the webpack dev server). Remember you can also use the <code>dotnet fable add</code> command to add Fable libraries. For example if you want to add <code>fable-elmish-react</code> you can type:</p>
-<pre><code class="language-shell">dotnet fable <span class="token function">add</span> fable-powerpack@next fable-react@next fable-elmish@next fable-elmish-react@next</code></pre>
+<pre><code class="language-shell">dotnet fable <span class="token function">add</span> fable-powerpack@next fable-react@next fable-elmish@next fable-elmish-react@next
+</code></pre>
 <blockquote>
 <p>At the moment Fable cannot resolve transitive dependencies so it&#39;s necessary to list them all.</p>
 </blockquote>
 <h4><a name="important-note" class="anchor" href="#important-note">Important Note</a></h4><p>When adding new dependencies and making changes to the project file, it is often necessary to run the following commands again.</p>
 <pre><code class="language-shell"> dotnet restore
  dotnet build
- dotnet fable npm-run build</code></pre>
+ dotnet fable npm-run build
+</code></pre>
 <p>A key indicator that you need to run these commands is that Intellisense stops working.  Also, be sure you are setting the environment variable correctly as mentioned above.</p>
 <br />
 

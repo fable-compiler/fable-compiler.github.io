@@ -54,7 +54,8 @@
     <span class="token comment">// In this example we use Thoth.Json cached auto decoders</span>
     <span class="token comment">// More info at: https://mangelmaxime.github.io/Thoth/json/v3.html#caching</span>
     <span class="token keyword">let</span> decoder <span class="token operator">=</span> Decode<span class="token punctuation">.</span>Auto<span class="token punctuation">.</span>generateDecoderCached<span class="token operator">&lt;</span>'T<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    fetchWithDecoder url decoder init</code></pre>
+    fetchWithDecoder url decoder init
+</code></pre>
 <h2><a name="fable-react" class="anchor" href="#fable-react">Fable.React</a></h2><p>Latest Fable.React (v5, currently in beta) has a dependency on the new Fable.Browser.Dom package, besides these changes:</p>
 <ul>
 <li>In line with the previous changes, the <code>Fable.Import.</code> and <code>Fable.Helpers.</code> prefixes have been dropped, so now you only need to <code>open Fable.React</code> (and/or Fable.React.Props).</li>
@@ -74,7 +75,9 @@
 <li><code>Elmish.Browser</code> namespace has been replaced with just <code>Elmish</code></li>
 </ul>
 <h2><a name="other-packages-fulma-thoth-json-fable-simplehttp-" class="anchor" href="#other-packages-fulma-thoth-json-fable-simplehttp-">Other packages: Fulma, Thoth.Json, Fable.SimpleHttp...</a></h2><p>Several other packages have published new beta versions without actual changes (fortunately! I hear you) but with dependencies on Fable.Core 3 and Fable.Browser to avoid compilation errors. However, after updating dependencies and building your project, if you see an error like the following:</p>
-<pre><code>FSC : error FS0193: The module/namespace &#39;Fable.Import.JS&#39; coming from &#39;Fable.Core&#39; didn&#39;t contain the namespace, module or type &#39;Promise`1&#39; [/path/to/your/Project.fsproj]</code></pre><p>This means one of your dependencies is still not updated. Find which package still depends on Fable.Core 2.0 (you can inspect <code>paket.lock</code> if using Paket) and contact the maintainers of the library to ask for an upgrade (check first there&#39;s no a prerelease version already available with the update).</p>
+<pre><code>FSC : error FS0193: The module/namespace &#39;Fable.Import.JS&#39; coming from &#39;Fable.Core&#39; didn&#39;t contain the namespace, module or type &#39;Promise`1&#39; [/path/to/your/Project.fsproj]
+</code></pre>
+<p>This means one of your dependencies is still not updated. Find which package still depends on Fable.Core 2.0 (you can inspect <code>paket.lock</code> if using Paket) and contact the maintainers of the library to ask for an upgrade (check first there&#39;s no a prerelease version already available with the update).</p>
 <p>Find below a table with a summary of the package and namespace changes. You can also use <a href="https://github.com/MangelMaxime/fulma-demo/pull/26/commits/e92fa03e0241170719d51a7268e1114a389485da">this commit</a> as reference when upgrading your project.</p>
 <table>
 <thead>

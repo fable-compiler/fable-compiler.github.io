@@ -52,7 +52,8 @@ This guide has been writed by converting Fulma.Minimal template from Fable 1 to 
         <span class="token string">"node_modules/"</span><span class="token punctuation">,</span>
         <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token string">"./node_modules/"</span><span class="token punctuation">)</span>
     <span class="token punctuation">]</span>
-<span class="token punctuation">}</span><span class="token punctuation">,</span></code></pre>
+<span class="token punctuation">}</span><span class="token punctuation">,</span>
+</code></pre>
 </div>
 <div class="column"></div>
 </div>
@@ -70,7 +71,8 @@ With Fable 1
 
 <span class="token keyword">var</span> babelOptions <span class="token operator">=</span> fableUtils<span class="token punctuation">.</span><span class="token function">resolveBabelOptions</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
     presets<span class="token operator">:</span> <span class="token punctuation">[</span>
-        <span class="token comment">// ...</span></code></pre>
+        <span class="token comment">// ...</span>
+</code></pre>
 </div>
 
 <div class="column">
@@ -84,7 +86,8 @@ With Fable 2
 
 <span class="token keyword">var</span> babelOptions <span class="token operator">=</span> <span class="token punctuation">{</span>
     presets<span class="token operator">:</span> <span class="token punctuation">[</span>
-        <span class="token comment">// ...</span></code></pre>
+        <span class="token comment">// ...</span>
+</code></pre>
 </div>
 
 </div>
@@ -107,8 +110,10 @@ With Fable 1
             <span class="token string">"modules"</span><span class="token operator">:</span> <span class="token boolean">false</span>
         <span class="token punctuation">}</span><span class="token punctuation">]</span>
     <span class="token punctuation">]</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<pre><code class="language-js">babel<span class="token operator">-</span>polyfill</code></pre>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<pre><code class="language-js">babel<span class="token operator">-</span>polyfill
+</code></pre>
 </div>
 
 <div class="column">
@@ -125,8 +130,10 @@ With Fable 2
             <span class="token string">"modules"</span><span class="token operator">:</span> <span class="token boolean">false</span>
         <span class="token punctuation">}</span><span class="token punctuation">]</span>
     <span class="token punctuation">]</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
-<pre><code class="language-js">@babel<span class="token operator">/</span>polyfill</code></pre>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<pre><code class="language-js">@babel<span class="token operator">/</span>polyfill
+</code></pre>
 </div>
 
 </div>
@@ -137,7 +144,9 @@ With Fable 2
 
 <p>If you are not sure of your <em>current working directory</em>, you can run Fable.</p>
 <pre><code>Fable (2.0.1) daemon started on port 56569
-CWD: /Users/maximemangel/Workspaces/Github/MangelMaxime/Fulma/templates/Content</code></pre><p>Here the <em>current working directory</em> is <code>/Users/maximemangel/Workspaces/Github/MangelMaxime/Fulma/templates/Content</code></p>
+CWD: /Users/maximemangel/Workspaces/Github/MangelMaxime/Fulma/templates/Content
+</code></pre>
+<p>Here the <em>current working directory</em> is <code>/Users/maximemangel/Workspaces/Github/MangelMaxime/Fulma/templates/Content</code></p>
 </div>
 </div>
 
@@ -151,7 +160,8 @@ CWD: /Users/maximemangel/Workspaces/Github/MangelMaxime/Fulma/templates/Content<
         path<span class="token operator">:</span> path<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span>__dirname<span class="token punctuation">,</span> <span class="token constant">CONFIG</span><span class="token punctuation">.</span>outputDir<span class="token punctuation">)</span><span class="token punctuation">,</span>
     <span class="token punctuation">}</span>
     <span class="token comment">// ...</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
 </div>
 </div>
 
@@ -283,7 +293,8 @@ At the time of writing here are the version retrieved
 
 <span class="token keyword">let</span> <span class="token keyword">inline</span> toJson x <span class="token operator">=</span> Encode<span class="token punctuation">.</span>Auto<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span>
 
-<span class="token keyword">let</span> <span class="token keyword">inline</span> ofJson<span class="token operator">&lt;</span>'T<span class="token operator">></span> json <span class="token operator">=</span> Decode<span class="token punctuation">.</span>Auto<span class="token punctuation">.</span>unsafeFromString<span class="token operator">&lt;</span>'T<span class="token operator">></span><span class="token punctuation">(</span>json<span class="token punctuation">)</span></code></pre>
+<span class="token keyword">let</span> <span class="token keyword">inline</span> ofJson<span class="token operator">&lt;</span>'T<span class="token operator">></span> json <span class="token operator">=</span> Decode<span class="token punctuation">.</span>Auto<span class="token punctuation">.</span>unsafeFromString<span class="token operator">&lt;</span>'T<span class="token operator">></span><span class="token punctuation">(</span>json<span class="token punctuation">)</span>
+</code></pre>
 </div>
 <div class="column"></div>
 </div>

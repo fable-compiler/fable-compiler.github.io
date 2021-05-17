@@ -11,7 +11,9 @@
             lastName
         }
     }
-}</code></pre><p>Might map to F# types as follows:</p>
+}
+</code></pre>
+<p>Might map to F# types as follows:</p>
 <pre><code class="language-fs"><span class="token builtin class-name">type</span> Author <span class="token operator">=</span> <span class="token punctuation">{</span>
     firstName: string option
     lastName: string option
@@ -25,7 +27,8 @@
 
 <span class="token builtin class-name">type</span> Query <span class="token operator">=</span> <span class="token punctuation">{</span>
     posts: Post list
-<span class="token punctuation">}</span></code></pre>
+<span class="token punctuation">}</span>
+</code></pre>
 <blockquote>
 <p>The types are of course imaginary here and are for demo purposes.</p>
 </blockquote>
@@ -34,7 +37,9 @@ Modelling the shape of the queries via F# types by hand can be a cumbersome task
 <h3><a name="type-providers-to-the-rescue-" class="anchor" href="#type-providers-to-the-rescue-">Type-Providers to the rescue...?</a></h3><p>The first idea that F# developers get when looking at such problem is: &quot;There must be a type provider for this!&quot; and they would be right. In F# land, the awesome <a href="https://github.com/fsprojects/FSharp.Data.GraphQL">FSharp.Data.GraphQL</a> library gives the ability to write GraphQL backends and includes a type provider for type-safe clients in F#. Unfortunately, ever since Fable 2.0 came out around late 2018, that type provider <a href="https://github.com/fsprojects/FSharp.Data.GraphQL/issues/204">was no longer compatible</a> with Fable applications. I thought I could give it a try and fix the problem in the repository, even the maintainer <a href="https://github.com/johnberzy-bazinga">John Berzy</a> generously offered to help out but I couldn&#39;t get my head around the code base: type providers are really hard to write and to understand what exactly they are doing. Not to mention, I didn&#39;t enough experience in GraphQL itself to understand how the mapping worked by that time.</p>
 <h3><a name="snowflaqe-code-gen-back-to-business" class="anchor" href="#snowflaqe-code-gen-back-to-business">Snowflaqe: code-gen back to business</a></h3><p>Instead of a type-provider, I thought I would start fresh from a new perspective and instead try to implement what many tools in the node.js ecosystem do: code-generate the client application! This is essentially what <a href="https://github.com/Zaid-Ajaj/Snowflaqe">Snowflaqe</a> does: it generates a fully functional F# <em>project</em> that can be referenced from Fable applications. The generation process uses a URL to the GraphQL backend to retrieve the schema from and an input directory containing the individual queries. The tool will first <em>validate</em> and <em>type-check</em> the queries against the schema and when everything is good, it starts to generate the actual project.</p>
 <p>Snowflaqe is currently at v1.0 and it is distributed as a dotnet CLI tool, you can give it a try by installing it on your machine:</p>
-<pre><code>dotnet tool install snowflaqe -g</code></pre><p>If you wanted to build a GraphQL front-end using latest Fable, now you can. The tool is still very much in early days and I have only been developing it for the last 3 weeks. I used it at work for one of our Fable projects that talks to a GraphQL backend using complex queries and it works like a charm, I was really happy with the results. In case you have a project to try it out too, I am curious to hear your feedback.</p>
+<pre><code>dotnet tool install snowflaqe -g
+</code></pre>
+<p>If you wanted to build a GraphQL front-end using latest Fable, now you can. The tool is still very much in early days and I have only been developing it for the last 3 weeks. I used it at work for one of our Fable projects that talks to a GraphQL backend using complex queries and it works like a charm, I was really happy with the results. In case you have a project to try it out too, I am curious to hear your feedback.</p>
 <blockquote>
 <p>Currently Snowflaqe only supports Fable projects but in the future I plan to allow for other specialized generation targets such as F# on dotnet or on WebAssembly via <a href="https://fsbolero.io/">Bolero</a>. As always, PRs are welcome!</p>
 </blockquote>

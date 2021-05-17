@@ -24,7 +24,8 @@
         <span class="token string">"virtual-dom"</span><span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token string">"h"</span><span class="token punctuation">,</span> <span class="token string">"create"</span><span class="token punctuation">,</span> <span class="token string">"diff"</span><span class="token punctuation">,</span> <span class="token string">"patch"</span> <span class="token punctuation">]</span>
       <span class="token punctuation">}</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
   <span class="token punctuation">]</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
 <pre><code class="language-json"><span class="token property">"rollup"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
   <span class="token property">"plugins"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token punctuation">[</span><span class="token string">"commonjs"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
@@ -33,7 +34,8 @@
       <span class="token punctuation">}</span>
     <span class="token punctuation">}</span><span class="token punctuation">]</span>
   <span class="token punctuation">]</span>
-<span class="token punctuation">}</span></code></pre>
+<span class="token punctuation">}</span>
+</code></pre>
 <p>The default Rollup configuration in Fable is as follows (any option in fableconfig will override them, including plugins):</p>
 <pre><code class="language-js"><span class="token punctuation">{</span>
     <span class="token comment">// entry: &lt;Last F# source file></span>
@@ -45,13 +47,15 @@
         <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'rollup-plugin-node-resolve'</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">{</span> ignoreGlobal<span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
         <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'rollup-plugin-commonjs'</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">{</span> jsnext<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> main<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> browser<span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
     <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
+<span class="token punctuation">}</span>
+</code></pre>
 <p>If you&#39;re writing a Node app or using <a href="http://requirejs.org/">RequireJS</a> and <strong>don&#39;t want to bundle</strong>, just use the UMD distribution of <code>fable-core</code>. The <code>--refs</code> compiler argument gives you a chance to replace the base directory of imported JS files when referencing assemblies (<a href="https://github.com/fable-compiler/Fable/blob/85fb471ecc77b6d7296c5a1513e89e95f44c225b/samples/browser/react-todomvc/fableconfig.json">example</a>):</p>
 <pre><code class="language-json"><span class="token punctuation">{</span>
     <span class="token property">"refs"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
         <span class="token property">"Fable.Core"</span><span class="token operator">:</span> <span class="token string">"fable-core/umd"</span>
     <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
+<span class="token punctuation">}</span>
+</code></pre>
 <p>Because of this, it&#39;s recommended that Fable libraries include two distributions: the default one with ES2015 modules, and another one in the <code>umd</code> subdirectory with UMD modules. Just create an <code>umd</code> target for your library and compile it as well before publishing (<a href="https://github.com/fable-compiler/fable-powerpack/blob/master/fableconfig.json">example</a>).</p>
 <blockquote>
 <p><strong>Caveat</strong>: Though Rollup can understand <code>commonjs</code> modules, it&#39;s not as powerful as Webpack and can have problems bundling some packages (notably <a href="https://facebook.github.io/react/">React</a>). In this case you may want to load the JS library globally with a <code>&lt;script&gt;</code> tag (<a href="https://github.com/fable-compiler/fable-elmish/blob/e34232b8fbbf979fd800d9c24a386c2a2ffda966/samples/react/counter/fableconfig.json">example</a>) or with RequireJS (<a href="https://github.com/fable-compiler/Fable/blob/85fb471ecc77b6d7296c5a1513e89e95f44c225b/samples/browser/react-todomvc/index.html#L25-L33">example</a>). Of course, it&#39;s still possible to skip Rollup bundling and use Webpack as before.</p>

@@ -17,15 +17,18 @@
 
 <span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">cube</span> <span class="token punctuation">(</span> <span class="token parameter">x</span> <span class="token punctuation">)</span> <span class="token punctuation">{</span>
   <span class="token keyword">return</span> x <span class="token operator">*</span> x <span class="token operator">*</span> x<span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre>
+<span class="token punctuation">}</span>
+</code></pre>
 <p>main.js (entry module)</p>
 <pre><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">{</span> cube <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./maths.js'</span><span class="token punctuation">;</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span> <span class="token function">cube</span><span class="token punctuation">(</span> <span class="token number">5</span> <span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 125</span></code></pre>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span> <span class="token function">cube</span><span class="token punctuation">(</span> <span class="token number">5</span> <span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 125</span>
+</code></pre>
 <p>bundle.js (<code>square</code> is excluded)</p>
 <pre><code class="language-js"><span class="token keyword">function</span> <span class="token function">cube</span> <span class="token punctuation">(</span> <span class="token parameter">x</span> <span class="token punctuation">)</span> <span class="token punctuation">{</span>
   <span class="token keyword">return</span> x <span class="token operator">*</span> x <span class="token operator">*</span> x<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span> <span class="token function">cube</span><span class="token punctuation">(</span> <span class="token number">5</span> <span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span> <span class="token function">cube</span><span class="token punctuation">(</span> <span class="token number">5</span> <span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
 <p>Check Rollup&#39;s website to see how this works <a href="http://rollupjs.org/">live</a>.</p>
 <p>Cool, isn&#39;t it? But... wait, what am I doing? I wanted to convince you to try Fable and here I am only talking about the niceties of ES2015 modules. Obviously, it&#39;s not possible for Fable to have any advantage regarding a feature that was specifically designed for JS and its ecosystem, right? Well, let&#39;s see. Challenge accepted!</p>
 <h2><a name="autocompletion" class="anchor" href="#autocompletion">Autocompletion</a></h2><p>ES2015 modules are very nice but there&#39;s one little problem: they make <strong>exploratory programming</strong> more difficult. We need to know the bits of the library we want to import in advance, which means we must check the documentation carefully to see what we actually need and we cannot use the tremendously productive autocompletion capabilities of IDEs like <a href="https://code.visualstudio.com/">Visual Studio Code</a> to explore the API as we code. <strong>Not even with TypeScript</strong>, a statically typed language, as it uses the same syntax as ES2015 for importing modules.</p>
@@ -36,14 +39,16 @@ console<span class="token punctuation">.</span><span class="token function">log<
   x <span class="token operator">+</span> x
 
 <span class="token keyword">let</span> bar y <span class="token operator">=</span>
-  y <span class="token operator">*</span> y</code></pre>
+  y <span class="token operator">*</span> y
+</code></pre>
 <pre><code class="language-js"><span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token parameter">x</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
   <span class="token keyword">return</span> x <span class="token operator">+</span> x<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
 <span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">bar</span><span class="token punctuation">(</span><span class="token parameter">y</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
   <span class="token keyword">return</span> y <span class="token operator">*</span> y<span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre>
+<span class="token punctuation">}</span>
+</code></pre>
 <p>Noticed that? Fable doesn&#39;t create an inner module within <code>MyNamespace</code> but exposes the functions in <code>MyModule</code> directly to make the code compatible with ES2015 bundlers. Let&#39;s see how it works when we&#39;re consuming the code:</p>
 <pre><code class="language-fsharp"><span class="token preprocessor property">#load </span><span class="token string">"MyLib.fs"</span>
 
@@ -53,7 +58,8 @@ console<span class="token punctuation">.</span><span class="token function">log<
   <span class="token keyword">let</span> result <span class="token operator">=</span> bar <span class="token number">5</span>
   printfn <span class="token string">"%i"</span>
 
-<span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
 <pre><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">{</span> fsFormat <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"fable-core/String"</span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> <span class="token punctuation">{</span> bar <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"./MyLib"</span>
 
@@ -62,14 +68,17 @@ console<span class="token punctuation">.</span><span class="token function">log<
   <span class="token function">fsFormat</span><span class="token punctuation">(</span><span class="token string">"%i"</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token parameter">x</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
     console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre>
+<span class="token punctuation">}</span>
+</code></pre>
 <p>Fable is just importing the function we need, the way ES2015 modules are intended to be. The clear difference with raw JS here is we don&#39;t need to make the imports explicit: if we replace <code>bar</code> with <code>foo</code> Fable will change the import automatically. As you can see, this works not only for our code but also for functions in <code>fable-core</code> (the JS translation of FSharp.Core).</p>
 <p>The example was just to show that opening a module doesn&#39;t import everything, but in order to get autocompletion we just need to qualify the module name instead. The generated JS code will be the same.</p>
 <p><img src="/img/blog/capture2.png" alt="Autocompletion"></p>
 <p>This means we can do exploratory programming while still having all the advantages of tree-shaking: the best of two worlds! (my favourite sentence). And, as you probably know, F# has many tools to write and read documentation directly in code. With <a href="http://ionide.io/">Ionide</a> you even get formatting for markdown comments!</p>
 <p><img src="/img/blog/capture1.jpg" alt="Markdown"></p>
 <p>Have I convinced you yet to use the Fable + ES2015 bundler combo? Great! Now you just need to do is to find the right bundler, install it, learn how to configure it, make sure to run it after every Fable compilation... No, wait! <a href="http://fable.io/blog/Introducing-0-7.html#ES2015-Modules-and-Bundling">Fable 0.7 comes with Rollup embedded</a> so the only thing you need to bundle your code and dependencies with tree shaking is:</p>
-<pre><code>fable src/MyProject.fsproj --rollup</code></pre><p>And that&#39;s it!</p>
+<pre><code>fable src/MyProject.fsproj --rollup
+</code></pre>
+<p>And that&#39;s it!</p>
 <hr>
 <p>Hope you liked the post and give Fable a try. Please check the web and the documentation (being updated to 0.7 at the moment) and come to the <a href="https://gitter.im/fable-compiler/Fable">Gitter channel</a> if you have any question. Also make sure to follow the other posts of the awesome <a href="https://sergeytihon.wordpress.com/2016/10/23/f-advent-calendar-in-english-2016/">F# advent calendar</a> and keep tuned with Fable&#39;s website and <a href="https://twitter.com/FableCompiler">Twitter</a> for other exciting announcements!</p>
 </div></div><div class="column"></div></div></div></div><footer style="background-color:dodgerblue"><div class="content"><p>Fable <a href="https://github.com/fable-compiler/Fable">source code</a> is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.</p></div></footer><script>

@@ -33,7 +33,8 @@
   <span class="token operator">|</span> About
   <span class="token operator">|</span> Jalousie
   <span class="token operator">|</span> Montreal
-  <span class="token operator">|</span> WelcomePage</code></pre>
+  <span class="token operator">|</span> WelcomePage
+</code></pre>
 <p>The documentary part is split into 2 sections which are:</p>
 <ol>
 <li><a href="http://www.casquenoir.com/#jalousie">Jalousie</a></li>
@@ -57,14 +58,16 @@
                 <span class="token punctuation">[</span> <span class="token punctuation">]</span>
             <span class="token punctuation">]</span>
           <span class="token punctuation">]</span>
-      <span class="token punctuation">]</span></code></pre>
+      <span class="token punctuation">]</span>
+</code></pre>
 <p>or <a href="http://fontawesome.io/icons/">Font awesome icons</a></p>
 <pre><code class="language-fsharp">  <span class="token keyword">let</span> icon name css <span class="token operator">=</span>
     span
       <span class="token punctuation">[</span>
         ClassName <span class="token operator">&lt;|</span> sprintf <span class="token string">"icon %s"</span> css
         <span class="token function">unbox</span><span class="token punctuation">(</span><span class="token string">"aria-hidden"</span><span class="token punctuation">,</span> <span class="token string">"true"</span><span class="token punctuation">)</span>
-      <span class="token punctuation">]</span> <span class="token punctuation">[</span> i <span class="token punctuation">[</span> ClassName <span class="token punctuation">(</span>sprintf <span class="token string">"fa %s"</span> name<span class="token punctuation">)</span> <span class="token punctuation">]</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">]</span></code></pre>
+      <span class="token punctuation">]</span> <span class="token punctuation">[</span> i <span class="token punctuation">[</span> ClassName <span class="token punctuation">(</span>sprintf <span class="token string">"fa %s"</span> name<span class="token punctuation">)</span> <span class="token punctuation">]</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">]</span>
+</code></pre>
 <p>For the main layout I ended up with a very simple scheme:</p>
 <pre><code class="language-fsharp">  div <span class="token punctuation">[</span>
   <span class="token punctuation">]</span><span class="token punctuation">[</span>
@@ -77,7 +80,8 @@
     Intro<span class="token punctuation">.</span>View<span class="token punctuation">.</span>root model<span class="token punctuation">.</span>intro <span class="token punctuation">(</span>IntroMsg <span class="token operator">>></span> dispatch <span class="token punctuation">)</span> <span class="token comment">// intro modal</span>
 
     Partners<span class="token punctuation">.</span>View<span class="token punctuation">.</span>root model<span class="token punctuation">.</span>partners <span class="token punctuation">(</span>PartnersMsg <span class="token operator">>></span> dispatch <span class="token punctuation">)</span> <span class="token comment">// partners modal</span>
-  <span class="token punctuation">]</span></code></pre>
+  <span class="token punctuation">]</span>
+</code></pre>
 <p>The <em>Credits</em>, <em>Intro</em> and <em>Partners</em> section are just <a href="http://bulma.io/documentation/components/modal/">modal windows</a> that appear when needed from any section, so I added them in there.</p>
 <p>The dynamic navigation bar is sticky so I added it there too.</p>
 <pre><code class="language-css">// Sticky navbar
@@ -85,7 +89,8 @@
   position: fixed <span class="token operator">!</span>important
   top: <span class="token number">0</span>
   left: <span class="token number">0</span>
-  right: <span class="token number">0</span></code></pre>
+  right: <span class="token number">0</span>
+</code></pre>
 <h2><a name="the-nav-bar" class="anchor" href="#the-nav-bar">The nav bar</a></h2><p><img src="https://img15.hostingpics.net/pics/904108navbar.gif" alt="nav bar"></p>
 <p>This is a very important component in the application since it allows user to switch to any section/chapter as well as to subchapters.</p>
 <p>The links to modal popups works like this:</p>
@@ -96,7 +101,8 @@
         HideBurger <span class="token operator">|></span> dispatch
         <span class="token punctuation">)</span>
       Title title
-    <span class="token punctuation">]</span> <span class="token punctuation">[</span> str title <span class="token punctuation">]</span></code></pre>
+    <span class="token punctuation">]</span> <span class="token punctuation">[</span> str title <span class="token punctuation">]</span>
+</code></pre>
 <p>The <code>DisplayCredits</code> message simply toggles the display of the modal window through the use of <code>is-active</code> css class as specified in <a href="http://bulma.io/documentation/components/modal/">Bulma doc</a></p>
 <p>The <code>HideBurger</code> message hides the burger when the navbar is displayed on mobile phones. Again through the use of <code>is-active</code> css class as specified in <a href="http://bulma.io/documentation/components/nav/">Bulma doc</a></p>
 <p>The most interesting part being the subsections. Clicking on a chapter number scrolls down the page to the section. So I created <em>scrollableTo</em> component:</p>
@@ -114,7 +120,8 @@
 
       HideBurger <span class="token operator">|></span> dispatch
       <span class="token punctuation">)</span>
-  <span class="token punctuation">]</span> <span class="token punctuation">[</span> elems <span class="token punctuation">]</span></code></pre>
+  <span class="token punctuation">]</span> <span class="token punctuation">[</span> elems <span class="token punctuation">]</span>
+</code></pre>
 <p>The code is pretty straightforward. We ask for the content through the <code>scrollIntoView</code> method. And we send an <code>ActivateSection</code> message which just updates the model with current section id and reloads the view to activate the relevant css class (colored background)</p>
 <p><img src="https://img15.hostingpics.net/pics/904108navbar.gif" alt="nav bar"></p>
 <p>Regarding the sounds. Each section plays a sound when loaded. The speaker icon on the navbar mutes the sound through a <code>ToggleSound</code> message. I created a simple sound component.</p>
@@ -133,7 +140,8 @@
     OnClick <span class="token punctuation">(</span> <span class="token keyword">fun</span> _ <span class="token operator">-></span> ToggleSound <span class="token operator">|></span> dispatch <span class="token punctuation">)</span>
   <span class="token punctuation">]</span> <span class="token punctuation">[</span>
     icon
-  <span class="token punctuation">]</span></code></pre>
+  <span class="token punctuation">]</span>
+</code></pre>
 <p><em>State</em>:</p>
 <pre><code class="language-fsharp">  <span class="token keyword">match</span> msg <span class="token keyword">with</span>
   <span class="token operator">|</span> ToggleSound  <span class="token operator">-></span>
@@ -142,7 +150,8 @@
     <span class="token operator">|</span> <span class="token keyword">true</span> <span class="token operator">-></span> Waud<span class="token punctuation">.</span>setVolume <span class="token number">1.0</span>
     <span class="token operator">|</span> <span class="token keyword">false</span> <span class="token operator">-></span> Waud<span class="token punctuation">.</span>setVolume <span class="token number">0.0</span>
 
-    <span class="token punctuation">{</span> model <span class="token keyword">with</span> toggleSound <span class="token operator">=</span> value<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span></code></pre>
+    <span class="token punctuation">{</span> model <span class="token keyword">with</span> toggleSound <span class="token operator">=</span> value<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+</code></pre>
 <h2><a name="straightforward-development" class="anchor" href="#straightforward-development">Straightforward development</a></h2><p>The only external library I ended up using was <a href="http://www.waudjs.com/">Waud.js</a> for the sound which offers many cool features, among others <strong>automute</strong> when we quit the web site to another tab or use another app.</p>
 <p>All the other components were created for the app.</p>
 <h2><a name="conclusion" class="anchor" href="#conclusion">Conclusion</a></h2><p><img src="https://i.imgflip.com/1qzmbn.jpg" alt="Fable... What else ?"></p>
