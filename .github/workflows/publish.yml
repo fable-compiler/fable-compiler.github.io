@@ -1,4 +1,4 @@
-name: CI
+name: Publish
 on:
   push:
     branches: [ dev ]
@@ -16,4 +16,10 @@ jobs:
       - name: Package restore
         run: npm install
       - name: Build site
-        run: npm run deploy
+        run: npm run build    
+      - name: Deploy docs
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./deploy
+          publish_branch: master
