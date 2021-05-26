@@ -10,9 +10,12 @@ open Util.Types
 open GlobalHelpers
 open Fable.Core
 open Fable.Core.JsInterop
+open Fable.React.Props
 
-let twitterFeed =
-  """<a class="twitter-timeline" data-lang="en" data-width="400" data-height="600" data-theme="light" href="https://twitter.com/FableCompiler?ref_src=twsrc%5Etfw">Tweets by FableCompiler</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>"""
+let twitterFeed (width, height) =
+  sprintf
+    """<a class="twitter-timeline" data-lang="en" data-width="%i" data-height="%i" data-theme="light" href="https://twitter.com/FableCompiler?ref_src=twsrc%%5Etfw">Tweets by FableCompiler</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>"""
+    width height
 
 let cardTexts =
   [
@@ -102,11 +105,16 @@ let renderBody (info: PageInfo) =
 
         Column.column [ Column.Width (Screen.All, Column.IsOneThird) ] [
           div [
+            let (width, height) = (400, 600)
             Style [
               Margin "10px auto"
               Width "fit-content"
+              Height height
+              
+              // hide placeholder link that gets pushed down temporarily before being removed
+              CSSProp.Overflow OverflowOptions.Hidden
             ]
-            DangerouslySetInnerHTML { __html = parseMarkdown twitterFeed }
+            DangerouslySetInnerHTML { __html = parseMarkdown (twitterFeed (width, height)) }
           ] []
         ]
       ]
