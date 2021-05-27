@@ -96,21 +96,19 @@ let renderBody (info: PageInfo) =
   div [Style [ CSSProp.Overflow OverflowOptions.Hidden ]] [
 
     Container.container [] [
-      Columns.columns [ Columns.IsVCentered ] [
-        Column.column [
-          Column.Width (Screen.All, Column.IsTwoThirds)
-        ] [
+      Columns.columns [ Columns.IsVCentered; Columns.CustomClass "homepage-header" ] [
+        div [ ] [
           Header.render()
         ]
 
-        Column.column [ Column.Width (Screen.All, Column.IsOneThird) ] [
+        div [ ] [
           div [
             let (width, height) = (400, 600)
             Style [
               Margin "10px auto"
               Width "fit-content"
               Height height
-              
+
               // hide placeholder link that gets pushed down temporarily before being removed
               CSSProp.Overflow OverflowOptions.Hidden
             ]
