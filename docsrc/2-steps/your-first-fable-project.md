@@ -6,25 +6,27 @@ title: Start a new project
 
 Now we're ready, let's start a new project using Fable!
 
-## Use the official templates
-
 <ul class="textual-steps">
 
 <li>
 
 ### Use a Fable template
 
-**ATTENTION: Templates may not be yet updated to Fable 3**
+The easiest way to get started with Fable is to use a template (learn more about [dotnet templates](https://docs.microsoft.com/en-us/dotnet/core/tools/custom-templates#installing-a-template)). For a minimal Fable project, create and navigate to a new directory and run the following commands (first one is only needed if you haven't installed the template yet in your system).
 
-The easiest way to get started with Fable is to use one of the Fable official templates. First list them, then pick a template with a name that starts with "fable" to create a new project.
+1. `dotnet new --install Fable.Template`
+2. `dotnet new fable`
 
-1. `dotnet new -i 'Fable.Template::*'`
-2. `mkdir MyFirstFableProject ; cd MyFirstFableProject`
-3. `dotnet new fable`
+The rest of this document applies to Fable.Template. Alternatively, if you want to use a more comprehensive template with more tooling and libraries installed, please check one of the following:
 
-or, for example,
+- Build a [React](https://reactjs.org/) app in F# with [Feliz template](https://zaid-ajaj.github.io/Feliz/#/Feliz/ProjectTemplate)
+- To write a frontend app fully in F# without JS dependencies, check out [Sutil](https://davedawkins.github.io/Sutil/#documentation-installation)
+- Get up to speed with [SAFE Template](https://safe-stack.github.io/docs/quickstart/) which covers both the frontend and backend sides of your app
 
-3. `dotnet new fable-react-elmish`
+:::info
+At the time of writing, you need to install a prerelease version of SAFE.Template as in `dotnet new --install SAFE.Template::3.0.0-beta004` in order to use Fable 3.
+:::
+
 </li>
 
 <li>
@@ -33,10 +35,10 @@ or, for example,
 
 **JS dependencies** are listed in the `package.json` file. You can run `npm install`, which will download the needed packages to the `node_modules` folder and create a lock file.
 
-**.NET dependencies** are listed in the `src/App.fsproj` file. You can install them by running `dotnet restore`, but this is already automatically done by Fable.
+**.NET dependencies** are listed in the `src/App.fsproj` file. You can install them by running `dotnet restore src`, but this is already automatically done by Fable.
 
 :::info
-Lock files (like `package-lock.json` if you're using npm) should be committed to ensure reproducible builds whenever anybody clones your repo.
+Lock files (like `package-lock.json` if you're using npm) should be committed to ensure reproducible builds whenever anybody clones your repo. For .NET dependencies you can create a lock file by using [Paket](https://fsprojects.github.io/Paket/).
 :::
 
 </li>
@@ -45,22 +47,13 @@ Lock files (like `package-lock.json` if you're using npm) should be committed to
 
 ### Build & run the app
 
-Here we go.
+Here we go. If you've already installed JS dependencies, just run `npm start`. After a few seconds, your web server app will be running in the background until you kill it.
 
-1. `cd src`
-2. `dotnet build`
-3. `cd ..`
-4. `npm start`
-
-Your web server app is now running in foreground until you kill it.
-
-While the server is running
 - You can access your project at [http://localhost:8080/](http://localhost:8080/) with your favorite browser.
-- The server is in “watch” mode, so you will see server console output in the terminal window.
-- You can edit the `App.fs` file located in the `src` folder. Each time you save the file, Fable rebuilds the project automatically. If the build succeeds, you will see your changes in the browser without refreshing the page; if not, nothing changes in the browser, and you can see the build errors in the server’s console output.
+- The server is in “watch” mode. Each time you save an `.fs` F# source file, Fable rebuilds the project automatically. If the build succeeds, you will see your changes in the browser without refreshing the page; if not, nothing changes in the browser, and you can see the build errors in the server’s console output.
 
 :::info
-Always check the `README.md` file shipped with the template to get up-to-date instructions.
+The `npm start` command is just an alias for `dotnet fable watch src --run webpack-dev-server`, check the "scripts" section of the `package.json` file. Please also check the `README.md` file shipped with the template to get up-to-date instructions.
 :::
 
 </li>
