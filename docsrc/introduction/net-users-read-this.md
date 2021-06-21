@@ -22,7 +22,7 @@ For starters, using F# for fable apps is very similar to using F# for .NET apps:
 
 Although Fable brings a lot of familiarity for F# and .NET developers, the target runtime is JavaScript. This difference impacts several important areas:
 
-* Your web UI depenendcies will be NPM dependencies, not .NET dependencies
+* Your web UI dependencies will be NPM dependencies, not .NET dependencies
 * Your build tools will include web app development tools (e.g., webpack)
 * Runtime behavior will be based on JavaScript semantics, not .NET semantics
 
