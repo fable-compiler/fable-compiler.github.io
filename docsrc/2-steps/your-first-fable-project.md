@@ -17,15 +17,12 @@ The easiest way to get started with Fable is to use a template (learn more about
 1. `dotnet new --install Fable.Template`
 2. `dotnet new fable`
 
-The rest of this document applies to Fable.Template. Alternatively, if you want to use a more comprehensive template with more tooling and libraries installed, please check one of the following:
+The rest of this document applies to Fable.Template. Alternatively, if you want specific examples or a more comprehensive template with more tooling and libraries installed, please check one of the following:
 
+- Clone the [Fable 3 samples](https://github.com/fable-compiler/fable3-samples) repository to learn how to use Fable with different kinds of apps (browser, nodejs, testing, etc)
 - Build a [React](https://reactjs.org/) app in F# with [Feliz template](https://zaid-ajaj.github.io/Feliz/#/Feliz/ProjectTemplate)
-- To write a frontend app fully in F# without JS dependencies, check out [Sutil](https://davedawkins.github.io/Sutil/#documentation-installation)
+- Write a frontend app fully in F# without JS dependencies with [Sutil](https://davedawkins.github.io/Sutil/#documentation-installation)
 - Get up to speed with [SAFE Template](https://safe-stack.github.io/docs/quickstart/) which covers both the frontend and backend sides of your app
-
-:::info
-At the time of writing, you need to install a prerelease version of SAFE.Template as in `dotnet new --install SAFE.Template::3.0.0-beta004` in order to use Fable 3.
-:::
 
 </li>
 
