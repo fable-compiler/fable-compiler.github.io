@@ -1,82 +1,108 @@
-const standard = require('nacara/dist/layouts/standard/Export').default;
-const mdMessage = require('nacara/dist/js/utils').mdMessage;
-const path = require('path');
+const standardLayouts = require("nacara-layout-standard");
+
+const mdMessage = (level) => {
+
+    return {
+        validate: function (params) {
+            return params.trim() === level;
+        },
+
+        render: function (tokens, idx) {
+            if (tokens[idx].nesting === 1) {
+                // opening tag
+                return `<article class="message is-${level}">
+                <div class="message-body">`;
+
+
+            } else {
+                // closing tag
+                return '</div>\n</article>\n';
+            }
+        }
+    }
+}
 
 module.exports = {
     url: "https://fable.io",
-    baseUrl: "/docs/",
+    baseUrl: "/",
     editUrl: 'https://github.com/fable-compiler/fable-compiler.github.io/edit/dev/docsrc',
     source: "docsrc",
-    output: "./deploy/docs",
+    output: "deploy",
     title: "Fable",
     version: "2.0.0",
     navbar: {
         showVersion: false,
         links: [
             {
-                href: "https://fable.io/repl/",
-                label: "Try online"
+                href: "/docs",
+                label: "Documentation"
             },
             {
-                href: "https://gitter.im/fable-compiler/Fable",
-                label: "Chat",
-                icon: "fab fa-gitter",
-                isExternal: true,
-                color: "#24292e"
+                href: "https://fable.io/repl/",
+                label: "Try"
+            },
+            {
+                href: "/blog",
+                label: "Blog"
+            },
+            {
+                href: "/community.html",
+                label: "Community"
+            },
+            {
+                href: "/ressources.html",
+                label: "Ressources"
             },
             {
                 href: "https://github.com/fable-compiler/fable",
                 icon: "fab fa-github",
                 isExternal: true,
-                color: "#24292e"
             },
             {
                 href: "https://twitter.com/FableCompiler",
                 icon: "fab fa-twitter",
-                isExternal: true,
-                color: "#55acee"
+                isExternal: true
             }
         ]
     },
     menu: {
         Introduction: [
-            "index",
-            "introduction/net-users-read-this",
-            "introduction/js-users-read-this"
+            "docs/index",
+            "docs/introduction/dotnet-users-read-this",
+            "docs/introduction/js-users-read-this"
         ],
         "New to F#?": [
-            "new-to-fsharp/learning-the-language",
-            "new-to-fsharp/let-keyword"
+            "docs/new-to-fsharp/learning-the-language",
+            "docs/new-to-fsharp/let-keyword"
         ],
         "Fable in 2 steps": [
-            "2-steps/setup",
-            "2-steps/your-first-fable-project"
+            "docs/2-steps/setup",
+            "docs/2-steps/your-first-fable-project"
         ],
         "Your Fable project": [
-            "your-fable-project/project-file",
-            "your-fable-project/use-a-fable-library",
-            "your-fable-project/author-a-fable-library",
-            "your-fable-project/build-and-run",
-            "your-fable-project/testing"
+            "docs/your-fable-project/project-file",
+            "docs/your-fable-project/use-a-fable-library",
+            "docs/your-fable-project/author-a-fable-library",
+            "docs/your-fable-project/build-and-run",
+            "docs/your-fable-project/testing"
         ],
         "Communicate with Javascript": [
-            "communicate/js-from-fable",
-            "communicate/fable-from-js"
+            "docs/communicate/js-from-fable",
+            "docs/communicate/fable-from-js"
         ],
         "From .NET to Fable": [
-            "dotnet/compatibility",
-            "dotnet/numbers"
+            "docs/dotnet/compatibility",
+            "docs/dotnet/numbers"
         ],
         "Miscellaneous": [
-            "miscellaneous/official-samples",
-            "miscellaneous/awesome-list",
-            "miscellaneous/fable-in-videos"
+            "docs/miscellaneous/official-samples",
+            "docs/miscellaneous/fable-in-videos"
         ]
     },
     lightner: {
-        backgroundColor: "#FAFAFA",
-        textColor: "",
-        themeFile: "./lightner/themes/OneLight.json",
+        backgroundColor: "#FFFFFF",
+        textColor: "#000000",
+        themeFile: "./lightner/themes/customized_OneLight.json",
         grammars: [
             "./lightner/grammars/fsharp.json",
             "./lightner/grammars/JSON.tmLanguage.json",
@@ -88,8 +114,9 @@ module.exports = {
         ]
     },
     layouts: {
-        default: standard.Default,
-        changelog: standard.Changelog
+        default: standardLayouts.standard,
+        changelog: standardLayouts.changelog,
+        navbarOnly: standardLayouts.navbarOnly
     },
     plugins: {
         markdown: [
@@ -122,10 +149,7 @@ module.exports = {
                 ]
             },
             {
-                path: 'nacara/dist/js/markdown-it-anchored.js'
-            },
-            {
-                path: 'nacara/dist/js/markdown-it-toc.js'
+                path: 'nacara/js/markdown-it-anchored.js'
             }
         ]
     }

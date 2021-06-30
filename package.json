@@ -20,7 +20,7 @@
     },
     "dependencies": {
         "@babel/core": "^7.14.2",
-        "bulma": "^0.9.2",
+        "bulma": "^0.9.3",
         "concurrently": "^6.1.0",
         "fable-compiler": "^2.13.0",
         "fable-splitter": "^2.2.1",

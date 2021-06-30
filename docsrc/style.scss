@@ -1,16 +1,96 @@
 @import "./../node_modules/bulma/sass/utilities/initial-variables";
 
-$primary: #bb4321;
-$text: #2d2d2d;
+
+$fable-blue: dodgerblue;
+$purple: #7a325d;
+$blue: #0055a4;
+$primary: #1292ff;
+$black: #202020;
+// $scheme-main: whitesmoke;
+$text: black;
+
+@import "./../node_modules/bulma/sass/utilities/derived-variables";
+
+$navbar-item-color: $white;
+$navbar-background-color: $primary;
+$navbar-item-hover-color: $white;
+$navbar-item-hover-background-color: lighten($primary, 8%);
+
+$content-heading-color: $primary;
+
+$menu-item-active-background-color: $primary;
+$menu-item-active-color: $white;
+$menu-item-hover-color: $primary;
+$menu-item-hover-background-color: transparent;
+$menu-label-font-size: $size-6;
+$menu-item-radius: $radius-large $radius-large;
+
+$toc-item-active-font-weight: $weight-semibold;
 
 $body-size: 14px;
-$navbar-background-color: $white;
-$navbar-item-color: $primary;
-$content-heading-color: $primary;
-$menu-item-active-background-color: $primary;
 
-$toc-item-active-color: $primary;
-$toc-item-hover-color: $primary;
+$textual-stesp-color: lightgrey;
 
+@import "./../node_modules/bulma/sass/utilities/_all.sass";
 @import './../node_modules/bulma/bulma.sass';
-@import './../node_modules/nacara/scss/nacara.scss';
+@import './../node_modules/nacara-layout-standard/scss/nacara.scss';
+
+.content {
+    pre {
+        border-radius: $radius;
+        box-shadow: 5px 5px 0px 1px lightgrey;
+        border: 1px solid lightgrey;
+        background-color: $white;
+    }
+}
+
+.twitter-timeline-container {
+    border: 1px solid $grey-lighter !important;
+    border-radius: $radius;
+    overflow: hidden;
+    padding: 0;
+}
+
+.has-code-block {
+    &.is-normal {
+        pre {
+            font-size: $size-6;
+        }
+    }
+}
+
+.selling-points {
+    display: grid;
+    gap: $size-4;
+    // grid-template-rows: 200px;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 1fr;
+
+    .selling-point {
+        border-radius: 4px;
+        box-shadow: 5px 5px 0px 1px lightgrey;
+        border: 1px solid lightgrey;
+        background-color: white;
+        margin-bottom: 0 !important;
+    }
+}
+
+// On obile display the selling points has a single column
+@include mobile {
+    .selling-points {
+        grid-template-columns: 1fr;
+    }
+}
+
+.box.is-selling-point {
+    border-radius: 4px;
+    box-shadow: 5px 5px 0px 1px lightgrey;
+    border: 1px solid lightgrey;
+    background-color: white;
+}
+
+@include touch {
+    #fable-main-header {
+        padding: $size-3;
+    }
+}
