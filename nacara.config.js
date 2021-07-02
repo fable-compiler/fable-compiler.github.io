@@ -1,4 +1,5 @@
 const standardLayouts = require("nacara-layout-standard");
+const pageBlog = require("./scripts/blog-page");
 
 const mdMessage = (level) => {
 
@@ -42,7 +43,7 @@ module.exports = {
                 label: "Try"
             },
             {
-                href: "/blog",
+                href: "/blog/index.html",
                 label: "Blog"
             },
             {
@@ -116,7 +117,8 @@ module.exports = {
     layouts: {
         default: standardLayouts.standard,
         changelog: standardLayouts.changelog,
-        navbarOnly: standardLayouts.navbarOnly
+        navbarOnly: standardLayouts.navbarOnly,
+        blogPage: pageBlog.render
     },
     plugins: {
         markdown: [

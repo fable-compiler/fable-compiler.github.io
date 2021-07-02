@@ -1,5 +1,5 @@
 ---
-title: JavaScript you can be proud of
+title: JavaScript you can be proud of!
 layout: navbarOnly
 ---
 
