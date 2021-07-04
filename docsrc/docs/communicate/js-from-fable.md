@@ -1,5 +1,6 @@
 ---
 title: Call JS from Fable
+layout: standard
 ---
 
 ## Call JavaScript from Fable

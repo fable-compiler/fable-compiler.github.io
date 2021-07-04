@@ -1,5 +1,6 @@
 ---
 title: Are you a JS developer?
+layout: standard
 ---
 
 ## Welcome to Fable!

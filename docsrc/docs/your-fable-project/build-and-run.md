@@ -1,5 +1,6 @@
 ---
 title: Build & run
+layout: standard
 ---
 
 Your project is ready? Then it's time to build and run it.

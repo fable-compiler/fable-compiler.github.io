@@ -1,5 +1,6 @@
 ---
 title: Community
+layout: standard
 menu: false
 ---
 

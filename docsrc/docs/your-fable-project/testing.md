@@ -1,5 +1,6 @@
 ---
 title: Testing
+layout: standard
 ---
 
 You can use all tools of the JS ecosystem.

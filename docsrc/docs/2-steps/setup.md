@@ -1,5 +1,6 @@
 ---
 title: Setup
+layout: standard
 ---
 
 ## Prerequisites

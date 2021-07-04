@@ -1,5 +1,6 @@
 ---
 title: Are you a .NET developer?
+layout: standard
 ---
 
 Hi!

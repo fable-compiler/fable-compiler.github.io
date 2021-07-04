@@ -1,5 +1,6 @@
 ---
 title: Awesome Fable
+layout: standard
 menu: false
 ---
 

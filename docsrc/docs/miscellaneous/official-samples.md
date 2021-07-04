@@ -1,5 +1,6 @@
 ---
 title: Check official samples
+layout: standard
 ---
 
 <ul class="textual-steps">
