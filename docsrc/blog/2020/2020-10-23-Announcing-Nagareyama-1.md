@@ -1,3 +1,15 @@
+---
+layout: blogPage
+title: Announcing Nagareyama (Fable 3) (I)
+author: Alfonso García-Caro
+date: 2020-10-23
+author_link: https://twitter.com/alfonsogcnunez
+author_image: https://github.com/alfonsogarciacaro.png
+# external_link:
+abstract: |
+  Next-gen Fable is here! This is the first of a series of posts to introduce the improvements this new major release brings.
+---
+
 Next-gen Fable is here! This is the first of a series of posts to introduce the improvements this new major release brings. We will start with the biggest change: Fable will now be distribute as a [dotnet tool](https://docs.microsoft.com/en-us/dotnet/core/tools/global-tools). Keep reading to learn the reasoning behind this and what improvements are happening with the change.
 
 ## Fable as a dotnet tool
@@ -25,7 +37,7 @@ BTW, if you do need Babel in your workflow to transform the generated code to a 
 
 Removing the JS process means we don't need the inter-process communication any more, which makes Fable faster. What I didn't expect is it would make it so much faster! We will see the improvements in more detail in a later post, but just as an appetizer behold this benchmark that shows how the compilation time for Fable tests has been cut almost in half!
 
-![Benchmark](/img/blog/benchmark1.jpg)
+![Benchmark](/static/img/blog/benchmark1.jpg)
 
 ## Try it out!
 

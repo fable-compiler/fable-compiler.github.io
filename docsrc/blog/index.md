@@ -1,10 +1,23 @@
 ---
-title: Blog
-layout: navbarOnly
-menu: false
-showEditButton: false
-showTitle: false
+layout: blogIndex
 ---
+
+
+<div class="container">
+    <div class="columns">
+        <div class="column is-8 is-offset-2">
+            <section class="section">
+                <figure class="image mx-auto" style="max-width:200px">
+                    <img src="/static/img/fable_logo.png">
+                </figure>
+                <div class="content is-size-5 has-text-weight-light mt-4">
+
+Check our blog to be up-to-date with recent developments in Fable community and if you have cool stuff to share (and we're sure you do) [send us a PR](https://github.com/fable-compiler/fable-compiler.github.io/tree/dev/blog) with your post or a link to your personal web.
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
 
 <!--
     Blog page of Fable is mostly writtien using HTML because it needs specific layouts

@@ -1,3 +1,15 @@
+---
+layout: blogPage
+title: Announcing Elmish.Snabbdom
+author: Alfonso García-Caro
+date: 2021-03-02
+author_link: https://twitter.com/alfonsogcnunez
+author_image: https://github.com/alfonsogarciacaro.png
+# external_link:
+abstract: |
+  I've been recently playing with Feliz.Engine and wanted to check how easy was to adapt it to an alternative Virtual-DOM implementation, like Snabbdom. This started just as an experiment but I've been pleasantly surprised by how simple yet powerful Snabbdom is, and more importantly how well it fits with the Elmish architecture
+---
+
 I've been recently playing with [Feliz.Engine](https://github.com/alfonsogarciacaro/Feliz.Engine/tree/main/samples/Feliz.Snabbdom), an attempt to take advantage of the great work done by Zaid Ajaj and contributors with [Feliz](https://zaid-ajaj.github.io/Feliz/) when writing non-React applications. As part of this I wanted to check how easy was to adapt Feliz.Engine to an alternative Virtual-DOM implementation, and I read good things about [Snabbdom](https://github.com/snabbdom/snabbdom) so I gave it a go. This started just as an experiment but I've been pleasantly surprised by how simple yet powerful Snabbdom is, and more importantly, how well it fits with the [Elmish architecture](https://elmish.github.io/), so I want to share with you my findings hoping that you find them useful.
 
 There was recently a discussion in Twitter about the [problems with Fable Elmish](https://twitter.com/7sharp9_/status/1365270255170428928). So far, Elmish in Fable apps has always used React as the view engine, including React native for mobile (there are also Elmish implementations for non-Fable platforms like [WPF](https://github.com/elmish/Elmish.WPF), [Xamarin](https://fsprojects.github.io/Fabulous/) or [Blazor](https://fsbolero.io/docs/Elmish)), and there's been always friction between the concept of "component" in Elmish and React. This is a bit of technical discussion and I won't go into detail here, among other reasons because I've never managed to explain the difference in an understandable manner. Probably the easiest is to consider Elm/Elmish don't really have a notion of "component" as Dave Thomas explains. It's true the Fable Elmish community tends to "componentize" apps maybe under the influence of React, which sometimes leads to an excess of boilerplate to wire everything.
@@ -33,7 +45,7 @@ Html.li [
     ]
 ```
 
-![Snabbdom CSS transitions](/img/blog/snabbdom-css-transitions.gif)
+![Snabbdom CSS transitions](/static/img/blog/snabbdom-css-transitions.gif)
 
 Learn more about Snabbdom CSS transitions [here](https://github.com/snabbdom/snabbdom#delayed-properties).
 

@@ -1,3 +1,15 @@
+---
+layout: blogPage
+title: Introducing Femto
+author: Zaid-Ajaj
+date: 2019-06-29
+author_link: https://twitter.com/zaid_ajaj
+author_image: https://github.com/Zaid-Ajaj.png
+# external_link:
+abstract: |
+  In this blog post, we will introduce a new tool called Femto that will hopefully make the lives of Fable users a lot easier when it comes to the npm packages they depend upon.
+---
+
 ## Introducing Femto
 
 In this blog post, we will introduce a new tool called Femto that will hopefully make the lives of Fable users a lot easier when it comes to the npm packages they depend upon. First things first: let's go through the problem context to understand what Femto is trying to solve.

@@ -1,13 +1,13 @@
 ---
-title: Introducing 0.7
 layout: blogPage
+title: Introducing 0.7
 author: Alfonso García-Caro
 date: 2016-11-22
 author_link: https://twitter.com/alfonsogcnunez
 author_image: https://github.com/alfonsogarciacaro.png
-description: |
-  I've been recently playing with Feliz.Engine and wanted to check how easy was to adapt it to an alternative Virtual-DOM implementation, like Snabbdom.
-  This started just as an experiment but I've been pleasantly surprised by how simple yet powerful Snabbdom is, and more importantly how well it fits with the Elmish architecture
+# external_link:
+abstract: |
+  So finally here it is! It took a bit longer than expected but I'm very happy to announce Fable 0.7 has been released to npm. This version includes lots of improvements thanks to feedback from the community, it's almost a full rewrite and could be considered 1.0 (in fact, 1.0 will probably be this with minor upgrades).
 ---
 
 So finally here it is! It took a bit longer than expected but I'm very happy to announce Fable 0.7 has been released to npm. This version includes lots of improvements thanks to the feedback from the community, it's almost a full rewrite and could be considered 1.0 (in fact, 1.0 will probably be this with minor upgrades). My experience when developing 0.7 has been completely different than in 0.1 times. Then I was coding alone in the room and this time... well, I'm still coding alone in my room but on the other side of the internet the many faces of the community have been tremendously helping me with PRs, clever suggestions and thorough testing.

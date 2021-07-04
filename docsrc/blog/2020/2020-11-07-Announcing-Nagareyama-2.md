@@ -1,3 +1,15 @@
+---
+layout: blogPage
+title: Announcing Nagareyama (Fable 3) (II)
+author: Alfonso García-Caro
+date: 2020-11-07
+author_link: https://twitter.com/alfonsogcnunez
+author_image: https://github.com/alfonsogarciacaro.png
+# external_link:
+abstract: |
+  I hope you already tried out the new Fable and are enjoying it! The release candidate has just been published and in this post we will also dive into the differences when generating JS code compared to Fable 2.
+---
+
 I hope you already tried out the new Fable and are enjoying it! If you haven't yet, please note the release candidate has just been published. This means we are focusing now on fixing bugs and there won't be any major change before the stable release. This is the perfect opportunity to try upgrading your app and check everything is working correctly (if it doesn't, [let us know](https://github.com/fable-compiler/Fable/issues/new)). Be confident Nagareyama has already been tested in different production apps and we have already ironed out most (if not all) issues. To install Fable 3 just run the following command (use `update` instead of `install` if you already installed the tool previously):
 
 ```

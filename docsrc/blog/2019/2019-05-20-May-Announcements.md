@@ -1,3 +1,15 @@
+---
+layout: blogPage
+title: May Announcements
+author: Alfonso García-Caro
+date: 2019-05-20
+author_link: https://twitter.com/alfonsogcnunez
+author_image: https://github.com/alfonsogarciacaro.png
+# external_link:
+abstract: |
+  Just a very quick post to share with you some of the things that have been happening for the last few weeks in Fable World.
+---
+
 Hi there! Just a very quick post to share with you some of the things that have been happening for the last few weeks in Fable World. Here we go!
 
 ## New version of fable-compiler: 2.3.10

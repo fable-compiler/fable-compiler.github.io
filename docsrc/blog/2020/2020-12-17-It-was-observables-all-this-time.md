@@ -1,3 +1,15 @@
+---
+layout: blogPage
+title: It was observables all this time
+author: Alfonso García-Caro
+date: 2020-12-17
+author_link: https://twitter.com/alfonsogcnunez
+author_image: https://github.com/alfonsogarciacaro.png
+# external_link:
+abstract: |
+  Reviewing, and rethinking, UI architectures.
+---
+
 **Disclaimer I**: This post is part of the [F# Advent Calendar in Japanese](https://qiita.com/advent-calendar/2020/fsharp) (the original one), but it's not in Japanese and doesn't contain any F# code either so... well, sorry for that. 今度日本語で書くように頑張ります！ Thanks a lot to Midoliy btw for organizing it and to Sergey for [the English version](https://sergeytihon.com/2020/10/22/f-advent-calendar-in-english-2020/)!
 
 **Disclaimer II**: I will be reviewing recent developments in the way we build user interfaces, particularly in web apps. But this is done from my own experience and doesn't try to be an accurate report of Software History, please excuse the many inaccuracies that are about to come.
@@ -59,4 +71,4 @@ Together with other members of the Fable community, I’m currently finishing a 
 
 <br />
 
-If you’ve come this far, thanks a lot for reading the post and I hope you found it useful. Stay tuned and follow the [@FableCompiler Twitter account](https://twitter.com/FableCompiler) for get the latest news. We all have big hopes for 2021 so even if it’s a bit early, Happy New Year to you all! 
+If you’ve come this far, thanks a lot for reading the post and I hope you found it useful. Stay tuned and follow the [@FableCompiler Twitter account](https://twitter.com/FableCompiler) for get the latest news. We all have big hopes for 2021 so even if it’s a bit early, Happy New Year to you all!

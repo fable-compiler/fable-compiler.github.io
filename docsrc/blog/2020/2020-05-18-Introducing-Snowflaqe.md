@@ -1,3 +1,15 @@
+---
+title: Introducing Snowflaqe
+layout: blogPage
+author: Zaid-Ajaj
+date: 2020-05-18
+author_link: https://twitter.com/zaid_ajaj
+author_image: https://github.com/Zaid-Ajaj.png
+# external_link:
+abstract: |
+  In this blog post, we will introduce a new tool for Fable called Snowflaqe which will allow generating type-safe GraphQL clients for Fable applications.
+---
+
 ## Introducing Snowflaqe
 
 In this blog post, we will introduce a new tool for Fable called [Snowflaqe](https://github.com/Zaid-Ajaj/Snowflaqe) which will allow generating type-safe GraphQL clients for Fable applications. Though at first, let us talk about what the problem is that Snowflaqe solves and why it is needed.
@@ -25,7 +37,7 @@ query {
 }
 ```
 Might map to F# types as follows:
-```fs
+```fsharp
 type Author = {
     firstName: string option
     lastName: string option

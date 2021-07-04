@@ -1,3 +1,15 @@
+---
+layout: blogPage
+title: Introducing Feliz v1.0
+author: Zaid-Ajaj
+date: 2020-05-18
+author_link: https://twitter.com/zaid_ajaj
+author_image: https://github.com/Zaid-Ajaj.png
+# external_link:
+abstract: |
+  Announcing the official release of Feliz and what it means for the Fable community.
+---
+
 ## Introducing Feliz v1.0
 
 Today, we are happy to announce the official stable release of [Feliz](https://github.com/Zaid-Ajaj/Feliz). This comes after 10 months of development since the initial version and more than 100 releases in between where we kept adding support for more and more React APIs as well as increasing the API coverage for Html, SVG and CSS elements.

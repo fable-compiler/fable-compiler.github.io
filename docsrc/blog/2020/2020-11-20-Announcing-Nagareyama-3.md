@@ -1,3 +1,15 @@
+---
+layout: blogPage
+title: Announcing Nagareyama (Fable 3) (III)
+author: Alfonso García-Caro
+date: 2020-11-20
+author_link: https://twitter.com/alfonsogcnunez
+author_image: https://github.com/alfonsogarciacaro.png
+# external_link:
+abstract: |
+  This is the third post in the "Announcing Nagareyama (Fable 3)" series. This time we will be focusing on the actual new features of Nagareyama.
+---
+
 This is the third post in the "Announcing Nagareyama (Fable 3)" series. You can check the previous articles below:
 
 - [Announcing Nagareyama I: Tooling](https://fable.io/blog/Announcing-Nagareyama-1.html)
@@ -77,7 +89,7 @@ let measureTime (f: unit -> unit) = emitJsStatement f """
 let addAnything (x: obj) (y: obj): obj = emitJsExpr (x, y) "$0 + $1"
 ```
 
-As usual, we don't recommend relying on inlined JS code too much, after all, Fable was developed to be able to use and advanced statically-typed language with the JS ecosystem, but sometime we just need to paste a piece of code we borrowed from the internet (we don't do that very often, but sometimes happens, right?) and the new helpers make this easier than using the attributes. 
+As usual, we don't recommend relying on inlined JS code too much, after all, Fable was developed to be able to use and advanced statically-typed language with the JS ecosystem, but sometime we just need to paste a piece of code we borrowed from the internet (we don't do that very often, but sometimes happens, right?) and the new helpers make this easier than using the attributes.
 
 A word of caution about emitting _raw_ javascript. Fable 2 relied on Babel to parse this raw code and integrate it with JS AST. Now Fable 3 prints this code directly, which surfaces a problem we don't have in F#: in JS as in other languages, there's a difference between "expressions" and "statements". Fable 3 won't be able to tell them apart from a JS code string. That's why there are two helpers: `emitJsExpr` and `emitJsStatement`. The `Emit` attribute also includes now an optional `isStatement` parameter:
 

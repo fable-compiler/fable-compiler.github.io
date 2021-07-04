@@ -1,3 +1,16 @@
+---
+layout: blogPage
+title: "Casque Noir: Raising awareness on Haïti social and environmental issues"
+author: François Nicaise
+date: 2017-06-20
+author_link: https://twitter.com/thewhitetigle
+author_image: https://github.com/whitetigle.png
+# external_link:
+abstract: |
+  I've been recently playing with Feliz.Engine and wanted to check how easy was to adapt it to an alternative Virtual-DOM implementation, like Snabbdom.
+  This started just as an experiment but I've been pleasantly surprised by how simple yet powerful Snabbdom is, and more importantly how well it fits with the Elmish architecture
+---
+
 For several years, Casque Noir, a Canadian non-profit organization, has been researching about urban mutations of Haïti Island's capital, Port-au-Prince's most famous deprived urban neighbourhood: Jalousie
 
 <img src="http://www.casquenoir.com/img/jalousie/j_1_1a.jpg" alt="Jalousie" width="800px" />

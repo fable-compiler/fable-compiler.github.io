@@ -1,3 +1,15 @@
+---
+layout: blogPage
+title: Announcing Nagareyama (Fable 3) (and IV)
+author: Alfonso García-Caro
+date: 2020-12-04
+author_link: https://twitter.com/alfonsogcnunez
+author_image: https://github.com/alfonsogarciacaro.png
+# external_link:
+abstract: |
+  Today is the day, Fable 3 Nagareyama is officially released!
+---
+
 Today is the day, Fable 3 Nagareyama is officially released! Does this mean the latest version is bug-free? Probably not, but at least the install command is shorter. We have also tested the release candidates in many projects and managed to fix all the outstanding issues so if you find a problem when upgrading your Fable 2 project you may even consider yourself lucky (also, please report).
 
 First things first, I have to acknowledge all the people that have contributed to this release: from Don Syme himself to ncave, our mysterious contributor, and all the early-users that have helped polish this release. Very importantly, the teachers too that take care of my children in difficult times so I can focus on programming. The fact that so many people can collaborate together to put a project like Fable forward still feels like magic to me and I can only say a big THANK YOU to you all. I'm also very happy this is coincidental with the release of F# 5, as incredibly smart people are putting a lot of effort to make the development experience with the language really pleasant. Quoting Krzysztof Cieślak, what a great time to be an F# developer!

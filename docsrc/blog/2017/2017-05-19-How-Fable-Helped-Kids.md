@@ -1,8 +1,13 @@
 ---
+layout: blogPage
 title: How Fable helped kids win a contest
-menu: false
-showToc: false
-showTitle: false
+author: François Nicaise
+date: 2017-05-19
+author_link: https://twitter.com/thewhitetigle
+author_image: https://github.com/whitetigle.png
+# external_link:
+abstract: |
+  Yesterday, when I fell asleep, it was with the clear memory of smiles shining on the faces of our kids. After several months of hard work, they did it. They **won the Junior Achievement Young Entreprise** regional contest organized in Bordeaux and were qualified for the National contest!
 ---
 
 <div class="blog-post">

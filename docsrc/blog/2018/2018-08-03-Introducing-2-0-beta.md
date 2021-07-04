@@ -1,3 +1,15 @@
+---
+layout: blogPage
+title: Introducing Fable 2.0 beta
+author: Alfonso García-Caro
+date: 2018-08-03
+author_link: https://twitter.com/alfonsogcnunez
+author_image: https://github.com/alfonsogarciacaro.png
+# external_link:
+abstract: |
+  Fable 2? Really? I want to try it out! NOW!
+---
+
 ## TL;DR
 
 - **Fable 2? Really? I want to try it out! NOW!** The easiest way is to check [the new and shiny repl](http://fable.io/repl) for quickly running and editing samples online. To test the new tooling in your machine, we have prepared two samples: [one with minimal configuration](https://github.com/fable-compiler/fable2-samples/tree/master/minimal) if you prefer to start with the basics; and [a full-blown app](https://github.com/MangelMaxime/fulma-demo) that includes most extensive configuration and code.

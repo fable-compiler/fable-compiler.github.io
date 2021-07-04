@@ -1,3 +1,15 @@
+---
+title: Migration to Fable 2
+layout: blogPage
+author: Mangel Maxime
+date: 2018-10-01
+author_link: https://twitter.com/MangelMaxime
+author_image: https://github.com/MangelMaxime.png
+# external_link:
+abstract: |
+  With this document we are going to convert a Fable 1 project into a Fable 2 project. This guide has been writed by converting Fulma.Minimal template from Fable 1 to Fable 2.
+---
+
 ## TL;DR
 
 With this document we are going to convert a Fable 1 project into a Fable 2 project.

@@ -1,3 +1,15 @@
+---
+layout: blogPage
+title: Introducing Fable 1.0 beta (codename narumi)
+author: Alfonso García-Caro
+date: 2017-03-20
+author_link: https://twitter.com/alfonsogcnunez
+author_image: https://github.com/alfonsogarciacaro.png
+# external_link:
+abstract: |
+  Fable has recently added support for a subset of the FSharp.Reflection namespace. Which is really great, allowing us to inspect type information at run-time in the browser. Today, we will be exploring an application of meta-programming using FSharp.Reflection to abstract a very common task in web development: client-server communication.
+---
+
 One year after the release of fable-compiler 0.0.1 to npm, I'm very glad to announce the availability of Fable 1.0 beta and I'm also tremendously happy to see how during this time the project has become a very important part of the F# ecosystem and even for some the main reason to write F#. I realize Fable must live up to the high standards of the F# experience, because of this, the main efforts for this new major version have been put into improving the workflow and make it as easy as possible for app and library developers to author Fable programs. If the keyword of Fable 0.7 was _community_ this time we can say it is _integration_: keeping the original spirit of bringing together the best of F#/.NET and JS worlds, Fable 1.0 integrates now in the pipeline of the best build tools in both ecosystems.
 
 > Disclaimer: This is the announcements of a **beta** release so please expect some rough edges. If you have a critical project in Fable you may want to wait for the stable version, but it would be really helpful if you could take the time to go through this document, upgrade your project and provide feedback to help make sure the final Fable 1.0 will work for everybody.
