@@ -73,7 +73,6 @@ const renderAuthorAndDate = (authorName, authorLink, date) => {
 
 export const render = (model, pageContext) => {
     return new Promise((resolve, reject) => {
-        console.log(pageContext.FrontMatter);
         const title = pageContext.FrontMatter.title;
         const author = pageContext.FrontMatter.author;
         const date = pageContext.FrontMatter.date;
@@ -109,11 +108,16 @@ export const render = (model, pageContext) => {
                                         }
                                     )
                             )
+                        ),
+                        e("script",
+                            {
+                                src: "/static/nacara_internals/menu.js"
+                            }
                         )
                     )
                 );
 
-                resolve(standardLayouts.basePage(model, pageContext.Attributes.Title, content));
+                resolve(standardLayouts.basePage(model, null, content));
             })
             .catch((error) => {
                 console.error(error);
