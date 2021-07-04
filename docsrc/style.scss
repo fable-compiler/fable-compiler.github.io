@@ -125,9 +125,7 @@ $textual-stesp-color: lightgrey;
 
     .card.article {
         @include strong-shadow-box;
-        height: 350px;
         margin-bottom: 7rem;
-
 
         // Author image customization for blog index page
         .image {

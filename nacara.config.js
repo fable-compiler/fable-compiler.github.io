@@ -1,5 +1,6 @@
 const standardLayouts = require("nacara-layout-standard");
-const pageBlog = require("./scripts/blog-page");
+const blogPage = require("./scripts/blog-page");
+const blogIndex = require("./scripts/blog-index");
 
 const mdMessage = (level) => {
 
@@ -115,10 +116,11 @@ module.exports = {
         ]
     },
     layouts: {
-        default: standardLayouts.standard,
+        standard: standardLayouts.standard,
         changelog: standardLayouts.changelog,
         navbarOnly: standardLayouts.navbarOnly,
-        blogPage: pageBlog.render
+        blogPage: blogPage.render,
+        blogIndex: blogIndex.render
     },
     plugins: {
         markdown: [
