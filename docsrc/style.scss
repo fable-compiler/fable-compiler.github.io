@@ -15,6 +15,8 @@ $navbar-item-color: $white;
 $navbar-background-color: $primary;
 $navbar-item-hover-color: $white;
 $navbar-item-hover-background-color: lighten($primary, 8%);
+$navbar-item-active-background-color: lighten($primary, 8%);
+$navbar-item-active-color: $white;
 
 $content-heading-color: $primary;
 
@@ -40,6 +42,12 @@ $textual-stesp-color: lightgrey;
     box-shadow: 5px 5px 0px 1px lightgrey;
     border: 1px solid lightgrey;
     background-color: white;
+}
+
+.navbar-item {
+    &.is-active {
+        text-decoration: underline;
+    }
 }
 
 .content {
