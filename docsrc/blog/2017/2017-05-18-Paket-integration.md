@@ -1,5 +1,5 @@
 ---
-layout: blogPage
+layout: fable-blog-page
 title: Paket Integration
 author: Alfonso García-Caro
 date: 2017-05-18

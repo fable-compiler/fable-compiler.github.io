@@ -1,5 +1,5 @@
 ---
-layout: blogPage
+layout: fable-blog-page
 title: Introducing Femto
 author: Zaid-Ajaj
 date: 2019-06-29

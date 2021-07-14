@@ -1,6 +1,6 @@
 ---
 title: Introducing Snowflaqe
-layout: blogPage
+layout: fable-blog-page
 author: Zaid-Ajaj
 date: 2020-05-18
 author_link: https://twitter.com/zaid_ajaj

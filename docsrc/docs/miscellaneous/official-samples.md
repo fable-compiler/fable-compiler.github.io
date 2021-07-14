@@ -1,6 +1,6 @@
 ---
 title: Check official samples
-layout: standard
+layout: nacara-standard
 ---
 
 <ul class="textual-steps">

@@ -1,5 +1,5 @@
 ---
-layout: blogPage
+layout: fable-blog-page
 title: Announcing Fable.React 5
 author: Alfonso García-Caro
 date: 2019-04-16

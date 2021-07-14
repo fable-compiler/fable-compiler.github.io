@@ -1,6 +1,6 @@
 ---
 title: Call Fable from JavaScript
-layout: standard
+layout: nacara-standard
 ---
 
 Sometimes, we'd like to use the power of Fable into our JavaScript apps. For instance, to create a new

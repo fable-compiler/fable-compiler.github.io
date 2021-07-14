@@ -1,5 +1,5 @@
 ---
-layout: blogPage
+layout: fable-blog-page
 title: Announcing Elmish.Snabbdom
 author: Alfonso García-Caro
 date: 2021-03-02

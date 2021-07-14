@@ -1,5 +1,5 @@
 ---
-layout: blogPage
+layout: fable-blog-page
 title: "Statically Typed Client-Server Communication with F#: Proof of Concept"
 author: Zaid-Ajaj
 date: 2017-03-19

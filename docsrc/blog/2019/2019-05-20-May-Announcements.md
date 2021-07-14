@@ -1,5 +1,5 @@
 ---
-layout: blogPage
+layout: fable-blog-page
 title: May Announcements
 author: Alfonso García-Caro
 date: 2019-05-20

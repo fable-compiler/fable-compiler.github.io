@@ -1,5 +1,5 @@
 ---
-layout: blogPage
+layout: fable-blog-page
 title: Introducing Feliz v1.0
 author: Zaid-Ajaj
 date: 2020-05-18

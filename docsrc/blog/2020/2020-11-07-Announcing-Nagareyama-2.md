@@ -1,5 +1,5 @@
 ---
-layout: blogPage
+layout: fable-blog-page
 title: Announcing Nagareyama (Fable 3) (II)
 author: Alfonso García-Caro
 date: 2020-11-07

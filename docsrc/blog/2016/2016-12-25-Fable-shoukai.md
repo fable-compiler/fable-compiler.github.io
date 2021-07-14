@@ -1,5 +1,5 @@
 ---
-layout: blogPage
+layout: fable-blog-page
 title: Fable(F#からJSへコンパイラー)の紹介
 author: Alfonso García-Caro
 date: 2016-12-25

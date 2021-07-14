@@ -1,6 +1,6 @@
 ---
 title: The let keyword
-layout: standard
+layout: nacara-standard
 ---
 
 `let` is the F# keyword used to bind any value to a name, it's used to bind the so called primitive types such as a `string` or an `integer`, to bind to a function or more complex structures such as arrays or records.

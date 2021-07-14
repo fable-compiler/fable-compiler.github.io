@@ -1,3 +1,3 @@
 ---
-layout: blogIndex
+layout: fable-blog-index
 ---

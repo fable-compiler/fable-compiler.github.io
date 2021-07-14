@@ -1,6 +1,6 @@
 ---
 title: Community
-layout: standard
+layout: nacara-standard
 menu: false
 ---
 

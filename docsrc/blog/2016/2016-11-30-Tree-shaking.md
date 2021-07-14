@@ -1,5 +1,5 @@
 ---
-layout: blogPage
+layout: fable-blog-page
 title: Tree Shaking with Fable
 author: Alfonso García-Caro
 date: 2016-11-30

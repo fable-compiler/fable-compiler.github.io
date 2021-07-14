@@ -1,5 +1,5 @@
 ---
-layout: blogPage
+layout: fable-blog-page
 title: "Casque Noir: Raising awareness on Haïti social and environmental issues"
 author: François Nicaise
 date: 2017-06-20

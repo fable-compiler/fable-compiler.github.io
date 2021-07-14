@@ -1,5 +1,5 @@
 ---
-layout: blogPage
+layout: fable-blog-page
 title: FableConf or where the magic happened
 author: Alfonso García-Caro
 date: 2017-12-06

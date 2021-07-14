@@ -1,5 +1,5 @@
 ---
-layout: blogPage
+layout: fable-blog-page
 title: Introducing Fable 2.0 beta
 author: Alfonso García-Caro
 date: 2018-08-03

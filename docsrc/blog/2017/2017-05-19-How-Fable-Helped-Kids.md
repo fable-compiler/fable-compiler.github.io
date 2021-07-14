@@ -1,5 +1,5 @@
 ---
-layout: blogPage
+layout: fable-blog-page
 title: How Fable helped kids win a contest
 author: François Nicaise
 date: 2017-05-19

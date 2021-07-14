@@ -4,9 +4,7 @@ const e = React.createElement;
 const fs = require("fs").promises;
 const path = require("path");
 const frontMatter = require("front-matter")
-const md = require('markdown-it')({
-    html: true
-});
+const nacaraStrandardPrelude = require("nacara-layout-standard/dist/Prelude");
 
 /**
  *
@@ -21,7 +19,7 @@ const renderAuthorImage = (blogPage) => {
         e("img",
             {
                 className: "author-image is-rounded",
-                src: blogPage.attributes.author_image
+                src: blogPage.Attributes.author_image
             }
         )
     )
@@ -36,14 +34,14 @@ const renderTile = (blogPage) => {
 
     // Add leading / + change file extension
     let internalLink =
-        "/" + blogPage.path.substring(0, blogPage.path.lastIndexOf('.') + 1) + "html"
+        "/" + blogPage.RelativePath.substring(0, blogPage.RelativePath.lastIndexOf('.') + 1) + "html"
 
     // Use / for the URL and not \ needed when generating the blog from Windows
     internalLink = internalLink.replace(/\\/g, "/")
 
     const link =
-        (blogPage.attributes.external_link != null) ?
-            blogPage.attributes.external_link : internalLink;
+        (blogPage.Attributes.external_link != null) ?
+            blogPage.Attributes.external_link : internalLink;
 
     return e("h2",
         {
@@ -53,7 +51,7 @@ const renderTile = (blogPage) => {
             {
                 href: link
             },
-            blogPage.attributes.title,
+            blogPage.Attributes.title,
         )
     )
 }
@@ -74,15 +72,15 @@ const renderAuthorAndDate = (blogPage) => {
         e("a",
             {
                 className: "tag is-rounded is-medium is-primary",
-                href: blogPage.attributes.author_link
+                href: blogPage.Attributes.author_link
             },
-            blogPage.attributes.author
+            blogPage.Attributes.author
         ),
         e("span",
             {
                 className: "tag is-rounded is-medium"
             },
-            dateFormat.format(blogPage.attributes.date)
+            dateFormat.format(blogPage.Attributes.date)
         )
     )
 }
@@ -145,39 +143,8 @@ const renderPageHeader = () => {
     )
 }
 
-const getFiles = async (model, rootDirectory) => {
-    let filesAcc = [];
-
-    const directoryForRelativePath = path.join(rootDirectory, "..")
-
-    const iterateDirectory = async (directory) => {
-        const files = await fs.readdir(directory);
-
-        for (const file of files) {
-            const absoluteFilepath = path.join(directory, file)
-            const stats = await fs.stat(absoluteFilepath);
-            if (stats.isDirectory()) {
-                await iterateDirectory(absoluteFilepath);
-            } else {
-                const pageContent = await fs.readFile(absoluteFilepath);
-                const fm = frontMatter(pageContent.toString())
-
-                filesAcc.push({
-                    absoluteFilepath: absoluteFilepath,
-                    path: path.relative(directoryForRelativePath, absoluteFilepath),
-                    attributes: fm.attributes
-                });
-            }
-        }
-    }
-
-    await iterateDirectory(rootDirectory);
-
-    return filesAcc;
-}
-
-const renderAbstract = (blogPage) => {
-    const content = md.render(blogPage.attributes.abstract)
+const renderAbstract = async (rendererContext, blogPage) => {
+    const content = await rendererContext.MarkdownToHtml(blogPage.Attributes.abstract)
 
     return e("div",
         {
@@ -187,7 +154,7 @@ const renderAbstract = (blogPage) => {
     )
 }
 
-const renderBlogAbstract = async (blogPage) => {
+const renderBlogAbstract = async (rendererContext, blogPage) => {
     return e("div",
         {
             className: "card article",
@@ -203,41 +170,60 @@ const renderBlogAbstract = async (blogPage) => {
                     renderAuthorImage(blogPage),
                     renderTitleAndAuthorDateTag(blogPage)
                 ),
-                renderAbstract(blogPage)
+                await renderAbstract(rendererContext, blogPage)
         )
     )
 }
 
-export const render = async (model, initialPageContext) => {
-    const pageContext =
-        await standardLayouts.processMarkdown(model, initialPageContext)
+const render = async (rendererContext, pageContext) => {
+    // Note the blog-index page doesn't have any markdown renderer because all of it's content
+    // is generated from the frontmatter information coming from the blog-page files
 
-    const blogDirectory =
-        path.dirname(pageContext.Path);
+    // const blogDirectory =
+    //     path.dirname(pageContext.RelativePath);
 
-    const blogDirectoryAbsolute =
-        path.join(model.WorkingDirectory, blogDirectory)
+    // const blogDirectoryAbsolute =
+    //     path.join(model.WorkingDirectory, blogDirectory)
 
-    let blogPages = await getFiles(model, blogDirectoryAbsolute);
-    blogPages = blogPages.filter((file) => {
-        return file.absoluteFilepath != path.join(blogDirectoryAbsolute, "index.md")
-    })
+    const blogPages =
+        rendererContext.Pages
+            .filter((pageContext) => {
+                return pageContext.Layout === "fable-blog-page"
+            })
+            .sort((pageContext1, pageContext2 ) => {
+                return pageContext1.Attributes.date - pageContext2.Attributes.date
+            });
 
-    // Sort from newest to oldest blog post
-    blogPages.sort((page1, page2) => {
-        return page2.attributes.date - page1.attributes.date;
-    })
-
-    // const sortedBlogPages = await sortBlogPart(files);
-
-    // console.log(sortedBlogPages);
 
     let blogAbstractElements = [];
 
     for (const blogPage of blogPages) {
-        const blogAbstractElement = await renderBlogAbstract(blogPage)
+        const blogAbstractElement = await renderBlogAbstract(rendererContext, blogPage)
         blogAbstractElements.push(blogAbstractElement)
     }
+
+    // let blogPages = await getFiles(model, blogDirectoryAbsolute);
+
+
+    // blogPages = blogPages.filter((file) => {
+    //     return file.absoluteFilepath != path.join(blogDirectoryAbsolute, "index.md")
+    // })
+
+    // // Sort from newest to oldest blog post
+    // blogPages.sort((page1, page2) => {
+    //     return page2.Attributes.date - page1.Attributes.date;
+    // })
+
+    // // const sortedBlogPages = await sortBlogPart(files);
+
+    // // console.log(sortedBlogPages);
+
+    // let blogAbstractElements = [];
+
+    // for (const blogPage of blogPages) {
+    //     const blogAbstractElement = await renderBlogAbstract(blogPage)
+    //     blogAbstractElements.push(blogAbstractElement)
+    // }
 
     const content =
         e("div",
@@ -258,5 +244,20 @@ export const render = async (model, initialPageContext) => {
             )
     );
 
-    return standardLayouts.basePage(model, null, content);
+    return nacaraStrandardPrelude.basePage(new nacaraStrandardPrelude.BasePageArgs(
+        rendererContext.Config,
+        pageContext.Section,
+        undefined,
+        content
+    ));
+}
+
+export default {
+    Renderers: [
+        {
+            Name: "fable-blog-index",
+            Func: render
+        }
+    ],
+    Dependencies: []
 }

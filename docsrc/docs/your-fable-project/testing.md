@@ -1,6 +1,6 @@
 ---
 title: Testing
-layout: standard
+layout: nacara-standard
 ---
 
 You can use all tools of the JS ecosystem.

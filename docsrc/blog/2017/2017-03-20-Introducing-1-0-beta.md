@@ -1,5 +1,5 @@
 ---
-layout: blogPage
+layout: fable-blog-page
 title: Introducing Fable 1.0 beta (codename narumi)
 author: Alfonso García-Caro
 date: 2017-03-20

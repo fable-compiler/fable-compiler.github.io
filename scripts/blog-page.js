@@ -1,6 +1,9 @@
+import { PageContext, RendererContext } from "nacara-layout-standard/dist/Nacara/Source/Types";
+
 const standardLayouts = require("nacara-layout-standard");
 const React = require("react");
 const e = React.createElement;
+const nacaraStrandardPrelude = require("nacara-layout-standard/dist/Prelude");
 
 /**
  *
@@ -42,6 +45,7 @@ const renderTile = (title) => {
  * @param {Date} date
  * @returns
  */
+
 const renderAuthorAndDate = (authorName, authorLink, date) => {
     const dateFormat =
         new Intl.DateTimeFormat(
@@ -71,56 +75,68 @@ const renderAuthorAndDate = (authorName, authorLink, date) => {
     )
 }
 
-export const render = (model, pageContext) => {
-    return new Promise((resolve, reject) => {
-        const title = pageContext.FrontMatter.title;
-        const author = pageContext.FrontMatter.author;
-        const date = pageContext.FrontMatter.date;
-        const author_link = pageContext.FrontMatter.author_link;
-        const author_image = pageContext.FrontMatter.author_image;
+/**
+ * @param {RendererContext} rendererContext
+ * @param {PageContext} pageContext
+ */
+const render = async (rendererContext, pageContext) => {
+    const title = pageContext.Attributes.title;
+    const author = pageContext.Attributes.author;
+    const date = pageContext.Attributes.date;
+    const author_link = pageContext.Attributes.author_link;
+    const author_image = pageContext.Attributes.author_image;
 
-        standardLayouts
-            .processMarkdown(model, pageContext)
-            .then((pageContext) => {
+    const pageContent = await rendererContext.MarkdownToHtml(pageContext.Content)
 
-                const content =
+    const content =
+        e("div",
+            {
+                className: "container",
+            },
+            e("div",
+                {
+                    className: "columns",
+                },
+                e("div",
+                    {
+                        className: "column is-8-desktop is-offset-2-desktop"
+                    },
                     e("div",
-                        {
-                            className: "container",
-                        },
+                        { className: "section blog-post" },
+                        renderAuthorImage(author_image),
+                        renderTile(title),
+                        renderAuthorAndDate(author, author_link, date),
                         e("div",
                             {
-                                className: "columns",
-                            },
-                            e("div",
-                                {
-                                    className: "column is-8-desktop is-offset-2-desktop"
-                                },
-                                e("div",
-                                    { className: "section blog-post" },
-                                    renderAuthorImage(author_image),
-                                    renderTile(title),
-                                    renderAuthorAndDate(author, author_link, date),
-                                    e("div",
-                                        {
-                                            className: "content",
-                                            dangerouslySetInnerHTML: { __html: pageContext.Content }
-                                        }
-                                    )
-                            )
-                        ),
-                        e("script",
-                            {
-                                src: "/static/nacara_internals/menu.js"
+                                className: "content",
+                                dangerouslySetInnerHTML: { __html: pageContent }
                             }
                         )
                     )
-                );
+                ),
+                e("script",
+                    {
+                        src: "/static/nacara_internals/menu.js"
+                    }
+                )
+            )
+        );
 
-                resolve(standardLayouts.basePage(model, null, content));
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    });
+    return nacaraStrandardPrelude.basePage(new nacaraStrandardPrelude.BasePageArgs(
+        rendererContext.Config,
+        pageContext.Section,
+        undefined,
+        content
+    ));
+
+}
+
+export default {
+    Renderers: [
+        {
+            Name: "fable-blog-page",
+            Func: render
+        }
+    ],
+    Dependencies: []
 }

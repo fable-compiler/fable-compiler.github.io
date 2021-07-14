@@ -1,6 +1,6 @@
 ---
 title: Setup
-layout: standard
+layout: nacara-standard
 ---
 
 ## Prerequisites

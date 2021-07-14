@@ -1,5 +1,5 @@
 ---
-layout: blogPage
+layout: fable-blog-page
 title: It was observables all this time
 author: Alfonso García-Caro
 date: 2020-12-17

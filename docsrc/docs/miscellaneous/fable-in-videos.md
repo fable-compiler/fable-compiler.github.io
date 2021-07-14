@@ -1,6 +1,6 @@
 ---
 title: Fable in videos
-layout: standard
+layout: nacara-standard
 ---
 
 Many people have been speaking at various conferences about Fable and related stacks. So grab a ☕️ and have enjoy these 🎥 and [let's start right now with the famous song...](https://www.youtube.com/watch?v=pbqsjEF6Qpw)

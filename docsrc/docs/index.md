@@ -1,6 +1,6 @@
 ---
 title: What is Fable?
-layout: standard
+layout: nacara-standard
 ---
 
 Fable is a compiler that lets you use [F#](https://fsharp.org/) to build applications that run in the JavaScript ecosystem.

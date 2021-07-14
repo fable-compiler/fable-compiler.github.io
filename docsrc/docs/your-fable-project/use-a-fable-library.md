@@ -1,6 +1,6 @@
 ---
 title: Use a Fable library
-layout: standard
+layout: nacara-standard
 ---
 
 We often use libraries using [NuGet](https://www.nuget.org/), which is the defacto .NET package manager.

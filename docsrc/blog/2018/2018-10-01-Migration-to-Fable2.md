@@ -1,6 +1,6 @@
 ---
 title: Migration to Fable 2
-layout: blogPage
+layout: fable-blog-page
 author: Mangel Maxime
 date: 2018-10-01
 author_link: https://twitter.com/MangelMaxime

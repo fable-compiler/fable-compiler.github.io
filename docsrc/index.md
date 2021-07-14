@@ -1,6 +1,6 @@
 ---
 title: JavaScript you can be proud of!
-layout: navbarOnly
+layout: nacara-navbar-only
 ---
 
 <!--

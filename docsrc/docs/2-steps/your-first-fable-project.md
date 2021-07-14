@@ -1,6 +1,6 @@
 ---
 title: Start a new project
-layout: standard
+layout: nacara-standard
 ---
 
 Now we're ready, let's start a new project using Fable!

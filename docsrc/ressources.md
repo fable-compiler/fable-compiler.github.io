@@ -1,6 +1,6 @@
 ---
 title: Awesome Fable
-layout: standard
+layout: nacara-standard
 menu: false
 ---
 

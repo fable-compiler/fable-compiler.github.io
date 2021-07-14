@@ -1,6 +1,6 @@
 ---
 title: Call JS from Fable
-layout: standard
+layout: nacara-standard
 ---
 
 ## Call JavaScript from Fable

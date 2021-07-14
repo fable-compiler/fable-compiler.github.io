@@ -1,5 +1,5 @@
 ---
-layout: blogPage
+layout: fable-blog-page
 title: Introducing 0.7
 author: Alfonso García-Caro
 date: 2016-11-22

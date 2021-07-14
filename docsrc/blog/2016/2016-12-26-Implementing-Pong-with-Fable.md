@@ -1,5 +1,5 @@
 ---
-layout: blogPage
+layout: fable-blog-page
 title: Implementing Pong in a functional manner with Fable
 author: Marcel Schwark
 date: 2016-12-26

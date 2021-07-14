@@ -1,6 +1,6 @@
 ---
 title: Author a Fable library
-layout: standard
+layout: nacara-standard
 ---
 
 To write a library that can be used in Fable you only need to fulfill a few conditions:
