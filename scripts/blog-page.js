@@ -1,6 +1,5 @@
 import { PageContext, RendererContext } from "nacara-layout-standard/dist/Nacara/Source/Types";
 
-const standardLayouts = require("nacara-layout-standard");
 const React = require("react");
 const e = React.createElement;
 const nacaraStrandardPrelude = require("nacara-layout-standard/dist/Prelude");

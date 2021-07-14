@@ -1,9 +1,5 @@
-const standardLayouts = require("nacara-layout-standard");
 const React = require("react");
 const e = React.createElement;
-const fs = require("fs").promises;
-const path = require("path");
-const frontMatter = require("front-matter")
 const nacaraStrandardPrelude = require("nacara-layout-standard/dist/Prelude");
 
 /**
@@ -179,12 +175,6 @@ const render = async (rendererContext, pageContext) => {
     // Note the blog-index page doesn't have any markdown renderer because all of it's content
     // is generated from the frontmatter information coming from the blog-page files
 
-    // const blogDirectory =
-    //     path.dirname(pageContext.RelativePath);
-
-    // const blogDirectoryAbsolute =
-    //     path.join(model.WorkingDirectory, blogDirectory)
-
     const blogPages =
         rendererContext.Pages
             .filter((pageContext) => {
@@ -194,36 +184,12 @@ const render = async (rendererContext, pageContext) => {
                 return pageContext1.Attributes.date - pageContext2.Attributes.date
             });
 
-
     let blogAbstractElements = [];
 
     for (const blogPage of blogPages) {
         const blogAbstractElement = await renderBlogAbstract(rendererContext, blogPage)
         blogAbstractElements.push(blogAbstractElement)
     }
-
-    // let blogPages = await getFiles(model, blogDirectoryAbsolute);
-
-
-    // blogPages = blogPages.filter((file) => {
-    //     return file.absoluteFilepath != path.join(blogDirectoryAbsolute, "index.md")
-    // })
-
-    // // Sort from newest to oldest blog post
-    // blogPages.sort((page1, page2) => {
-    //     return page2.Attributes.date - page1.Attributes.date;
-    // })
-
-    // // const sortedBlogPages = await sortBlogPart(files);
-
-    // // console.log(sortedBlogPages);
-
-    // let blogAbstractElements = [];
-
-    // for (const blogPage of blogPages) {
-    //     const blogAbstractElement = await renderBlogAbstract(blogPage)
-    //     blogAbstractElements.push(blogAbstractElement)
-    // }
 
     const content =
         e("div",
