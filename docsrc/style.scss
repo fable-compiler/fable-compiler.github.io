@@ -1,13 +1,15 @@
+$family-sans-serif: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+
 @import "./../node_modules/bulma/sass/utilities/initial-variables";
 
 
 $fable-blue: dodgerblue;
 $purple: #7a325d;
 $blue: #0055a4;
-$primary: #1292ff;
+$primary: $fable-blue;
 $black: #202020;
 // $scheme-main: whitesmoke;
-$text: black;
+$text: #444;
 
 @import "./../node_modules/bulma/sass/utilities/derived-variables";
 

@@ -59,7 +59,8 @@ layout: nacara-navbar-only
             <div class="box selling-point">
                 <div class="media">
                     <div class="media-left">
-                        <figure class="image is-64x64">
+                        <figure class="image" style="height: 3em; width: 3em;">
+                        <!-- 3em mimics the behaviour of the fa-3x for font-awesome icons making the layout more consistent -->
                             <img src="/static/img/fsharp.png" />
                         </figure>
                     </div>
