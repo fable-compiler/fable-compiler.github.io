@@ -1,0 +1,62 @@
+[
+    {
+        "type": "category",
+        "label": "Introduction",
+        "items": [
+            "docs/index",
+            "docs/introduction/dotnet-users-read-this",
+            "docs/introduction/js-users-read-this"
+        ]
+    },
+    {
+        "type": "category",
+        "label": "New to F#?",
+        "items": [
+            "docs/new-to-fsharp/learning-the-language",
+            "docs/new-to-fsharp/let-keyword"
+        ]
+    },
+    {
+        "type": "category",
+        "label": "Fable in 2 steps",
+        "items": [
+            "docs/2-steps/setup",
+            "docs/2-steps/your-first-fable-project"
+        ]
+    },
+    {
+        "type": "category",
+        "label": "Your Fable project",
+        "items": [
+            "docs/your-fable-project/project-file",
+            "docs/your-fable-project/use-a-fable-library",
+            "docs/your-fable-project/author-a-fable-library",
+            "docs/your-fable-project/build-and-run",
+            "docs/your-fable-project/testing"
+        ]
+    },
+    {
+        "type": "category",
+        "label": "Communicate with Javascript",
+        "items": [
+            "docs/communicate/js-from-fable",
+            "docs/communicate/fable-from-js"
+        ]
+    },
+    {
+        "type": "category",
+        "label": "From .NET to Fable",
+        "items": [
+            "docs/dotnet/compatibility",
+            "docs/dotnet/numbers"
+        ]
+    },
+    {
+        "type": "category",
+        "label": "Miscellaneous",
+        "items": [
+            "docs/miscellaneous/official-samples",
+            "docs/miscellaneous/fable-in-videos"
+        ]
+    }
+]
