@@ -1,6 +1,6 @@
 const React = require("react");
 const e = React.createElement;
-const nacaraStrandardPrelude = require("nacara-layout-standard/dist/Prelude");
+const pageMinimal = require("nacara-layout-standard/dist/Page.Minimal");
 
 /**
  *
@@ -210,7 +210,7 @@ const render = async (rendererContext, pageContext) => {
             )
     );
 
-    return nacaraStrandardPrelude.basePage(new nacaraStrandardPrelude.BasePageArgs(
+    return pageMinimal.render(new pageMinimal.RenderArgs(
         rendererContext.Config,
         pageContext.Section,
         undefined,
