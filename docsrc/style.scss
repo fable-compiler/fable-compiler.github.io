@@ -39,12 +39,9 @@ $textual-stesp-color: lightgrey;
 @import './../node_modules/bulma/bulma.sass';
 @import './../node_modules/nacara-layout-standard/scss/nacara.scss';
 
-@mixin strong-shadow-box {
-    border-radius: 4px;
-    box-shadow: 5px 5px 0px 1px lightgrey;
-    border: 1px solid lightgrey;
-    background-color: white;
-}
+@import './scss/utilities.scss';
+@import './scss/blog-index.scss';
+@import './scss/blog-post.scss';
 
 .content {
     pre {
@@ -105,80 +102,4 @@ $textual-stesp-color: lightgrey;
         display: block;
         // margin-bottom: $size-6;
     }
-}
-
-// Adapt the anchor margin to the blog page
-// This is needed otherwise when using the TOC the blog article is cut
-.blog-page {
-    .anchor {
-        padding: 13rem 0 0;
-    }
-
-    .blog-title {
-        a {
-            visibility: visible;
-            color: $primary;
-            font-weight: $weight-normal;
-
-            &:hover {
-                text-decoration: underline;
-            }
-        }
-    }
-
-
-    .card.article {
-        @include strong-shadow-box;
-        margin-bottom: 7rem;
-
-        // Author image customization for blog index page
-        .image {
-            @each $dimension in $dimensions {
-                &.is-#{$dimension}x#{$dimension} {
-                    &.author-image  {
-                        position: absolute;
-                        top: - $dimension * 0.5px;
-                        left: 50%;
-                        margin-left: - $dimension * 0.5px;
-
-                        img {
-                            border: $radius solid lightgrey;
-                        }
-                    }
-                }
-            }
-        }
-
-    }
-
-}
-
-.blog-post {
-    img {
-        display: block;
-        margin: auto;
-    }
-
-
-    // Author image customization for blog index page
-    .image {
-        @each $dimension in $dimensions {
-            &.is-#{$dimension}x#{$dimension} {
-                &.author-image  {
-                    left: 50%;
-                    margin-left: - $dimension * 0.5px;
-
-                    img {
-                        border: $radius solid lightgrey;
-                    }
-                }
-            }
-        }
-    }
-
-    .blog-title {
-        margin-top: 2rem !important;
-        margin-bottom: 2rem;
-    }
-
 }

@@ -9,7 +9,7 @@
     "navbar": {
         "start": [
             {
-                "url": "/docs",
+                "url": "/documentation",
                 "section": "docs",
                 "label": "Documentation"
             },
@@ -28,8 +28,8 @@
                 "label": "Community"
             },
             {
-                "url": "/ressources.html",
-                "label": "Ressources"
+                "url": "/resources.html",
+                "label": "Resources"
             }
         ],
         "end": [
@@ -56,7 +56,8 @@
             "./lightner/grammars/JavaScript.tmLanguage.json",
             "./lightner/grammars/TypeScript.tmLanguage.json",
             "./lightner/grammars/html.tmLanguage.json",
-            "./lightner/grammars/shell-unix-bash.tmLanguage.json"
+            "./lightner/grammars/shell-unix-bash.tmLanguage.json",
+            "./lightner/grammars/css.tmLanguage.json"
         ]
     },
     "layouts": [

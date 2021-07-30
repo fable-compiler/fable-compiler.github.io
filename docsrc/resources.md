@@ -1,15 +1,16 @@
 ---
-title: Awesome Fable
+title: Resources
 layout: nacara-standard
 menu: false
 ---
 
 > A community driven list of useful Fable tutorials, libraries and software.
 
-Inspired by the [awesome](#more-awesome) list thing. Feel free to <a href="https://github.com/kunjee17/awesome-fable/blob/master/CONTRIBUTION.md" target="_blank">improve</a> this list.
+Inspired by the [awesome](#More-resources) list thing. Feel free to <a href="https://github.com/kunjee17/awesome-fable/blob/master/CONTRIBUTION.md" target="_blank">improve</a> this list.
 
 [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/sindresorhus/awesome)
-[![Build Status](https://travis-ci.org/kunjee17/awesome-fable.svg?branch=master)](https://travis-ci.org/kunjee17/awesome-fable)
+
+- <a href="https://github.com/kunjee17/awesome-fable/blob/master/CONTRIBUTION.md" target="_blank">Contribution Guidelines</a>
 
 ## Examples
 
@@ -29,9 +30,7 @@ Inspired by the [awesome](#more-awesome) list thing. Feel free to <a href="https
 * [bulma-timepicker](https://github.com/rfrerebe/fable2-samples/tree/master/minimal) - A simple timepicker using Bulma in an F# React component + how to use this React component in Elmish.
 * [dexter](https://github.com/rajatsharma/dexter) - A minimal Pokemon search made with Fable, Feliz and Elmish. It demoes React components designed with Typesafe styling.
 * [FSharp React Starter](https://github.com/dam5s/fsharp-react-starter) - A starter application with examples of common architecture and testing patterns.
-
-**[:arrow_up: back to top](#table-of-contents)**
-
+* [F# trivia game](https://github.com/aaronpowell/ondotnet-fsharp-complete) - A trivia game written in Fable + F# Azure Functions, deployed to Azure Static Web Apps
 
 ## Learn
 
@@ -61,9 +60,6 @@ Inspired by the [awesome](#more-awesome) list thing. Feel free to <a href="https
 * [Getting Started with Elmish](https://thesharperdev.com/getting-started-with-elmish/) - Walking through Elmish Counter app and explaining the MVU architecture.
 * [Starting with Fable (F#)](https://itnext.io/starting-with-fable-f-83846ab790ad) - From scratch, no React, no Elmish, no Paket. Interop with DOM, p5.js explained. Also published on [dev.to](https://dev.to/semuserable/starting-with-fable-f-kbi).
 
-**[:arrow_up: back to top](#table-of-contents)**
-
-
 ## Videos and podcasts
 
 *Watch great talks about Fable*
@@ -76,9 +72,7 @@ Inspired by the [awesome](#more-awesome) list thing. Feel free to <a href="https
 * [From F# to JavaScript and beyond with Fable](https://hanselminutes.com/616/from-f-to-javascript-and-beyond-with-fable-and-alfonso-garcia-caro) - with Alfonso Garcia-Caro on Scott Hanselman's "[Hanselminutes][Hanselminutes]" podcast
 * [F# and the SAFE stack](https://hanselminutes.com/624/f-and-the-functional-safe-stack-with-krzysztof-cielak) - with Krzysztof Cieślak on Scott Hanselman's "[Hanselminutes][Hanselminutes]" podcast
 * [Introduction to Web-Development with F# and Fable](https://www.youtube.com/watch?v=yjODmfGWmvw) - [@zaid-ajaj](https://github.com/Zaid-Ajaj) and [@rommsen](https://github.com/rommsen) will talk about what Fable is, why it is an awesome tool to use for web development in 2019 and how you can start using it today.
-
-**[:arrow_up: back to top](#table-of-contents)**
-
+* [Fable + Azure Functions + Static Web Apps](https://youtu.be/wBP8k1ZuRmQ) - A session for On .NET Live
 
 ## Libraries
 
@@ -143,8 +137,6 @@ Inspired by the [awesome](#more-awesome) list thing. Feel free to <a href="https
 * [Fable.MomentJs](https://github.com/uxsoft/Fable.MomentJs) - packaged MomentJs bindings by [Prolucid](https://github.com/Prolucid/fable-import-momentjs)
 * [Fss](https://github.com/Bjorn-Strom/FSS) - Type-safe CSS styling library.
 
-**[:arrow_up: back to top](#table-of-contents)**
-
 ## Tools
 
 *Tools around Fable platform.*
@@ -156,9 +148,6 @@ Inspired by the [awesome](#more-awesome) list thing. Feel free to <a href="https
 * [JSON to Thoth](https://github.com/nojaf/jason-to-thoth) - Convert JSON to F# code with Thoth decoders.
 * [Femto](https://github.com/Zaid-Ajaj/Femto) - Femto is a CLI tool that automatically resolves npm packages used by Fable bindings
 
-**[:arrow_up: back to top](#table-of-contents)**
-
-
 ## Editors
 
 *Editors to code with F#.*
@@ -166,9 +155,6 @@ Inspired by the [awesome](#more-awesome) list thing. Feel free to <a href="https
 * [Ionide][ionide] - A wonderful Visual Studio Code extension for F# language.
 * [Visual Studio](https://visualstudio.microsoft.com/)
 * [JetBrains Rider](https://www.jetbrains.com/rider/)
-
-**[:arrow_up: back to top](#table-of-contents)**
-
 
 ## Templates
 
@@ -180,9 +166,9 @@ Inspired by the [awesome](#more-awesome) list thing. Feel free to <a href="https
 * [Fulma minimal template](https://fulma.github.io/Fulma/#template) - The quickest way to get started an Elmish + Fulma application from scratch
 * [Fable.Library.Template](https://github.com/TheAngryByrd/Fable.Library.Template) - F# Template for create and publishing Fable Libraries
 * [Semuserable.Fable.Templates](https://github.com/semuserable/Semuserable.Fable.Templates) - Minimal Fable templates
-
-**[:arrow_up: back to top](#table-of-contents)**
-
+* [Fable for Azure Static Web Apps](https://github.com/aaronpowell/swa-fable-template) - GitHub repo template for Fable + Functions for Azure Static Web Apps
+* [Fable + Feliz for Azure Static Web Apps](https://github.com/aaronpowell/swa-feliz-template) - GitHub repo template for Feliz + Functions for Azure Static Web Apps
+* [Elmish for Azure Static Web Apps](https://github.com/aaronpowell/swa-elmish-template) - GitHub repo template for Elmish + Functions for Azure Static Web Apps
 
 ## Old (working only before Fable3)
 * [Fable.Jest](https://github.com/jgrund/fable-jest) - Testing Fable apps with [Jest](https://facebook.github.io/jest/)
@@ -193,18 +179,12 @@ Inspired by the [awesome](#more-awesome) list thing. Feel free to <a href="https
 * [Fable.Import.WebMIDI](https://github.com/magicmonty/fable-import-webmidi) - Web MIDI bindings for Fable
 * [rollup-plugin-fable](https://www.npmjs.com/package/rollup-plugin-fable) - Fable plugin for Rollup
 
-**[:arrow_up: back to top](#table-of-contents)**
-
-
 ## Support
 
 *Where to find help.*
 
 * [Gitter](https://gitter.im/fable-compiler/Fable) - Ask questions on fable gitter.
 * [Slack](http://foundation.fsharp.org/join) - Join Official FSharp.org and Slack channel.
-
-**[:arrow_up: back to top](#table-of-contents)**
-
 
 ## Built with Fable
 
@@ -217,15 +197,7 @@ Inspired by the [awesome](#more-awesome) list thing. Feel free to <a href="https
 * [Fable-of-the-Day](https://github.com/rommsen/fable-of-the-day) - Catch of the day by @wesbos ported to Fable
 * [Czech Republic 2018 Election Analytics](http://showme.median.cz/volby-2018/)
 
-# Who to follow
-
-* [Official Twitter Handle of Fable](https://twitter.com/FableCompiler)
-* [F# Weekly](https://sergeytihon.com/)
-
-**[:arrow_up: back to top](#table-of-contents)**
-
-
-# More awesome
+## More resources
 
 *Discover other amazingly awesome lists.*
 
@@ -234,17 +206,6 @@ Awesome Fable is just a part of awesome thing, get more here:
 - <a href="https://github.com/sindresorhus/awesome" target="_blank">awesome</a> by [**@sindresorhus**](https://github.com/sindresorhus)
 - <a href="https://github.com/bayandin/awesome-awesomeness" target="_blank">awesome-awesomeness</a> by [**@bayandin**](https://github.com/bayandin)
 - <a href="https://github.com/fsprojects/awesome-fsharp" target="_blank">awesome-fsharp</a> by [**@fsprojects**](https://github.com/fsprojects)
-
-
-**[:arrow_up: back to top](#table-of-contents)**
-
-
-## License
-
-[![CC0](http://i.creativecommons.org/p/zero/1.0/88x31.png)](http://creativecommons.org/publicdomain/zero/1.0/)
-
-To the extent possible under law, [@kunjee17](https://github.com/kunjee17) has waived all copyright and related or neighboring rights to this work.
-
 
 [ionide]: http://ionide.io/
 [Hanselminutes]: https://hanselminutes.com

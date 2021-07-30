@@ -4,7 +4,7 @@ layout: nacara-navbar-only
 ---
 
 <!--
-    Index page of Fable is mostly writtien using HTML because it needs specific layouts
+    Index page of Fable is mostly written using HTML because it needs specific layouts
 
     It is still process as markdown by Nacara so we get nice snippet coloration and also
     benefit of the navbar generation and same style across all Fable website
@@ -50,7 +50,7 @@ layout: nacara-navbar-only
     </div>
     <!--
         Selling points of Fable
-        For the sellings points of Fable we use CSS grid instead of Bulma columns
+        For the selling points of Fable we use CSS grid instead of Bulma columns
         because we want all the box to have the same height.
         This is not something possible to do dynamically using Flexbox / Bulma columns system
     -->
@@ -60,7 +60,7 @@ layout: nacara-navbar-only
                 <div class="media">
                     <div class="media-left">
                         <figure class="image" style="height: 3em; width: 3em;">
-                        <!-- 3em mimics the behaviour of the fa-3x for font-awesome icons making the layout more consistent -->
+                        <!-- 3em mimics the behavior of the fa-3x for font-awesome icons making the layout more consistent -->
                             <img src="/static/img/fsharp.png" />
                         </figure>
                     </div>
@@ -180,7 +180,7 @@ layout: nacara-navbar-only
             <div class="column is-6 is-offset-1 is-7-tablet">
                 <div class="content has-code-block is-normal">
 
-<!-- The indentation/format used has been choosen so the code is displayed
+<!-- The indentation/format used has been chosen so the code is displayed
 without scrollbar on almost any screen size -->
 ```fsharp
 type Face =
@@ -208,7 +208,7 @@ match card with
 // For example, the value '(_,Spades)' may indicate
 // a case not covered by the pattern(s).
 ```
-</div> <!-- Markdown is sensible to indentation, this squirk will disappear with next version of Nacara -->
+</div> <!-- Markdown is sensible to indentation -->
             </div>
         </div>
         <div class="columns is-vcentered mt-5">
@@ -223,7 +223,7 @@ match card with
             <div class="column is-6 is-offset-1 is-7-tablet">
                 <div class="content has-code-block is-normal">
 
-<!-- The indentation/format used has been choosen so the code is displayed
+<!-- The indentation/format used has been chosen so the code is displayed
 without scrollbar on almost any screen size -->
 ```fsharp
 // JS promises made easy
@@ -253,7 +253,7 @@ option {
     return x + y + z
 }
 ```
-</div> <!-- Markdown is sensible to indentation, this squirk will disappear with next version of Nacara -->
+</div> <!-- Markdown is sensible to indentation -->
             </div>
         </div>
         <div class="columns is-vcentered mt-5">
@@ -268,7 +268,7 @@ option {
             <div class="column is-6 is-offset-1 is-7-tablet">
                 <div class="content has-code-block is-normal">
 
-<!-- The indentation/format used has been choosen so the code is displayed
+<!-- The indentation/format used has been chosen so the code is displayed
 without scrollbar on almost any screen size -->
 ```fsharp
 [<Measure>] type m
@@ -284,7 +284,7 @@ let thisWillFail = distance + time
 let thisWorks = distance / time
 // 2.0<m/s>
 ```
-</div> <!-- Markdown is sensible to indentation, this squirk will disappear with next version of Nacara -->
+</div> <!-- Markdown is sensible to indentation -->
             </div>
         </div>
         <div class="columns is-vcentered mt-5">
@@ -299,7 +299,7 @@ let thisWorks = distance / time
             <div class="column is-6 is-offset-1 is-7-tablet">
                 <div class="content has-code-block is-normal">
 
-<!-- The indentation/format used has been choosen so the code is displayed
+<!-- The indentation/format used has been chosen so the code is displayed
 without scrollbar on almost any screen size -->
 ```fsharp
 [<Literal>]
@@ -320,7 +320,7 @@ async {
             todo.completed
 }
 ```
-</div> <!-- Markdown is sensible to indentation, this squirk will disappear with next version of Nacara -->
+</div> <!-- Markdown is sensible to indentation -->
             </div>
         </div>
     </section>

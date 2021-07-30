@@ -7,7 +7,7 @@ author_link: https://twitter.com/MangelMaxime
 author_image: https://github.com/MangelMaxime.png
 # external_link:
 abstract: |
-  With this document we are going to convert a Fable 1 project into a Fable 2 project. This guide has been writed by converting Fulma.Minimal template from Fable 1 to Fable 2.
+  With this document we are going to convert a Fable 1 project into a Fable 2 project. This guide has been written by converting Fulma.Minimal template from Fable 1 to Fable 2.
 ---
 
 ## TL;DR
@@ -16,7 +16,7 @@ With this document we are going to convert a Fable 1 project into a Fable 2 proj
 
 <div class="message is-info">
 <div class="message-body">
-This guide has been writed by converting Fulma.Minimal template from Fable 1 to Fable 2.
+This guide has been written by converting Fulma.Minimal template from Fable 1 to Fable 2.
 
 You can see all the changes made by looking at [this commit](https://github.com/MangelMaxime/Fulma/commit/24c9269fc08eac9c66e774aec4a5fe4132968805).
 </div>

@@ -1,0 +1,29 @@
+.blog-post {
+    img {
+        display: block;
+        margin: auto;
+    }
+
+
+    // Author image customization for blog index page
+    .image {
+        @each $dimension in $dimensions {
+            &.is-#{$dimension}x#{$dimension} {
+                &.author-image  {
+                    left: 50%;
+                    margin-left: - $dimension * 0.5px;
+
+                    img {
+                        border: $radius solid lightgrey;
+                    }
+                }
+            }
+        }
+    }
+
+    .blog-title {
+        margin-top: 2rem !important;
+        margin-bottom: 2rem;
+    }
+
+}

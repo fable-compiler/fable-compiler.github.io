@@ -58,7 +58,7 @@ Alternatively, you can install it locally into your projects directory:
 dotnet tool install femto --tool-path ./femto
 ```
 then you can `cd` your way to where you have your Fable project and run project analysis:
-```bash
+```shell
 # navigate to your project directory
 cd fable-minimal
 cd src
@@ -67,7 +67,7 @@ cd src
 femto
 ```
 You can also specify the directory of your Fable project or specify the project path itself, the following will find the same project.
-```bash
+```shell
 femto .
 
 femto ./src
@@ -99,13 +99,13 @@ then run `femto` in the project directory, you get the following logs:
 [20:13:43 INF]   | -- Resolve manually using 'npm install react-spring@8.0.1 --save'
 ```
 Notice how Femto decided to use `npm` for package management. In case I had the `yarn.lock` file next to `package.json` then Femto will use `yarn` instead and the install commands would be yarn specific:
-```bash
+```shell
 npm install sweetalert2@8.5.0 --save
 # becomes
 yarn add sweetalert2@8.5.0
 ```
 Now you can either run the commands that Femto logged or let it do the work simply as follows:
-```bash
+```shell
 femto --resolve
 ```
 This logs the following:
