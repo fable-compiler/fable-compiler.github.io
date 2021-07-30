@@ -10,7 +10,7 @@
         "start": [
             {
                 "url": "/documentation",
-                "section": "docs",
+                "section": "documentation",
                 "label": "Documentation"
             },
             {
@@ -24,7 +24,6 @@
             },
             {
                 "url": "/community.html",
-                "section": "community",
                 "label": "Community"
             },
             {

@@ -124,7 +124,7 @@ If you need to customize the layout or fix something that the place to go.
 
 If there is a bug on another page, then the issue should be reported on [Nacara](https://github.com/MangelMaxime/Nacara) repository as it is the one hosted the "standard" layout.
 
-### How test locally ?
+### How to test locally ?
 
 1. `npm install`
 2. `npm run watch`
