@@ -177,11 +177,13 @@ const render = async (rendererContext, pageContext) => {
 
     const blogPages =
         rendererContext.Pages
+            // Filter out the blog-page files
             .filter((pageContext) => {
                 return pageContext.Layout === "fable-blog-page"
             })
+            // Sort the blog-page files by date (newest first)
             .sort((pageContext1, pageContext2 ) => {
-                return pageContext1.Attributes.date - pageContext2.Attributes.date
+                return pageContext2.Attributes.date - pageContext1.Attributes.date
             });
 
     let blogAbstractElements = [];
