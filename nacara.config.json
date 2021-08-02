@@ -1,0 +1,77 @@
+{
+    "url": "https://fable.io",
+    "baseUrl": "/",
+    "editUrl": "https://github.com/fable-compiler/fable-compiler.github.io/edit/dev/docsrc",
+    "source": "docsrc",
+    "output": "deploy",
+    "title": "Fable",
+    "version": "2.0.0",
+    "navbar": {
+        "start": [
+            {
+                "url": "/documentation",
+                "section": "documentation",
+                "label": "Documentation"
+            },
+            {
+                "url": "https://fable.io/repl/",
+                "label": "Try"
+            },
+            {
+                "url": "/blog/index.html",
+                "section": "blog",
+                "label": "Blog"
+            },
+            {
+                "url": "/community.html",
+                "label": "Community"
+            },
+            {
+                "url": "/resources.html",
+                "label": "Resources"
+            }
+        ],
+        "end": [
+            {
+                "url": "https://github.com/fable-compiler/fable",
+                "icon": "fab fa-github",
+                "isExternal": true
+            },
+            {
+                "url": "https://twitter.com/FableCompiler",
+                "icon": "fab fa-twitter",
+                "isExternal": true
+            },
+            {
+                "url": "https://gitter.im/fable-compiler/Fable",
+                "icon": "fab fa-gitter",
+                "isExternal": true
+            },            
+            {
+                "url": "https://www.youtube.com/channel/UC6m70Jyr65ogDySbK7aMmzg/videos",
+                "icon": "fab fa-youtube",
+                "isExternal": true
+            }
+        ]
+    },
+    "lightner": {
+        "backgroundColor": "#FFFFFF",
+        "textColor": "#000000",
+        "themeFile": "./lightner/themes/customized_OneLight.json",
+        "grammars": [
+            "./lightner/grammars/fsharp.json",
+            "./lightner/grammars/JSON.tmLanguage.json",
+            "./lightner/grammars/xml.tmLanguage.json",
+            "./lightner/grammars/JavaScript.tmLanguage.json",
+            "./lightner/grammars/TypeScript.tmLanguage.json",
+            "./lightner/grammars/html.tmLanguage.json",
+            "./lightner/grammars/shell-unix-bash.tmLanguage.json",
+            "./lightner/grammars/css.tmLanguage.json"
+        ]
+    },
+    "layouts": [
+        "nacara-layout-standard",
+        "./scripts/blog-index.js",
+        "./scripts/blog-page.js"
+    ]
+}

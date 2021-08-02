@@ -1,0 +1,46 @@
+
+// Adapt the anchor margin to the blog page
+// This is needed otherwise when using the TOC the blog article is cut
+.blog-page {
+    .anchor {
+        padding: 13rem 0 0;
+    }
+
+    .blog-title {
+        a {
+            visibility: visible;
+            color: $primary;
+            font-weight: $weight-normal;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+
+    .card.article {
+        @include strong-shadow-box;
+        margin-bottom: 7rem;
+
+        // Author image customization for blog index page
+        .image {
+            @each $dimension in $dimensions {
+                &.is-#{$dimension}x#{$dimension} {
+                    &.author-image  {
+                        position: absolute;
+                        top: - $dimension * 0.5px;
+                        left: 50%;
+                        margin-left: - $dimension * 0.5px;
+
+                        img {
+                            border: $radius solid lightgrey;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+}
