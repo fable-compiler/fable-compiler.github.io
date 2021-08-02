@@ -28,7 +28,7 @@ layout: nacara-navbar-only
                     </a>
                 </div>
                 <div class="column has-text-centered is-4-tablet is-offset-3-mobile is-6-mobile">
-                    <a class="button is-fullwidth is-primary is-outlined is-uppercase" href="/docs/2-steps/setup.html">
+                    <a class="button is-fullwidth is-primary is-outlined is-uppercase" href="/documentation/2-steps/setup.html">
                         Get started
                     </a>
                 </div>
