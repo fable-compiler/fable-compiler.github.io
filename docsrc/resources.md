@@ -6,10 +6,6 @@ menu: false
 
 > A community driven list of useful Fable tutorials, libraries and software.
 
-Inspired by the [awesome](#More-resources) list thing. Feel free to <a href="https://github.com/kunjee17/awesome-fable/blob/master/CONTRIBUTION.md" target="_blank">improve</a> this list.
-
-[![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/sindresorhus/awesome)
-
 ## Examples
 
 *Some good apps written in Fable.*
@@ -194,16 +190,6 @@ Inspired by the [awesome](#More-resources) list thing. Feel free to <a href="htt
 * [Casque Noir](http://www.casquenoir.com) - Web documentary about Haïti environmental issues
 * [Fable-of-the-Day](https://github.com/rommsen/fable-of-the-day) - Catch of the day by @wesbos ported to Fable
 * [Czech Republic 2018 Election Analytics](http://showme.median.cz/volby-2018/)
-
-## More resources
-
-*Discover other amazingly awesome lists.*
-
-Awesome Fable is just a part of awesome thing, get more here:
-
-- <a href="https://github.com/sindresorhus/awesome" target="_blank">awesome</a> by [**@sindresorhus**](https://github.com/sindresorhus)
-- <a href="https://github.com/bayandin/awesome-awesomeness" target="_blank">awesome-awesomeness</a> by [**@bayandin**](https://github.com/bayandin)
-- <a href="https://github.com/fsprojects/awesome-fsharp" target="_blank">awesome-fsharp</a> by [**@fsprojects**](https://github.com/fsprojects)
 
 [ionide]: http://ionide.io/
 [Hanselminutes]: https://hanselminutes.com
