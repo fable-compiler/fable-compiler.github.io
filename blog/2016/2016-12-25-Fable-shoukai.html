@@ -1,0 +1,29 @@
+<html class="has-navbar-fixed-top"><head><title>Fable</title><meta http-equiv="content-type"/><link rel="stylesheet" type="text/css" href="/style.css"/><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"/></head><body><nav class="navbar is-fixed-top"><div class="container"><div class="navbar-brand"><a class="navbar-item title is-4" href="https://fable.io/">Fable</a><a class="navbar-item is-hidden-desktop" href="https://github.com/fable-compiler/fable"><span class="icon"><i class=" fab fa-github fa-lg"></i></span></a><a class="navbar-item is-hidden-desktop" href="https://twitter.com/FableCompiler"><span class="icon"><i class=" fab fa-twitter fa-lg"></i></span></a><a class="navbar-item is-hidden-desktop" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class=" fab fa-gitter fa-lg"></i></span></a><a class="navbar-item is-hidden-desktop" href="https://www.youtube.com/channel/UC6m70Jyr65ogDySbK7aMmzg/videos"><span class="icon"><i class=" fab fa-youtube fa-lg"></i></span></a><a class="navbar-burger" data-target="nav-menu"><span></span><span></span><span></span></a></div><div class="navbar-menu" id="nav-menu"><div class="navbar-start"><a class="navbar-item" href="/documentation">Documentation</a><a class="navbar-item" href="https://fable.io/repl/">Try</a><a class="navbar-item is-active" href="/blog/index.html">Blog</a><a class="navbar-item" href="/community.html">Community</a><a class="navbar-item" href="/resources.html">Resources</a></div><div class="navbar-end"><a class="navbar-item" href="https://github.com/fable-compiler/fable"><span class="icon"><i class=" fab fa-github fa-lg"></i></span></a><a class="navbar-item" href="https://twitter.com/FableCompiler"><span class="icon"><i class=" fab fa-twitter fa-lg"></i></span></a><a class="navbar-item" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class=" fab fa-gitter fa-lg"></i></span></a><a class="navbar-item" href="https://www.youtube.com/channel/UC6m70Jyr65ogDySbK7aMmzg/videos"><span class="icon"><i class=" fab fa-youtube fa-lg"></i></span></a></div></div></div></nav><div class="container"><div class="columns"><div class="column is-8-desktop is-offset-2-desktop"><div class="section blog-post"><figure class="image is-96x96 author-image"><img class="is-rounded" src="https://github.com/alfonsogarciacaro.png"/></figure><h2 class="title is-size-3 has-text-primary has-text-weight-normal has-text-centered blog-title">Fable(F#からJSへコンパイラー)の紹介</h2><div class="tags has-addons is-justify-content-center"><a class="tag is-rounded is-medium is-primary" href="https://twitter.com/alfonsogcnunez">Alfonso García-Caro</a><span class="tag is-rounded is-medium">December 25, 2016</span></div><div class="content"><p>皆さま、スペインからこんにちは！これは日本語の「<a href="http://qiita.com/advent-calendar/2016/fsharp">F# Advent Calendar 2016</a>」
+の2５日目の記事です、一日遅れましたがご了承ください(;^_^A ｱｾｱｾ･･･</p>
+<hr>
+<p>今回もしつこくFableという自分のプロジェクトについて話したいです。私のプログラミングの経験は
+大体.NET/C#,２年前に同時に関数プログラミングとWebプログラミングを始めて、F#言語に憧れて
+F#をウェブに対応できる方法を探しまして、その時<a href="http://funscript.info/">FunScript</a>を見つかりました。
+FunScriptはF＃のソースコードをJSへコンパイルし、とても面白いプロジェクトでした。それがきっかけで
+初めて私のオープンソースの経験としては下手でしたがFunScriptに色々な貢献をしてみました。２０１５年にも
+<a href="https://twitter.com/yukitos">鈴木さん</a>のおかげで<a href="https://www.youtube.com/watch?v=c7z7b-0dkjo&amp;t=602s">東京のF＃グループの前でFunScriptについて喋る
+機会がありました</a>。</p>
+<p>残念ながらFunScriptもいろいろな限度がありましたので大きいアプリを開発するにはあまりふさわしいツールでは
+なかったです。去年の終わりにF＃でもJS側でもソースコードではなくAST(<a href="https://ja.wikipedia.org/wiki/%E6%8A%BD%E8%B1%A1%E6%A7%8B%E6%96%87%E6%9C%A8">Abstract Syntax Tree</a>)
+を読んだり書いたりなどのツールができましたので（<a href="http://fsharp.github.io/FSharp.Compiler.Service/">F# Compiler Services</a>と<a href="https://babeljs.io/">Babel</a>)
+ゼロから新しいコンパイラー作るチャンスだと思いました。最初は単純にただBabelにただ文字を変えて「Fabel」
+の名前でしたが、F＃のコミュニティの意見を聞いたら、やっぱり「Fable」はもっと似合う名前でした。</p>
+<p>新しいコンパイラーを作るにはどのメリットがあるかと聞かれたら…</p>
+<ul>
+<li>直接F＃ソースコードを読みますので、JSへ変更する時間は早くなります（特に<code>--watch</code>モードにて）</li>
+<li><a href="https://babeljs.io/learn-es2015/">ES2015</a>を目的としていますが、Babelを通じて古いブラウザでも実行できます</li>
+<li>F＃のファイルは<a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/import">ES2015 モジュールモジュール</a>に
+なりますので、JSとの相互運用は高くなります</li>
+<li>ウェブだけではなく、JSの実行できるところ（デスクトップやモバイルなど）のターゲットもできます</li>
+</ul>
+<p>Fableの初めてのコミットしてからもう一年になりますが、その間F＃コミュニティの応援のおかげで大きなプロジェクトに
+なりました。もうFableで制作された<a href="http://thegamma.net/">The Gamma Project</a>のような大きなプロジェクトウェブは
+発表されています。まだ英語だけですが、皆さん興味がありましたら、<a href="http://fable.io/">Fableのホームサイト</a>と<a href="http://fable.io/samples.html">サンプル</a>
+をチエックしてください。そして質問がありましたらご気軽に<a href="https://twitter.com/alfonsogcnunez">連絡をお願いします</a>。Fableを使って皆さんがすごいアプリを
+作ることを期待しています！</p>
+</div></div></div><script src="/static/nacara_internals/menu.js"></script></div></div><script async="" src="/resources/nacara-standard-layouts/scripts/menu.js"></script></body></html>

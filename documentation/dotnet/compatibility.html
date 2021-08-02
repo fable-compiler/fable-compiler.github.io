@@ -1,0 +1,197 @@
+<html class="has-navbar-fixed-top"><head><title>Fable · .NET and F# compatibility</title><meta http-equiv="content-type"/><link rel="stylesheet" type="text/css" href="/style.css"/><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"/></head><body><nav class="navbar is-fixed-top"><div class="container"><div class="navbar-brand"><a class="navbar-item title is-4" href="https://fable.io/">Fable</a><a class="navbar-item is-hidden-desktop" href="https://github.com/fable-compiler/fable"><span class="icon"><i class=" fab fa-github fa-lg"></i></span></a><a class="navbar-item is-hidden-desktop" href="https://twitter.com/FableCompiler"><span class="icon"><i class=" fab fa-twitter fa-lg"></i></span></a><a class="navbar-item is-hidden-desktop" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class=" fab fa-gitter fa-lg"></i></span></a><a class="navbar-item is-hidden-desktop" href="https://www.youtube.com/channel/UC6m70Jyr65ogDySbK7aMmzg/videos"><span class="icon"><i class=" fab fa-youtube fa-lg"></i></span></a><a class="navbar-burger" data-target="nav-menu"><span></span><span></span><span></span></a></div><div class="navbar-menu" id="nav-menu"><div class="navbar-start"><a class="navbar-item is-active" href="/documentation">Documentation</a><a class="navbar-item" href="https://fable.io/repl/">Try</a><a class="navbar-item" href="/blog/index.html">Blog</a><a class="navbar-item" href="/community.html">Community</a><a class="navbar-item" href="/resources.html">Resources</a></div><div class="navbar-end"><a class="navbar-item" href="https://github.com/fable-compiler/fable"><span class="icon"><i class=" fab fa-github fa-lg"></i></span></a><a class="navbar-item" href="https://twitter.com/FableCompiler"><span class="icon"><i class=" fab fa-twitter fa-lg"></i></span></a><a class="navbar-item" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class=" fab fa-gitter fa-lg"></i></span></a><a class="navbar-item" href="https://www.youtube.com/channel/UC6m70Jyr65ogDySbK7aMmzg/videos"><span class="icon"><i class=" fab fa-youtube fa-lg"></i></span></a></div></div></div></nav><div class="container"><div class="mobile-menu"><nav class="breadcrumb"><ul><li><a class="menu-trigger"><span></span><span></span><span></span></a></li><li class="is-active"><a>From .NET to Fable</a></li><li class="is-active"><a>.NET and F# compatibility</a></li></ul></nav></div><div class="columns is-gapless is-mobile"><div class="column is-menu-column is-3-desktop is-hidden-touch ml-5"><div class="menu-container"><aside class="menu"><ul class="menu-list"><ul class="menu-list"><p class="menu-label">Introduction</p><li><a class=" " href="/documentation/index.html">What is Fable?</a></li><li><a class=" " href="/documentation/introduction/dotnet-users-read-this.html">Are you a .NET developer?</a></li><li><a class=" " href="/documentation/introduction/js-users-read-this.html">Are you a JS developer?</a></li></ul><ul class="menu-list"><p class="menu-label">New to F#?</p><li><a class=" " href="/documentation/new-to-fsharp/learning-the-language.html">Learning the language</a></li><li><a class=" " href="/documentation/new-to-fsharp/let-keyword.html">The let keyword</a></li></ul><ul class="menu-list"><p class="menu-label">Fable in 2 steps</p><li><a class=" " href="/documentation/2-steps/setup.html">Setup</a></li><li><a class=" " href="/documentation/2-steps/your-first-fable-project.html">Start a new project</a></li></ul><ul class="menu-list"><p class="menu-label">Your Fable project</p><li><a class=" " href="/documentation/your-fable-project/project-file.html">The project file</a></li><li><a class=" " href="/documentation/your-fable-project/use-a-fable-library.html">Use a Fable library</a></li><li><a class=" " href="/documentation/your-fable-project/author-a-fable-library.html">Author a Fable library</a></li><li><a class=" " href="/documentation/your-fable-project/build-and-run.html">Build &amp; run</a></li><li><a class=" " href="/documentation/your-fable-project/testing.html">Testing</a></li></ul><ul class="menu-list"><p class="menu-label">Communicate with Javascript</p><li><a class=" " href="/documentation/communicate/js-from-fable.html">Call JS from Fable</a></li><li><a class=" " href="/documentation/communicate/fable-from-js.html">Call Fable from JavaScript</a></li></ul><ul class="menu-list"><p class="menu-label">From .NET to Fable</p><li><a class=" is-active has-table-of-content" href="/documentation/dotnet/compatibility.html">.NET and F# compatibility</a></li><ul class="table-of-content"><li><a href="#.NET-Base-Class-Library" data-toc-element="true">.NET Base Class Library </a><ul class="table-of-content"><li><a href="#Caveats" data-toc-element="true">Caveats </a></li></ul></li><li><a href="#FSharp.Core" data-toc-element="true">FSharp.Core </a><ul class="table-of-content"><li><a href="#Caveats-II" data-toc-element="true">Caveats II </a></li></ul></li><li><a href="#Object-Oriented-Programming" data-toc-element="true">Object Oriented Programming </a><ul class="table-of-content"><li><a href="#Caveats-III" data-toc-element="true">Caveats III </a></li></ul></li><li><a href="#Reflection-and-Generics" data-toc-element="true">Reflection and Generics </a></li></ul><li><a class=" " href="/documentation/dotnet/numbers.html">Numeric types</a></li></ul><ul class="menu-list"><p class="menu-label">Miscellaneous</p><li><a class=" " href="/documentation/miscellaneous/official-samples.html">Check official samples</a></li><li><a class=" " href="/documentation/miscellaneous/fable-in-videos.html">Fable in videos</a></li></ul></ul></aside></div></div><div class="column is-8-desktop is-full-touch"><section class="section"><div class="content"><header class="page-header"><a class="button is-hidden-touch is-outlined is-primary is-pulled-right" target="_blank" href="https://github.com/fable-compiler/fable-compiler.github.io/edit/dev/docsrc/documentation/dotnet/compatibility.md">Edit</a><h1 class="title is-1">.NET and F# compatibility</h1></header><div><p>Fable provides support for some classes of .NET BCL (Base Class Library) and most of FSharp.Core library. When possible, Fable translates .NET types and methods to native JavaScript APIs for minimum overhead.</p>
+<h2>.NET Base Class Library <a href="#.NET-Base-Class-Library" aria-hidden="true"><span class="anchor" id=".NET-Base-Class-Library"></span>#</a></h2>
+<p>The following classes are translated to JS and most of their methods (static and instance) should be available in Fable.</p>
+<table>
+<thead>
+<tr>
+<th>.NET</th>
+<th>JavaScript</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Numeric Types</td>
+<td>number</td>
+</tr>
+<tr>
+<td>Arrays</td>
+<td>Array / Typed Arrays</td>
+</tr>
+<tr>
+<td>Events</td>
+<td>fable-core/Event</td>
+</tr>
+<tr>
+<td>System.Boolean</td>
+<td>boolean</td>
+</tr>
+<tr>
+<td>System.Char</td>
+<td>string</td>
+</tr>
+<tr>
+<td>System.String</td>
+<td>string</td>
+</tr>
+<tr>
+<td>System.Guid</td>
+<td>string</td>
+</tr>
+<tr>
+<td>System.TimeSpan</td>
+<td>number</td>
+</tr>
+<tr>
+<td>System.DateTime</td>
+<td>Date</td>
+</tr>
+<tr>
+<td>System.DateTimeOffset</td>
+<td>Date</td>
+</tr>
+<tr>
+<td>System.Timers.Timer</td>
+<td>fable-core/Timer</td>
+</tr>
+<tr>
+<td>System.Collections.Generic.List</td>
+<td>Array</td>
+</tr>
+<tr>
+<td>System.Collections.Generic.HashSet</td>
+<td>Set</td>
+</tr>
+<tr>
+<td>System.Collections.Generic.Dictionary</td>
+<td>Map</td>
+</tr>
+<tr>
+<td>System.Text.RegularExpressions.Regex</td>
+<td>RegExp</td>
+</tr>
+<tr>
+<td>System.Lazy</td>
+<td>fable-core/Lazy</td>
+</tr>
+<tr>
+<td>System.Random</td>
+<td>{}</td>
+</tr>
+<tr>
+<td>System.Math</td>
+<td>(native JS functions)</td>
+</tr>
+</tbody>
+</table>
+<p>The following static methods are also available:</p>
+<ul>
+<li><code>System.Console.WriteLine</code> (also with formatting)</li>
+<li><code>System.Diagnostics.Debug.WriteLine</code> (also with formatting)</li>
+<li><code>System.Diagnostics.Debug.Assert(condition: bool)</code></li>
+<li><code>System.Diagnostics.Debugger.Break()</code></li>
+<li><code>System.Activator.CreateInstance&lt;'T&gt;()</code></li>
+</ul>
+<p>There is also support to convert between numeric types and to parse strings, check <a href="https://github.com/fable-compiler/Fable/blob/master/tests/Main/ConvertTests.fs">the conversion tests</a>.</p>
+<h3>Caveats <a href="#Caveats" aria-hidden="true"><span class="anchor" id="Caveats"></span>#</a></h3>
+<ul>
+<li>All numeric types become JS <code>number</code> (64-bit floating type), except for <code>int64</code>, <code>uint64</code>, <code>bigint</code> and <code>decimal</code>. Check the <a href="numbers.html">Numeric Types</a> section to learn more about the differences between .NET and JS.</li>
+<li>Numeric arrays are compiled to <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray">Typed Arrays</a> when possible.</li>
+<li>No bound checks for numeric types (unless you do explicit conversions like <code>byte 500</code>) nor for array indices.</li>
+<li><code>Regex</code> will always behave as if passed <code>RegexOptions.ECMAScript</code> flag (e.g., no negative look-behind or named groups).</li>
+</ul>
+<h2>FSharp.Core <a href="#FSharp.Core" aria-hidden="true"><span class="anchor" id="FSharp.Core"></span>#</a></h2>
+<p>Most of FSharp.Core operators are supported, as well as formatting with <code>sprintf</code>, <code>printfn</code> or <code>failwithf</code> (<code>String.Format</code> is also available).
+The following types and/or corresponding modules from FSharp.Core lib will likewise translate to JS:</p>
+<table>
+<thead>
+<tr>
+<th>.NET</th>
+<th>JavaScript</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tuples</td>
+<td>Array</td>
+</tr>
+<tr>
+<td>Option</td>
+<td>(erased)</td>
+</tr>
+<tr>
+<td>Choice</td>
+<td>fable-core/Choice</td>
+</tr>
+<tr>
+<td>Result</td>
+<td>fable-core/Result</td>
+</tr>
+<tr>
+<td>String</td>
+<td>fable-core/String (module)</td>
+</tr>
+<tr>
+<td>Seq</td>
+<td><a href="http://babeljs.io/docs/learn-es2015/#iterators-for-of">Iterable</a></td>
+</tr>
+<tr>
+<td>List</td>
+<td>fable-core/List</td>
+</tr>
+<tr>
+<td>Map</td>
+<td>fable-core/Map</td>
+</tr>
+<tr>
+<td>Set</td>
+<td>fable-core/Set</td>
+</tr>
+<tr>
+<td>Async</td>
+<td>fable-core/Async</td>
+</tr>
+<tr>
+<td>Event</td>
+<td>fable-core/Event (module)</td>
+</tr>
+<tr>
+<td>Observable</td>
+<td>fable-core/Observable (module)</td>
+</tr>
+<tr>
+<td>Arrays</td>
+<td>Array / Typed Arrays</td>
+</tr>
+<tr>
+<td>Events</td>
+<td>fable-core/Event</td>
+</tr>
+<tr>
+<td>MailboxProcessor</td>
+<td>fable-core/MailboxProcessor (limited support)</td>
+</tr>
+</tbody>
+</table>
+<h3>Caveats II <a href="#Caveats-II" aria-hidden="true"><span class="anchor" id="Caveats-II"></span>#</a></h3>
+<ul>
+<li>Options are <strong>erased</strong> in JS (<code>Some 5</code> becomes just <code>5</code> in JS and <code>None</code> translates to <code>null</code>). This is needed for example, to represent TypeScript <a href="https://www.typescriptlang.org/docs/handbook/interfaces.html#optional-properties">optional properties</a>. However in a few cases (like nested options) there is an actual representation of the option in the runtime.</li>
+<li><code>Async.RunSynchronously</code> is not supported.</li>
+<li><code>MailboxProcessor</code> is single-threaded in JS and currently only <code>Start</code>, <code>Receive</code>, <code>Post</code> and <code>PostAndAsyncReply</code> are implemented (<code>cancellationToken</code> or <code>timeout</code> optional arguments are not supported).</li>
+</ul>
+<h2>Object Oriented Programming <a href="#Object-Oriented-Programming" aria-hidden="true"><span class="anchor" id="Object-Oriented-Programming"></span>#</a></h2>
+<p>Most of F# OOP features are compatible with Fable: interfaces and abstract classes, structs, inheritance, overloading, etc. However, please note that due to some limitations of <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes">ES2015 classes</a> the generated code uses the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain">prototype chain</a> instead. Also note that instance members are not attached to the prototype, which means they won't be accessible from native JS code. The exception to this rule are the implementations of <strong>interface and abstract members</strong>.</p>
+<h3>Caveats III <a href="#Caveats-III" aria-hidden="true"><span class="anchor" id="Caveats-III"></span>#</a></h3>
+<ul>
+<li>It's not possible to type test against interfaces or generic types.</li>
+</ul>
+<h2>Reflection and Generics <a href="#Reflection-and-Generics" aria-hidden="true"><span class="anchor" id="Reflection-and-Generics"></span>#</a></h2>
+<p>There is some reflection support in Fable, you can check the <a href="https://github.com/fable-compiler/Fable/blob/master/tests/Main/ReflectionTests.fs">reflection tests</a> to see what is currently possible.</p>
+<p>Generics are erased by default in the generated JS code. However, it is still possible to access generic information (like <code>typeof&lt;'T&gt;</code>) at runtime by marking functions with <code>inline</code>:</p>
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">doesNotCompileInFable</span><span style="color: #A626A4">(</span><span style="color: #383A42">x</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">&#039;T</span><span style="color: #A626A4">)</span><span> </span><span style="color: #A626A4">=</span>
+<span>    typeof</span><span style="color: #A626A4">&lt;</span><span>&#039;T</span><span style="color: #A626A4">&gt;</span><span>.FullName </span><span style="color: #A626A4">|&gt;</span><span> printfn </span><span style="color: #50A14F">&quot;</span><span style="color: #A626A4">%s</span><span style="color: #50A14F">&quot;</span>
+
+<span style="color: #A626A4">let inline</span><span> </span><span style="color: #E45649">doesWork</span><span style="color: #A626A4">(</span><span style="color: #383A42">x</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">&#039;T</span><span style="color: #A626A4">)</span><span> </span><span style="color: #A626A4">=</span>
+<span>    typeof</span><span style="color: #A626A4">&lt;</span><span>&#039;T</span><span style="color: #A626A4">&gt;</span><span>.FullName </span><span style="color: #A626A4">|&gt;</span><span> printfn </span><span style="color: #50A14F">&quot;</span><span style="color: #A626A4">%s</span><span style="color: #50A14F">&quot;</span>
+
+<span>doesWork </span><span style="color: #986801">5</span></code></pre>
+</div></div></section><div class="navigation-container"><a class="button navigate-to-previous is-primary is-outlined" href="/documentation/communicate/fable-from-js.html"><span class="icon"><i class=" fas fa-arrow-left"></i></span><span class=" is-uppercase">Call Fable from JavaScript</span></a><a class="button navigate-to-next is-primary is-outlined" href="/documentation/dotnet/numbers.html"><span class=" is-uppercase">Numeric types</span><span class="icon"><i class=" fas fa-arrow-right"></i></span></a></div></div></div></div><script async="" src="/resources/nacara-standard-layouts/scripts/menu.js"></script></body></html>

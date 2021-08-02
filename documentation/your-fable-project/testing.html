@@ -1,0 +1,87 @@
+<html class="has-navbar-fixed-top"><head><title>Fable · Testing</title><meta http-equiv="content-type"/><link rel="stylesheet" type="text/css" href="/style.css"/><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"/></head><body><nav class="navbar is-fixed-top"><div class="container"><div class="navbar-brand"><a class="navbar-item title is-4" href="https://fable.io/">Fable</a><a class="navbar-item is-hidden-desktop" href="https://github.com/fable-compiler/fable"><span class="icon"><i class=" fab fa-github fa-lg"></i></span></a><a class="navbar-item is-hidden-desktop" href="https://twitter.com/FableCompiler"><span class="icon"><i class=" fab fa-twitter fa-lg"></i></span></a><a class="navbar-item is-hidden-desktop" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class=" fab fa-gitter fa-lg"></i></span></a><a class="navbar-item is-hidden-desktop" href="https://www.youtube.com/channel/UC6m70Jyr65ogDySbK7aMmzg/videos"><span class="icon"><i class=" fab fa-youtube fa-lg"></i></span></a><a class="navbar-burger" data-target="nav-menu"><span></span><span></span><span></span></a></div><div class="navbar-menu" id="nav-menu"><div class="navbar-start"><a class="navbar-item is-active" href="/documentation">Documentation</a><a class="navbar-item" href="https://fable.io/repl/">Try</a><a class="navbar-item" href="/blog/index.html">Blog</a><a class="navbar-item" href="/community.html">Community</a><a class="navbar-item" href="/resources.html">Resources</a></div><div class="navbar-end"><a class="navbar-item" href="https://github.com/fable-compiler/fable"><span class="icon"><i class=" fab fa-github fa-lg"></i></span></a><a class="navbar-item" href="https://twitter.com/FableCompiler"><span class="icon"><i class=" fab fa-twitter fa-lg"></i></span></a><a class="navbar-item" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class=" fab fa-gitter fa-lg"></i></span></a><a class="navbar-item" href="https://www.youtube.com/channel/UC6m70Jyr65ogDySbK7aMmzg/videos"><span class="icon"><i class=" fab fa-youtube fa-lg"></i></span></a></div></div></div></nav><div class="container"><div class="mobile-menu"><nav class="breadcrumb"><ul><li><a class="menu-trigger"><span></span><span></span><span></span></a></li><li class="is-active"><a>Your Fable project</a></li><li class="is-active"><a>Testing</a></li></ul></nav></div><div class="columns is-gapless is-mobile"><div class="column is-menu-column is-3-desktop is-hidden-touch ml-5"><div class="menu-container"><aside class="menu"><ul class="menu-list"><ul class="menu-list"><p class="menu-label">Introduction</p><li><a class=" " href="/documentation/index.html">What is Fable?</a></li><li><a class=" " href="/documentation/introduction/dotnet-users-read-this.html">Are you a .NET developer?</a></li><li><a class=" " href="/documentation/introduction/js-users-read-this.html">Are you a JS developer?</a></li></ul><ul class="menu-list"><p class="menu-label">New to F#?</p><li><a class=" " href="/documentation/new-to-fsharp/learning-the-language.html">Learning the language</a></li><li><a class=" " href="/documentation/new-to-fsharp/let-keyword.html">The let keyword</a></li></ul><ul class="menu-list"><p class="menu-label">Fable in 2 steps</p><li><a class=" " href="/documentation/2-steps/setup.html">Setup</a></li><li><a class=" " href="/documentation/2-steps/your-first-fable-project.html">Start a new project</a></li></ul><ul class="menu-list"><p class="menu-label">Your Fable project</p><li><a class=" " href="/documentation/your-fable-project/project-file.html">The project file</a></li><li><a class=" " href="/documentation/your-fable-project/use-a-fable-library.html">Use a Fable library</a></li><li><a class=" " href="/documentation/your-fable-project/author-a-fable-library.html">Author a Fable library</a></li><li><a class=" " href="/documentation/your-fable-project/build-and-run.html">Build &amp; run</a></li><li><a class=" is-active has-table-of-content" href="/documentation/your-fable-project/testing.html">Testing</a></li><ul class="table-of-content"><li><a href="#Setup" data-toc-element="true">Setup </a></li><li><a href="#Write-tests" data-toc-element="true">Write tests </a></li><li><a href="#Run" data-toc-element="true">Run </a></li><li><a href="#Watch-mode" data-toc-element="true">Watch mode </a></li></ul></ul><ul class="menu-list"><p class="menu-label">Communicate with Javascript</p><li><a class=" " href="/documentation/communicate/js-from-fable.html">Call JS from Fable</a></li><li><a class=" " href="/documentation/communicate/fable-from-js.html">Call Fable from JavaScript</a></li></ul><ul class="menu-list"><p class="menu-label">From .NET to Fable</p><li><a class=" " href="/documentation/dotnet/compatibility.html">.NET and F# compatibility</a></li><li><a class=" " href="/documentation/dotnet/numbers.html">Numeric types</a></li></ul><ul class="menu-list"><p class="menu-label">Miscellaneous</p><li><a class=" " href="/documentation/miscellaneous/official-samples.html">Check official samples</a></li><li><a class=" " href="/documentation/miscellaneous/fable-in-videos.html">Fable in videos</a></li></ul></ul></aside></div></div><div class="column is-8-desktop is-full-touch"><section class="section"><div class="content"><header class="page-header"><a class="button is-hidden-touch is-outlined is-primary is-pulled-right" target="_blank" href="https://github.com/fable-compiler/fable-compiler.github.io/edit/dev/docsrc/documentation/your-fable-project/testing.md">Edit</a><h1 class="title is-1">Testing</h1></header><div><p>You can use all tools of the JS ecosystem.</p>
+<p>Several js libs already have a Fable binding :</p>
+<ul>
+<li>mocha: <a href="https://github.com/Zaid-Ajaj/Fable.Mocha">https://github.com/Zaid-Ajaj/Fable.Mocha</a></li>
+<li>jest: <a href="https://github.com/Shmew/Fable.Jester">https://github.com/Shmew/Fable.Jester</a></li>
+</ul>
+<h1>Example with jest <a href="#Example-with-jest" aria-hidden="true"><span class="anchor" id="Example-with-jest"></span></a></h1>
+<h2>Setup <a href="#Setup" aria-hidden="true"><span class="anchor" id="Setup"></span>#</a></h2>
+<p>You should install js test runner :</p>
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span>  npm install jest --save-dev</span></code></pre>
+<p>And Fable binding :</p>
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span>  </span><span style="color: #A0A1A7;font-style: italic"># nuget</span>
+<span>  dotnet add package Fable.Jester</span>
+<span>  </span><span style="color: #A0A1A7;font-style: italic"># paket</span>
+<span>  paket add Fable.Jester --project ./project/path</span></code></pre>
+<h2>Write tests <a href="#Write-tests" aria-hidden="true"><span class="anchor" id="Write-tests"></span>#</a></h2>
+<p>Now, you can write your first test :</p>
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Jester</span>
+
+<span>Jest.describe</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;can run basic tests&quot;</span><span style="color: #A626A4">,</span><span> </span><span style="color: #A626A4">fun</span><span style="color: #383A42"> </span><span style="color: #A626A4">()</span><span> </span><span style="color: #A626A4">-&gt;</span>
+<span>    Jest.test</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;running a test&quot;</span><span style="color: #A626A4">,</span><span> </span><span style="color: #A626A4">fun</span><span style="color: #383A42"> </span><span style="color: #A626A4">()</span><span> </span><span style="color: #A626A4">-&gt;</span>
+<span>        Jest.expect</span><span style="color: #A626A4">(</span><span style="color: #986801">1</span><span style="color: #A626A4">+</span><span style="color: #986801">1</span><span style="color: #A626A4">)</span><span>.toEqual</span><span style="color: #A626A4">(</span><span style="color: #986801">2</span><span style="color: #A626A4">)</span>
+<span>    </span><span style="color: #A626A4">)</span>
+<span style="color: #A626A4">)</span></code></pre>
+<p>See Jester documentation to more informations : <a href="https://shmew.github.io/Fable.Jester/">https://shmew.github.io/Fable.Jester/</a></p>
+<h2>Run <a href="#Run" aria-hidden="true"><span class="anchor" id="Run"></span>#</a></h2>
+<p>Like all transpiled languages to JS, you have to convert your project to JS.
+For this, you can use Webpack, but it isn't the ideal solution, because test runners generally prefer to have small files rather than a single big file.
+You can use the compiler directly via the <code>fable-splitter</code> tool.</p>
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span>  npm install fable-splitter --save-dev</span></code></pre>
+<p>You should create a config file <code>splitter.config.js</code>:</p>
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span style="color: #A626A4">const</span><span> </span><span style="color: #986801">path</span><span> </span><span style="color: #0184BC">=</span><span> </span><span style="color: #0184BC">require</span><span style="color: #383A42">(</span><span style="color: #50A14F">&quot;path&quot;</span><span style="color: #383A42">);</span>
+
+<span style="color: #E45649">module</span><span style="color: #383A42">.</span><span style="color: #E45649">exports</span><span> </span><span style="color: #0184BC">=</span><span> </span><span style="color: #383A42">{</span>
+<span>  allFiles</span><span style="color: #0184BC">:</span><span> </span><span style="color: #986801">true</span><span style="color: #383A42">,</span><span> </span><span style="color: #A0A1A7;font-style: italic">// convert all files and not only entrypoint</span>
+<span>  entry</span><span style="color: #0184BC">:</span><span> </span><span style="color: #E45649">path</span><span style="color: #383A42">.</span><span style="color: #4078F2">join</span><span style="color: #383A42">(</span><span style="color: #E45649">__dirname</span><span style="color: #383A42">,</span><span> </span><span style="color: #50A14F">&quot;./project/path.fsproj&quot;</span><span style="color: #383A42">),</span>
+<span>  outDir</span><span style="color: #0184BC">:</span><span> </span><span style="color: #E45649">path</span><span style="color: #383A42">.</span><span style="color: #4078F2">join</span><span style="color: #383A42">(</span><span style="color: #E45649">__dirname</span><span style="color: #383A42">,</span><span> </span><span style="color: #50A14F">&quot;./output&quot;</span><span style="color: #383A42">),</span>
+<span>  babel</span><span style="color: #0184BC">:</span><span> </span><span style="color: #383A42">{</span><span> sourceMaps</span><span style="color: #0184BC">:</span><span> </span><span style="color: #50A14F">&quot;inline&quot;</span><span> </span><span style="color: #383A42">}</span><span> </span><span style="color: #A0A1A7;font-style: italic">// enable sourceMaps to see F# code and not generated js in test reports</span>
+<span style="color: #383A42">};</span></code></pre>
+<p>You should config Jest with another config file <code>jest.config.js</code> :</p>
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span style="color: #E45649">module</span><span style="color: #383A42">.</span><span style="color: #E45649">exports</span><span> </span><span style="color: #0184BC">=</span><span> </span><span style="color: #383A42">{</span>
+<span>  moduleFileExtensions</span><span style="color: #0184BC">:</span><span> </span><span style="color: #383A42">[</span><span style="color: #50A14F">&#039;js&#039;</span><span style="color: #383A42">],</span>
+<span>  roots</span><span style="color: #0184BC">:</span><span> </span><span style="color: #383A42">[</span><span style="color: #50A14F">&#039;./output&#039;</span><span style="color: #383A42">],</span>
+<span>  testMatch</span><span style="color: #0184BC">:</span><span> </span><span style="color: #383A42">[</span><span style="color: #50A14F">&#039;&lt;rootDir&gt;/**/*.Test.js&#039;</span><span style="color: #383A42">],</span>
+<span>  coveragePathIgnorePatterns</span><span style="color: #0184BC">:</span><span> </span><span style="color: #383A42">[</span><span style="color: #50A14F">&#039;/</span><span style="color: #0184BC">\.</span><span style="color: #50A14F">fable/&#039;</span><span style="color: #383A42">,</span><span> </span><span style="color: #50A14F">&#039;/[fF]able.*/&#039;</span><span style="color: #383A42">,</span><span> </span><span style="color: #50A14F">&#039;/node_modules/&#039;</span><span style="color: #383A42">],</span>
+<span>  testEnvironment</span><span style="color: #0184BC">:</span><span> </span><span style="color: #50A14F">&#039;node&#039;</span><span style="color: #383A42">,</span>
+<span>  transform</span><span style="color: #0184BC">:</span><span> </span><span style="color: #383A42">{}</span>
+<span style="color: #383A42">};</span></code></pre>
+<p><code>roots</code> should be equals to <code>outDir</code> of compilator.
+<code>testMatch</code> indicate file pattern name with test.
+<code>coveragePathIgnorePatterns</code>, <code>testEnvironment</code>, <code>transform</code> improve performance of runner.
+You can read Jest doc to see more : <a href="https://jestjs.io/docs/en/configuration">https://jestjs.io/docs/en/configuration</a></p>
+<p>Now, you can build:</p>
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span>  npx fable-splitter -c splitter.config.js</span></code></pre>
+<p>And run test:</p>
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span>  npx jest --config=jest.config.js</span></code></pre>
+<p>Youhou! You can see the test result :)</p>
+<p>You can specify this command on npm in <code>package.json</code> :</p>
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span>{</span>
+<span>  </span><span style="color: #E45649">&quot;scripts&quot;</span><span>: {</span>
+<span>    </span><span style="color: #E45649">&quot;test&quot;</span><span>: </span><span style="color: #50A14F">&quot;fable-splitter -c splitter.config.js &amp;&amp; jest --config=jest.config.js&quot;</span><span>,</span>
+<span>  },</span>
+<span>}</span></code></pre>
+<p>And now run with a single command:</p>
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span>  npm </span><span style="color: #0184BC">test</span></code></pre>
+<h2>Watch mode <a href="#Watch-mode" aria-hidden="true"><span class="anchor" id="Watch-mode"></span>#</a></h2>
+<p>Running each time is slow.
+You can use the watch feature to take advantage of the compiler and runner cache, and run tests whenever a file changes.</p>
+<p>Currently, Fable doesn't have official plugins for the different runners.
+So you have to execute these two commands in parallel:</p>
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span>  npx fable-splitter -c splitter.config.js -w</span>
+<span>  npx jest --config=jest.config.js --watchAll</span></code></pre>
+<p>You add a npm script in <code>package.json</code> :</p>
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span>{</span>
+<span>  </span><span style="color: #E45649">&quot;scripts&quot;</span><span>: {</span>
+<span>    </span><span style="color: #E45649">&quot;test&quot;</span><span>: </span><span style="color: #50A14F">&quot;fable-splitter -c splitter.config.js &amp;&amp; jest --config=jest.config.js&quot;</span><span>,</span>
+<span>    </span><span style="color: #E45649">&quot;watch-test:build&quot;</span><span>: </span><span style="color: #50A14F">&quot;fable-splitter -c splitter.config.js -w&quot;</span><span>,</span>
+<span>    </span><span style="color: #E45649">&quot;watch-test:run&quot;</span><span>: </span><span style="color: #50A14F">&quot;jest --config=jest.config.js --watchAll&quot;</span><span>,</span>
+<span>    </span><span style="color: #E45649">&quot;watch-test&quot;</span><span>: </span><span style="color: #50A14F">&quot;npm-run-all --parallel watch-test:*&quot;</span>
+<span>  },</span>
+<span>}</span></code></pre>
+<p>I use <code>npm-run-all</code> to run several commands in parallel. You should install with:</p>
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span>  npm install --save-dev npm-run-all</span></code></pre>
+<p>Now, run</p>
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span>  npm run-script watch-test</span></code></pre>
+<p>Enjoy :)</p>
+</div></div></section><div class="navigation-container"><a class="button navigate-to-previous is-primary is-outlined" href="/documentation/your-fable-project/build-and-run.html"><span class="icon"><i class=" fas fa-arrow-left"></i></span><span class=" is-uppercase">Build &amp; run</span></a><a class="button navigate-to-next is-primary is-outlined" href="/documentation/communicate/js-from-fable.html"><span class=" is-uppercase">Call JS from Fable</span><span class="icon"><i class=" fas fa-arrow-right"></i></span></a></div></div></div></div><script async="" src="/resources/nacara-standard-layouts/scripts/menu.js"></script></body></html>

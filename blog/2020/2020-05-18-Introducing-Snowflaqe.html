@@ -1,0 +1,53 @@
+<html class="has-navbar-fixed-top"><head><title>Fable</title><meta http-equiv="content-type"/><link rel="stylesheet" type="text/css" href="/style.css"/><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"/></head><body><nav class="navbar is-fixed-top"><div class="container"><div class="navbar-brand"><a class="navbar-item title is-4" href="https://fable.io/">Fable</a><a class="navbar-item is-hidden-desktop" href="https://github.com/fable-compiler/fable"><span class="icon"><i class=" fab fa-github fa-lg"></i></span></a><a class="navbar-item is-hidden-desktop" href="https://twitter.com/FableCompiler"><span class="icon"><i class=" fab fa-twitter fa-lg"></i></span></a><a class="navbar-item is-hidden-desktop" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class=" fab fa-gitter fa-lg"></i></span></a><a class="navbar-item is-hidden-desktop" href="https://www.youtube.com/channel/UC6m70Jyr65ogDySbK7aMmzg/videos"><span class="icon"><i class=" fab fa-youtube fa-lg"></i></span></a><a class="navbar-burger" data-target="nav-menu"><span></span><span></span><span></span></a></div><div class="navbar-menu" id="nav-menu"><div class="navbar-start"><a class="navbar-item" href="/documentation">Documentation</a><a class="navbar-item" href="https://fable.io/repl/">Try</a><a class="navbar-item is-active" href="/blog/index.html">Blog</a><a class="navbar-item" href="/community.html">Community</a><a class="navbar-item" href="/resources.html">Resources</a></div><div class="navbar-end"><a class="navbar-item" href="https://github.com/fable-compiler/fable"><span class="icon"><i class=" fab fa-github fa-lg"></i></span></a><a class="navbar-item" href="https://twitter.com/FableCompiler"><span class="icon"><i class=" fab fa-twitter fa-lg"></i></span></a><a class="navbar-item" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class=" fab fa-gitter fa-lg"></i></span></a><a class="navbar-item" href="https://www.youtube.com/channel/UC6m70Jyr65ogDySbK7aMmzg/videos"><span class="icon"><i class=" fab fa-youtube fa-lg"></i></span></a></div></div></div></nav><div class="container"><div class="columns"><div class="column is-8-desktop is-offset-2-desktop"><div class="section blog-post"><figure class="image is-96x96 author-image"><img class="is-rounded" src="https://github.com/Zaid-Ajaj.png"/></figure><h2 class="title is-size-3 has-text-primary has-text-weight-normal has-text-centered blog-title">Introducing Snowflaqe</h2><div class="tags has-addons is-justify-content-center"><a class="tag is-rounded is-medium is-primary" href="https://twitter.com/zaid_ajaj">Zaid-Ajaj</a><span class="tag is-rounded is-medium">May 18, 2020</span></div><div class="content"><h2>Introducing Snowflaqe <a href="#Introducing-Snowflaqe" aria-hidden="true"><span class="anchor" id="Introducing-Snowflaqe"></span>#</a></h2>
+<p>In this blog post, we will introduce a new tool for Fable called <a href="https://github.com/Zaid-Ajaj/Snowflaqe">Snowflaqe</a> which will allow generating type-safe GraphQL clients for Fable applications. Though at first, let us talk about what the problem is that Snowflaqe solves and why it is needed.</p>
+<h3>GraphQL Backends <a href="#GraphQL-Backends" aria-hidden="true"><span class="anchor" id="GraphQL-Backends"></span>#</a></h3>
+<p>While most web applications implement data exchange protocols between backend and frontend as a traditional REST API or some (g)RPC library, many modern applications have been implementing their backend API with <a href="https://graphql.org/">GraphQL</a> instead. Exposing a GraphQL API enables a rich and easy to use query language for different frontends and different clients. GraphQL has been very popular especially in the node.js community and it is now gaining momentum in .NET via the excellent <a href="https://github.com/graphql-dotnet/graphql-dotnet">graphql-dotnet</a> library and other platforms as well.</p>
+<h3>Type-Safe GrapQL Clients <a href="#Type-Safe-GrapQL-Clients" aria-hidden="true"><span class="anchor" id="Type-Safe-GrapQL-Clients"></span>#</a></h3>
+<p>When a client communicates with a GraphQL backend, it sends a query. The query must be compatible with the exposed GraphQL schema from the backend in order to return the requested data (much like SQL queries).</p>
+<p>The shape and structure of the data is very much dependent on the written query. This means that data returned from a query has a unique shape and type. For example, the following query:</p>
+<pre><code>query {
+    posts {
+        id
+        title
+        author {
+            firstName
+            lastName
+        }
+    }
+}
+</code></pre>
+<p>Might map to F# types as follows:</p>
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span style="color: #A626A4">type</span><span> </span><span style="color: #C18401">Author</span><span> </span><span style="color: #A626A4">=</span><span> </span><span style="color: #A626A4">{</span>
+<span>    firstName</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">string option</span>
+<span>    lastName</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">string option</span>
+<span style="color: #A626A4">}</span>
+
+<span style="color: #A626A4">type</span><span> </span><span style="color: #C18401">Post</span><span> </span><span style="color: #A626A4">=</span><span> </span><span style="color: #A626A4">{</span>
+<span>    id</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">string</span>
+<span>    title</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">string</span>
+<span>    author</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">Author</span>
+<span style="color: #A626A4">}</span>
+
+<span style="color: #A626A4">type</span><span> </span><span style="color: #C18401">Query</span><span> </span><span style="color: #A626A4">=</span><span> </span><span style="color: #A626A4">{</span>
+<span>    posts</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">Post list</span>
+<span style="color: #A626A4">}</span></code></pre>
+<blockquote>
+<p>The types are of course imaginary here and are for demo purposes.</p>
+</blockquote>
+<p>Adding or removing properties from the query changes the type of the shape of data that is returned.
+Modelling the shape of the queries via F# types by hand can be a cumbersome task and is very error-prone: you as a developer have to lookup the individual types and making sure these align with the schema every time the schema changes.</p>
+<h3>Type-Providers to the rescue...? <a href="#Type-Providers-to-the-rescue..." aria-hidden="true"><span class="anchor" id="Type-Providers-to-the-rescue..."></span>#</a></h3>
+<p>The first idea that F# developers get when looking at such problem is: &quot;There must be a type provider for this!&quot; and they would be right. In F# land, the awesome <a href="https://github.com/fsprojects/FSharp.Data.GraphQL">FSharp.Data.GraphQL</a> library gives the ability to write GraphQL backends and includes a type provider for type-safe clients in F#. Unfortunately, ever since Fable 2.0 came out around late 2018, that type provider <a href="https://github.com/fsprojects/FSharp.Data.GraphQL/issues/204">was no longer compatible</a> with Fable applications. I thought I could give it a try and fix the problem in the repository, even the maintainer <a href="https://github.com/johnberzy-bazinga">John Berzy</a> generously offered to help out but I couldn't get my head around the code base: type providers are really hard to write and to understand what exactly they are doing. Not to mention, I didn't enough experience in GraphQL itself to understand how the mapping worked by that time.</p>
+<h3>Snowflaqe: code-gen back to business <a href="#Snowflaqe:-code-gen-back-to-business" aria-hidden="true"><span class="anchor" id="Snowflaqe:-code-gen-back-to-business"></span>#</a></h3>
+<p>Instead of a type-provider, I thought I would start fresh from a new perspective and instead try to implement what many tools in the node.js ecosystem do: code-generate the client application! This is essentially what <a href="https://github.com/Zaid-Ajaj/Snowflaqe">Snowflaqe</a> does: it generates a fully functional F# <em>project</em> that can be referenced from Fable applications. The generation process uses a URL to the GraphQL backend to retrieve the schema from and an input directory containing the individual queries. The tool will first <em>validate</em> and <em>type-check</em> the queries against the schema and when everything is good, it starts to generate the actual project.</p>
+<p>Snowflaqe is currently at v1.0 and it is distributed as a dotnet CLI tool, you can give it a try by installing it on your machine:</p>
+<pre><code>dotnet tool install snowflaqe -g
+</code></pre>
+<p>If you wanted to build a GraphQL front-end using latest Fable, now you can. The tool is still very much in early days and I have only been developing it for the last 3 weeks. I used it at work for one of our Fable projects that talks to a GraphQL backend using complex queries and it works like a charm, I was really happy with the results. In case you have a project to try it out too, I am curious to hear your feedback.</p>
+<blockquote>
+<p>Currently Snowflaqe only supports Fable projects but in the future I plan to allow for other specialized generation targets such as F# on dotnet or on WebAssembly via <a href="https://fsbolero.io/">Bolero</a>. As always, PRs are welcome!</p>
+</blockquote>
+<p>You can learn more about Snowflaqe by reading the <a href="https://github.com/Zaid-Ajaj/Snowflaqe">docs on Github</a></p>
+<p>I hope you enjoy using Snowflaqe.</p>
+<p>Happy coding!</p>
+</div></div></div><script src="/static/nacara_internals/menu.js"></script></div></div><script async="" src="/resources/nacara-standard-layouts/scripts/menu.js"></script></body></html>

@@ -1,0 +1,159 @@
+<html class="has-navbar-fixed-top"><head><title>Fable</title><meta http-equiv="content-type"/><link rel="stylesheet" type="text/css" href="/style.css"/><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"/></head><body><nav class="navbar is-fixed-top"><div class="container"><div class="navbar-brand"><a class="navbar-item title is-4" href="https://fable.io/">Fable</a><a class="navbar-item is-hidden-desktop" href="https://github.com/fable-compiler/fable"><span class="icon"><i class=" fab fa-github fa-lg"></i></span></a><a class="navbar-item is-hidden-desktop" href="https://twitter.com/FableCompiler"><span class="icon"><i class=" fab fa-twitter fa-lg"></i></span></a><a class="navbar-item is-hidden-desktop" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class=" fab fa-gitter fa-lg"></i></span></a><a class="navbar-item is-hidden-desktop" href="https://www.youtube.com/channel/UC6m70Jyr65ogDySbK7aMmzg/videos"><span class="icon"><i class=" fab fa-youtube fa-lg"></i></span></a><a class="navbar-burger" data-target="nav-menu"><span></span><span></span><span></span></a></div><div class="navbar-menu" id="nav-menu"><div class="navbar-start"><a class="navbar-item" href="/documentation">Documentation</a><a class="navbar-item" href="https://fable.io/repl/">Try</a><a class="navbar-item is-active" href="/blog/index.html">Blog</a><a class="navbar-item" href="/community.html">Community</a><a class="navbar-item" href="/resources.html">Resources</a></div><div class="navbar-end"><a class="navbar-item" href="https://github.com/fable-compiler/fable"><span class="icon"><i class=" fab fa-github fa-lg"></i></span></a><a class="navbar-item" href="https://twitter.com/FableCompiler"><span class="icon"><i class=" fab fa-twitter fa-lg"></i></span></a><a class="navbar-item" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class=" fab fa-gitter fa-lg"></i></span></a><a class="navbar-item" href="https://www.youtube.com/channel/UC6m70Jyr65ogDySbK7aMmzg/videos"><span class="icon"><i class=" fab fa-youtube fa-lg"></i></span></a></div></div></div></nav><div class="container"><div class="columns"><div class="column is-8-desktop is-offset-2-desktop"><div class="section blog-post"><figure class="image is-96x96 author-image"><img class="is-rounded" src="https://github.com/whitetigle.png"/></figure><h2 class="title is-size-3 has-text-primary has-text-weight-normal has-text-centered blog-title">Casque Noir: Raising awareness on Haïti social and environmental issues</h2><div class="tags has-addons is-justify-content-center"><a class="tag is-rounded is-medium is-primary" href="https://twitter.com/thewhitetigle">François Nicaise</a><span class="tag is-rounded is-medium">June 20, 2017</span></div><div class="content"><p>For several years, Casque Noir, a Canadian non-profit organization, has been researching about urban mutations of Haïti Island's capital, Port-au-Prince's most famous deprived urban neighbourhood: Jalousie</p>
+<img src="http://www.casquenoir.com/img/jalousie/j_1_1a.jpg" alt="Jalousie" width="800px" />
+<p><em>Credit: Nathalie Claude</em></p>
+<p>One of the main problem in <em>Jalousie</em> is rubbish spreading everywhere, mostly thanks to plastic based items, one being water bags called <em>Alaska</em>. The Guardian made a <a href="https://www.theguardian.com/cities/gallery/2015/sep/28/cleaning-up-haiti-safest-water-source-contaminating-in-pictures">photo report</a> about it a few years ago.</p>
+<img src="http://www.casquenoir.com/img/jalousie/j_1_1b.jpg" alt="Street filled with rubbish" width="800px" />
+<p><em>Credit: Nathalie Claude</em></p>
+<p>The <a href="http://www.casquenoir.com/#jalousie">Blok’ô Kalité Materyo project</a> is an initiative to recycle water bags through the creation of light concrete blocks built by mixing platic and concrete.</p>
+<img src="http://www.casquenoir.com/img/jalousie/j_3_1a.jpg" alt="Blok’ô Kalité Materyo" width="800px" />
+<p><em>Credit: Nathalie Claude</em></p>
+<h2>The Web site <a href="#The-Web-site" aria-hidden="true"><span class="anchor" id="The-Web-site"></span>#</a></h2>
+<p>In early 2017, after many trips to Haïti, where she gathered a lot of material, <a href="https://www.linkedin.com/in/nathalie-claude-694a2045/">Nathalie Claude</a>, founder of <a href="https://www.facebook.com/casquenoir2013/">Casque Noir</a> asked <a href="http://www.biensuratelier.com/graphisme.html">Atelier BienSür</a> if it would be possible to make a web documentary to spread the word about Casque Noir's <em>Blok’ô Kalité Materyo</em> project.</p>
+<p><img src="https://img15.hostingpics.net/pics/19445179cn.png" alt="The web site"></p>
+<p>The main constraint being time: nothing, neither texts nor videos,  sounds or photos would be ready before May. And the deadline was set to June the 10th with a public showing the 16th in Montreal.</p>
+<p>Being a long time partner of <a href="http://www.biensuratelier.com/graphisme.html">Atelier BienSür</a>, Elsa Miquel contacted me to see what could be done technically in less than a month.</p>
+<p>So with a very early mockup we gathered a list of requirements:</p>
+<ul>
+<li>fully responsive</li>
+<li>dynamic and responsive navigation bar</li>
+<li>full screen photo display</li>
+<li>photos slideshows</li>
+<li>videos embeds</li>
+<li>sounds embeds</li>
+</ul>
+<h2>The Tech stack <a href="#The-Tech-stack" aria-hidden="true"><span class="anchor" id="The-Tech-stack"></span>#</a></h2>
+<img src="https://user-images.githubusercontent.com/1197905/27047311-56453e74-4fb0-11e7-905c-0a05e5fd87ca.png" alt="Fable logo" width="800px" />
+<p>Once again, I decided I would go with <a href="http://fable.io/">Fable</a>. And I asked my friend <a href="https://twitter.com/MangelMaxime">Maxime Mangel</a> what he thought about using <a href="https://fable-elmish.github.io/elmish/">Fable-Elmish</a> to build the site. He validated the combo fable-elmish with <a href="http://bulma.io/">bulma css framework</a></p>
+<h2>The Architecture <a href="#The-Architecture" aria-hidden="true"><span class="anchor" id="The-Architecture"></span>#</a></h2>
+<p><em>Please have a look at the <a href="https://fable-elmish.github.io/elmish/">Fable-Elmish</a> documentation to understand what follows.</em></p>
+<p>I ended up with very few Pages:</p>
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span style="color: #A626A4">type</span><span> </span><span style="color: #C18401">Page</span><span> </span><span style="color: #A626A4">=</span>
+<span>  </span><span style="color: #A626A4">|</span><span> Home</span>
+<span>  </span><span style="color: #A626A4">|</span><span> About</span>
+<span>  </span><span style="color: #A626A4">|</span><span> Jalousie</span>
+<span>  </span><span style="color: #A626A4">|</span><span> Montreal</span>
+<span>  </span><span style="color: #A626A4">|</span><span> WelcomePage</span></code></pre>
+<p>The documentary part is split into 2 sections which are:</p>
+<ol>
+<li><a href="http://www.casquenoir.com/#jalousie">Jalousie</a></li>
+<li><a href="http://www.casquenoir.com/#montreal">Montreal</a></li>
+</ol>
+<p>Since each section uses the same layout I decided I would create reusable components such as video embeds:</p>
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span>  </span><span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">youtube</span><span style="color: #383A42"> id </span><span style="color: #A626A4">=</span>
+<span>    </span><span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">realUrl</span><span> </span><span style="color: #A626A4">=</span><span> sprintf </span><span style="color: #50A14F">&quot;https://www.youtube.com/embed/</span><span style="color: #A626A4">%s</span><span style="color: #50A14F">?controls=1&amp;showinfo=0&amp;rel=0&amp;autoplay=0&amp;loop=1&amp;playlist=</span><span style="color: #A626A4">%s</span><span style="color: #50A14F">&amp;rel=0&amp;modestbranding=1&quot;</span><span> id id</span>
+<span>    div </span><span style="color: #A626A4">[</span><span>ClassName </span><span style="color: #50A14F">&quot;columns&quot;</span><span> </span><span style="color: #A626A4">]</span>
+<span>      </span><span style="color: #A626A4">[</span>
+<span>        div </span><span style="color: #A626A4">[</span><span>ClassName </span><span style="color: #50A14F">&quot;column is-half is-offset-2&quot;</span><span> </span><span style="color: #A626A4">]</span>
+<span>          </span><span style="color: #A626A4">[</span>
+<span>            div </span><span style="color: #A626A4">[</span><span> ClassName </span><span style="color: #50A14F">&quot;videowrapper&quot;</span><span style="color: #A626A4">]</span>
+<span>              </span><span style="color: #A626A4">[</span>
+<span>              iframe</span>
+<span>                </span><span style="color: #A626A4">[</span>
+<span>                  Src realUrl</span>
+<span>                  unbox</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;frameBorder&quot;</span><span style="color: #A626A4">,</span><span style="color: #50A14F">&quot;0&quot;</span><span style="color: #A626A4">)</span>
+<span>                  unbox</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;allowFullScreen&quot;</span><span style="color: #A626A4">,</span><span style="color: #50A14F">&quot;allowFullScreen&quot;</span><span style="color: #A626A4">)</span>
+<span>                </span><span style="color: #A626A4">]</span>
+<span>                </span><span style="color: #A626A4">[</span><span> </span><span style="color: #A626A4">]</span>
+<span>            </span><span style="color: #A626A4">]</span>
+<span>          </span><span style="color: #A626A4">]</span>
+<span>      </span><span style="color: #A626A4">]</span></code></pre>
+<p>or <a href="http://fontawesome.io/icons/">Font awesome icons</a></p>
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span>  </span><span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">icon</span><span style="color: #383A42"> name css </span><span style="color: #A626A4">=</span>
+<span>    span</span>
+<span>      </span><span style="color: #A626A4">[</span>
+<span>        ClassName </span><span style="color: #A626A4">&lt;|</span><span> sprintf </span><span style="color: #50A14F">&quot;icon </span><span style="color: #A626A4">%s</span><span style="color: #50A14F">&quot;</span><span> css</span>
+<span>        unbox</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;aria-hidden&quot;</span><span style="color: #A626A4">,</span><span> </span><span style="color: #50A14F">&quot;true&quot;</span><span style="color: #A626A4">)</span>
+<span>      </span><span style="color: #A626A4">]</span><span> </span><span style="color: #A626A4">[</span><span> i </span><span style="color: #A626A4">[</span><span> ClassName </span><span style="color: #A626A4">(</span><span>sprintf </span><span style="color: #50A14F">&quot;fa </span><span style="color: #A626A4">%s</span><span style="color: #50A14F">&quot;</span><span> name</span><span style="color: #A626A4">)</span><span> </span><span style="color: #A626A4">]</span><span> </span><span style="color: #A626A4">[]</span><span> </span><span style="color: #A626A4">]</span></code></pre>
+<p>For the main layout I ended up with a very simple scheme:</p>
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span>  div </span><span style="color: #A626A4">[</span>
+<span>  </span><span style="color: #A626A4">][</span>
+<span>    Navbar.View.root model.navbar </span><span style="color: #A626A4">(</span><span>NavMsg </span><span style="color: #A626A4">&gt;&gt;</span><span> dispatch </span><span style="color: #A626A4">)</span><span> model.currentPage </span><span style="color: #A0A1A7;font-style: italic">//  navigation bar</span>
+
+<span>    pageHtml model.currentPage </span><span style="color: #A0A1A7;font-style: italic">// current page</span>
+
+<span>    Credits.View.root model.credits </span><span style="color: #A626A4">(</span><span>CreditsMsg </span><span style="color: #A626A4">&gt;&gt;</span><span> dispatch </span><span style="color: #A626A4">)</span><span> </span><span style="color: #A0A1A7;font-style: italic">// credits modal</span>
+
+<span>    Intro.View.root model.intro </span><span style="color: #A626A4">(</span><span>IntroMsg </span><span style="color: #A626A4">&gt;&gt;</span><span> dispatch </span><span style="color: #A626A4">)</span><span> </span><span style="color: #A0A1A7;font-style: italic">// intro modal</span>
+
+<span>    Partners.View.root model.partners </span><span style="color: #A626A4">(</span><span>PartnersMsg </span><span style="color: #A626A4">&gt;&gt;</span><span> dispatch </span><span style="color: #A626A4">)</span><span> </span><span style="color: #A0A1A7;font-style: italic">// partners modal</span>
+<span>  </span><span style="color: #A626A4">]</span></code></pre>
+<p>The <em>Credits</em>, <em>Intro</em> and <em>Partners</em> section are just <a href="http://bulma.io/documentation/components/modal/">modal windows</a> that appear when needed from any section, so I added them in there.</p>
+<p>The dynamic navigation bar is sticky so I added it there too.</p>
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span>// </span><span style="color: #A626A4">Sticky navbar</span>
+<span style="color: #986801">.nav</span>
+<span style="color: #A626A4">  position: fixed !important</span>
+<span style="color: #A626A4">  top: 0</span>
+<span style="color: #A626A4">  left: 0</span>
+<span style="color: #A626A4">  right: 0</span></code></pre>
+<h2>The nav bar <a href="#The-nav-bar" aria-hidden="true"><span class="anchor" id="The-nav-bar"></span>#</a></h2>
+<p><img src="https://img15.hostingpics.net/pics/904108navbar.gif" alt="nav bar"></p>
+<p>This is a very important component in the application since it allows user to switch to any section/chapter as well as to subchapters.</p>
+<p>The links to modal popups works like this:</p>
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span>    a </span><span style="color: #A626A4">[</span>
+<span>      ClassName </span><span style="color: #50A14F">&quot;nav-item&quot;</span>
+<span>      OnClick </span><span style="color: #A626A4">(fun</span><span style="color: #383A42"> _ </span><span style="color: #A626A4">-&gt;</span>
+<span>        DisplayCredits </span><span style="color: #986801">true</span><span> </span><span style="color: #A626A4">|&gt;</span><span> dispatch</span>
+<span>        HideBurger </span><span style="color: #A626A4">|&gt;</span><span> dispatch</span>
+<span>        </span><span style="color: #A626A4">)</span>
+<span>      Title title</span>
+<span>    </span><span style="color: #A626A4">]</span><span> </span><span style="color: #A626A4">[</span><span> str title </span><span style="color: #A626A4">]</span></code></pre>
+<p>The <code>DisplayCredits</code> message simply toggles the display of the modal window through the use of <code>is-active</code> css class as specified in <a href="http://bulma.io/documentation/components/modal/">Bulma doc</a></p>
+<p>The <code>HideBurger</code> message hides the burger when the navbar is displayed on mobile phones. Again through the use of <code>is-active</code> css class as specified in <a href="http://bulma.io/documentation/components/nav/">Bulma doc</a></p>
+<p>The most interesting part being the subsections. Clicking on a chapter number scrolls down the page to the section. So I created <em>scrollableTo</em> component:</p>
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">scrollableTo</span><span style="color: #383A42"> css tag elems dispatch</span><span style="color: #A626A4">=</span>
+<span>  </span><span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">id</span><span> </span><span style="color: #A626A4">=</span><span> </span><span style="color: #A626A4">(</span><span>sprintf </span><span style="color: #50A14F">&quot;nav</span><span style="color: #A626A4">%s</span><span style="color: #50A14F">&quot;</span><span> tag</span><span style="color: #A626A4">)</span>
+<span>  a </span><span style="color: #A626A4">[</span>
+<span>    Id id</span>
+<span>    Href id</span>
+<span>    ClassName css</span>
+<span>    OnClick </span><span style="color: #A626A4">(fun</span><span style="color: #383A42"> _ </span><span style="color: #A626A4">-&gt;</span>
+
+<span>      document.getElementById</span><span style="color: #A626A4">(</span><span> tag </span><span style="color: #A626A4">)</span><span>.scrollIntoView</span><span style="color: #A626A4">()</span>
+
+<span>      ActivateSection id </span><span style="color: #A626A4">|&gt;</span><span> dispatch</span>
+
+<span>      HideBurger </span><span style="color: #A626A4">|&gt;</span><span> dispatch</span>
+<span>      </span><span style="color: #A626A4">)</span>
+<span>  </span><span style="color: #A626A4">]</span><span> </span><span style="color: #A626A4">[</span><span> elems </span><span style="color: #A626A4">]</span></code></pre>
+<p>The code is pretty straightforward. We ask for the content through the <code>scrollIntoView</code> method. And we send an <code>ActivateSection</code> message which just updates the model with current section id and reloads the view to activate the relevant css class (colored background)</p>
+<p><img src="https://img15.hostingpics.net/pics/904108navbar.gif" alt="nav bar"></p>
+<p>Regarding the sounds. Each section plays a sound when loaded. The speaker icon on the navbar mutes the sound through a <code>ToggleSound</code> message. I created a simple sound component.</p>
+<p><em>View</em>:</p>
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">sound</span><span style="color: #383A42"> model dispatch </span><span style="color: #A626A4">=</span>
+
+<span>  </span><span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">icon</span><span> </span><span style="color: #A626A4">=</span>
+<span>    </span><span style="color: #A626A4">match</span><span> model.toggleSound </span><span style="color: #A626A4">with</span>
+<span>    </span><span style="color: #A626A4">|</span><span> </span><span style="color: #986801">true</span><span> </span><span style="color: #A626A4">-&gt;</span>
+<span>      Components.icon </span><span style="color: #50A14F">&quot;fa-volume-up&quot;</span><span> </span><span style="color: #50A14F">&quot;&quot;</span>
+<span>    </span><span style="color: #A626A4">|</span><span> </span><span style="color: #986801">false</span><span> </span><span style="color: #A626A4">-&gt;</span>
+<span>      Components.icon </span><span style="color: #50A14F">&quot;fa-volume-off&quot;</span><span> </span><span style="color: #50A14F">&quot;&quot;</span>
+
+<span>  div </span><span style="color: #A626A4">[</span>
+<span>    ClassName </span><span style="color: #50A14F">&quot;nav-item nav-title&quot;</span>
+<span>    OnClick </span><span style="color: #A626A4">(</span><span> </span><span style="color: #A626A4">fun</span><span style="color: #383A42"> _ </span><span style="color: #A626A4">-&gt;</span><span> ToggleSound </span><span style="color: #A626A4">|&gt;</span><span> dispatch </span><span style="color: #A626A4">)</span>
+<span>  </span><span style="color: #A626A4">]</span><span> </span><span style="color: #A626A4">[</span>
+<span>    icon</span>
+<span>  </span><span style="color: #A626A4">]</span></code></pre>
+<p><em>State</em>:</p>
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span>  </span><span style="color: #A626A4">match</span><span> msg </span><span style="color: #A626A4">with</span>
+<span>  </span><span style="color: #A626A4">|</span><span> ToggleSound  </span><span style="color: #A626A4">-&gt;</span>
+<span>    </span><span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">value</span><span> </span><span style="color: #A626A4">=</span><span> not model.toggleSound</span>
+<span>    </span><span style="color: #A626A4">match</span><span> value </span><span style="color: #A626A4">with</span>
+<span>    </span><span style="color: #A626A4">|</span><span> </span><span style="color: #986801">true</span><span> </span><span style="color: #A626A4">-&gt;</span><span> Waud.setVolume </span><span style="color: #986801">1.0</span>
+<span>    </span><span style="color: #A626A4">|</span><span> </span><span style="color: #986801">false</span><span> </span><span style="color: #A626A4">-&gt;</span><span> Waud.setVolume </span><span style="color: #986801">0.0</span>
+
+<span>    </span><span style="color: #A626A4">{</span><span> model </span><span style="color: #A626A4">with</span><span> toggleSound </span><span style="color: #A626A4">=</span><span> value</span><span style="color: #A626A4">},</span><span> </span><span style="color: #A626A4">[]</span></code></pre>
+<h2>Straightforward development <a href="#Straightforward-development" aria-hidden="true"><span class="anchor" id="Straightforward-development"></span>#</a></h2>
+<p>The only external library I ended up using was <a href="http://www.waudjs.com/">Waud.js</a> for the sound which offers many cool features, among others <strong>automute</strong> when we quit the web site to another tab or use another app.</p>
+<p>All the other components were created for the app.</p>
+<h2>Conclusion <a href="#Conclusion" aria-hidden="true"><span class="anchor" id="Conclusion"></span>#</a></h2>
+<p><img src="https://i.imgflip.com/1qzmbn.jpg" alt="Fable... What else ?"></p>
+<p>As a freelancer I don't have much time for</p>
+<ul>
+<li>debugging runtime errors</li>
+<li>costly maintenance after release</li>
+</ul>
+<p>Usually my clients want more features for less money and of course <em>stability</em></p>
+<p>So in the search of a path for rapid and robust development, once again, Fable and Fable-Elmish just allowed me to do the job in due time.</p>
+<p>Remember me: <em>If it compiles = it works!</em></p>
+</div></div></div><script src="/static/nacara_internals/menu.js"></script></div></div><script async="" src="/resources/nacara-standard-layouts/scripts/menu.js"></script></body></html>

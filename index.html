@@ -1,106 +1,435 @@
-<html><head><title>Fable: JavaScript you can be proud of!</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="twitter:title" content="Fable"/><meta name="twitter:description" content="F# to JS compiler"/><meta name="twitter:image" content="https://fable.io/img/fable_logo.png"/><meta name="twitter:card" content="summary_large_image"/><link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,300,600,700|Roboto+Mono|Fira+Code|Open+Sans:400,300,600,700"/><script src="https://kit.fontawesome.com/f1c8a90b9d.js"></script><link rel="stylesheet" type="text/css" href="/css/styles.css"/><link rel="stylesheet" type="text/css" href="/css/prism.css"/><link rel="shortcut icon" href="/img/fable.ico"/></head><body><nav class="navbar"><div class="navbar-brand"><a class="navbar-item is-size-4" href="/" style="background-color:rgba(0,0,0,0.5);color:dodgerblue;font-weight:600">Fable</a><div class="navbar-burger" data-target="navMenu"><span></span><span></span><span></span></div></div><div id="navMenu" class=" navbar-menu"><div class="navbar-start"><a class=" navbar-item" href="/docs">Docs</a><a class=" navbar-item" href="/blog">Blog</a><a class=" navbar-item" href="/repl">REPL</a><a class=" navbar-item" href="/community">Community</a><a class=" navbar-item" href="/fableconf">FableConf</a></div><div class="navbar-end"><div class="field is-grouped"><a class="navbar-item" href="https://gitter.im/fable-compiler/Fable" target="_blank" style="color:white"><span class="icon"><i class=" fab fa-gitter"></i></span></a><a class="navbar-item" href="https://github.com/fable-compiler/fable" target="_blank" style="color:white"><span class="icon"><i class=" fab fa-github"></i></span></a><a class="navbar-item" href="https://twitter.com/FableCompiler" target="_blank" style="color:white"><span class="icon"><i class=" fab fa-twitter"></i></span></a><a class="navbar-item" href="https://www.youtube.com/channel/UC6m70Jyr65ogDySbK7aMmzg/videos" target="_blank" style="color:white"><span class="icon"><i class=" fab fa-youtube"></i></span></a></div></div></div></nav><div style="overflow:hidden"><div class="container"><div class="columns homepage-header is-vcentered"><div><div class="fable-header" style="margin:20px 0"><figure class="image" style="max-width:500px;margin-left:auto;margin-right:auto"><img class="fable-logo" src="/img/fable_logo.png"/></figure><div style="display:flex;justify-content:center"><div style="width:250px;margin:0 0.5rem"><a style="margin:10px" href="/repl/" target="_black"><button class="button is-fullwidth is-outlined is-medium is-success" style="font-size:1rem">TRY ONLINE</button></a></div><div style="width:250px;margin:0 0.5rem"><a style="margin:10px" href="/docs/2-steps/setup.html"><button class="button is-fullwidth is-outlined is-medium is-info" style="font-size:1rem">GET STARTED</button></a></div></div><div class="fable-catchphrase"><p>Fable is a compiler that brings <a href="http://fsharp.org/">F#</a> into the JavaScript ecosystem</p>
-</div></div></div><div><div style="margin:10px auto;width:fit-content;height:600px;overflow:hidden"><p><a class="twitter-timeline" data-lang="en" data-width="400" data-height="600" data-theme="light" href="https://twitter.com/FableCompiler?ref_src=twsrc%5Etfw">Tweets by FableCompiler</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
-</div></div></div><div class="columns"><div class="column"><div class="box"><article class="media"><div class="media-left"><figure class="image is-64x64"><img src="./img/fsharp.png"/></figure></div><div class="media-content"><span class="title is-5">Functional programming and more</span><div><p>Immutable by default. Powerful pattern matching. Lightweight syntax. Units of measure. Type providers. Enjoy.</p>
-</div></div></article></div></div><div class="column"><div class="box"><article class="media"><div class="media-left"><div style="width:64px;height:64px;color:#2d2d2d"><i class=" fas fa-lock fa-2x"></i></div></div><div class="media-content"><span class="title is-5">Type safety without the hassle</span><div><p>Type inference provides robustness and correctness, but without the cost of additional code. Let the compiler catch bugs for you.</p>
-</div></div></article></div></div></div><div class="columns"><div class="column"><div class="box"><article class="media"><div class="media-left"><div style="width:64px;height:64px;color:#2d2d2d"><i class=" fas fa-wrench fa-2x"></i></div></div><div class="media-content"><span class="title is-5">Modern Javascript output</span><div><p>Fable produces readable JavaScript code compatible with ES2015 standards and popular tooling like <a href="https://webpack.js.org/">Webpack</a>.</p>
-</div></div></article></div></div><div class="column"><div class="box"><article class="media"><div class="media-left"><div style="width:64px;height:64px;color:#2d2d2d"><i class=" fas fa-puzzle-piece fa-2x"></i></div></div><div class="media-content"><span class="title is-5">Easy JavaScript interop</span><div><p>Call <a href="/docs/communicate/js-from-fable.html">JavaScript from Fable</a> or <a href="/docs/communicate/fable-from-js.html">Fable from JS</a>. Use NPM packages. The entire JavaScript ecosystem is at your fingertips.</p>
-</div></div></article></div></div></div><div class="columns"><div class="column"><div class="box"><article class="media"><div class="media-left"><div style="width:64px;height:64px;color:#2d2d2d"><i class=" fas fa-edit fa-2x"></i></div></div><div class="media-content"><span class="title is-5">First-class editor tools</span><div><p>Choose your favorite tool: from <a href="http://ionide.io/">Visual Studio Code</a> to <a href="https://www.jetbrains.com/rider/">JetBrains Rider</a>. Check <a href="/docs/2-steps/setup.html#development-tools">the whole list here</a>.</p>
-</div></div></article></div></div><div class="column"><div class="box"><article class="media"><div class="media-left"><div style="width:64px;height:64px;color:#2d2d2d"><i class=" fas fa-battery-full fa-2x"></i></div></div><div class="media-content"><span class="title is-5">Batteries included</span><div><p>Fable supports <a href="/docs/dotnet/compatibility.html">the F# core library and some common .NET libraries</a> to supplement the JavaScript ecosystem.</p>
-</div></div></article></div></div></div><div class="columns"></div><section class="section quickstart"><h4 class="title is-4">Quick start</h4><div class="content"><div><p><a href="/repl">Try Fable online</a> or get started in your local machine with our set of samples (<a href="/docs/2-steps/setup.html">more info</a>):</p>
-</div><ol><li><a href="https://dotnet.microsoft.com" target="_blank">Install .NET Core SDK</a></li><li><a href="https://nodejs.org/en/" target="_blank">Install Node.js</a></li><li>Then type the following in a terminal and open http://localhost:8080 in your browser after compilation finishes:</li></ol></div><pre>git clone https://github.com/fable-compiler/fable3-samples
-cd fable3-samples/browser
-npm install
-npm start</pre></section><section class="section has-background-white features"><h2 class="title has-text-centered is-2" style="color:dodgerblue">Features</h2><div class="content has-text-centered"><p>These are some of the main F# features that you can use in your web apps with Fable.</p></div><hr/><div class="columns is-vcentered" style="margin-top:1.5rem"><div class="column is-1"></div><div class="column is-3"><h4 class="title is-4" style="color:dodgerblue">Powerful pattern matching</h4><div class="content"><p><div><p>Model your domain with union types and match complex patterns with ease. The compiler will warn you if you&#39;re forgetting some cases!</p>
-</div></p></div></div><div class="column is-7"><div><pre><code class="language-fsharp">
-<span class="token keyword">type</span> <span class="token class-name">Face</span> <span class="token operator">=</span> Ace <span class="token operator">|</span> King <span class="token operator">|</span> Queen <span class="token operator">|</span> Jack <span class="token operator">|</span> Number <span class="token keyword">of</span> <span class="token class-name">int</span>
-<span class="token keyword">type</span> <span class="token class-name">Color</span> <span class="token operator">=</span> Spades <span class="token operator">|</span> Hearts <span class="token operator">|</span> Diamonds <span class="token operator">|</span> Clubs
-<span class="token keyword">type</span> <span class="token class-name">Card</span> <span class="token operator">=</span> Face <span class="token operator">*</span> Color
+<html class="has-navbar-fixed-top"><head><title>Fable · JavaScript you can be proud of!</title><meta http-equiv="content-type"/><link rel="stylesheet" type="text/css" href="/style.css"/><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"/></head><body><nav class="navbar is-fixed-top"><div class="container"><div class="navbar-brand"><a class="navbar-item title is-4" href="https://fable.io/">Fable</a><a class="navbar-item is-hidden-desktop" href="https://github.com/fable-compiler/fable"><span class="icon"><i class=" fab fa-github fa-lg"></i></span></a><a class="navbar-item is-hidden-desktop" href="https://twitter.com/FableCompiler"><span class="icon"><i class=" fab fa-twitter fa-lg"></i></span></a><a class="navbar-item is-hidden-desktop" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class=" fab fa-gitter fa-lg"></i></span></a><a class="navbar-item is-hidden-desktop" href="https://www.youtube.com/channel/UC6m70Jyr65ogDySbK7aMmzg/videos"><span class="icon"><i class=" fab fa-youtube fa-lg"></i></span></a><a class="navbar-burger" data-target="nav-menu"><span></span><span></span><span></span></a></div><div class="navbar-menu" id="nav-menu"><div class="navbar-start"><a class="navbar-item" href="/documentation">Documentation</a><a class="navbar-item" href="https://fable.io/repl/">Try</a><a class="navbar-item" href="/blog/index.html">Blog</a><a class="navbar-item" href="/community.html">Community</a><a class="navbar-item" href="/resources.html">Resources</a></div><div class="navbar-end"><a class="navbar-item" href="https://github.com/fable-compiler/fable"><span class="icon"><i class=" fab fa-github fa-lg"></i></span></a><a class="navbar-item" href="https://twitter.com/FableCompiler"><span class="icon"><i class=" fab fa-twitter fa-lg"></i></span></a><a class="navbar-item" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class=" fab fa-gitter fa-lg"></i></span></a><a class="navbar-item" href="https://www.youtube.com/channel/UC6m70Jyr65ogDySbK7aMmzg/videos"><span class="icon"><i class=" fab fa-youtube fa-lg"></i></span></a></div></div></div></nav><div><!--
+    Index page of Fable is mostly written using HTML because it needs specific layouts
 
-<span class="token keyword">let</span> aceOfHearts <span class="token operator">=</span> Ace<span class="token punctuation">,</span>Hearts
-<span class="token keyword">let</span> tenOfSpades <span class="token operator">=</span> <span class="token punctuation">(</span>Number <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span> Spades
+    It is still process as markdown by Nacara so we get nice snippet coloration and also
+    benefit of the navbar generation and same style across all Fable website
+-->
+<!-- Disable the copy-button on all the elements contained inside the container (all this page) -->
+<div class="container mt-5" date-disable-copy-button="true">
+    <div class="columns is-vcentered">
+        <!-- Be careful when updating this div and it's content their is a script strongly dependant on the class names -->
+        <div class="column is-offset-2-desktop is-8-desktop is-full-tablet" id="fable-main-header">
+            <!-- Fable logo -->
+            <figure class="image" style="max-width: 550px; margin: auto">
+                <img class="fable-logo" src="/static/img/fable_logo.png" />
+            </figure>
+            <br />
+            <!-- Quick links -->
+            <div class="columns">
+                <div class="column has-text-centered is-offset-2-tablet is-4-tablet is-offset-3-mobile is-6-mobile">
+                    <a class="button is-fullwidth is-success is-outlined is-uppercase" href="https://fable.io/repl">
+                        Try online
+                    </a>
+                </div>
+                <div class="column has-text-centered is-4-tablet is-offset-3-mobile is-6-mobile">
+                    <a class="button is-fullwidth is-primary is-outlined is-uppercase" href="/docs/2-steps/setup.html">
+                        Get started
+                    </a>
+                </div>
+            </div>
+            <br />
+            <p class="has-text-weight-light is-size-4 has-text-centered">
+                Fable is a compiler that brings <a href="http://fsharp.org/">F#</a> into the JavaScript ecosystem
+            </p>
+        </div>
+        <!--
+            Hide the twitter feed on touch screens
+            It would be better to not load it at all on mobile but for now that's better than nothing
+            The not loading part could be handle with the next version of Nacara as it will be
+            a dynamic application and not just static website
+        -->
+        <div class="column is-offset-1-desktop-only is-4-desktop is-3-widescreen is-hidden is-hidden-touch twitter-timeline-container" >
+            <a class="twitter-timeline" data-lang="en" data-height="520" data-theme="light" href="https://twitter.com/FableCompiler?ref_src=twsrc%5Etfw">Tweets by @FableCompiler</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </div>
+    </div>
+    <!--
+        Selling points of Fable
+        For the selling points of Fable we use CSS grid instead of Bulma columns
+        because we want all the box to have the same height.
+        This is not something possible to do dynamically using Flexbox / Bulma columns system
+    -->
+    <div class="section">
+        <div class="selling-points">
+            <div class="box selling-point">
+                <div class="media">
+                    <div class="media-left">
+                        <figure class="image" style="height: 3em; width: 3em;">
+                        <!-- 3em mimics the behavior of the fa-3x for font-awesome icons making the layout more consistent -->
+                            <img src="/static/img/fsharp.png" />
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <span class="title is-5">
+                            Functional programming and more
+                        </span>
+                        <p>
+                            Immutable by default. Powerful pattern matching. Lightweight syntax. Units of measure. Type providers. Enjoy.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="box selling-point has-background-white">
+                <div class="media">
+                    <div class="media-left">
+                        <span class="icon is-large has-text-black">
+                            <i class="fas fa-lock fa-3x"></i>
+                        </span>
+                    </div>
+                    <div class="media-content">
+                        <span class="title is-5">
+                            Type safety without the hassle
+                        </span>
+                        <p>
+                            Type inference provides robustness and correctness, but without the cost of additional code. Let the compiler catch bugs for you.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="box selling-point has-background-white">
+                <div class="media">
+                    <div class="media-left">
+                        <span class="icon is-large has-text-black">
+                            <i class="fas fa-wrench fa-3x"></i>
+                        </span>
+                    </div>
+                    <div class="media-content">
+                        <span class="title is-5">
+                            Modern Javascript output
+                        </span>
+                        <p>
+                            Fable produces readable JavaScript code compatible with ES2015 standards and popular tooling like <a href="https://webpack.js.org/">Webpack</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="box selling-point has-background-white">
+                <div class="media">
+                    <div class="media-left">
+                        <span class="icon is-large has-text-black">
+                            <i class="fas fa-puzzle-piece fa-3x"></i>
+                        </span>
+                    </div>
+                    <div class="media-content">
+                        <span class="title is-5">
+                            Easy JavaScript interop
+                        </span>
+                        <p>
+                            Call <a href="/docs/communicate/js-from-fable.html">JavaScript from Fable</a> or <a href="/docs/communicate/fable-from-js.html">Fable from JS</a>. Use NPM packages. The entire JavaScript ecosystem is at your fingertips.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="box selling-point has-background-white">
+                <div class="media">
+                    <div class="media-left">
+                        <span class="icon is-large has-text-black">
+                            <i class="fas fa-edit fa-3x"></i>
+                        </span>
+                    </div>
+                    <div class="media-content">
+                        <span class="title is-5">
+                            First-class editor tools
+                        </span>
+                        <p>
+                            Choose your favorite tool: from <a href="https://ionide.io/">Visual Studio Code</a> to <a href="https://www.jetbrains.com/rider/">JetBrains Rider</a>. Check <a href="/docs/2-steps/setup.html#development-tools">the whole list here</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="box selling-point has-background-white">
+                <div class="media">
+                    <div class="media-left">
+                        <span class="icon is-large has-text-black">
+                            <i class="fas fa-battery-full fa-3x"></i>
+                        </span>
+                    </div>
+                    <div class="media-content">
+                        <span class="title is-5">
+                            Batteries included
+                        </span>
+                        <p>
+                            Fable supports the <a href="docs/dotnet/compatibility.html">F# core library and some common .NET libraries</a> to supplement the JavaScript ecosystem.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="section">
+        <h2 class="title is-2 has-text-primary has-text-centered">
+            Features
+        </h2>
+        <p class="content is-size-5 has-text-centered">
+            These are some of the main F# features that you can use in your web apps with Fable.
+        </p>
+        <div class="columns is-vcentered mt-5">
+            <div class="column is-4">
+                <h4 class="title has-text-primary">
+                    Powerful pattern matching
+                </h4>
+                <p class="content is-size-5">
+                    These are some of the main F# features that you can use in your web apps with Fable.
+                </p>
+            </div>
+            <div class="column is-6 is-offset-1 is-7-tablet">
+                <div class="content has-code-block is-normal">
+<!-- The indentation/format used has been chosen so the code is displayed
+without scrollbar on almost any screen size -->
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span style="color: #A626A4">type</span><span> </span><span style="color: #C18401">Face</span><span> </span><span style="color: #A626A4">=</span>
+<span>    </span><span style="color: #A626A4">|</span><span> Ace </span><span style="color: #A626A4">|</span><span> King </span><span style="color: #A626A4">|</span><span> Queen </span><span style="color: #A626A4">|</span><span> Jack</span>
+<span>    </span><span style="color: #A626A4">|</span><span> Number </span><span style="color: #A626A4">of</span><span> </span><span style="color: #C18401">int</span>
+<span style="color: #A626A4">type</span><span> </span><span style="color: #C18401">Color</span><span> </span><span style="color: #A626A4">=</span>
+<span>    </span><span style="color: #A626A4">|</span><span> Spades </span><span style="color: #A626A4">|</span><span> Hearts </span><span style="color: #A626A4">|</span><span> Diamonds </span><span style="color: #A626A4">|</span><span> Clubs</span>
+<span style="color: #A626A4">type</span><span> </span><span style="color: #C18401">Card</span><span> </span><span style="color: #A626A4">=</span>
+<span>    </span><span style="color: #A626A4">|</span><span> Face </span><span style="color: #A626A4">*</span><span> Color</span>
 
-<span class="token keyword">match</span> card <span class="token keyword">with</span>
-<span class="token operator">|</span> Ace<span class="token punctuation">,</span> Hearts <span class="token operator">-></span> printfn <span class="token string">"Ace Of Hearts!"</span>
-<span class="token operator">|</span> _<span class="token punctuation">,</span> Hearts <span class="token operator">-></span> printfn <span class="token string">"A lovely heart"</span>
-<span class="token operator">|</span> <span class="token punctuation">(</span>Number <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span> Spades <span class="token operator">-></span> printfn <span class="token string">"10 of Spades"</span>
-<span class="token operator">|</span> _<span class="token punctuation">,</span> <span class="token punctuation">(</span>Diamonds<span class="token operator">|</span>Clubs<span class="token punctuation">)</span> <span class="token operator">-></span> printfn <span class="token string">"Diamonds or clubs"</span>
-<span class="token comment">// warning: Incomplete pattern matches on this expression.</span>
-<span class="token comment">// For example, the value '(_,Spades)' may indicate</span>
-<span class="token comment">// a case not covered by the pattern(s).</span>
-</code></pre>
-</div></div><div class="column"></div></div><div class="columns is-vcentered" style="margin-top:1.5rem"><div class="column is-1"></div><div class="column is-3"><h4 class="title is-4" style="color:dodgerblue">Computation expressions</h4><div class="content"><p><div><p>There&#39;s a lot of code involving continuations out there, like asynchronous or undeterministic operations. Other languages bake specific solutions into the syntax, with F# you can use built-in computation expressions and also extend them yourself.</p>
-</div></p></div></div><div class="column is-7"><div><pre><code class="language-fsharp">
-<span class="token comment">// JS promises made easy</span>
-<span class="token computation-expression keyword">promise</span> <span class="token punctuation">{</span>
-    <span class="token keyword">let!</span> res <span class="token operator">=</span> Fetch<span class="token punctuation">.</span>fetch url <span class="token punctuation">[</span><span class="token punctuation">]</span>
-    <span class="token keyword">let!</span> txt <span class="token operator">=</span> res<span class="token punctuation">.</span><span class="token function">text</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">return</span> txt<span class="token punctuation">.</span>Length
-<span class="token punctuation">}</span>
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">aceOfHearts</span><span> </span><span style="color: #A626A4">=</span><span> Ace</span><span style="color: #A626A4">,</span><span>Hearts</span>
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">tenOfSpades</span><span> </span><span style="color: #A626A4">=</span><span> </span><span style="color: #A626A4">(</span><span>Number </span><span style="color: #986801">10</span><span style="color: #A626A4">),</span><span> Spades</span>
 
-<span class="token comment">// Declare your own computation expression</span>
-<span class="token keyword">type</span> <span class="token class-name">OptionBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span>
-  <span class="token keyword">member</span> __<span class="token punctuation">.</span><span class="token function">Bind</span><span class="token punctuation">(</span>opt<span class="token punctuation">,</span> binder<span class="token punctuation">)</span> <span class="token operator">=</span>
-    <span class="token keyword">match</span> opt <span class="token keyword">with</span> Some value <span class="token operator">-></span> binder value <span class="token operator">|</span> None <span class="token operator">-></span> None
-  <span class="token keyword">member</span> __<span class="token punctuation">.</span><span class="token function">Return</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token operator">=</span> Some value
+<span style="color: #A626A4">match</span><span> card </span><span style="color: #A626A4">with</span>
+<span style="color: #A626A4">|</span><span> Ace</span><span style="color: #A626A4">,</span><span> Hearts </span><span style="color: #A626A4">-&gt;</span>
+<span>    printfn </span><span style="color: #50A14F">&quot;Ace Of Hearts!&quot;</span>
+<span style="color: #A626A4">|</span><span> </span><span style="color: #A626A4">_,</span><span> Hearts </span><span style="color: #A626A4">-&gt;</span>
+<span>    printfn </span><span style="color: #50A14F">&quot;A lovely heart&quot;</span>
+<span style="color: #A626A4">|</span><span> </span><span style="color: #A626A4">(</span><span>Number </span><span style="color: #986801">10</span><span style="color: #A626A4">),</span><span> Spades </span><span style="color: #A626A4">-&gt;</span>
+<span>    printfn </span><span style="color: #50A14F">&quot;10 of Spades&quot;</span>
+<span style="color: #A626A4">|</span><span> </span><span style="color: #A626A4">_,</span><span> </span><span style="color: #A626A4">(</span><span>Diamonds</span><span style="color: #A626A4">|</span><span>Clubs</span><span style="color: #A626A4">)</span><span> </span><span style="color: #A626A4">-&gt;</span>
+<span>    printfn </span><span style="color: #50A14F">&quot;Diamonds or clubs&quot;</span>
+<span style="color: #A0A1A7;font-style: italic">// Warning:</span>
+<span style="color: #A0A1A7;font-style: italic">// Incomplete pattern matches on this expression.</span>
+<span style="color: #A0A1A7;font-style: italic">// For example, the value &#039;(_,Spades)&#039; may indicate</span>
+<span style="color: #A0A1A7;font-style: italic">// a case not covered by the pattern(s).</span></code></pre>
+</div> <!-- Markdown is sensible to indentation -->
+            </div>
+        </div>
+        <div class="columns is-vcentered mt-5">
+            <div class="column is-4">
+                <h4 class="title has-text-primary">
+                    Computation expressions
+                </h4>
+                <p class="content is-size-5">
+                    There's a lot of code involving continuations out there, like asynchronous or undeterministic operations. Other languages bake specific solutions into the syntax, with F# you can use built-in computation expressions and also extend them yourself.
+                </p>
+            </div>
+            <div class="column is-6 is-offset-1 is-7-tablet">
+                <div class="content has-code-block is-normal">
+<!-- The indentation/format used has been chosen so the code is displayed
+without scrollbar on almost any screen size -->
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span style="color: #A0A1A7;font-style: italic">// JS promises made easy</span>
+<span style="color: #A626A4">promise {</span>
+<span>    </span><span style="color: #A626A4">let!</span><span> </span><span style="color: #E45649">res</span><span> </span><span style="color: #A626A4">=</span><span> Fetch.fetch url </span><span style="color: #A626A4">[]</span>
+<span>    </span><span style="color: #A626A4">let!</span><span> </span><span style="color: #E45649">txt</span><span> </span><span style="color: #A626A4">=</span><span> res.text</span><span style="color: #986801">()</span>
+<span>    </span><span style="color: #A626A4">return</span><span> txt.Length</span>
+<span style="color: #A626A4">}</span>
 
-<span class="token keyword">let</span> option <span class="token operator">=</span> <span class="token function">OptionBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span style="color: #A0A1A7;font-style: italic">// Declare your own computation expression</span>
+<span style="color: #A626A4">type</span><span> </span><span style="color: #C18401">OptionBuilder</span><span style="color: #986801">()</span><span> </span><span style="color: #A626A4">=</span>
+<span>    </span><span style="color: #A626A4">member</span><span> </span><span style="color: #E45649">__.Bind</span><span style="color: #A626A4">(</span><span style="color: #383A42">opt</span><span style="color: #A626A4">,</span><span> </span><span style="color: #383A42">binder</span><span style="color: #A626A4">)</span><span> </span><span style="color: #A626A4">=</span>
+<span>        </span><span style="color: #A626A4">match</span><span> opt </span><span style="color: #A626A4">with</span>
+<span>            </span><span style="color: #A626A4">|</span><span> Some value </span><span style="color: #A626A4">-&gt;</span><span> binder value</span>
+<span>            </span><span style="color: #A626A4">|</span><span> None </span><span style="color: #A626A4">-&gt;</span><span> None</span>
+<span>    </span><span style="color: #A626A4">member</span><span> </span><span style="color: #E45649">__.Return</span><span style="color: #A626A4">(</span><span style="color: #383A42">value</span><span style="color: #A626A4">)</span><span> </span><span style="color: #A626A4">=</span>
+<span>        Some value</span>
 
-<span class="token computation-expression keyword">option</span> <span class="token punctuation">{</span>
-  <span class="token keyword">let!</span> x <span class="token operator">=</span> <span class="token function">trySomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-  <span class="token keyword">let!</span> y <span class="token operator">=</span> <span class="token function">trySomethingElse</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-  <span class="token keyword">let!</span> z <span class="token operator">=</span> <span class="token function">andYetTrySomethingElse</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-  <span class="token comment">// Code will only hit this point if the three</span>
-  <span class="token comment">// operations above return Some</span>
-  <span class="token keyword">return</span> x <span class="token operator">+</span> y <span class="token operator">+</span> z
-<span class="token punctuation">}</span>
-</code></pre>
-</div></div><div class="column"></div></div><div class="columns is-vcentered" style="margin-top:1.5rem"><div class="column is-1"></div><div class="column is-3"><h4 class="title is-4" style="color:dodgerblue">Units of measure</h4><div class="content"><p><div><p>Let the compiler verify arithmetic relationships for you to help prevent programming errors.</p>
-</div></p></div></div><div class="column is-7"><div><pre><code class="language-fsharp">
-<span class="token annotation"><span class="token punctuation">[&lt;</span><span class="token class-name">Measure</span><span class="token punctuation">>]</span></span> <span class="token keyword">type</span> <span class="token class-name">m</span>
-<span class="token annotation"><span class="token punctuation">[&lt;</span><span class="token class-name">Measure</span><span class="token punctuation">>]</span></span> <span class="token keyword">type</span> <span class="token class-name">s</span>
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">option</span><span> </span><span style="color: #A626A4">=</span><span> OptionBuilder</span><span style="color: #986801">()</span>
 
-<span class="token keyword">let</span> distance <span class="token operator">=</span> <span class="token number">12.0</span><span class="token operator">&lt;</span>m<span class="token operator">></span>
-<span class="token keyword">let</span> time <span class="token operator">=</span> <span class="token number">6.0</span><span class="token operator">&lt;</span>s<span class="token operator">></span>
+<span>option </span><span style="color: #A626A4">{</span>
+<span>    </span><span style="color: #A626A4">let!</span><span> </span><span style="color: #E45649">x</span><span> </span><span style="color: #A626A4">=</span><span> trySomething</span><span style="color: #986801">()</span>
+<span>    </span><span style="color: #A626A4">let!</span><span> </span><span style="color: #E45649">y</span><span> </span><span style="color: #A626A4">=</span><span> trySomethingElse</span><span style="color: #986801">()</span>
+<span>    </span><span style="color: #A626A4">let!</span><span> </span><span style="color: #E45649">z</span><span> </span><span style="color: #A626A4">=</span><span> andYetTrySomethingElse</span><span style="color: #986801">()</span>
+<span>    </span><span style="color: #A0A1A7;font-style: italic">// Code will only hit this point if the three</span>
+<span>    </span><span style="color: #A0A1A7;font-style: italic">// operations above return Some</span>
+<span>    </span><span style="color: #A626A4">return</span><span> x </span><span style="color: #A626A4">+</span><span> y </span><span style="color: #A626A4">+</span><span> z</span>
+<span style="color: #A626A4">}</span></code></pre>
+</div> <!-- Markdown is sensible to indentation -->
+            </div>
+        </div>
+        <div class="columns is-vcentered mt-5">
+            <div class="column is-4">
+                <h4 class="title has-text-primary">
+                    Units of measure
+                </h4>
+                <p class="content is-size-5">
+                    These are some of the main F# features that you can use in your web apps with Fable.
+                </p>
+            </div>
+            <div class="column is-6 is-offset-1 is-7-tablet">
+                <div class="content has-code-block is-normal">
+<!-- The indentation/format used has been chosen so the code is displayed
+without scrollbar on almost any screen size -->
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span style="color: #0184BC">[&lt;Measure&gt;]</span><span> </span><span style="color: #A626A4">type</span><span> </span><span style="color: #C18401">m</span>
+<span style="color: #0184BC">[&lt;Measure&gt;]</span><span> </span><span style="color: #A626A4">type</span><span> </span><span style="color: #C18401">s</span>
 
-<span class="token keyword">let</span> thisWillFail <span class="token operator">=</span> distance <span class="token operator">+</span> time
-<span class="token comment">// ERROR: The unit of measure 'm' does</span>
-<span class="token comment">// not match the unit of measure 's'</span>
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">distance</span><span> </span><span style="color: #A626A4">=</span><span> </span><span style="color: #986801">12.0</span><span style="color: #A626A4">&lt;</span><span>m</span><span style="color: #A626A4">&gt;</span>
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">time</span><span> </span><span style="color: #A626A4">=</span><span> </span><span style="color: #986801">6.0</span><span style="color: #A626A4">&lt;</span><span>s</span><span style="color: #A626A4">&gt;</span>
 
-<span class="token keyword">let</span> thisWorks <span class="token operator">=</span> distance <span class="token operator">/</span> time
-<span class="token comment">// 2.0&lt;m/s></span>
-</code></pre>
-</div></div><div class="column"></div></div><div class="columns is-vcentered" style="margin-top:1.5rem"><div class="column is-1"></div><div class="column is-3"><h4 class="title is-4" style="color:dodgerblue">Type providers</h4><div class="content"><p><div><p>Build your types using real-world conditions and make the compiler warn you if those conditions change.</p>
-</div></p></div></div><div class="column is-7"><div><pre><code class="language-fsharp">
-<span class="token keyword">let</span> <span class="token annotation"><span class="token punctuation">[&lt;</span><span class="token class-name">Literal</span><span class="token punctuation">>]</span></span> JSON_URL <span class="token operator">=</span> <span class="token string">"https://jsonplaceholder.typicode.com/todos"</span>
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">thisWillFail</span><span> </span><span style="color: #A626A4">=</span><span> distance </span><span style="color: #A626A4">+</span><span> time</span>
+<span style="color: #A0A1A7;font-style: italic">// ERROR: The unit of measure &#039;m&#039; does</span>
+<span style="color: #A0A1A7;font-style: italic">// not match the unit of measure &#039;s&#039;</span>
 
-<span class="token comment">// Type is created automatically from the url</span>
-<span class="token keyword">type</span> <span class="token class-name">Todos</span> <span class="token operator">=</span> Fable<span class="token punctuation">.</span>JsonProvider<span class="token punctuation">.</span>Generator<span class="token operator">&lt;</span>JSON_URL<span class="token operator">></span>
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">thisWorks</span><span> </span><span style="color: #A626A4">=</span><span> distance </span><span style="color: #A626A4">/</span><span> time</span>
+<span style="color: #A0A1A7;font-style: italic">// 2.0&lt;m/s&gt;</span></code></pre>
+</div> <!-- Markdown is sensible to indentation -->
+            </div>
+        </div>
+        <div class="columns is-vcentered mt-5">
+            <div class="column is-4">
+                <h4 class="title has-text-primary">
+                    Type providers
+                </h4>
+                <p class="content is-size-5">
+                    Build your types using real-world conditions and make the compiler warn you if those conditions change.
+                </p>
+            </div>
+            <div class="column is-6 is-offset-1 is-7-tablet">
+                <div class="content has-code-block is-normal">
+<!-- The indentation/format used has been chosen so the code is displayed
+without scrollbar on almost any screen size -->
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span style="color: #0184BC">[&lt;Literal&gt;]</span>
+<span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">JSON_URL</span><span> </span><span style="color: #A626A4">=</span><span> </span><span style="color: #50A14F">&quot;https://jsonplaceholder.typicode.com/todos&quot;</span>
 
-<span class="token computation-expression keyword">async</span> <span class="token punctuation">{</span>
-    <span class="token keyword">let!</span> <span class="token punctuation">(</span>_<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token operator">=</span> Fable<span class="token punctuation">.</span>SimpleHttp<span class="token punctuation">.</span>Http<span class="token punctuation">.</span>get url
-    <span class="token keyword">let</span> todos <span class="token operator">=</span> Todos<span class="token punctuation">.</span>ParseArray res
-    <span class="token keyword">for</span> todo <span class="token keyword">in</span> todos <span class="token keyword">do</span>
-        <span class="token comment">// If the JSON schema changes, this will fail compilation</span>
-        printfn <span class="token string">"ID %i, USER: %i, TITLE %s, COMPLETED %b"</span>
-            todo<span class="token punctuation">.</span>id
-            todo<span class="token punctuation">.</span>userId
-            todo<span class="token punctuation">.</span>title
-            todo<span class="token punctuation">.</span>completed
-<span class="token punctuation">}</span>
-</code></pre>
-</div></div><div class="column"></div></div></section><section class="section"><h4 class="title is-4" style="text-align:center">Users of Fable</h4><div class="fable-introduction"><p>These are some of the projects and companies using Fable. Send us <a href="https://twitter.com/FableCompiler">a message</a> to include yours!</p>
-</div><br/><div class="flex-wrap fable-friends"><div style="margin-right:1rem;margin-bottom:1rem;background-color:white;padding:0.3rem;display:flex;flex-direction:column;justify-content:center;align-items:center"><a href="https://resoptima.com/" target="_blank"><img src="img/users/resoptima.png"/></a></div><div style="margin-right:1rem;margin-bottom:1rem;background-color:white;padding:0.3rem;display:flex;flex-direction:column;justify-content:center;align-items:center"><a href="https://demetrixbio.com" target="_blank"><img src="img/users/demetrix.png"/></a></div><div style="margin-right:1rem;margin-bottom:1rem;background-color:white;padding:0.3rem;display:flex;flex-direction:column;justify-content:center;align-items:center"><a href="https://www.compraga.de/" target="_blank"><img src="img/users/compraga.jpeg"/></a></div><div style="margin-right:1rem;margin-bottom:1rem;background-color:white;padding:0.3rem;display:flex;flex-direction:column;justify-content:center;align-items:center"><a href="https://www.aimtecglobal.com/en/" target="_blank"><img src="img/users/aimtec.jpg"/></a></div><div style="margin-right:1rem;margin-bottom:1rem;background-color:white;padding:0.3rem;display:flex;flex-direction:column;justify-content:center;align-items:center"><a href="http://nsynk.de/" target="_blank"><img src="img/users/nsynk.png"/></a></div><div style="margin-right:1rem;margin-bottom:1rem;background-color:white;padding:0.3rem;display:flex;flex-direction:column;justify-content:center;align-items:center"><a href="https://thegamma.net/" target="_blank"><img src="img/users/thegamma.png"/></a></div><div style="margin-right:1rem;margin-bottom:1rem;background-color:white;padding:0.3rem;display:flex;flex-direction:column;justify-content:center;align-items:center"><a href="https://www.msu-solutions.de/" target="_blank"><img src="img/users/msu.jpg"/></a></div><div style="margin-right:1rem;margin-bottom:1rem;background-color:white;padding:0.3rem;display:flex;flex-direction:column;justify-content:center;align-items:center"><a href="http://ionide.io/" target="_blank"><img src="img/users/ionide.png"/></a></div><div style="margin-right:1rem;margin-bottom:1rem;background-color:white;padding:0.3rem;display:flex;flex-direction:column;justify-content:center;align-items:center"><a href="http://prolucid.ca/" target="_blank"><img src="img/users/prolucid.jpg"/></a></div><div style="margin-right:1rem;margin-bottom:1rem;background-color:white;padding:0.3rem;display:flex;flex-direction:column;justify-content:center;align-items:center"><a href="http://casquenoir.com/" target="_blank"><img src="img/users/casquenoir.jpg"/></a></div><div style="margin-right:1rem;margin-bottom:1rem;background-color:white;padding:0.3rem;display:flex;flex-direction:column;justify-content:center;align-items:center"><a href="https://www.danpower-gruppe.de/" target="_blank"><img src="img/users/danpower.png"/></a></div><div style="margin-right:1rem;margin-bottom:1rem;background-color:white;padding:0.3rem;display:flex;flex-direction:column;justify-content:center;align-items:center"><a href="http://www.tachyus.com/" target="_blank"><img src="img/users/tachyus.png"/></a></div><div style="margin-right:1rem;margin-bottom:1rem;background-color:white;padding:0.3rem;display:flex;flex-direction:column;justify-content:center;align-items:center"><a href="https://axxes.com/en" target="_blank"><img src="img/users/axxes.png"/></a></div><div style="margin-right:1rem;margin-bottom:1rem;background-color:white;padding:0.3rem;display:flex;flex-direction:column;justify-content:center;align-items:center"><a href="https://visualmips.github.io/" target="_blank"><img src="img/users/visualmips.png"/></a></div><div style="margin-right:1rem;margin-bottom:1rem;background-color:white;padding:0.3rem;display:flex;flex-direction:column;justify-content:center;align-items:center"><a href="http://lambdafactory.io/" target="_blank"><img src="img/users/lambdafactory.png"/></a></div><div style="margin-right:1rem;margin-bottom:1rem;background-color:white;padding:0.3rem;display:flex;flex-direction:column;justify-content:center;align-items:center"><a href="https://www.bluetradingsystems.com/" target="_blank"><img src="img/users/BTS.svg"/></a></div><div style="margin-right:1rem;margin-bottom:1rem;background-color:white;padding:0.3rem;display:flex;flex-direction:column;justify-content:center;align-items:center"><a href="https://www.who-umc.org/" target="_blank"><img src="img/users/umc.png"/></a></div></div></section></div></div><footer style="background-color:dodgerblue"><div class="content"><p>Fable <a href="https://github.com/fable-compiler/Fable">source code</a> is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.</p></div></footer><script>
-document.addEventListener('DOMContentLoaded', function () {
-  // burger
-  var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-  if ($navbarBurgers.length > 0) {
-    $navbarBurgers.forEach(function ($el) {
-      $el.addEventListener('click', function () {
-        var target = $el.dataset.target;
-        var $target = document.getElementById(target);
-        $el.classList.toggle('is-active');
-        $target.classList.toggle('is-active');
-      });
-    });
-  }
-});</script></body></html>
+<span style="color: #A0A1A7;font-style: italic">// Type is created automatically from the url</span>
+<span style="color: #A626A4">type</span><span> </span><span style="color: #C18401">Todos</span><span> </span><span style="color: #A626A4">=</span><span> Fable.JsonProvider.Generator</span><span style="color: #A626A4">&lt;</span><span>JSON</span><span style="color: #A626A4">_</span><span>URL</span><span style="color: #A626A4">&gt;</span>
+
+<span style="color: #A626A4">async {</span>
+<span>    </span><span style="color: #A626A4">let!</span><span> </span><span style="color: #A626A4">(</span><span style="color: #383A42">_</span><span style="color: #A626A4">,</span><span> </span><span style="color: #383A42">res</span><span style="color: #A626A4">)</span><span> </span><span style="color: #A626A4">=</span><span> Fable.SimpleHttp.Http.get url</span>
+<span>    </span><span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">todos</span><span> </span><span style="color: #A626A4">=</span><span> Todos.ParseArray res</span>
+<span>    </span><span style="color: #A626A4">for</span><span> todo </span><span style="color: #A626A4">in</span><span> todos </span><span style="color: #A626A4">do</span>
+<span>        </span><span style="color: #A0A1A7;font-style: italic">// Compilation fail if the JSON schema changes</span>
+<span>        printfn </span><span style="color: #50A14F">&quot;ID </span><span style="color: #A626A4">%i</span><span style="color: #50A14F">, USER: </span><span style="color: #A626A4">%i</span><span style="color: #50A14F">, TITLE </span><span style="color: #A626A4">%s</span><span style="color: #50A14F">, COMPLETED </span><span style="color: #A626A4">%b</span><span style="color: #50A14F">&quot;</span>
+<span>            todo.id</span>
+<span>            todo.userId</span>
+<span>            todo.title</span>
+<span>            todo.completed</span>
+<span style="color: #A626A4">}</span></code></pre>
+</div> <!-- Markdown is sensible to indentation -->
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <h3 class="title is-3 has-text-primary has-text-centered">
+            Users of Fable
+        </h3>
+        <p class="content is-size-5">
+            These are some of the projects and companies using Fable. Send us a message to include yours!
+        </p>
+        <div class="columns is-multiline is-centered is-mobile">
+            <div class="column is-narrow">
+                <a class="image is-128x128 is-flex is-flex-direction-column is-justify-content-center" href="https://resoptima.com/" target="_blank">
+                    <img src="static/img/users/resoptima.png">
+                </a>
+            </div>
+            <div class="column is-narrow">
+                <a class="image is-128x128 is-flex is-flex-direction-column is-justify-content-center" href="https://demetrixbio.com" target="_blank">
+                    <img src="static/img/users/demetrix.png">
+                </a>
+            </div>
+            <div class="column is-narrow">
+                <a class="image is-128x128 is-flex is-flex-direction-column is-justify-content-center" href="https://www.compraga.de/" target="_blank">
+                    <img src="static/img/users/compraga.jpeg">
+                </a>
+            </div>
+            <div class="column is-narrow">
+                <a class="image is-128x128 is-flex is-flex-direction-column is-justify-content-center" href="https://www.aimtecglobal.com/en/" target="_blank">
+                    <img src="static/img/users/aimtec.jpg">
+                </a>
+            </div>
+            <div class="column is-narrow">
+                <a class="image is-128x128 is-flex is-flex-direction-column is-justify-content-center" href="http://nsynk.de/" target="_blank">
+                    <img src="static/img/users/nsynk.png">
+                </a>
+            </div>
+            <div class="column is-narrow">
+                <a class="image is-128x128 is-flex is-flex-direction-column is-justify-content-center" href="https://thegamma.net/" target="_blank">
+                    <img src="static/img/users/thegamma.png">
+                </a>
+            </div>
+            <div class="column is-narrow">
+                <a class="image is-128x128 is-flex is-flex-direction-column is-justify-content-center" href="https://www.msu-solutions.de/" target="_blank">
+                    <img src="static/img/users/msu.jpg">
+                </a>
+            </div>
+            <div class="column is-narrow">
+                <a class="image is-128x128 is-flex is-flex-direction-column is-justify-content-center" href="http://ionide.io/" target="_blank">
+                    <img src="static/img/users/ionide.png">
+                </a>
+            </div>
+            <div class="column is-narrow">
+                <a class="image is-128x128 is-flex is-flex-direction-column is-justify-content-center" href="http://prolucid.ca/" target="_blank">
+                    <img src="static/img/users/prolucid.jpg">
+                </a>
+            </div>
+            <div class="column is-narrow">
+                <a class="image is-128x128 is-flex is-flex-direction-column is-justify-content-center" href="http://casquenoir.com/" target="_blank">
+                    <img src="static/img/users/casquenoir.jpg">
+                </a>
+            </div>
+            <div class="column is-narrow">
+                <a class="image is-128x128 is-flex is-flex-direction-column is-justify-content-center" href="https://www.danpower-gruppe.de/" target="_blank">
+                    <img src="static/img/users/danpower.png">
+                </a>
+            </div>
+            <div class="column is-narrow">
+                <a class="image is-128x128 is-flex is-flex-direction-column is-justify-content-center" href="http://www.tachyus.com/" target="_blank">
+                    <img src="static/img/users/tachyus.png">
+                </a>
+            </div>
+            <div class="column is-narrow">
+                <a class="image is-128x128 is-flex is-flex-direction-column is-justify-content-center" href="https://axxes.com/en" target="_blank">
+                    <img src="static/img/users/axxes.png">
+                </a>
+            </div>
+            <div class="column is-narrow">
+                <a class="image is-128x128 is-flex is-flex-direction-column is-justify-content-center" href="https://visualmips.github.io/" target="_blank">
+                    <img src="static/img/users/visualmips.png">
+                </a>
+            </div>
+            <div class="column is-narrow">
+                <a class="image is-128x128 is-flex is-flex-direction-column is-justify-content-center" href="http://lambdafactory.io/" target="_blank">
+                    <img src="static/img/users/lambdafactory.png">
+                </a>
+            </div>
+            <div class="column is-narrow">
+                <a class="image is-128x128 is-flex is-flex-direction-column is-justify-content-center" href="https://www.bluetradingsystems.com/" target="_blank">
+                    <img src="static/img/users/BTS.svg">
+                </a>
+            </div>
+            <div class="column is-narrow">
+                <a class="image is-128x128 is-flex is-flex-direction-column is-justify-content-center" href="https://www.who-umc.org/" target="_blank">
+                    <img src="static/img/users/umc.png">
+                </a>
+            </div>
+        </div>
+    </section>
+</div>
+<!--
+    This script shows the twitter timeline only when it is ready.
+    This avoid weird layout when twitter loading is blocked by an add blocker
+-->
+<script type="text/javascript">
+    window.addEventListener("DOMContentLoaded", () => {
+        const twitterContainer = document.querySelector(".twitter-timeline-container");
+        const config = { attributes: false, childList: true };
+        const callback = function(mutationsList) {
+            const isReady = mutationsList.find(function (mutation) {
+                return mutation.removedNodes.length !== 0;
+            });
+
+            if (isReady) {
+
+                const fableMainHeader = document.querySelector("#fable-main-header");
+                fableMainHeader.classList.add("is-8-desktop");
+                fableMainHeader.classList.remove("is-offset-2-desktop");
+
+                twitterContainer.classList.remove("is-hidden");
+            }
+        };
+
+        // Créé une instance de l'observateur lié à la fonction de callback
+        const observer = new MutationObserver(callback);
+
+        // Commence à observer le noeud cible pour les mutations précédemment configurées
+        observer.observe(twitterContainer, config);
+    })
+</script>
+</div><script async="" src="/resources/nacara-standard-layouts/scripts/menu.js"></script></body></html>
