@@ -9,12 +9,12 @@
     "navbar": {
         "start": [
             {
-                "url": "/documentation",
-                "section": "documentation",
+                "url": "/docs",
+                "section": "docs",
                 "label": "Documentation"
             },
             {
-                "url": "https://fable.io/repl/",
+                "url": "/repl/",
                 "label": "Try"
             },
             {

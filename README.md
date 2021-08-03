@@ -14,7 +14,7 @@ All the content of the website is located under the `docsrc` folder, so if you a
 docsrc
 ├── blog                Contains the blog posts
 ├── community.md        Page listing the different places where people can regroup, ask for help
-├── documentation       Contains the documentation section
+├── docs                Contains the documentation section
 ├── index.md            Index of the website
 ├── resources.md        Community driven list of useful Fable tutorials, libraries and software.
 ├── static              Static resource like images, etc.
