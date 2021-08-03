@@ -5,7 +5,7 @@ layout: nacara-standard
 
 You can use all tools of the JS ecosystem.
 
-Several js libs already have a Fable binding :
+Several js libs already have a Fable binding:
 - mocha: [https://github.com/Zaid-Ajaj/Fable.Mocha](https://github.com/Zaid-Ajaj/Fable.Mocha)
 - jest: [https://github.com/Shmew/Fable.Jester](https://github.com/Shmew/Fable.Jester)
 
@@ -37,26 +37,13 @@ Jest.describe("can run basic tests", fun () ->
 See Jester documentation to more informations : [https://shmew.github.io/Fable.Jester/](https://shmew.github.io/Fable.Jester/)
 
 ## Run
-Like all transpiled languages to JS, you have to convert your project to JS.
-For this, you can use Webpack, but it isn't the ideal solution, because test runners generally prefer to have small files rather than a single big file.
-You can use the compiler directly via the `fable-splitter` tool.
+Before running the tests, you have to convert your project to JS, but you don't need to bundle with Webpack, because test runners generally prefer to have small files rather than a single big file. So we only need to run the Fable compiler and put the generated code in an output dir.
+
 ```shell
-  npm install fable-splitter --save-dev
+  dotnet fable src -o output
 ```
 
-You should create a config file `splitter.config.js`:
-```js
-const path = require("path");
-
-module.exports = {
-  allFiles: true, // convert all files and not only entrypoint
-  entry: path.join(__dirname, "./project/path.fsproj"),
-  outDir: path.join(__dirname, "./output"),
-  babel: { sourceMaps: "inline" } // enable sourceMaps to see F# code and not generated js in test reports
-};
-```
-
-You should config Jest with another config file `jest.config.js` :
+You should config Jest with a config file `jest.config.js` :
 ```js
 module.exports = {
   moduleFileExtensions: ['js'],
@@ -72,12 +59,7 @@ module.exports = {
 `coveragePathIgnorePatterns`, `testEnvironment`, `transform` improve performance of runner.
 You can read Jest doc to see more : [https://jestjs.io/docs/en/configuration](https://jestjs.io/docs/en/configuration)
 
-Now, you can build:
-```shell
-  npx fable-splitter -c splitter.config.js
-```
-
-And run test:
+Now, you can run then tests:
 ```shell
   npx jest --config=jest.config.js
 ```
@@ -88,7 +70,7 @@ You can specify this command on npm in `package.json` :
 ```json
 {
   "scripts": {
-    "test": "fable-splitter -c splitter.config.js && jest --config=jest.config.js",
+    "test": "dotnet fable src -o output --run jest --config=jest.config.js",
   },
 }
 ```
@@ -104,7 +86,7 @@ You can use the watch feature to take advantage of the compiler and runner cache
 Currently, Fable doesn't have official plugins for the different runners.
 So you have to execute these two commands in parallel:
 ```shell
-  npx fable-splitter -c splitter.config.js -w
+  dotnet fable watch src -o output
   npx jest --config=jest.config.js --watchAll
 ```
 
@@ -112,8 +94,8 @@ You add a npm script in `package.json` :
 ```json
 {
   "scripts": {
-    "test": "fable-splitter -c splitter.config.js && jest --config=jest.config.js",
-    "watch-test:build": "fable-splitter -c splitter.config.js -w",
+    "test": "dotnet fable src -o output && jest --config=jest.config.js",
+    "watch-test:build": "dotnet fable watch src -o output",
     "watch-test:run": "jest --config=jest.config.js --watchAll",
     "watch-test": "npm-run-all --parallel watch-test:*"
   },

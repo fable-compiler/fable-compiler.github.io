@@ -60,6 +60,20 @@ If the value is globally accessible in JS, you can use the `Global` attribute wi
  let [<Global>] console: JS.Console = jsNative
 ```
 
+#### Importing relative paths when using an output directory
+
+If you are putting the generated JS files in an output directory using Fable's `-o` option, be aware that Fable will only move files corresponding to .fs sources, not external files like .js or .css. Fable will automatically adjust relative paths in imports to the location of the generated file, but sometimes it's difficult to know where the generated file will end up exactly. In these cases, it's useful to use the `${outDir}` macro which will be replaced by the output directory. For example, if we are importing a CSS module like this:
+
+```fsharp
+[<ImportDefault("${outDir}/../styles/styles.module.css")>]
+let styles: CssModule = jsNative
+```
+
+Let's say we're compiling with the `-o build` option and the file ends up in the `build/Components` directory. The generated code will look like:
+
+```js
+import styles from "../../styles/styles.module.css"
+```
 
 #### OOP Class definition and inheritance
 

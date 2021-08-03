@@ -47,6 +47,13 @@ module Bar =
     let add x y = x * y
 ```
 
+### Custom behaviour
+
+In some cases, it's possible to change the default behavior towards name mangling:
+
+- If you want to have all members attached to a class (as in standard JS classes) and not-mangled use the `AttachMembers` attribute. But be aware **overloads won't work** in this case.
+- If you are not planning to use an interface to interact with JS and want to have overloaded members, you can decorate the interface declaration with the `Mangle` attribute. Note: Interfaces coming from .NET BCL (like System.Collections.IEnumerator) are mangled by default.
+
 ## Common types and objects
 
 Some F#/.NET types have [counterparts in JS](/../dotnet/compatibility.html). Fable takes advantage of this to compile to native types that are more performant and reduce bundle size. You can also use this to improve interop when exchanging data between F# and JS. The most important common types are:

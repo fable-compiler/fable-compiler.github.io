@@ -9,7 +9,7 @@ layout: nacara-standard
 
 ## Download a Fable sample
 
-Fable can target different JavaScript runtimes like Node.js, Browser, etc. To make it easier for people to explore Fable usage we created fable2-samples [Github repo](https://github.com/fable-compiler/fable2-samples).
+Fable can target different JavaScript runtimes like Node.js, Browser, etc. To make it easier for people to explore Fable usage we created fable3-samples [Github repo](https://github.com/fable-compiler/fabl32-samples).
 
 This repository contains several samples ready to use, each located in its own folder.
 
@@ -19,29 +19,29 @@ If you are interested in a full-stack F# solution that covers both the backend (
 
 * **Browser samples**
 
-  * Simple HTML5 canvas and Browser DOM: *[/browser](https://github.com/fable-compiler/fable2-samples/tree/master/browser)*
+  * Simple HTML5 canvas and Browser DOM: *[/browser](https://github.com/fable-compiler/fable3-samples/tree/master/browser)*
 
-  * More complex browser app with fetch & promises & json parsing: *[/promises](https://github.com/fable-compiler/fable2-samples/tree/master/promises)*
+  * More complex browser app with fetch & promises & json parsing: *[/promises](https://github.com/fable-compiler/fable3-samples/tree/master/promises)*
 
 * **React samples**
 
-  * [Elm](https://elm-lang.org/)-like [single page application (SPA)](https://en.wikipedia.org/wiki/Single-page_application) with React: *[/minimal](https://github.com/fable-compiler/fable2-samples/tree/master/minimal)*
+  * [Elm](https://elm-lang.org/)-like [single page application (SPA)](https://en.wikipedia.org/wiki/Single-page_application) with React: *[/minimal](https://github.com/fable-compiler/fable3-samples/tree/master/minimal)*
 
   * Start a frontend app SPA using Bulma & React (`git clone https://github.com/MangelMaxime/fulma-demo`)
 
 * **Node.js samples**
 
-  * Node.js app with fetch & promises: *[/nodejs](https://github.com/fable-compiler/fable2-samples/tree/master/nodejs)*
+  * Node.js app with fetch & promises: *[/nodejs](https://github.com/fable-compiler/fable3-samples/tree/master/nodejs)*
 
-  * Bundled Node.js app with fetch & promises: (*/[nodejsbundle](https://github.com/fable-compiler/fable2-samples/tree/master/nodejsbundle)*
+  * Bundled Node.js app with fetch & promises: */[nodejsbundle](https://github.com/fable-compiler/fable3-samples/tree/master/nodejsbundle)*
 
 * **Advanced samples**
 
-  * Using Paket to resolve .NET dependencies: *[/withpaket](https://github.com/fable-compiler/fable2-samples/tree/master/withpaket)*
+  * Using Paket to resolve .NET dependencies: *[/withpaket](https://github.com/fable-compiler/fable3-samples/tree/master/withpaket)*
 
-  * Interoperability: calling JS code from Fable: *[/interop](https://github.com/fable-compiler/fable2-samples/tree/master/interop)*
+  * Interoperability: calling JS code from Fable: *[/interop](https://github.com/fable-compiler/fable3-samples/tree/master/interop)*
 
-  * Interoperability: calling Fable code from JS: *[/interopFableFromJs](https://github.com/fable-compiler/fable2-samples/tree/master/interopFableFromJs)*
+  * Interoperability: calling Fable code from JS: *[/interopFableFromJs](https://github.com/fable-compiler/fable3-samples/tree/master/interopFableFromJs)*
 
 </li>
 
