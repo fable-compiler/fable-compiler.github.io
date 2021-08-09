@@ -9,7 +9,7 @@ layout: nacara-standard
 
 ## Download a Fable sample
 
-Fable can target different JavaScript runtimes like Node.js, Browser, etc. To make it easier for people to explore Fable usage we created fable3-samples [Github repo](https://github.com/fable-compiler/fabl32-samples).
+Fable can target different JavaScript runtimes like Node.js, Browser, etc. To make it easier for people to explore Fable usage we created fable3-samples [Github repo](https://github.com/fable-compiler/fable3-samples).
 
 This repository contains several samples ready to use, each located in its own folder.
 
