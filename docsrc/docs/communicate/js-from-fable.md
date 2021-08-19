@@ -57,7 +57,10 @@ let myFunction(x: int): int = jsNative
 If the value is globally accessible in JS, you can use the `Global` attribute with an optional name parameter instead.
 
 ```fsharp
- let [<Global>] console: JS.Console = jsNative
+let [<Global>] console: JS.Console = jsNative
+
+// You can pass a string argument if you want to use a different name in your F# code
+let [<Global("console")>] logger: JS.Console = jsNative
 ```
 
 #### Importing relative paths when using an output directory
@@ -77,28 +80,42 @@ import styles from "../../styles/styles.module.css"
 
 #### OOP Class definition and inheritance
 
-Assuming we need to import an ES6 class or even a typescript class from which we only know the types, it is advised to attach it to a class with an abstract member defining the types and a default implementation which points to the `jsNative` reference:
+Assuming we need to import a JS class, we can represent it in F# using a standard class declaration with an `Import` attribute. In this case we use `jsNative` as a dummy implementation for its members as the actual implementation will come from JS. When using `jsNative` don't forget to add the return type to the member!
 
 ```fsharp
 [<Import("DataManager", from="library/data")>]
-type DataManager<'Model> (conf:obj) =
-     class
-         abstract member delete: 'Model -> Promise<obj>
-         default this.delete(_:'Model):Promise<obj> = jsNative
-
-         abstract member insert: 'Model -> Promise<obj>
-         default this.insert(_:'Model):Promise<obj> = jsNative
-
-         abstract member update:'Model -> Promise<obj>
-         default this.update (_:'Model):Promise<obj> = jsNative
-     end
+type DataManager<'Model> (conf: Config) =
+    member _.delete(data: 'Model): Promise<'Model> = jsNative
+    member _.insert(data: 'Model): Promise<'Model> = jsNative
+    member _.update(data: 'Model): Promise<'Model> = jsNative
 ```
 
-From this point it is possible to use it or even to inherit from it and use the keyword `override` as it is usually done on regular F#, [see the official F# documentation](https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/inheritance).
+From this point it is possible to use it or even to inherit from it as it is usually done on regular F#, [see the official F# documentation](https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/inheritance). If you want to inherit and override a member, F# requires you to declare the member as `abstract` in the base class, with a default implementation if you want to make it also directly usable from the base class. For example:
+
+```fsharp
+// This class lives in JS
+[<Import("DataManager", from="library/data")>]
+type DataManager<'T> (conf: Config) =
+    abstract update: data: 'T -> Promise<'T>    
+    default _.update(data: 'T): Promise<'T> = jsNative
+
+// This class lives in our code
+type MyDataManager<'T>(config) =
+    inherit DataManager<'T>(config)
+    // We can do something with data before sending it to the base class
+    override _.update(data) =
+        base.update(data)
+
+let test (data: 'T) (manager: DataManager<'T>) =
+    manager.update(data) |> ignore
+
+// This will call MyDataManager.update even if test expects DataManager
+MyDataManager(myConfig) |> test myData
+```
 
 #### Let's practice! 1st try!
 
-Now that we've seen this, let's review the code in the [interop](https://github.com/fable-compiler/fable2-samples/tree/master/interop) sample
+Now that we've seen this, let's review the code in the [interop](https://github.com/fable-compiler/fable3-samples/tree/master/interop) sample
 
 Let's say we have an `alert.js` file that we'd like to use in our Fable project.
 
@@ -303,6 +320,10 @@ type MyClassStatic =
   abstract Create: 'T * 'T -> MyClass<'T>
   abstract getPI : unit-> float
 ```
+
+:::info
+We could have used a class declaration with dummy implementations as we did with DataManager above, but you will find that in Fable bindings it's common to split the instance and static parts of a JS types in two interfaces to overcome some restrictions of the F# type system or to be able to deal with JS classes as values. In this case, by convention `Create` denotes the constructor.
+:::
 
 Here we used the `Emit` attribute to apply the JS `new` keyword and to build a JS object with the arguments, because that's what MyClass constructor accepts. Note that here `$0` represents the interface object (in this case, MyClass static).
 
