@@ -113,6 +113,10 @@ let test (data: 'T) (manager: DataManager<'T>) =
 MyDataManager(myConfig) |> test myData
 ```
 
+:::info
+If you have a Typescript declaration for the JS code you want to import, you can use [ts2fable](https://github.com/fable-compiler/ts2fable) to help you write the F# bindings.
+:::
+
 #### Let's practice! 1st try!
 
 Now that we've seen this, let's review the code in the [interop](https://github.com/fable-compiler/fable3-samples/tree/master/interop) sample
