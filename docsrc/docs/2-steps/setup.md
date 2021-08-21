@@ -11,6 +11,8 @@ In order to use Fable you will need the following tools:
 - [Node.js](https://nodejs.org/) to execute JS code
 - A JS package manager, like [npm](https://www.npmjs.com/) (which comes with Node) or [yarn](https://yarnpkg.com/)
 
+Having the above tools, you may consider using [Femto](https://fable.io/blog/2019/2019-06-29-Introducing-Femto.html) to ease package management.
+
 ## Development tools
 
 Basically you will need an editor that lets you code in F# with features like hints on hover, autocomplete, syntax highlighting and so on... and there are many of them to suit your code styling!
