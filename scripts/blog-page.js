@@ -26,7 +26,7 @@ const renderAuthorImage = (imageLink) => {
  * @param {String} title
  * @returns
  */
-const renderTile = (title) => {
+const renderTitle = (title) => {
     return e("h2",
         {
             className: "title is-size-3 has-text-primary has-text-weight-normal has-text-centered blog-title"
@@ -101,7 +101,7 @@ const render = async (rendererContext, pageContext) => {
                     e("div",
                         { className: "section blog-post" },
                         renderAuthorImage(author_image),
-                        renderTile(title),
+                        renderTitle(title),
                         renderAuthorAndDate(author, author_link, date),
                         e("div",
                             {
