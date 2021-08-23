@@ -5,12 +5,11 @@
         "npm": ">=7.0.0"
     },
     "scripts": {
-        "clean": "shx rm -rf deploy",
-        "prebuild": "npm run clean",
+        "clean": "nacara clean",
         "build": "nacara",
-        "prewatch": "npm run clean",
-        "watch": "nacara --watch",
-        "deploy": "npm run build && gh-pages -d deploy -b master"
+        "watch": "nacara watch",
+        "serve": "nacara serve",
+        "deploy": "npm run build && gh-pages -d docs_deploy -b master"
     },
     "dependencies": {
         "bulma": "^0.9.3",

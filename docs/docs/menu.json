@@ -1,6 +1,6 @@
 [
     {
-        "type": "category",
+        "type": "section",
         "label": "Introduction",
         "items": [
             "docs/index",
@@ -9,7 +9,7 @@
         ]
     },
     {
-        "type": "category",
+        "type": "section",
         "label": "New to F#?",
         "items": [
             "docs/new-to-fsharp/learning-the-language",
@@ -17,7 +17,7 @@
         ]
     },
     {
-        "type": "category",
+        "type": "section",
         "label": "Fable in 2 steps",
         "items": [
             "docs/2-steps/setup",
@@ -25,7 +25,7 @@
         ]
     },
     {
-        "type": "category",
+        "type": "section",
         "label": "Your Fable project",
         "items": [
             "docs/your-fable-project/project-file",
@@ -36,7 +36,7 @@
         ]
     },
     {
-        "type": "category",
+        "type": "section",
         "label": "Communicate with Javascript",
         "items": [
             "docs/communicate/js-from-fable",
@@ -44,7 +44,7 @@
         ]
     },
     {
-        "type": "category",
+        "type": "section",
         "label": "From .NET to Fable",
         "items": [
             "docs/dotnet/compatibility",
@@ -52,7 +52,7 @@
         ]
     },
     {
-        "type": "category",
+        "type": "section",
         "label": "Miscellaneous",
         "items": [
             "docs/miscellaneous/official-samples",

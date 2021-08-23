@@ -11,7 +11,7 @@ layout: nacara-navbar-only
 -->
 
 <!-- Disable the copy-button on all the elements contained inside the container (all this page) -->
-<div class="container mt-5" date-disable-copy-button="true">
+<div class="container mt-5" data-disable-copy-button="true">
     <div class="columns is-vcentered">
         <!-- Be careful when updating this div and it's content their is a script strongly dependant on the class names -->
         <div class="column is-offset-2-desktop is-8-desktop is-full-tablet" id="fable-main-header">

@@ -1,11 +1,8 @@
 {
     "url": "https://fable.io",
     "baseUrl": "/",
-    "editUrl": "https://github.com/fable-compiler/fable-compiler.github.io/edit/dev/docsrc",
-    "source": "docsrc",
-    "output": "deploy",
+    "editUrl": "https://github.com/fable-compiler/fable-compiler.github.io/edit/dev/docs",
     "title": "Fable",
-    "version": "2.0.0",
     "navbar": {
         "start": [
             {
@@ -46,7 +43,7 @@
                 "url": "https://gitter.im/fable-compiler/Fable",
                 "icon": "fab fa-gitter",
                 "isExternal": true
-            },            
+            },
             {
                 "url": "https://www.youtube.com/channel/UC6m70Jyr65ogDySbK7aMmzg/videos",
                 "icon": "fab fa-youtube",
