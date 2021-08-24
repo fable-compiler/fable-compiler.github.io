@@ -68,7 +68,7 @@
     },
     "layouts": [
         "nacara-layout-standard",
-        "./scripts/blog-index.js",
-        "./scripts/blog-page.js"
+        "./scripts/blog-index.jsx",
+        "./scripts/blog-page.jsx"
     ]
 }
