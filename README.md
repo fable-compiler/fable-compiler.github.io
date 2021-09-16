@@ -1,17 +1,17 @@
 # [Fable website](http://fable.io) generator
 
-This project generates the static web pages for [Fable website](http://fable.io).
+This project generates the static web pages for the [Fable website](http://fable.io).
 
 > If you've trouble building some native dependencies (like oniguruma) on your system, check the [requirements for node-gyp installation](https://github.com/nodejs/node-gyp#installation).
 
 ## How to contribute?
 
-All the content of the website is located under the `docsrc` folder, so if you are looking.
+All the content of the website is located under the `docs` folder, so if you are looking.
 
 ## Architecture
 
 ```
-docsrc
+docs
 ├── blog                Contains the blog posts
 ├── community.md        Page listing the different places where people can regroup, ask for help
 ├── docs                Contains the documentation section
@@ -24,9 +24,9 @@ docsrc
 
 ## How to add a blog post?
 
-Blog posts are located under `docsrc/blog` folder.
+Blog posts are located under the `docs/blog` folder.
 
-1. Add your file following this convention `docsrc/blog/YYYY/YYYY-MM-DD-your blog post.md`
+1. Add your file following this convention `docs/blog/YYYY/YYYY-MM-DD-your blog post.md`
 
     - `YYYY` represents the year
     - `YYYY-MM-DD` is the date of creation of your blog post
@@ -88,7 +88,7 @@ We are using Textmate grammar for the syntax highlighting, if when building the 
 No grammar found for language: `fsharp`
 ```
 
-It means that we don't support yet this syntax. In order to add support for it follow this steps:
+It means that we don't support yet this syntax. In order to add support for it follow these steps:
 
 1. Find a `tmLanguage.json` online.
 
@@ -105,7 +105,7 @@ It means that we don't support yet this syntax. In order to add support for it f
     }
     ```
 
-    This will helps us update the grammar if needed.
+    This will help us to update the grammar if needed.
 
 4. Check the name of the extension used under `scopeName` property. It will be the name that you have to use for telling which language to choose for the highlighting.
 
@@ -120,7 +120,7 @@ The custom layout for the blog index and blog pages are at:
 - `./scripts/blog-index.js`
 - `./scripts/blog-page.js`
 
-If you need to customize the layout or fix something that the place to go.
+If you need to customize the layout or fix something, that's the place to go.
 
 If there is a bug on another page, then the issue should be reported on [Nacara](https://github.com/MangelMaxime/Nacara) repository as it is the one hosted the "standard" layout.
 

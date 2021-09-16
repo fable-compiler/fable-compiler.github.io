@@ -54,7 +54,7 @@ module.exports = {
   transform: {}
 };
 ```
-`roots` should be equals to `outDir` of compilator.
+`roots` should be equal to the `outDir` of the compiler.
 `testMatch` indicate file pattern name with test.
 `coveragePathIgnorePatterns`, `testEnvironment`, `transform` improve performance of runner.
 You can read Jest doc to see more : [https://jestjs.io/docs/en/configuration](https://jestjs.io/docs/en/configuration)
@@ -80,7 +80,7 @@ And now run with a single command:
 ```
 
 ## Watch mode
-Running each time is slow.
+Running tests each time is slow.
 You can use the watch feature to take advantage of the compiler and runner cache, and run tests whenever a file changes.
 
 Currently, Fable doesn't have official plugins for the different runners.
@@ -90,7 +90,7 @@ So you have to execute these two commands in parallel:
   npx jest --config=jest.config.js --watchAll
 ```
 
-You add a npm script in `package.json` :
+You add an npm script in `package.json` :
 ```json
 {
   "scripts": {

@@ -49,7 +49,7 @@ That's basically all you need to do. The build process will then automatically d
 
 The second way of adding libraries is to use  the [Paket](https://fsprojects.github.io/Paket/) library manager. While it's not compulsory, it's in most cases a good choice for large projects.
 
-Using Paket is clearly straightforward if you follow the [official documentation](https://fsprojects.github.io/Paket/get-started.html)
+Using Paket is clearly straightforward if you follow the [official documentation](https://fsprojects.github.io/Paket/get-started.html).
 
 But in order to make things easier for you, we created a [sample](https://github.com/fable-compiler/fable2-samples/tree/master/withpaket). This is a good companion while you read the paket doc.
 

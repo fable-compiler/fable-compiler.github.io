@@ -11,9 +11,9 @@ Here's how you can bind a string to an identifier named `x`:
 let x = "some text"
 ```
 
-The above snippet would be consider a constant in some other languages such as JavaScript. In F# there's no `var` or `const` there's only `let` and since in F# every value is immutable by default, that snippet is the equivalent of a constant.
+The above snippet would be considered a constant in some other languages such as JavaScript. In F# there's no `var` or `const` there's only `let` and since in F# every value is immutable by default, that snippet is the equivalent of a constant.
 
-Note that `let` in F# is different than `let` in JavaScript and this we'll be mentioned later on this page.
+Note that `let` in F# is different than `let` in JavaScript and this will be mentioned later on this page.
 
 We're going to see more on functions later but here's how you can bind a function to an identifier named `add`:
 
@@ -45,9 +45,9 @@ let printName name =
         else
             name
     printfn "%s" name // Will print "John Doe"
-    printfn "%s" (stripLastName name)
+    printfn "%s" (stripLastName name) // Will print "John"
 
-printName "John Doe" // Will print "John"
+printName "John Doe"
 ```
 
 Don't worry too much if you don't fully grasp the above code, the main goal of that snippet is to demonstrate that the function `printName` expects an argument named `name` and in its body it defines another function `stripLastName` that also expects an argument `name`. Inside the scope of `stripLastName` the `name` argument is creating a new binding and thus shadowing the `name` argument received on the `printName` function. And that can be asserted by the two prints at the end of the `printName` function.

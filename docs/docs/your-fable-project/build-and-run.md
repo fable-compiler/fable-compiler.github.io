@@ -11,7 +11,7 @@ Webpack can be a bit difficult to configure. Most of the [samples](https://githu
 
 ## Development
 
-Even if we already have our own server, when developing our frontend we want a server that is capable of detecting changes in the code and load them without restarting the app! This what [webpack-dev-server](https://github.com/webpack/webpack-dev-server) does, so normally we'll be running it together with Fable in watch mode, as in `dotnet fable watch src --run webpack serve src/App.fs.js --mode development`
+Even if we already have our own server, when developing our frontend we want a server that is capable of detecting changes in the code and load them without restarting the app! This is what [webpack-dev-server](https://github.com/webpack/webpack-dev-server) does, so normally we'll be running it together with Fable in watch mode, as in `dotnet fable watch src --run webpack serve src/App.fs.js --mode development`
 
 > In most Fable projects, we use a `webpack.config.js` file to pass arguments to Webpack so you will only see the `webpack serve` command.
 
