@@ -9,7 +9,7 @@ Hi!
 
 We're happy you decided to try Fable. Since F# is a language originally created for the .NET environment, Fable uses some tools that come from there.
 
-Don't panic! There is enough documentation to explain how the .NET tools integrate in your environment. And there is basically only two things you need to know:
+Don't panic! There is enough documentation to explain how the .NET tools integrate in your environment. And there are basically only two things you need to know:
 
 1. Fable uses F# project files (`.fsproj`) to list your F# code files and libraries.
 2. Fable uses NuGet to load F# libraries, which is the equivalent of NPM for the .NET environment

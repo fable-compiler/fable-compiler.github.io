@@ -27,6 +27,6 @@ Although Fable brings a lot of familiarity for F# and .NET developers, the targe
 * Your build tools will include web app development tools (e.g., webpack)
 * Runtime behavior will be based on JavaScript semantics, not .NET semantics
 
-There are some NuGet packages you can add into an F# project, but these packages have to also target Fable. Otherwise, your dependencies will directly by NPM dependencies. Please check the "Author a Fable library" section to learn more, especially if you are a library author and would like to make your package compatible with Fable.
+There are some NuGet packages you can add into an F# project, but these packages have to also target Fable. Otherwise, your dependencies will directly be NPM dependencies. Please check the "Author a Fable library" section to learn more, especially if you are a library author and would like to make your package compatible with Fable.
 
 These differences may seem like a lot to take in at once, but they're important for building robust applications. There have been efforts in the past to try and "magically" turn .NET code into JS, and these all tend to fail. The reality is that your target runtime environment will affect how your app runs and how you build it. However, once you internalize this, you'll find that using F# for web apps with Fable is incredibly productive, making web programming a lot more joyful than just using JavaScript or TypeScript!
