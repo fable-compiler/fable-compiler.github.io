@@ -35,7 +35,7 @@
 <span>  testEnvironment</span><span style="color: #0184BC">:</span><span> </span><span style="color: #50A14F">&#039;node&#039;</span><span style="color: #383A42">,</span>
 <span>  transform</span><span style="color: #0184BC">:</span><span> </span><span style="color: #383A42">{}</span>
 <span style="color: #383A42">};</span></code></pre>
-<p><code>roots</code> should be equals to <code>outDir</code> of compilator.
+<p><code>roots</code> should be equal to the <code>outDir</code> of the compiler.
 <code>testMatch</code> indicate file pattern name with test.
 <code>coveragePathIgnorePatterns</code>, <code>testEnvironment</code>, <code>transform</code> improve performance of runner.
 You can read Jest doc to see more : <a href="https://jestjs.io/docs/en/configuration">https://jestjs.io/docs/en/configuration</a></p>
@@ -51,13 +51,13 @@ You can read Jest doc to see more : <a href="https://jestjs.io/docs/en/configura
 <p>And now run with a single command:</p>
 <pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span>  npm </span><span style="color: #0184BC">test</span></code></pre>
 <h2>Watch mode <a href="#Watch-mode" aria-hidden="true"><span class="anchor" id="Watch-mode"></span>#</a></h2>
-<p>Running each time is slow.
+<p>Running tests each time is slow.
 You can use the watch feature to take advantage of the compiler and runner cache, and run tests whenever a file changes.</p>
 <p>Currently, Fable doesn't have official plugins for the different runners.
 So you have to execute these two commands in parallel:</p>
 <pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span>  dotnet fable watch src -o output</span>
 <span>  npx jest --config=jest.config.js --watchAll</span></code></pre>
-<p>You add a npm script in <code>package.json</code> :</p>
+<p>You add an npm script in <code>package.json</code> :</p>
 <pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span>{</span>
 <span>  </span><span style="color: #E45649">&quot;scripts&quot;</span><span>: {</span>
 <span>    </span><span style="color: #E45649">&quot;test&quot;</span><span>: </span><span style="color: #50A14F">&quot;dotnet fable src -o output &amp;&amp; jest --config=jest.config.js&quot;</span><span>,</span>
