@@ -15,4 +15,4 @@ jobs:
     - name: Checks
       run: |
         gem install awesome_bot
-        awesome_bot docsrc/resources.md --allow-redirect
+        awesome_bot docs/resources.md --allow-redirect
