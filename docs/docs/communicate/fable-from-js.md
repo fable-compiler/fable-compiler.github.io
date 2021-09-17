@@ -3,7 +3,7 @@ title: Call Fable from JavaScript
 layout: nacara-standard
 ---
 
-Sometimes, we'd like to use the power of Fable into our JavaScript apps. For instance, to create a new
+Sometimes, we'd like to use the power of Fable in our JavaScript apps. For instance, to create a new
 [js node in Node-RED](https://nodered.org/docs/creating-nodes/first-node) or call some handy F# code from our new Node.js serverless function or even call some powerful json parsing into our JavaScript app.
 
 It may allow you to play with Fable and add features, one at a time. So what does it take to call Fable from JavaScript? First you need to understand a bit how the generated JS code looks like so you can call it correctly.
@@ -59,7 +59,7 @@ In some cases, it's possible to change the default behavior towards name manglin
 Some F#/.NET types have [counterparts in JS](/../dotnet/compatibility.html). Fable takes advantage of this to compile to native types that are more performant and reduce bundle size. You can also use this to improve interop when exchanging data between F# and JS. The most important common types are:
 
 - **Strings and booleans** behave the same in F# and JS.
-- **Chars** are compiled as JS strings of length 1. This is mainly because string indexing in JS gives you another string. But you can use a char as a number with a explicit conversion like `int16 '家'`.
+- **Chars** are compiled as JS strings of length 1. This is mainly because string indexing in JS gives you another string. But you can use a char as a number with an explicit conversion like `int16 '家'`.
 - **Numeric types** compile to JS numbers, except for `long`, `decimal` and `bigint`.
 - **Arrays** (and `ResizeArray`) compile to JS arrays. _Numeric arrays_ compile to [Typed Arrays](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray) in most situations, though this shouldn't make a difference for most common operations like indexing, iterating or mapping. You can disable this behavior with [the `typedArrays` option](https://www.npmjs.com/package/fable-loader#options).
 - Any **IEnumerable** (or `seq`) can be traversed in JS as if it were an [Iterable](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators#Iterables).
