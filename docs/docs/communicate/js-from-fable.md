@@ -276,7 +276,7 @@ Now let's work with Emit and look at a new example with the following `MyClass.j
 
 ```js
 export default class MyClass {
-  // Note the constructors accepts an object
+  // Note the constructor accepts an object
   // with the `value` and `awesomeness` fields
   constructor({ value, awesomeness }) {
     this._value = value;
@@ -326,7 +326,7 @@ type MyClassStatic =
 ```
 
 :::info
-We could have used a class declaration with dummy implementations as we did with DataManager above, but you will find that in Fable bindings it's common to split the instance and static parts of a JS types in two interfaces to overcome some restrictions of the F# type system or to be able to deal with JS classes as values. In this case, by convention `Create` denotes the constructor.
+We could have used a class declaration with dummy implementations as we did with DataManager above, but you will find that in Fable bindings it's common to split the instance and static parts of a JS type in two interfaces to overcome some restrictions of the F# type system or to be able to deal with JS classes as values. In this case, by convention `Create` denotes the constructor.
 :::
 
 Here we used the `Emit` attribute to apply the JS `new` keyword and to build a JS object with the arguments, because that's what MyClass constructor accepts. Note that here `$0` represents the interface object (in this case, MyClass static).
@@ -452,7 +452,7 @@ let test(arg: U3<string, int, float[]>) =
 
 #### StringEnum
 
-In TypeScript is possible to define [String Literal Types](https://mariusschulz.com/blog/string-literal-types-in-typescript) which are similar to enumerations with an underlying string value. Fable allows the same feature by using union types and the `StringEnum` attribute. These union types must not have any data fields as they will be compiled to a string matching the name of the union case.
+In TypeScript it is possible to define [String Literal Types](https://mariusschulz.com/blog/string-literal-types-in-typescript) which are similar to enumerations with an underlying string value. Fable allows the same feature by using union types and the `StringEnum` attribute. These union types must not have any data fields as they will be compiled to a string matching the name of the union case.
 
 By default, the compiled string will have the first letter lowered. If you want to prevent this or use a different text than the union case name, use the `CompiledName` attribute:
 
@@ -559,7 +559,7 @@ Fable can make the transformation at compile time when applying the list literal
 
 ### Dynamic typing: don't read this!
 
-Through the use of the tools we just described above, Fable guarantees you shouldn't run into nasty bugs (as long as the interface contracts are correct) because all the code will be checked by the compiler. If it does not compile it either means your JS library does not exists or its path is not good or that your F# implementation lacks something. We do rely on Fable on systems that are used 24/7, web apps or Node.js apps. We know that if it compiles, it means a 99% chance of running without any problems.
+Through the use of the tools we just described above, Fable guarantees you shouldn't run into nasty bugs (as long as the interface contracts are correct) because all the code will be checked by the compiler. If it does not compile it either means your JS library does not exist or its path is not good or that your F# implementation lacks something. We do rely on Fable on systems that are used 24/7, web apps or Node.js apps. We know that if it compiles, it means a 99% chance of running without any problems.
 
 Our motto is: "If it compiles, it works!"
 
