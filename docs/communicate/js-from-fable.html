@@ -178,7 +178,7 @@
 <h4>Let's do it! Use Emit <a href="#Let's-do-it!-Use-Emit" aria-hidden="true"><span class="anchor" id="Let's-do-it!-Use-Emit"></span>#</a></h4>
 <p>Now let's work with Emit and look at a new example with the following <code>MyClass.js</code>:</p>
 <pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span style="color: #A626A4">export</span><span> </span><span style="color: #E45649">default</span><span> </span><span style="color: #A626A4">class</span><span style="color: #383A42"> </span><span style="color: #C18401">MyClass</span><span style="color: #383A42"> {</span>
-<span style="color: #383A42">  </span><span style="color: #A0A1A7;font-style: italic">// Note the constructors accepts an object</span>
+<span style="color: #383A42">  </span><span style="color: #A0A1A7;font-style: italic">// Note the constructor accepts an object</span>
 <span style="color: #383A42">  </span><span style="color: #A0A1A7;font-style: italic">// with the `value` and `awesomeness` fields</span>
 <span style="color: #383A42">  </span><span style="color: #A626A4">constructor</span><span style="color: #383A42">({ value, awesomeness }) {</span>
 <span style="color: #383A42">    </span><span style="color: #E45649">this</span><span style="color: #383A42">.</span><span style="color: #E45649">_value</span><span style="color: #383A42"> </span><span style="color: #0184BC">=</span><span style="color: #383A42"> </span><span style="color: #E45649">value</span><span style="color: #383A42">;</span>
@@ -218,7 +218,7 @@
 <span>  </span><span style="color: #A626A4">abstract</span><span> Create</span><span style="color: #A626A4">:</span><span> &#039;</span><span style="color: #C18401">T</span><span> </span><span style="color: #A626A4">*</span><span> &#039;</span><span style="color: #C18401">T</span><span> </span><span style="color: #A626A4">-&gt;</span><span> </span><span style="color: #C18401">MyClass</span><span style="color: #A626A4">&lt;</span><span style="color: #C18401">&#039;T</span><span style="color: #A626A4">&gt;</span>
 <span>  </span><span style="color: #A626A4">abstract</span><span> getPI </span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">unit</span><span style="color: #A626A4">-&gt;</span><span> </span><span style="color: #C18401">float</span></code></pre>
 <article class="message is-info">
-                    <div class="message-body"><p>We could have used a class declaration with dummy implementations as we did with DataManager above, but you will find that in Fable bindings it's common to split the instance and static parts of a JS types in two interfaces to overcome some restrictions of the F# type system or to be able to deal with JS classes as values. In this case, by convention <code>Create</code> denotes the constructor.</p>
+                    <div class="message-body"><p>We could have used a class declaration with dummy implementations as we did with DataManager above, but you will find that in Fable bindings it's common to split the instance and static parts of a JS type in two interfaces to overcome some restrictions of the F# type system or to be able to deal with JS classes as values. In this case, by convention <code>Create</code> denotes the constructor.</p>
 </div>
 </article>
 <p>Here we used the <code>Emit</code> attribute to apply the JS <code>new</code> keyword and to build a JS object with the arguments, because that's what MyClass constructor accepts. Note that here <code>$0</code> represents the interface object (in this case, MyClass static).</p>
@@ -308,7 +308,7 @@
 <span style="color: #A0A1A7;font-style: italic">//   }</span>
 <span style="color: #A0A1A7;font-style: italic">// }</span></code></pre>
 <h4>StringEnum <a href="#StringEnum" aria-hidden="true"><span class="anchor" id="StringEnum"></span>#</a></h4>
-<p>In TypeScript is possible to define <a href="https://mariusschulz.com/blog/string-literal-types-in-typescript">String Literal Types</a> which are similar to enumerations with an underlying string value. Fable allows the same feature by using union types and the <code>StringEnum</code> attribute. These union types must not have any data fields as they will be compiled to a string matching the name of the union case.</p>
+<p>In TypeScript it is possible to define <a href="https://mariusschulz.com/blog/string-literal-types-in-typescript">String Literal Types</a> which are similar to enumerations with an underlying string value. Fable allows the same feature by using union types and the <code>StringEnum</code> attribute. These union types must not have any data fields as they will be compiled to a string matching the name of the union case.</p>
 <p>By default, the compiled string will have the first letter lowered. If you want to prevent this or use a different text than the union case name, use the <code>CompiledName</code> attribute:</p>
 <pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core</span>
 
@@ -382,7 +382,7 @@
 </div>
 </article>
 <h3>Dynamic typing: don't read this! <a href="#Dynamic-typing:-don't-read-this!" aria-hidden="true"><span class="anchor" id="Dynamic-typing:-don't-read-this!"></span>#</a></h3>
-<p>Through the use of the tools we just described above, Fable guarantees you shouldn't run into nasty bugs (as long as the interface contracts are correct) because all the code will be checked by the compiler. If it does not compile it either means your JS library does not exists or its path is not good or that your F# implementation lacks something. We do rely on Fable on systems that are used 24/7, web apps or Node.js apps. We know that if it compiles, it means a 99% chance of running without any problems.</p>
+<p>Through the use of the tools we just described above, Fable guarantees you shouldn't run into nasty bugs (as long as the interface contracts are correct) because all the code will be checked by the compiler. If it does not compile it either means your JS library does not exist or its path is not good or that your F# implementation lacks something. We do rely on Fable on systems that are used 24/7, web apps or Node.js apps. We know that if it compiles, it means a 99% chance of running without any problems.</p>
 <p>Our motto is: &quot;If it compiles, it works!&quot;</p>
 <p>Still, like we stated, <strong>interop is a question of trust</strong>. If you trust your JS code and F# code, then maybe it's ok to do things together without further checks. Maybe.</p>
 <article class="message is-warning">
