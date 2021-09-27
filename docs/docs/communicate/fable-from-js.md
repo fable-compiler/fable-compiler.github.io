@@ -132,6 +132,41 @@ execute(function (x, y) { return x * y }, 3, 5) // 15
 
 > Check [this](https://fsharpforfunandprofit.com/posts/currying/) for more information on function currying in F# (and other functional languages).
 
+### Using delegates for disambiguation
+
+There are some situations where Fable uncurrying mechanism can get confused, particularly with functions that return other functions. Let's consider the following example:
+
+```fsharp
+open Fable.Core.JsInterop
+
+let myEffect() =
+    printfn "Effect!"
+    fun () -> printfn "Cleaning up"
+
+// Method from a JS module, expects a function
+// that returns another function for disposing
+let useEffect (effect: unit -> (unit -> unit)): unit =
+    importMember "my-js-module"
+
+// Fails, Fable thinks this is a 2-arity function
+useEffect myEffect
+```
+
+The problem here is the compiler cannot tell `unit -> unit -> unit` apart from `unit -> (unit -> unit)`, it can only see a 2-arity lambda (a function accepting two arguments). This won't be an issue if all your code is in F#, but if you're sending the function to JS as in this case, Fable will incorrectly try to uncurry it causing unexpected results.
+
+To disambiguate these cases, you can use [delegates](https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/delegates), like `System.Func` which are not curried:
+
+```fsharp
+open System
+
+// Remove the ambiguity by using a delegate
+let useEffect (effect: Func<unit, (unit -> unit)>): unit =
+    importMember "my-js-module"
+
+// Works
+useEffect(Func<_,_> myEffect)
+```
+
 ## Call Fable source code from a JS file
 
 Webpack makes it very easy to include files in different programming languages in your project by using loaders. Because in a Fable project we assume you're already using the [fable-loader](https://www.npmjs.com/package/fable-loader), if you have a file like the following:
