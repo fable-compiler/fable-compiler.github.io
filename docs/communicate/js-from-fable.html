@@ -154,6 +154,13 @@
 <span style="color: #A0A1A7;font-style: italic">// as with the ImportAttribute</span>
 <span style="color: #A626A4">let</span><span> </span><span style="color: #E45649">aDifferentName</span><span style="color: #A626A4">:</span><span> </span><span style="color: #C18401">string </span><span style="color: #A626A4">=</span><span> import </span><span style="color: #50A14F">&quot;myString&quot;</span><span> </span><span style="color: #50A14F">&quot;my-lib&quot;</span>
 <span style="color: #A0A1A7;font-style: italic">// import { myString } from &quot;my-lib&quot;</span></code></pre>
+<p>Occasionally, you may need to import JS purely for its side-effects. For example, some browser polyfills don't export any functions, but extend the browser's built-in DOM types when executed.</p>
+<p>For this, use <code>importSideEffects</code>.</p>
+<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core.JsInterop</span>
+
+<span>importSideEffects</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;my-polyfill-library&quot;</span><span style="color: #A626A4">)</span><span> </span><span style="color: #A0A1A7;font-style: italic">// from npm package</span>
+
+<span>importSideEffects</span><span style="color: #A626A4">(</span><span style="color: #50A14F">&quot;./my-polyfill.js&quot;</span><span style="color: #A626A4">)</span><span> </span><span style="color: #A0A1A7;font-style: italic">// from local .js file</span></code></pre>
 <h3>Emit, when F# is not enough <a href="#Emit-when-F-is-not-enough" aria-hidden="true"><span class="anchor" id="Emit-when-F-is-not-enough"></span>#</a></h3>
 <p>You can use the <code>Emit</code> attribute to decorate a function. Every call to the function will then be replaced inline by the content of the attribute with the placeholders <code>$0, $1, $2...</code> replaced by the arguments. For example, the following code will generate JavaScript as seen below.</p>
 <pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Fable.Core</span>
