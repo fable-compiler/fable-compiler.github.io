@@ -235,6 +235,18 @@ let aDifferentName: string = import "myString" "my-lib"
 // import { myString } from "my-lib"
 ```
 
+Occasionally, you may need to import JS purely for its side-effects. For example, some browser polyfills don't export any functions, but extend the browser's built-in DOM types when executed.
+
+For this, use `importSideEffects`.
+
+```fsharp
+open Fable.Core.JsInterop
+
+importSideEffects("my-polyfill-library") // from npm package
+
+importSideEffects("./my-polyfill.js") // from local .js file
+```
+
 ### Emit, when F# is not enough
 
 You can use the `Emit` attribute to decorate a function. Every call to the function will then be replaced inline by the content of the attribute with the placeholders `$0, $1, $2...` replaced by the arguments. For example, the following code will generate JavaScript as seen below.
