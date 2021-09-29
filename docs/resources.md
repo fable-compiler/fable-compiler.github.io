@@ -129,6 +129,7 @@ menu: false
 * [Fable.GroupingPanel](https://github.com/JordanMarr/Fable.GroupingPanel) - A computation expression for grouping data into collapsible panels.
 * [Fable.AntD](https://github.com/uxsoft/Fable.AntD) - Ant Design bindings for Fable
 * [Fss](https://github.com/Bjorn-Strom/FSS) - Type-safe CSS styling library.
+* [office-fable](https://github.com/Freymaurer/office-fable) - Fable bindings for office-js.
 
 ## Tools
 
@@ -188,6 +189,7 @@ menu: false
 * [Casque Noir](http://www.casquenoir.com) - Web documentary about Haïti environmental issues
 * [Fable-of-the-Day](https://github.com/rommsen/fable-of-the-day) - Catch of the day by @wesbos ported to Fable
 * [Czech Republic 2018 Election Analytics](http://showme.median.cz/volby-2018/)
+* [Metadata Excel-Add-in: Swate](https://github.com/nfdi4plants/Swate)
 
 [ionide]: http://ionide.io/
 [Hanselminutes]: https://hanselminutes.com
