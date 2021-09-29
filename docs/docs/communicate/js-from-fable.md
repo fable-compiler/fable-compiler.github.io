@@ -247,38 +247,6 @@ importSideEffects("my-polyfill-library") // from npm package
 importSideEffects("./my-polyfill.js") // from local .js file
 ```
 
-### Notes for Nuget Package Maintainers
-
-If you are producing a `nuget` package:
-
-- Convert any `import("package-name")` calls to `import("./package-name.js")`
-- If necessary, make sure that "./package-name.js" is copied into the project's source directory (perhaps as a pre-build step)
-- Ensure that your project file (`.fsproj`) contains these lines:
-
-```xml
-  <!-- Add source files to "fable" folder in Nuget package -->
-  <ItemGroup>
-    <Content Include="*.fsproj; **\*.fs; **\*.fsi; *.js;" PackagePath="fable\" />
-  </ItemGroup>
-```
-
-You will also find the npm package `fable-publish-utils` very useful:
-
-```shell
-$ npm install --save-dev fable-publish-utils
-```
-
-Example usage, for your `build.fsx` file:
-
-```fsharp
-open PublishUtils
-
-Target.create "publish" (fun _ ->
-    let pkg = "YourPackage"
-    pushNuget ("src" </> pkg </> pkg + ".fsproj") [] doNothing
-)
-```
-
 ### Emit, when F# is not enough
 
 You can use the `Emit` attribute to decorate a function. Every call to the function will then be replaced inline by the content of the attribute with the placeholders `$0, $1, $2...` replaced by the arguments. For example, the following code will generate JavaScript as seen below.
