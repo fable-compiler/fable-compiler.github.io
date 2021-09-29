@@ -265,7 +265,7 @@ If you are producing a `nuget` package:
 You will also find the npm package `fable-publish-utils` very useful:
 
 ```shell
-$ npm install -save-dev fable-publish-utils
+$ npm install --save-dev fable-publish-utils
 ```
 
 Example usage, for your `build.fsx` file:
