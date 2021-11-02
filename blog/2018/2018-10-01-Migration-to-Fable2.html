@@ -1,261 +1,47 @@
-<html class="has-navbar-fixed-top"><head><title>Fable</title><meta http-equiv="content-type"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" type="text/css" href="/style.css"/><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"/></head><body><nav class="navbar is-fixed-top"><div class="container"><div class="navbar-brand"><a class="navbar-item title is-4" href="https://fable.io/">Fable</a><a class="navbar-item is-hidden-desktop" href="https://github.com/fable-compiler/fable"><span class="icon"><i class=" fab fa-github fa-lg"></i></span></a><a class="navbar-item is-hidden-desktop" href="https://twitter.com/FableCompiler"><span class="icon"><i class=" fab fa-twitter fa-lg"></i></span></a><a class="navbar-item is-hidden-desktop" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class=" fab fa-gitter fa-lg"></i></span></a><a class="navbar-item is-hidden-desktop" href="https://www.youtube.com/channel/UC6m70Jyr65ogDySbK7aMmzg/videos"><span class="icon"><i class=" fab fa-youtube fa-lg"></i></span></a><a class="navbar-burger" data-target="nav-menu"><span></span><span></span><span></span></a></div><div class="navbar-menu" id="nav-menu"><div class="navbar-start"><a class="navbar-item" href="/docs">Documentation</a><a class="navbar-item" href="/repl/">Try</a><a class="navbar-item is-active" href="/blog/index.html">Blog</a><a class="navbar-item" href="/community.html">Community</a><a class="navbar-item" href="/resources.html">Resources</a></div><div class="navbar-end"><a class="navbar-item" href="https://github.com/fable-compiler/fable"><span class="icon"><i class=" fab fa-github fa-lg"></i></span></a><a class="navbar-item" href="https://twitter.com/FableCompiler"><span class="icon"><i class=" fab fa-twitter fa-lg"></i></span></a><a class="navbar-item" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class=" fab fa-gitter fa-lg"></i></span></a><a class="navbar-item" href="https://www.youtube.com/channel/UC6m70Jyr65ogDySbK7aMmzg/videos"><span class="icon"><i class=" fab fa-youtube fa-lg"></i></span></a></div></div></div></nav><div class="container"><div class="columns"><div class="column is-8-desktop is-offset-2-desktop"><div class="section blog-post"><figure class="image is-96x96 author-image"><img class="is-rounded" src="https://github.com/MangelMaxime.png"/></figure><h2 class="title is-size-3 has-text-primary has-text-weight-normal has-text-centered blog-title">Migration to Fable 2</h2><div class="tags has-addons is-justify-content-center"><a class="tag is-rounded is-medium is-primary" href="https://twitter.com/MangelMaxime">Mangel Maxime</a><span class="tag is-rounded is-medium">October 1, 2018</span></div><div class="content"><h2>TL;DR <a href="#TLDR" aria-hidden="true"><span class="anchor" id="TLDR"></span>#</a></h2>
-<p>With this document we are going to convert a Fable 1 project into a Fable 2 project.</p>
-<div class="message is-info">
-<div class="message-body">
-This guide has been written by converting Fulma.Minimal template from Fable 1 to Fable 2.
-<p>You can see all the changes made by looking at <a href="https://github.com/MangelMaxime/Fulma/commit/24c9269fc08eac9c66e774aec4a5fe4132968805">this commit</a>.</p>
-</div>
-</div>
-<h3>Upgrade to Babel 7 <a href="#Upgrade-to-Babel-7" aria-hidden="true"><span class="anchor" id="Upgrade-to-Babel-7"></span>#</a></h3>
-<p>During Fable 2 development, <a href="https://babeljs.io/blog/2018/08/27/7.0.0">Babel 7</a> has been released so we need to upgrade to it. Helpfully for us, they created a tool to help us.</p>
-<ol>
-<li>
-<p>Install <a href="https://github.com/zkat/npx#readme">npx</a>, this a CLI program allowing us to run npm packages.</p>
-<ul>
-<li>Maybe it came with node/npm: <code>npx --help</code></li>
-<li>For npm: <code>npm install -g npx</code></li>
-<li>For yarn: <code>yarn global add npx</code></li>
-</ul>
-</li>
-<li>
-<p>Run <code>npx babel-upgrade --write</code>, this will modify the nearest <code>package.json</code></p>
-</li>
-</ol>
-<h3>Upgrade fable's npm package <a href="#Upgrade-fable's-npm-package" aria-hidden="true"><span class="anchor" id="Upgrade-fable's-npm-package"></span>#</a></h3>
-<ol>
-<li>
-<p>Upgrade <code>fable-loader</code> to latest version <code>2.x.x</code></p>
-<ul>
-<li>For npm: <code>npm update fable-loader@latest</code></li>
-<li>For yarn: <code>yarn upgrade fable-loader@latest</code></li>
-</ul>
-</li>
-<li>
-<p>Remove <code>fable-utils</code>, it is not needed anymore</p>
-<ul>
-<li>For npm: <code>npm uninstall fable-utils</code></li>
-<li>For yarn: <code>yarn remove fable-utils</code></li>
-</ul>
-</li>
-</ol>
-<h3>Update your webpack.config.js <a href="#Update-your-webpack.config.js" aria-hidden="true"><span class="anchor" id="Update-your-webpack.config.js"></span>#</a></h3>
-<div class="message is-info">
-<div class="message-body">
-<p>In order to best benefit of new Fable 2 tree-shaking and module size reduction we encourage you to upgrade all your webpack related packages to their latest version.</p>
-</div>
-</div>
-<p>Here are the key points to consider for updating your <code>webpack.config.js</code>:</p>
-<h5>1. Remove <code>resolve.modules</code> <a href="#1.-Remove-resolve.modules" aria-hidden="true"><span class="anchor" id="1.-Remove-resolve.modules"></span>#</a></h5>
-<p>Now, fable will create a <code>.fable</code> folder located near your <code>package.json</code> so JavaScript tools works natively.</p>
-<p>Remove this lines from your <code>webpack.config.js</code></p>
-<div class="columns">
-<div class="column"></div>
-<div class="column is-half">
-<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span>resolve: </span><span style="color: #383A42">{</span>
-<span>    modules: </span><span style="color: #383A42">[</span>
-<span>        </span><span style="color: #50A14F">&quot;node_modules/&quot;</span><span style="color: #383A42">,</span>
-<span>        </span><span style="color: #4078F2">resolve</span><span style="color: #383A42">(</span><span style="color: #50A14F">&quot;./node_modules/&quot;</span><span style="color: #383A42">)</span>
-<span>    </span><span style="color: #383A42">]</span>
-<span style="color: #383A42">},</span></code></pre>
-</div>
-<div class="column"></div>
-</div>
-<h5>2. Remove any reference to <code>fable-utils</code> <a href="#2.-Remove-any-reference-to-fable-utils" aria-hidden="true"><span class="anchor" id="2.-Remove-any-reference-to-fable-utils"></span>#</a></h5>
-<div class="columns">
-<div class="column">
-<div class="has-text-centered has-text-weight-semibold">
-With Fable 1
-</div>
-<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span style="color: #A626A4">const</span><span> </span><span style="color: #986801">fableUtils</span><span> </span><span style="color: #0184BC">=</span><span> </span><span style="color: #0184BC">require</span><span style="color: #383A42">(</span><span style="color: #50A14F">&quot;fable-utils&quot;</span><span style="color: #383A42">);</span>
-
-<span style="color: #A0A1A7;font-style: italic">// ...</span>
-
-<span style="color: #A626A4">var</span><span> </span><span style="color: #383A42">babelOptions</span><span> </span><span style="color: #0184BC">=</span><span> </span><span style="color: #E45649">fableUtils</span><span style="color: #383A42">.</span><span style="color: #4078F2">resolveBabelOptions</span><span style="color: #383A42">({</span>
-<span>    presets</span><span style="color: #0184BC">:</span><span> </span><span style="color: #383A42">[</span>
-<span>        </span><span style="color: #A0A1A7;font-style: italic">// ...</span></code></pre>
-</div>
-<div class="column">
-<div class="has-text-centered has-text-weight-semibold">
-With Fable 2
-</div>
-<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span style="color: #A626A4">var</span><span> </span><span style="color: #383A42">babelOptions</span><span> </span><span style="color: #0184BC">=</span><span> </span><span style="color: #383A42">{</span>
-<span>    presets</span><span style="color: #0184BC">:</span><span> </span><span style="color: #383A42">[</span>
-<span>        </span><span style="color: #A0A1A7;font-style: italic">// ...</span></code></pre>
-</div>
-</div>
-<h5>3. Update <code>babelOptions</code> <a href="#3.-Update-babelOptions" aria-hidden="true"><span class="anchor" id="3.-Update-babelOptions"></span>#</a></h5>
-<p>Because you are now using Babel 7, you need to use <code>@babel</code> scope if available.</p>
-<div class="columns">
-<div class="column">
-<div class="has-text-centered has-text-weight-semibold">
-With Fable 1
-</div>
-<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span style="color: #A626A4">var</span><span> </span><span style="color: #383A42">babelOptions</span><span> </span><span style="color: #0184BC">=</span><span> </span><span style="color: #E45649">fableUtils</span><span style="color: #383A42">.</span><span style="color: #4078F2">resolveBabelOptions</span><span style="color: #383A42">({</span>
-<span>    presets</span><span style="color: #0184BC">:</span><span> </span><span style="color: #383A42">[</span>
-<span>        </span><span style="color: #383A42">[</span><span style="color: #50A14F">&quot;env&quot;</span><span style="color: #383A42">,</span><span> </span><span style="color: #383A42">{</span>
-<span>            </span><span style="color: #50A14F">&quot;targets&quot;</span><span style="color: #0184BC">:</span><span> </span><span style="color: #383A42">{</span>
-<span>                </span><span style="color: #50A14F">&quot;browsers&quot;</span><span style="color: #0184BC">:</span><span> </span><span style="color: #383A42">[</span><span style="color: #50A14F">&quot;last 2 versions&quot;</span><span style="color: #383A42">]</span>
-<span>            </span><span style="color: #383A42">},</span>
-<span>            </span><span style="color: #50A14F">&quot;modules&quot;</span><span style="color: #0184BC">:</span><span> </span><span style="color: #986801">false</span>
-<span>        </span><span style="color: #383A42">}]</span>
-<span>    </span><span style="color: #383A42">]</span>
-<span style="color: #383A42">});</span></code></pre>
-<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span style="color: #383A42">babel</span><span style="color: #0184BC">-</span><span style="color: #383A42">polyfill</span></code></pre>
-</div>
-<div class="column">
-<div class="has-text-centered has-text-weight-semibold">
-With Fable 2
-</div>
-<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span style="color: #A626A4">var</span><span> </span><span style="color: #383A42">babelOptions</span><span> </span><span style="color: #0184BC">=</span><span> </span><span style="color: #383A42">{</span>
-<span>    presets</span><span style="color: #0184BC">:</span><span> </span><span style="color: #383A42">[</span>
-<span>        </span><span style="color: #383A42">[</span><span style="color: #50A14F">&quot;@babel/preset-env&quot;</span><span style="color: #383A42">,</span><span> </span><span style="color: #383A42">{</span>
-<span>            </span><span style="color: #50A14F">&quot;targets&quot;</span><span style="color: #0184BC">:</span><span> </span><span style="color: #383A42">{</span>
-<span>                </span><span style="color: #50A14F">&quot;browsers&quot;</span><span style="color: #0184BC">:</span><span> </span><span style="color: #383A42">[</span><span style="color: #50A14F">&quot;last 2 versions&quot;</span><span style="color: #383A42">]</span>
-<span>            </span><span style="color: #383A42">},</span>
-<span>            </span><span style="color: #50A14F">&quot;modules&quot;</span><span style="color: #0184BC">:</span><span> </span><span style="color: #986801">false</span>
-<span>        </span><span style="color: #383A42">}]</span>
-<span>    </span><span style="color: #383A42">]</span>
-<span style="color: #383A42">};</span></code></pre>
-<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span>@</span><span style="color: #383A42">babel</span><span style="color: #0184BC">/</span><span style="color: #383A42">polyfill</span></code></pre>
-</div>
-</div>
-<h5>4. Remove unnecessary absolute paths <a href="#4.-Remove-unnecessary-absolute-paths" aria-hidden="true"><span class="anchor" id="4.-Remove-unnecessary-absolute-paths"></span>#</a></h5>
-<p>Because Fable 2, now creates a <code>.fable</code> folder you are not forced anymore to use <strong>absolute</strong> filepaths. All the filepaths are now relative to the nearest <code>package.json</code> found by Fable.</p>
-<div class="message is-info">
-<div class="message-body">
-<p>If you are not sure of your <em>current working directory</em>, you can run Fable.</p>
-<pre><code>Fable (2.0.1) daemon started on port 56569
-CWD: /Users/maximemangel/Workspaces/Github/MangelMaxime/Fulma/templates/Content
-</code></pre>
-<p>Here the <em>current working directory</em> is <code>/Users/maximemangel/Workspaces/Github/MangelMaxime/Fulma/templates/Content</code></p>
-</div>
-</div>
-<div class="message is-warning">
-<div class="message-body">
-<p>If you are using latest version of Webpack you still need to provide an absolute path for the <code>output</code></p>
-<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span style="color: #E45649">module</span><span style="color: #383A42">.</span><span style="color: #E45649">exports</span><span> </span><span style="color: #0184BC">=</span><span> </span><span style="color: #383A42">{</span>
-<span>    </span><span style="color: #A0A1A7;font-style: italic">// ...</span>
-<span>    output</span><span style="color: #0184BC">:</span><span> </span><span style="color: #383A42">{</span>
-<span>        path</span><span style="color: #0184BC">:</span><span> </span><span style="color: #E45649">path</span><span style="color: #383A42">.</span><span style="color: #4078F2">join</span><span style="color: #383A42">(</span><span style="color: #E45649">__dirname</span><span style="color: #383A42">,</span><span> </span><span style="color: #986801">CONFIG</span><span style="color: #383A42">.</span><span style="color: #E45649">outputDir</span><span style="color: #383A42">),</span>
-<span>    </span><span style="color: #383A42">}</span>
-<span>    </span><span style="color: #A0A1A7;font-style: italic">// ...</span>
-<span style="color: #383A42">};</span></code></pre>
-</div>
-</div>
-<p>You can find <a href="https://github.com/fable-compiler/webpack-config-template/blob/master/webpack.config.js">here</a> a <code>webpack.config.js</code> file to serve as a template for yours.</p>
-<p>If needed you can also take a look at the Fulma.Minimal diff <a href="https://github.com/MangelMaxime/Fulma/commit/24c9269fc08eac9c66e774aec4a5fe4132968805#diff-b81ec06774f7dfd70d0cac66cf146951">here</a>.</p>
-<h3>Update fable nuget package <a href="#Update-fable-nuget-package" aria-hidden="true"><span class="anchor" id="Update-fable-nuget-package"></span>#</a></h3>
-<p>Run <code>.paket/paket.exe update</code> to install the latest version of your dependencies. You can check that you are using the correct version of the package by comparing with this list:</p>
-<div class="has-text-centered has-text-italic">
-At the time of writing here are the version retrieved
-</div>
-<div class="columns">
-<div class="column"></div>
-<div class="column">
-<table class="table is-hoverable is-striped" style="min-width: 300px">
-<thead>
-<tr>
-<th> Package </th>
-<th> Version </th>
-</tr>
-</thead>
-<tbody>
-<tr class="has-background-grey-lighter">
-    <td class="has-text-centered" colspan="2"> Common to any Fable project </td>
-</tr>
-<tr>
-    <td>Fable.Core</td>
-    <td> 2.0.0</td>
-</tr>
-<tr>
-    <td>dotnet-fable</td>
-    <td> 2.0.1</td>
-</tr>
-<tr class="has-background-grey-lighter">
-<td class="has-text-centered" <td colspan="2"> For projects using Elmish </td>
-</tr>
-<tr>
-    <td> Fable.React </td>
-    <td> 4.0.1 </td>
-</tr>
-<tr>
-    <td> Fable.Elmish </td>
-    <td> 2.0.0 </td>
-</tr>
-<tr>
-    <td> Fable.Elmish.React </td>
-    <td> 2.0.0 </td>
-</tr>
-<tr>
-    <td> Fable.Elmish.Browser </td>
-    <td> 2.0.0 </td>
-</tr>
-<tr>
-    <td> Fable.Elmish.Debugger </td>
-    <td> 2.0.0 </td>
-</tr>
-<tr>
-    <td> Fable.Elmish.HMR </td>
-    <td> 2.0.0 </td>
-</tr>
-</tbody>
-</thead>
-</table>
-</div>
-<div class="column is-1-desktop"></div>
-<div class="column">
-<table class="table is-hoverable is-striped" style="min-width: 300px">
-<thead>
-<tr>
-<th> Package </th>
-<th> Version </th>
-</tr>
-</thead>
-<tbody>
-<tr class="has-background-grey-lighter">
-    <td class="has-text-centered" colspan="2"> General libraries </td>
-</tr>
-<tr>
-    <td> Fable.PowerPack </td>
-    <td> 2.0.1 </td>
-</tr>
-<tr>
-    <td> Fulma </td>
-    <td> 1.0.0 </td>
-</tr>
-<tr>
-    <td> Fulma.Extensions </td>
-    <td> 1.0.0 </td>
-</tr>
-<tr>
-    <td> Thoth.Json </td>
-    <td> 2.1.0 </td>
-</tr>
-</tbody>
-</thead>
-</table>
-</div>
-<div class="column"></div>
-</div>
-<h3>Breaking changes <a href="#Breaking-changes" aria-hidden="true"><span class="anchor" id="Breaking-changes"></span>#</a></h3>
-<p>Fable 2 introduce severals breaking changes, it will inform you by displaying an <em>obsolete</em> warning or by generating a warning in the ouput.</p>
-<p>Most important changes are:</p>
-<ul>
-<li><code>PojoAttribute</code> is not needed anymore</li>
-<li><code>PassGenericsAttribute</code> is also deprecated. If you need to resolve a generic argument, please inline the function. If you only need the <code>Type</code> of a generic argument, you can use <a href="https://github.com/fable-compiler/Fable/blob/d0f09bb74524c03d200249ea12906e426e170b44/tests/Main/ReflectionTests.fs#L402-L405">the <code>Fable.Core.Inject</code> attribute with <code>ITypeResolver</code></a>.</li>
-<li><strong>JSON serialization</strong>, you now need to choose between <a href="https://mangelmaxime.github.io/Thoth/json/v2/decode.html">Thoth.Json</a> and <a href="https://github.com/Zaid-Ajaj/Fable.SimpleJson/">Fable.SimpleJson</a>. If you need to support serialization both on Fable and .Net side you need to use <a href="https://mangelmaxime.github.io/Thoth/json/v2/net.html">Thoth.Json</a> as Fable.SimpleJson is based on a JavaScript library.</li>
-</ul>
-<p>If you want to quickly test Fable 2 and not convert all your <code>ofJson/toJson</code> reference yet. You can use the following polyfills:</p>
-<div class="columns">
-<div class="column"></div>
-<div class="column">
-<pre style="background-color: #FFFFFF;color: #000000;padding: 1em"><code><span style="color: #A626A4">open</span><span> </span><span style="color: #4078F2">Thoth.Json</span>
-
-<span style="color: #A626A4">let inline</span><span> </span><span style="color: #E45649">toJson</span><span style="color: #383A42"> x </span><span style="color: #A626A4">=</span><span> Encode.Auto.toString</span><span style="color: #A626A4">(</span><span style="color: #986801">0</span><span style="color: #A626A4">,</span><span> x</span><span style="color: #A626A4">)</span>
-
-<span style="color: #A626A4">let inline</span><span> </span><span style="color: #E45649">ofJson</span><span style="color: #A626A4">&lt;</span><span style="color: #C18401">&#039;T</span><span style="color: #A626A4">&gt;</span><span> </span><span style="color: #C18401">json</span><span> </span><span style="color: #A626A4">=</span><span> Decode.Auto.unsafeFromString</span><span style="color: #A626A4">&lt;</span><span>&#039;T</span><span style="color: #A626A4">&gt;(</span><span>json</span><span style="color: #A626A4">)</span></code></pre>
-</div>
-<div class="column"></div>
-</div>
-<p>See <a href="https://mangelmaxime.github.io/Thoth/json/v2/decode.html#auto-decoder">Thoth.Json auto decoder</a> documentation for more information about them.</p>
-</div></div></div></div></div><script async="" src="/resources/nacara-standard-layouts/scripts/menu.js"></script></body></html>
+<html class="has-navbar-fixed-top" lang="en"><head><title>Fable · Migration to Fable 2</title><meta http-equiv="content-type" content="text/html; charset=UTF-8" charSet="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" type="text/css" href="/style.css"/><script src="https://unpkg.com/scroll-into-view-if-needed@2.2.28/umd/scroll-into-view-if-needed.min.js"></script></head><body><nav class="navbar is-fixed-top is-spaced"><div class="container"><div class="navbar-brand"><a class="navbar-item title is-4" href="https://fable.io/">Fable</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/docs">Documentation</a><a class="navbar-item is-hidden-mobile" href="/repl/">Try</a><a class="navbar-item is-active" href="/blog/index.html">Blog</a><a class="navbar-item is-hidden-mobile" href="/community.html">Community</a><a class="navbar-item is-hidden-mobile" href="/resources.html">Resources</a><div class="navbar-item navbar-burger-dots is-hidden-tablet"><svg height="4" stroke="none" viewBox="0 0 22 4" width="22"><circle cx="2" cy="2" r="2"></circle><circle cx="2" cy="2" r="2" transform="translate(9,0)"></circle><circle cx="2" cy="2" r="2" transform="translate(18,0)"></circle></svg></div></div><div class="navbar-end is-hidden-mobile"><a class="navbar-item" href="https://github.com/fable-compiler/fable"><span class="icon"><i class=" fab fa-github fa-lg"></i></span></a><a class="navbar-item" href="https://twitter.com/FableCompiler"><span class="icon"><i class=" fab fa-twitter fa-lg"></i></span></a><a class="navbar-item" href="https://gitter.im/fable-compiler/Fable"><span class="icon"><i class=" fab fa-gitter fa-lg"></i></span></a><a class="navbar-item" href="https://www.youtube.com/channel/UC6m70Jyr65ogDySbK7aMmzg/videos"><span class="icon"><i class=" fab fa-youtube fa-lg"></i></span></a></div></div><div class="nacara-navbar-menu"><a class="nacara-navbar-menu-item" href="/repl/">Try</a><a class="nacara-navbar-menu-item" href="/community.html">Community</a><a class="nacara-navbar-menu-item" href="/resources.html">Resources</a><a class="nacara-navbar-menu-item" href="https://github.com/fable-compiler/fable">Github</a><a class="nacara-navbar-menu-item" href="https://twitter.com/FableCompiler">Twitter</a><a class="nacara-navbar-menu-item" href="https://gitter.im/fable-compiler/Fable">Gitter</a><a class="nacara-navbar-menu-item" href="https://www.youtube.com/channel/UC6m70Jyr65ogDySbK7aMmzg/videos">Youtube</a></div></div></nav><div class="grey-overlay"></div><div class="nacara-content"><div class="container"><div class="columns"><div class="column is-8-desktop is-offset-2-desktop"><div class="section blog-post"><figure class="image is-96x96 author-image"><img class="is-rounded" src="https://github.com/MangelMaxime.png"/></figure><h2 class="title is-size-3 has-text-primary has-text-weight-normal has-text-centered blog-title">Migration to Fable 2</h2><div class="tags has-addons is-justify-content-center"><a class="tag is-rounded is-medium is-primary" href="https://twitter.com/MangelMaxime">Mangel Maxime</a><span class="tag is-rounded is-medium">October 1, 2018</span></div><div class="content"><style class=grvsc-styles>.grvsc-container{overflow:auto;position:relative;-webkit-overflow-scrolling:touch;padding-top:1rem;padding-top:var(--grvsc-padding-top,var(--grvsc-padding-v,1rem));padding-bottom:1rem;padding-bottom:var(--grvsc-padding-bottom,var(--grvsc-padding-v,1rem));border-radius:8px;border-radius:var(--grvsc-border-radius,8px);font-feature-settings:normal;line-height:1.4}.grvsc-code{display:table}.grvsc-line{display:table-row;box-sizing:border-box;width:100%;position:relative}.grvsc-line>*{position:relative}.grvsc-gutter-pad{display:table-cell;padding-left:.75rem;padding-left:calc(var(--grvsc-padding-left,var(--grvsc-padding-h,1.5rem))/ 2)}.grvsc-gutter{display:table-cell;-webkit-user-select:none;-moz-user-select:none;user-select:none}.grvsc-gutter::before{content:attr(data-content)}.grvsc-source{display:table-cell;padding-left:1.5rem;padding-left:var(--grvsc-padding-left,var(--grvsc-padding-h,1.5rem));padding-right:1.5rem;padding-right:var(--grvsc-padding-right,var(--grvsc-padding-h,1.5rem))}.grvsc-source:empty::after{content:' ';-webkit-user-select:none;-moz-user-select:none;user-select:none}.grvsc-gutter+.grvsc-source{padding-left:.75rem;padding-left:calc(var(--grvsc-padding-left,var(--grvsc-padding-h,1.5rem))/ 2)}.grvsc-has-line-highlighting>.grvsc-code>.grvsc-line::before{content:' ';position:absolute;width:100%}.grvsc-line-diff-add::before{background-color:var(--grvsc-line-diff-add-background-color,rgba(0,255,60,.2))}.grvsc-line-diff-del::before{background-color:var(--grvsc-line-diff-del-background-color,rgba(255,0,20,.2))}.grvsc-line-number{padding:0 2px;text-align:right;opacity:.7}.atom-one-light{background-color:#fafafa;color:#383a42}.atom-one-light .mtki{font-style:italic}.atom-one-light .mtk1{color:#383a42}.atom-one-light .mtk10{color:#50a14f}.atom-one-light .mtk9{color:#4078f2}.atom-one-light .mtk14{color:#a626a4}.atom-one-light .mtk6{color:#986801}.atom-one-light .mtk8{color:#0184bc}.atom-one-light .mtk7{color:#a0a1a7}.atom-one-light .mtk5{color:#e45649}.atom-one-light .mtk4{color:#c18401}.atom-one-light .grvsc-line-highlighted::before{background-color:var(--grvsc-line-highlighted-background-color,rgba(0,0,0,.05));box-shadow:inset var(--grvsc-line-highlighted-border-width,4px) 0 0 0 var(--grvsc-line-highlighted-border-color,rgba(0,0,0,.2))}</style><h2>TL;DR</h2><p>With this document we are going to convert a Fable 1 project into a Fable 2 project.<div class="message is-info"><div class=message-body>This guide has been written by converting Fulma.Minimal template from Fable 1 to Fable 2.<p>You can see all the changes made by looking at <a href=https://github.com/MangelMaxime/Fulma/commit/24c9269fc08eac9c66e774aec4a5fe4132968805>this commit</a>.</div></div><h3>Upgrade to Babel 7</h3><p>During Fable 2 development, <a href=https://babeljs.io/blog/2018/08/27/7.0.0>Babel 7</a> has been released so we need to upgrade to it. Helpfully for us, they created a tool to help us.<ol><li><p>Install <a href=https://github.com/zkat/npx#readme>npx</a>, this a CLI program allowing us to run npm packages.<ul><li>Maybe it came with node/npm: <code>npx --help</code><li>For npm: <code>npm install -g npx</code><li>For yarn: <code>yarn global add npx</code></ul><li><p>Run <code>npx babel-upgrade --write</code>, this will modify the nearest <code>package.json</code></ol><h3>Upgrade fable's npm package</h3><ol><li><p>Upgrade <code>fable-loader</code> to latest version <code>2.x.x</code><ul><li>For npm: <code>npm update fable-loader@latest</code><li>For yarn: <code>yarn upgrade fable-loader@latest</code></ul><li><p>Remove <code>fable-utils</code>, it is not needed anymore<ul><li>For npm: <code>npm uninstall fable-utils</code><li>For yarn: <code>yarn remove fable-utils</code></ul></ol><h3>Update your webpack.config.js</h3><div class="message is-info"><div class=message-body><p>In order to best benefit of new Fable 2 tree-shaking and module size reduction we encourage you to upgrade all your webpack related packages to their latest version.</div></div><p>Here are the key points to consider for updating your <code>webpack.config.js</code>:<h5>1. Remove <code>resolve.modules</code></h5><p>Now, fable will create a <code>.fable</code> folder located near your <code>package.json</code> so JavaScript tools works natively.<p>Remove this lines from your <code>webpack.config.js</code><div class=columns><div class=column></div><div class="column is-half"><pre class="atom-one-light grvsc-container"data-index=0 data-language=js><code class=grvsc-code><span class=grvsc-line><span class=grvsc-source><span class=mtk1>resolve: {</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>    modules: [</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>        </span><span class=mtk10>"node_modules/"</span><span class=mtk1>,</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>        </span><span class=mtk9>resolve</span><span class=mtk1>(</span><span class=mtk10>"./node_modules/"</span><span class=mtk1>)</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>    ]</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>},</span></span></span></code></pre></div><div class=column></div></div><h5>2. Remove any reference to <code>fable-utils</code></h5><div class=columns><div class=column><div class="has-text-centered has-text-weight-semibold">With Fable 1</div><pre class="atom-one-light grvsc-container"data-index=1 data-language=js><code class=grvsc-code><span class=grvsc-line><span class=grvsc-source><span class=mtk14>const</span><span class=mtk1> </span><span class=mtk6>fableUtils</span><span class=mtk1> </span><span class=mtk8>=</span><span class=mtk1> </span><span class=mtk8>require</span><span class=mtk1>(</span><span class=mtk10>"fable-utils"</span><span class=mtk1>);</span></span></span>
+<span class=grvsc-line><span class=grvsc-source></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class="mtk7 mtki">// ...</span></span></span>
+<span class=grvsc-line><span class=grvsc-source></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk14>var</span><span class=mtk1> babelOptions </span><span class=mtk8>=</span><span class=mtk1> fableUtils.</span><span class=mtk9>resolveBabelOptions</span><span class=mtk1>({</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>    </span><span class=mtk5>presets</span><span class=mtk8>:</span><span class=mtk1> [</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>        </span><span class="mtk7 mtki">// ...</span></span></span></code></pre></div><div class=column><div class="has-text-centered has-text-weight-semibold">With Fable 2</div><pre class="atom-one-light grvsc-container"data-index=2 data-language=js><code class=grvsc-code><span class=grvsc-line><span class=grvsc-source></span></span>
+<span class=grvsc-line><span class=grvsc-source></span></span>
+<span class=grvsc-line><span class=grvsc-source></span></span>
+<span class=grvsc-line><span class=grvsc-source></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk14>var</span><span class=mtk1> babelOptions </span><span class=mtk8>=</span><span class=mtk1> {</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>    </span><span class=mtk5>presets</span><span class=mtk8>:</span><span class=mtk1> [</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>        </span><span class="mtk7 mtki">// ...</span></span></span></code></pre></div></div><h5>3. Update <code>babelOptions</code></h5><p>Because you are now using Babel 7, you need to use <code>@babel</code> scope if available.<div class=columns><div class=column><div class="has-text-centered has-text-weight-semibold">With Fable 1</div><pre class="atom-one-light grvsc-container"data-index=3 data-language=js><code class=grvsc-code><span class=grvsc-line><span class=grvsc-source><span class=mtk14>var</span><span class=mtk1> babelOptions </span><span class=mtk8>=</span><span class=mtk1> fableUtils.</span><span class=mtk9>resolveBabelOptions</span><span class=mtk1>({</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>    </span><span class=mtk5>presets</span><span class=mtk8>:</span><span class=mtk1> [</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>        [</span><span class=mtk10>"env"</span><span class=mtk1>, {</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>            </span><span class=mtk10>"targets"</span><span class=mtk8>:</span><span class=mtk1> {</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>                </span><span class=mtk10>"browsers"</span><span class=mtk8>:</span><span class=mtk1> [</span><span class=mtk10>"last 2 versions"</span><span class=mtk1>]</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>            },</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>            </span><span class=mtk10>"modules"</span><span class=mtk8>:</span><span class=mtk1> </span><span class=mtk6>false</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>        }]</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>    ]</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>});</span></span></span></code></pre><pre class="atom-one-light grvsc-container"data-index=4 data-language=js><code class=grvsc-code><span class=grvsc-line><span class=grvsc-source><span class=mtk1>babel</span><span class=mtk8>-</span><span class=mtk1>polyfill</span></span></span></code></pre></div><div class=column><div class="has-text-centered has-text-weight-semibold">With Fable 2</div><pre class="atom-one-light grvsc-container"data-index=5 data-language=js><code class=grvsc-code><span class=grvsc-line><span class=grvsc-source><span class=mtk14>var</span><span class=mtk1> babelOptions </span><span class=mtk8>=</span><span class=mtk1> {</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>    </span><span class=mtk5>presets</span><span class=mtk8>:</span><span class=mtk1> [</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>        [</span><span class=mtk10>"@babel/preset-env"</span><span class=mtk1>, {</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>            </span><span class=mtk10>"targets"</span><span class=mtk8>:</span><span class=mtk1> {</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>                </span><span class=mtk10>"browsers"</span><span class=mtk8>:</span><span class=mtk1> [</span><span class=mtk10>"last 2 versions"</span><span class=mtk1>]</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>            },</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>            </span><span class=mtk10>"modules"</span><span class=mtk8>:</span><span class=mtk1> </span><span class=mtk6>false</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>        }]</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>    ]</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>};</span></span></span></code></pre><pre class="atom-one-light grvsc-container"data-index=6 data-language=js><code class=grvsc-code><span class=grvsc-line><span class=grvsc-source><span class=mtk1>@babel</span><span class=mtk8>/</span><span class=mtk1>polyfill</span></span></span></code></pre></div></div><h5>4. Remove unnecessary absolute paths</h5><p>Because Fable 2, now creates a <code>.fable</code> folder you are not forced anymore to use <strong>absolute</strong> filepaths. All the filepaths are now relative to the nearest <code>package.json</code> found by Fable.<div class="message is-info"><div class=message-body><p>If you are not sure of your <em>current working directory</em>, you can run Fable.<pre class="atom-one-light grvsc-container"data-index=7 data-language><code class=grvsc-code><span class=grvsc-line><span class=grvsc-source>Fable (2.0.1) daemon started on port 56569</span></span>
+<span class=grvsc-line><span class=grvsc-source>CWD: /Users/maximemangel/Workspaces/Github/MangelMaxime/Fulma/templates/Content</span></span></code></pre><p>Here the <em>current working directory</em> is <code>/Users/maximemangel/Workspaces/Github/MangelMaxime/Fulma/templates/Content</code></div></div><div class="message is-warning"><div class=message-body><p>If you are using latest version of Webpack you still need to provide an absolute path for the <code>output</code><pre class="atom-one-light grvsc-container"data-index=8 data-language=js><code class=grvsc-code><span class=grvsc-line><span class=grvsc-source><span class=mtk5>module</span><span class=mtk1>.</span><span class=mtk5>exports</span><span class=mtk1> </span><span class=mtk8>=</span><span class=mtk1> {</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>    </span><span class="mtk7 mtki">// ...</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>    </span><span class=mtk5>output</span><span class=mtk8>:</span><span class=mtk1> {</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>        </span><span class=mtk5>path</span><span class=mtk8>:</span><span class=mtk1> path.</span><span class=mtk9>join</span><span class=mtk1>(</span><span class=mtk5>__dirname</span><span class=mtk1>, </span><span class=mtk6>CONFIG</span><span class=mtk1>.</span><span class=mtk5>outputDir</span><span class=mtk1>),</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>    }</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>    </span><span class="mtk7 mtki">// ...</span></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk1>};</span></span></span></code></pre></div></div><p>You can find <a href=https://github.com/fable-compiler/webpack-config-template/blob/master/webpack.config.js>here</a> a <code>webpack.config.js</code> file to serve as a template for yours.<p>If needed you can also take a look at the Fulma.Minimal diff <a href=https://github.com/MangelMaxime/Fulma/commit/24c9269fc08eac9c66e774aec4a5fe4132968805#diff-b81ec06774f7dfd70d0cac66cf146951>here</a>.<h3>Update fable nuget package</h3><p>Run <code>.paket/paket.exe update</code> to install the latest version of your dependencies. You can check that you are using the correct version of the package by comparing with this list:<div class="has-text-centered has-text-italic">At the time of writing here are the version retrieved</div><div class=columns><div class=column></div><div class=column><table class="is-hoverable is-striped table"style=min-width:300px><thead><tr><th>Package<th>Version<tbody><tr class=has-background-grey-lighter><td class=has-text-centered colspan=2>Common to any Fable project<tr><td>Fable.Core<td>2.0.0<tr><td>dotnet-fable<td>2.0.1<tr class=has-background-grey-lighter><td class=has-text-centered colspan=2 <td>For projects using Elmish<tr><td>Fable.React<td>4.0.1<tr><td>Fable.Elmish<td>2.0.0<tr><td>Fable.Elmish.React<td>2.0.0<tr><td>Fable.Elmish.Browser<td>2.0.0<tr><td>Fable.Elmish.Debugger<td>2.0.0<tr><td>Fable.Elmish.HMR<td>2.0.0</table></div><div class="column is-1-desktop"></div><div class=column><table class="is-hoverable is-striped table"style=min-width:300px><thead><tr><th>Package<th>Version<tbody><tr class=has-background-grey-lighter><td class=has-text-centered colspan=2>General libraries<tr><td>Fable.PowerPack<td>2.0.1<tr><td>Fulma<td>1.0.0<tr><td>Fulma.Extensions<td>1.0.0<tr><td>Thoth.Json<td>2.1.0</table></div><div class=column></div></div><h3>Breaking changes</h3><p>Fable 2 introduce severals breaking changes, it will inform you by displaying an <em>obsolete</em> warning or by generating a warning in the ouput.<p>Most important changes are:<ul><li><code>PojoAttribute</code> is not needed anymore<li><code>PassGenericsAttribute</code> is also deprecated. If you need to resolve a generic argument, please inline the function. If you only need the <code>Type</code> of a generic argument, you can use <a href=https://github.com/fable-compiler/Fable/blob/d0f09bb74524c03d200249ea12906e426e170b44/tests/Main/ReflectionTests.fs#L402-L405>the <code>Fable.Core.Inject</code> attribute with <code>ITypeResolver</code></a>.<li><strong>JSON serialization</strong>, you now need to choose between <a href=https://mangelmaxime.github.io/Thoth/json/v2/decode.html>Thoth.Json</a> and <a href=https://github.com/Zaid-Ajaj/Fable.SimpleJson/>Fable.SimpleJson</a>. If you need to support serialization both on Fable and .Net side you need to use <a href=https://mangelmaxime.github.io/Thoth/json/v2/net.html>Thoth.Json</a> as Fable.SimpleJson is based on a JavaScript library.</ul><p>If you want to quickly test Fable 2 and not convert all your <code>ofJson/toJson</code> reference yet. You can use the following polyfills:<div class=columns><div class=column></div><div class=column><pre class="atom-one-light grvsc-container"data-index=9 data-language=fsharp><code class=grvsc-code><span class=grvsc-line><span class=grvsc-source><span class=mtk14>open</span><span class=mtk1> </span><span class=mtk9>Thoth.Json</span></span></span>
+<span class=grvsc-line><span class=grvsc-source></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk14>let inline</span><span class=mtk1> </span><span class=mtk5>toJson</span><span class=mtk1> x </span><span class=mtk14>=</span><span class=mtk1> Encode.Auto.toString</span><span class=mtk14>(</span><span class=mtk6>0</span><span class=mtk14>,</span><span class=mtk1> x</span><span class=mtk14>)</span></span></span>
+<span class=grvsc-line><span class=grvsc-source></span></span>
+<span class=grvsc-line><span class=grvsc-source><span class=mtk14>let inline</span><span class=mtk1> </span><span class=mtk5>ofJson</span><span class=mtk14>&lt;</span><span class=mtk4>'T</span><span class=mtk14>></span><span class=mtk1> json </span><span class=mtk14>=</span><span class=mtk1> Decode.Auto.unsafeFromString</span><span class=mtk14>&lt;</span><span class=mtk1>'T</span><span class=mtk14>>(</span><span class=mtk1>json</span><span class=mtk14>)</span></span></span></code></pre></div><div class=column></div></div><p>See <a href=https://mangelmaxime.github.io/Thoth/json/v2/decode.html#auto-decoder>Thoth.Json auto decoder</a> documentation for more information about them.</div></div></div></div></div></div><script async="" src="/resources/nacara-standard-layouts/scripts/menu.js"></script></body></html>
