@@ -1,6 +1,6 @@
 ---
 title: Are you a .NET developer?
-layout: nacara-standard
+layout: standard
 ---
 
 Hi!

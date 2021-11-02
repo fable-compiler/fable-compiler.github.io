@@ -1,6 +1,6 @@
 ---
 title: Resources
-layout: nacara-standard
+layout: standard
 menu: false
 ---
 

@@ -114,13 +114,13 @@ In order to avoid these frictions, Fable 1.0 won't introduce more _hacky_ attrib
 
 Wow, I started the post saying that Fable 1.0 would make things easier but there are too many new things to learn! Luckily one of the cool features of the dotnet SDK that's been also a long request for Fable users is the template system. Thanks to that you can get a simple working project with a few commands. First, if you haven't already, install the latest [dotnet SDK](https://www.microsoft.com/net/download/core) and then type:
 
-```shell
+```sh
 dotnet new -i Fable.Template::*
 ```
 
 You only need to do this the first time or when you want to update the template (`::*` points to the latest version). Then create a directory and invoke the Fable template.
 
-```shell
+```sh
 mkdir myfableapp
 cd myfableapp
 dotnet new fable
@@ -128,14 +128,14 @@ dotnet new fable
 
 It's better to avoid hyphens or periods in the directory name, as this can confuse the template system (you can add them later if needed). Now you only have to install npm and nuget dependencies:
 
-```shell
+```sh
 dotnet restore
 npm install
 ```
 
 Now it depends on your project configuration, in the simple project created you can type `dotnet fable npm-run start` (see above) to start a web server that hot reloads on code changes (the npm `start` script in package.json just invokes the webpack dev server). Remember you can also use the `dotnet fable add` command to add Fable libraries. For example if you want to add `fable-elmish-react` you can type:
 
-```shell
+```sh
 dotnet fable add fable-powerpack@next fable-react@next fable-elmish@next fable-elmish-react@next
 ```
 
@@ -145,7 +145,7 @@ dotnet fable add fable-powerpack@next fable-react@next fable-elmish@next fable-e
 
 When adding new dependencies and making changes to the project file, it is often necessary to run the following commands again.
 
-```shell
+```sh
  dotnet restore
  dotnet build
  dotnet fable npm-run build

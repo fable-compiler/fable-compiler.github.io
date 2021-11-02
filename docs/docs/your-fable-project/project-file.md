@@ -1,6 +1,6 @@
 ---
 title: The project file
-layout: nacara-standard
+layout: standard
 ---
 
 Unlike JS, F# projects require all sources to be listed **in compilation order** in an `.fsproj` file. This may look quite restrictive at first, but it does have [some advantages](https://fsharpforfunandprofit.com/posts/cyclic-dependencies/).

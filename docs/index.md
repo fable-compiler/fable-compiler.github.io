@@ -1,6 +1,6 @@
 ---
 title: JavaScript you can be proud of!
-layout: nacara-navbar-only
+layout: navbar-only
 ---
 
 <!--
@@ -12,7 +12,8 @@ layout: nacara-navbar-only
 
 <!-- Disable the copy-button on all the elements contained inside the container (all this page) -->
 <div class="container mt-5" data-disable-copy-button="true">
-    <div class="columns is-vcentered">
+    <!-- Class 'is-marginless' is needed otherwise the body placement is mess up -->
+    <div class="columns is-marginless is-vcentered">
         <!-- Be careful when updating this div and it's content their is a script strongly dependant on the class names -->
         <div class="column is-offset-2-desktop is-8-desktop is-full-tablet" id="fable-main-header">
             <!-- Fable logo -->
@@ -44,7 +45,7 @@ layout: nacara-navbar-only
             The not loading part could be handle with the next version of Nacara as it will be
             a dynamic application and not just static website
         -->
-        <div class="column is-offset-1-desktop-only is-4-desktop is-3-widescreen is-hidden is-hidden-touch twitter-timeline-container" >
+        <div class="column is-offset-1-desktop-only is-4-desktop is-3-widescreen is-hidden is-hidden-touch twitter-timeline-container">
             <a class="twitter-timeline" data-lang="en" data-height="520" data-theme="light" href="https://twitter.com/FableCompiler?ref_src=twsrc%5Etfw">Tweets by @FableCompiler</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
         </div>
     </div>

@@ -22,6 +22,14 @@ docs
 └── style.scss          Main entry for styling the website
 ```
 
+## Code highlighting
+
+Is done using [gatsby-remark-vscode](https://github.com/andrewbranch/gatsby-remark-vscode/) plugins.
+
+Note: NPM complains about security warnings, unfortunaly the gatbsy teams is not really interested in upgrading their dependencies.
+
+Because the package are only used for static website execution, we consider it "ok" for now. But a standalone plugin is in the progress in order to remove this dependency.
+
 ## How to add a blog post?
 
 Blog posts are located under the `docs/blog` folder.
@@ -80,45 +88,12 @@ Blog posts are located under the `docs/blog` folder.
 
 3. Write your blog post under the front-matter section. The index page will automatically updates itself based on the information your provided
 
-## How to add new syntax support?
-
-We are using Textmate grammar for the syntax highlighting, if when building the website you see a warning similar to:
-
-```
-No grammar found for language: `fsharp`
-```
-
-It means that we don't support yet this syntax. In order to add support for it follow these steps:
-
-1. Find a `tmLanguage.json` online.
-
-    In general, you can find a lot of them inside [VS Code](https://github.com/microsoft/vscode) repository under the `extensions` folder or by looking at VS Code extensions repository online like Ionide etc.
-
-2. Copy the Textmate JSON grammar under `lightner/grammars/` folder
-3. Make sure to add information from where you found the grammar by adding a `` property to the JSON.
-
-    ```json
-    {
-        "information_for_contributors": [
-		    "This file has been copied from https://github.com/ionide/ionide-fsgrammar/blob/master/grammar/fsharp.json"
-	    ],
-    }
-    ```
-
-    This will help us to update the grammar if needed.
-
-4. Check the name of the extension used under `scopeName` property. It will be the name that you have to use for telling which language to choose for the highlighting.
-
-    For example, `"scopeName": "source.fsharp"` means that you need to write ` ```fsharp`
-
-5. Inside `nacara.config.json` add the path to the new grammar file to the `lightner.grammars` property.
-
 ## Note for the maintainers
 
 The custom layout for the blog index and blog pages are at:
 
-- `./scripts/blog-index.js`
-- `./scripts/blog-page.js`
+- `./scripts/blog-index.jsx`
+- `./scripts/blog-page.jsx`
 
 If you need to customize the layout or fix something, that's the place to go.
 

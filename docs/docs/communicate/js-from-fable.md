@@ -1,6 +1,6 @@
 ---
 title: Call JS from Fable
-layout: nacara-standard
+layout: standard
 ---
 
 ## Call JavaScript from Fable
@@ -96,7 +96,7 @@ From this point it is possible to use it or even to inherit from it as it is usu
 // This class lives in JS
 [<Import("DataManager", from="library/data")>]
 type DataManager<'T> (conf: Config) =
-    abstract update: data: 'T -> Promise<'T>    
+    abstract update: data: 'T -> Promise<'T>
     default _.update(data: 'T): Promise<'T> = jsNative
 
 // This class lives in our code

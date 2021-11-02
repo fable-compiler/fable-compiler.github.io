@@ -1,6 +1,6 @@
 ---
 title: Are you a JS developer?
-layout: nacara-standard
+layout: standard
 ---
 
 ## Welcome to Fable!

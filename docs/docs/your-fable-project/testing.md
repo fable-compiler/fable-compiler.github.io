@@ -1,6 +1,6 @@
 ---
 title: Testing
-layout: nacara-standard
+layout: standard
 ---
 
 You can use all tools of the JS ecosystem.
@@ -12,11 +12,11 @@ Several js libs already have a Fable binding:
 # Example with jest
 ## Setup
 You should install js test runner :
-```shell
+```sh
   npm install jest --save-dev
 ```
 And Fable binding :
-```shell
+```sh
   # nuget
   dotnet add package Fable.Jester
   # paket
@@ -39,7 +39,7 @@ See Jester documentation to more informations : [https://shmew.github.io/Fable.J
 ## Run
 Before running the tests, you have to convert your project to JS, but you don't need to bundle with Webpack, because test runners generally prefer to have small files rather than a single big file. So we only need to run the Fable compiler and put the generated code in an output dir.
 
-```shell
+```sh
   dotnet fable src -o output
 ```
 
@@ -60,7 +60,7 @@ module.exports = {
 You can read Jest doc to see more : [https://jestjs.io/docs/en/configuration](https://jestjs.io/docs/en/configuration)
 
 Now, you can run then tests:
-```shell
+```sh
   npx jest --config=jest.config.js
 ```
 
@@ -75,7 +75,7 @@ You can specify this command on npm in `package.json` :
 }
 ```
 And now run with a single command:
-```shell
+```sh
   npm test
 ```
 
@@ -85,7 +85,7 @@ You can use the watch feature to take advantage of the compiler and runner cache
 
 Currently, Fable doesn't have official plugins for the different runners.
 So you have to execute these two commands in parallel:
-```shell
+```sh
   dotnet fable watch src -o output
   npx jest --config=jest.config.js --watchAll
 ```
@@ -102,12 +102,12 @@ You add an npm script in `package.json` :
 }
 ```
 I use `npm-run-all` to run several commands in parallel. You should install with:
-```shell
+```sh
   npm install --save-dev npm-run-all
 ```
 
 Now, run
-```shell
+```sh
   npm run-script watch-test
 ```
 

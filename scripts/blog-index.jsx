@@ -1,5 +1,5 @@
-const React = require("react");
-const pageMinimal = require("nacara-layout-standard/dist/Page.Minimal");
+import React from "react";
+import * as pageMinimal from "nacara-layout-standard/dist/Page.Minimal.js";
 
 const AuthorImage = ({blogPage}) => {
     return <figure className="image is-96x96 author-image">
@@ -119,12 +119,11 @@ const render = async (rendererContext, pageContext) => {
         blogPage.Attributes.abstractText = abstractText;
     }
 
-    return pageMinimal.render(new pageMinimal.RenderArgs(
-        rendererContext.Config,
-        pageContext.Section,
-        undefined,
+    return pageMinimal.render(
+        rendererContext,
+        pageContext,
         <PageContainer blogPages={blogPages} />
-    ));
+    );
 }
 
 export default {

@@ -1,6 +1,6 @@
 ---
 title: Community
-layout: nacara-standard
+layout: standard
 menu: false
 ---
 
@@ -19,4 +19,3 @@ The community tend to congragate in the following forums:
 - [Fable Gitter](https://gitter.im/fable-compiler/Fable)
 - [F# Software Foundation Slack](https://fsharp.org/guides/slack/)
 - [F# Reddit](www.reddit.com/r/fsharp/)
-

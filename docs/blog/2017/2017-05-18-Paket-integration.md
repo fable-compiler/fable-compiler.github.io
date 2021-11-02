@@ -20,7 +20,7 @@ We wanted to move libraries back to the .NET side of things, but Fable still nee
 
 Fable simple (`Fable.Template`) and Elmish (`Fable.Template.Elmish.React`) templates have been updated to use Paket, download or update them to start enjoying reproducible builds and sane dependency management!
 
-```shell
+```sh
 dotnet new -i Fable.Template::*
 dotnet new fable -n MyProject
 ```
