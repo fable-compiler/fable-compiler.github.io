@@ -10,7 +10,7 @@ menu: false
 
 *Some good apps written in Fable.*
 
-* [Elmish](Elmish) - Find web app samples in elmish repository list.
+* [Elmish](https://elmish.github.io/#samples) - Find web app samples in elmish repository list.
 * [SAFE Bookstore](https://github.com/SAFE-Stack/SAFE-BookStore) - Full stack SAFE example with support for deploying in a Docker container.
 * [SAFE-Chat](https://github.com/SAFE-Stack/SAFE-Chat) - IRC-style chat demo featuring full-stack F#, Akka.Streams, Akkling, Fable, Elmish, Websockets and .NET Core.
 * [SAFE Nightwatch](https://github.com/SAFE-Stack/SAFE-Nightwatch) - A Demo application for React Native development in F# using Fable and the SAFE stack.
