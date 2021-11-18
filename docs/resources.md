@@ -30,7 +30,7 @@ menu: false
 
 *Learn what this awesome thing is.*
 
-* [Official Docs](http://fable.io/docs) — General information and in-depth guide with examples.
+* [Official Docs](https://fable.io/docs) — General information and in-depth guide with examples.
 * [Official SAFE-Stack Docs](https://safe-stack.github.io/docs/) - Official SAFE-Stack docs with nice samples and getting started tutorials.
 * [Official Elmish Docs][elmish] - Official Elmish docs with nice samples and explanation of concepts
 <!--* [Fable blog]() — Official Fable blog with new version announcements.-->
@@ -45,10 +45,10 @@ menu: false
 * [Creating Visual Planetary Systems using Fable and F#](https://medium.com/@mukund.sharma92/creating-visual-planetary-systems-using-fable-and-f-de23415ca6f7)
 * [FableConf 2017, Elmish & Canvas based presentation](https://github.com/whitetigle/fableconf2017) - Learn how to create gorgeous Perlin based canvas animations and texts with Elmish and JS Events through a very simple example.
 * [Learning about the F# SAFE stack - Suave.io, Azure, Fable, Elmish](https://www.hanselman.com/blog/LearningAboutTheFSAFEStackSuaveioAzureFableElmish.aspx) - High level introduction to the SAFE stack by Scott Hanselman.
-* [A fable of Web MIDI](http://blog.pagansoft.de/articles/a-fable-of-webmidi) - An article about how to create Fable bindings for Web MIDI
-* [Opinionated Fable - Architecture & Performance](http://kunjan.in/2018/03/opinionated-fable-architecture-and-performance/) - Architecture & Performance tips and tricks for Fable 1.x
+* [A fable of Web MIDI](https://blog.pagansoft.de/articles/a-fable-of-webmidi) - An article about how to create Fable bindings for Web MIDI
+* [Opinionated Fable - Architecture & Performance](https://kunjan.in/2018/03/opinionated-fable-architecture-and-performance/) - Architecture & Performance tips and tricks for Fable 1.x
 * [Fable in React land](https://blog.vbfox.net/2018/02/06/fable-react-1-react-in-fable-land.html) - Fable for React: creating components and optimizing them
-* [Create WebComponents with Fable + Elmish + React](http://hardt.software/building-a-webcomponent-with-fable-elmish-react/) - How to create WebComponents with Fable + Elmish + React
+* [Create WebComponents with Fable + Elmish + React](https://hardt.software/building-a-webcomponent-with-fable-elmish-react/) - How to create WebComponents with Fable + Elmish + React
 * [Even more interop with Fable](https://medium.com/@whitetigle/even-more-interop-with-fable-7afb0e8db5b4) - How to use Bcrypt Js library with Fable - Dec 2018
 * [Fable interop 101 : generate-password](https://medium.com/@whitetigle/fable-interop-101-generate-password-8ee21f56978e) - How to use generate-password Js library with Fable - Jan 2019
 * [Getting Started with Elmish](https://thesharperdev.com/getting-started-with-elmish/) - Walking through Elmish Counter app and explaining the MVU architecture.
@@ -137,7 +137,7 @@ menu: false
 
 * [fable-loader](https://www.npmjs.com/package/fable-loader) - Fable loader for Webpack
 * [ts2fable](https://github.com/fable-compiler/ts2fable) - Fable parser for Typescript declaration files
-* [Online REPL](http://fable.io/repl) - The Fable Online REPL
+* [Online REPL](https://fable.io/repl) - The Fable Online REPL
 * [HTML to Elmish](https://mangelmaxime.github.io/html-to-elmish/) - Convert HTML snippets into code ready to be used in Elmish apps
 * [JSON to Thoth](https://github.com/nojaf/jason-to-thoth) - Convert JSON to F# code with Thoth decoders.
 * [Femto](https://github.com/Zaid-Ajaj/Femto) - Femto is a CLI tool that automatically resolves npm packages used by Fable bindings
@@ -178,7 +178,7 @@ menu: false
 *Where to find help.*
 
 * [Gitter](https://gitter.im/fable-compiler/Fable) - Ask questions on fable gitter.
-* [Slack](http://foundation.fsharp.org/join) - Join Official FSharp.org and Slack channel.
+* [Slack](https://foundation.fsharp.org/join) - Join Official FSharp.org and Slack channel.
 
 ## Built with Fable
 
@@ -191,7 +191,7 @@ menu: false
 * [Czech Republic 2018 Election Analytics](http://showme.median.cz/volby-2018/)
 * [Metadata Excel-Add-in: Swate](https://github.com/nfdi4plants/Swate)
 
-[ionide]: http://ionide.io/
+[ionide]: https://ionide.io/
 [Hanselminutes]: https://hanselminutes.com
 [elmish]: https://github.com/elmish
 [jest-website]: https://facebook.github.io/jest/
