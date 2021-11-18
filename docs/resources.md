@@ -190,6 +190,7 @@ menu: false
 * [Fable-of-the-Day](https://github.com/rommsen/fable-of-the-day) - Catch of the day by @wesbos ported to Fable
 * [Czech Republic 2018 Election Analytics](http://showme.median.cz/volby-2018/)
 * [Metadata Excel-Add-in: Swate](https://github.com/nfdi4plants/Swate)
+* [facemorph.me](https://facemorph.me) - Website for morphing faces
 
 [ionide]: http://ionide.io/
 [Hanselminutes]: https://hanselminutes.com
