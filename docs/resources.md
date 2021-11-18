@@ -107,7 +107,7 @@ menu: false
 * [Fable.Reaction](https://fablereaction.readthedocs.io/en/latest/) - Extends Elmish with reactive ([AsyncRx](https://fablereaction.readthedocs.io/en/latest/asyncrx/index.html)) query capabilities
 * [Fable.Reactstrap](https://nojaf.github.io/fable-reactstrap/) - Fable bindings for [reactstrap](https://reactstrap.github.io/).
 * [Feliz][feliz-github-repository] - A fresh retake of the base React DSL and a collection of high-quality components used to build React applications, optimized for happiness.
-* [Feliz.Bulma](https://github.com/Dzoukr/Feliz.Bulma) - [Bulma UI](bulma.io) wrapper for the amazing Feliz DSL.
+* [Feliz.Bulma](https://github.com/Dzoukr/Feliz.Bulma) - [Bulma UI](https://bulma.io) wrapper for the amazing Feliz DSL.
 * [Feliz.Delay][feliz-github-repository] - Adds easy to use delayed rendering.
 * [Feliz.MaterialUI](https://github.com/Shmew/Feliz.MaterialUI) - Feliz-style Fable bindings for Material-UI.
 * [Feliz.MaterialUI.MaterialTable](https://github.com/Shmew/Feliz.MaterialUI.MaterialTable) - Fable bindings written in the Feliz-style for `material-table`.
