@@ -10,7 +10,7 @@ menu: false
 
 *Some good apps written in Fable.*
 
-* [Elmish](https://elmish.github.io/#samples) - Find web app samples in elmish repository list.
+* [Elmish][elmish] - Find web app samples in elmish repository list.
 * [SAFE Bookstore](https://github.com/SAFE-Stack/SAFE-BookStore) - Full stack SAFE example with support for deploying in a Docker container.
 * [SAFE-Chat](https://github.com/SAFE-Stack/SAFE-Chat) - IRC-style chat demo featuring full-stack F#, Akka.Streams, Akkling, Fable, Elmish, Websockets and .NET Core.
 * [SAFE Nightwatch](https://github.com/SAFE-Stack/SAFE-Nightwatch) - A Demo application for React Native development in F# using Fable and the SAFE stack.
@@ -32,7 +32,7 @@ menu: false
 
 * [Official Docs](http://fable.io/docs) — General information and in-depth guide with examples.
 * [Official SAFE-Stack Docs](https://safe-stack.github.io/docs/) - Official SAFE-Stack docs with nice samples and getting started tutorials.
-* [Official Elmish Docs](elmish) - Official Elmish docs with nice samples and explanation of concepts
+* [Official Elmish Docs][elmish] - Official Elmish docs with nice samples and explanation of concepts
 <!--* [Fable blog]() — Official Fable blog with new version announcements.-->
 * [Minimalistic Live Testing Fable Apps With QUnit](https://medium.com/@zaid.naom/minimalistic-live-testing-fable-apps-with-qunit-b9d9f2f64725)
 * [F# Interop with Javascript in Fable: The Complete Guide](https://medium.com/@zaid.naom/f-interop-with-javascript-in-fable-the-complete-guide-ccc5b896a59f) - A comprehensive guide to Fable's interop capabilities
@@ -72,7 +72,7 @@ menu: false
 
 *Useful helpers to build apps.*
 
-* [Elmish](elmish) - Elm-like abstractions for F# apps
+* [Elmish][elmish] - Elm-like abstractions for F# apps
 * [Elmish.Bridge](https://github.com/Nhowka/Elmish.Bridge) - Create client-server Fable-Elmish apps keeping a single mindset
 * [Fable.Fetch](https://github.com/fable-compiler/fable-fetch) - Fable bindings for Browsers' Fetch API.
 * [Fable.Promise](https://github.com/fable-compiler/fable-promise) - Fable bindings for JS promise.
@@ -83,7 +83,7 @@ menu: false
 * [Fable.Aether](https://github.com/Prolucid/fable-aether) - Optics library build for Fable
 * [Fable.Mqtt](https://github.com/Prolucid/fable-mqtt) - Fable bindings for MqttJS
 * [Fable.Mocha](https://github.com/Zaid-Ajaj/Fable.Mocha) - Fable testing library with mocha. Works in browser without any dependency.
-* [Fable.Jester](https://github.com/Shmew/Fable.Jester) - Testing Fable apps with [Jest](jest-website)
+* [Fable.Jester](https://github.com/Shmew/Fable.Jester) - Testing Fable apps with [Jest][jest-website]
 * [Fable.Ava](https://github.com/YoloDev/Fable.Ava) - Testing Fable apps with [Ava](https://github.com/avajs/ava)
 * [Elmish.SweetAlert](https://github.com/Zaid-Ajaj/Elmish.SweetAlert) - [sweetalert2](https://sweetalert2.github.io/) integration in Fable, implmeneted as Elmish commands, see [live docs](https://zaid-ajaj.github.io/Elmish.SweetAlert/).
 * [Elmish.Toastr](https://github.com/Zaid-Ajaj/Elmish.Toastr) - [Toastr](https://github.com/CodeSeven/toastr) (notification library) integration with Fable, implemented as Elmish commands
@@ -106,25 +106,25 @@ menu: false
 * [Fable Cyclsfs](https://github.com/bigteech/cyclefs) - A Cycle-like Fable library for build reactive webapp
 * [Fable.Reaction](https://fablereaction.readthedocs.io/en/latest/) - Extends Elmish with reactive ([AsyncRx](https://fablereaction.readthedocs.io/en/latest/asyncrx/index.html)) query capabilities
 * [Fable.Reactstrap](https://nojaf.github.io/fable-reactstrap/) - Fable bindings for [reactstrap](https://reactstrap.github.io/).
-* [Feliz](feliz-github-repository) - A fresh retake of the base React DSL and a collection of high-quality components used to build React applications, optimized for happiness.
+* [Feliz][feliz-github-repository] - A fresh retake of the base React DSL and a collection of high-quality components used to build React applications, optimized for happiness.
 * [Feliz.Bulma](https://github.com/Dzoukr/Feliz.Bulma) - [Bulma UI](bulma.io) wrapper for the amazing Feliz DSL.
-* [Feliz.Delay](feliz-github-repository) - Adds easy to use delayed rendering.
+* [Feliz.Delay][feliz-github-repository] - Adds easy to use delayed rendering.
 * [Feliz.MaterialUI](https://github.com/Shmew/Feliz.MaterialUI) - Feliz-style Fable bindings for Material-UI.
 * [Feliz.MaterialUI.MaterialTable](https://github.com/Shmew/Feliz.MaterialUI.MaterialTable) - Fable bindings written in the Feliz-style for `material-table`.
 * [Feliz.MaterialUI.Pickers](https://github.com/Shmew/Feliz.MaterialUI.Pickers) - Fable bindings written in the Feliz-style for `material-ui-pickers`.
-* [Feliz.PigeonMaps](feliz-github-repository) - `pigeon-maps` bindings based on the Feliz API.
+* [Feliz.PigeonMaps][feliz-github-repository] - `pigeon-maps` bindings based on the Feliz API.
 * [Feliz.Plotly](https://github.com/Shmew/Feliz.Plotly) - Fable bindings written in the Feliz-style for plotly.js.
-* [Feliz.Popover](feliz-github-repository) - `react-popover` bindings based on the Feliz API.
+* [Feliz.Popover][feliz-github-repository] - `react-popover` bindings based on the Feliz API.
 * [Feliz.ReactFlow](https://github.com/tforkmann/Feliz.ReactFlow) - `ReactFlow` bindings based on the Feliz API.
-* [Feliz.Recharts](feliz-github-repository) - `Recharts` bindings based on the Feliz API.
+* [Feliz.Recharts][feliz-github-repository] - `Recharts` bindings based on the Feliz API.
 * [Feliz.Recoil](https://github.com/Shmew/Feliz.Recoil) - Fable bindings in Feliz style for Facebook's experimental state management library recoil.
-* [Feliz.RoughViz](feliz-github-repository) - Feliz binding for the `rough-viz` library.
+* [Feliz.RoughViz][feliz-github-repository] - Feliz binding for the `rough-viz` library.
 * [Feliz.Router](https://github.com/Zaid-Ajaj/Feliz.Router) - An Elmish router that is focused, powerful and extremely easy to use.
 * [Feliz.SweetAlert](https://github.com/Shmew/Feliz.SweetAlert) - Fable bindings written in the Feliz-style for sweetalert2.
-* [Feliz.UseDeferred](feliz-github-repository) - Hooks for dead-simple data fetching with Feliz.
-* [Feliz.UseElmish](feliz-github-repository) - Hooks to build Elmish components as React components.
+* [Feliz.UseDeferred][feliz-github-repository] - Hooks for dead-simple data fetching with Feliz.
+* [Feliz.UseElmish][feliz-github-repository] - Hooks to build Elmish components as React components.
 * [Feliz.UseListener](https://github.com/Shmew/Feliz.UseListener) - React hooks for easy event listener management.
-* [Feliz.UseMediaQuery](feliz-github-repository) - Hooks to build responsive websites.
+* [Feliz.UseMediaQuery][feliz-github-repository] - Hooks to build responsive websites.
 * [Feliz.UseWorker](https://github.com/Shmew/Feliz.UseWorker) - Web workers in Fable made easy, exposed as React hooks and Elmish commands.
 * [Fable.GroupingPanel](https://github.com/JordanMarr/Fable.GroupingPanel) - A computation expression for grouping data into collapsible panels.
 * [Fable.AntD](https://github.com/uxsoft/Fable.AntD) - Ant Design bindings for Fable
@@ -165,7 +165,7 @@ menu: false
 * [Elmish for Azure Static Web Apps](https://github.com/aaronpowell/swa-elmish-template) - GitHub repo template for Elmish + Functions for Azure Static Web Apps
 
 ## Old (working only before Fable3)
-* [Fable.Jest](https://github.com/jgrund/fable-jest) - Testing Fable apps with [Jest](jest-website)
+* [Fable.Jest](https://github.com/jgrund/fable-jest) - Testing Fable apps with [Jest][jest-website]
 * [fable-signalr](https://github.com/Prolucid/fable-import-signalr) - Fable bindings for SignalR
 * [fable-websockets](https://github.com/Prolucid/fable-import-ws) - Archived - Fable bindings for WS
 * [fable-react-toolbox](https://github.com/Prolucid/fable-react-toolbox) - UI components for fable-react
