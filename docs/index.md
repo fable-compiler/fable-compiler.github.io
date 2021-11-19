@@ -418,6 +418,11 @@ async {
                     <img src="static/img/users/umc.png">
                 </a>
             </div>
+            <div class="column is-narrow">
+                <a class="image is-128x128 is-flex is-flex-direction-column is-justify-content-center" href="https://facemorph.me/" target="_blank">
+                    <img src="static/img/users/facemorph.me.svg">
+                </a>
+            </div>
         </div>
     </section>
 </div>
