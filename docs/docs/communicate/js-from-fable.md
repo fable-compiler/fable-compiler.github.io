@@ -486,6 +486,10 @@ myLib.myMethod("vertical", "Horizontal")
 
 #### TypeScriptTaggedUnion attribute
 
+:::info
+This feature requires fable tool >=3.6.2 and Fable.Core >=3.6.1
+:::
+
 In TypeScript there's also a concept of [Discriminated Unions](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#discriminated-unions), which works similarly to union types in F# but with a different approach.
 
 ```typescript
