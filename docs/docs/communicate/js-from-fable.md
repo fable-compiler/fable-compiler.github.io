@@ -397,7 +397,7 @@ let createMyClass(value: 'T, awesomeness: 'T) : MyClass<'T> = jsNative
 
 #### Erase attribute
 
-In TypeScript there's a concept of [Union Types](https://www.typescriptlang.org/docs/handbook/advanced-types.html#union-types) which differs from union types in F#. The former are just used to statically check a function argument accepting different types. In Fable, they're translated as **Erased Union Types** whose cases must have one and only one single data field. After compilation, the wrapping will be erased and only the data field will remain. To define an erased union type, just attach the `Erase` attribute to the type. Example:
+In TypeScript there's a concept of [Union Types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#union-types) which differs from union types in F#. The former are just used to statically check a function argument accepting different types. In Fable, they're translated as **Erased Union Types** whose cases must have one and only one single data field. After compilation, the wrapping will be erased and only the data field will remain. To define an erased union type, just attach the `Erase` attribute to the type. Example:
 
 ```fsharp
 open Fable.Core
@@ -462,9 +462,9 @@ let test(arg: U3<string, int, float[]>) =
 // }
 ```
 
-#### StringEnum
+#### StringEnum attribute
 
-In TypeScript it is possible to define [String Literal Types](https://mariusschulz.com/blog/string-literal-types-in-typescript) which are similar to enumerations with an underlying string value. Fable allows the same feature by using union types and the `StringEnum` attribute. These union types must not have any data fields as they will be compiled to a string matching the name of the union case.
+In TypeScript it is possible to define [String Enums](https://www.typescriptlang.org/docs/handbook/enums.html#string-enums) and [String Literal Types](https://mariusschulz.com/blog/string-literal-types-in-typescript) which are similar to enumerations with an underlying string value. Fable allows the same feature by using union types and the `StringEnum` attribute. These union types must not have any data fields as they will be compiled to a string matching the name of the union case.
 
 By default, the compiled string will have the first letter lowered. If you want to prevent this or use a different text than the union case name, use the `CompiledName` attribute:
 
@@ -483,6 +483,116 @@ myLib.myMethod(Vertical, Horizontal)
 // js output
 myLib.myMethod("vertical", "Horizontal")
 ```
+
+#### TypeScriptTaggedUnion attribute
+
+In TypeScript there's also a concept of [Discriminated Unions](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#discriminated-unions), which works similarly to union types in F# but with a different approach.
+
+```typescript
+interface Circle {
+  kind: "circle";
+  radius: number;
+}
+ 
+interface Square {
+  kind: "square";
+  sideLength: number;
+}
+ 
+type Shape = Circle | Square;
+
+// usage
+function describeShape(shape: Shape) {
+  switch (shape.kind) {
+    case "circle":
+      return "circle of radius ${shape.radius}";
+    case "square":
+      return "square of length ${shape.sideLength}";
+  }
+}
+```
+
+Here, `Shape` has a common field named `kind` which acts as a "tag" to discriminate the union cases.
+
+While it works very differently from union types in F#, the special attribute `TypeScriptTaggedUnion` allows you to treat it as if it were a F# union type. 
+
+```fsharp
+type Circle =
+    abstract kind: string
+    abstract radius: float
+
+type Square =
+    abstract kind: string
+    abstract sideLength: float
+
+[<TypeScriptTaggedUnion("kind")>]
+type Shape =
+    | Circle of Circle
+    | Square of Square
+
+// usage
+let describeShape (shape: Shape) =
+    match shape with
+    | Circle c -> $"circle of radius {c.radius}"
+    | Square s -> $"square of length {s.sideLength}"
+```
+
+We first specify the name of the tag field (in this case, `kind`) in `[<TypeScriptTaggedUnion("kind")>]`, and then define each case of the union type so that its name is equal to the value of the "tag" field with the first letter capitalized (e.g. `"circle"` -> `Circle`). If you want to use a completely different name than the value of the tag, use the `CompiledName` attribute:
+
+```fsharp
+[<TypeScriptTaggedUnion("kind")>]
+type Shape =
+    | [<CompiledName("circle")>] C of Circle
+    | [<CompiledName("square")>] S of Square
+```
+
+Sometimes, the "tag" field may not be a string but a number or an enum. 
+
+```typescript
+enum ShapeKind {
+  Circle = 1,
+  Square = 2,
+}
+
+interface Circle {
+  kind: ShapeKind.Circle;
+  radius: number;
+}
+ 
+interface Square {
+  kind: ShapeKind.Square;
+  sideLength: number;
+}
+ 
+type Shape = Circle | Square;
+```
+
+In this case, use the `CompiledValue` attribute instead of `CompiledName`:
+
+```fsharp
+type ShapeKind =
+    | Circle = 1
+    | Square = 2
+
+type Circle =
+    abstract kind: ShapeKind
+    abstract radius: float
+
+type Square =
+    abstract kind: ShapeKind
+    abstract sideLength: float
+
+[<TypeScriptTaggedUnion("kind")>]
+type Shape =
+    | [<CompiledValue(ShapeKind.Circle)>] Circle of Circle
+    | [<CompiledValue(ShapeKind.Square)>] Square of Square
+```
+
+These union types must have one and only one single data field. Most TypeScript discriminated unions are union of interfaces, so you would want to first define the corresponding F# interfaces and then put them together to a `TypeScriptTaggedUnion`.
+
+:::info
+Do not try to replace your F# union types with `TypeScriptTaggedUnion`. Both are completely equivalent performance-wise since `match` compiles to an efficient `switch` statement in both cases. So using `TypeScriptTaggedUnion` would only add unnecessary keystrokes and can lead to potential bugs. Use it only when you are trying to bind to an union type coming from TypeScript.
+:::
 
 ### Plain Old JavaScript Objects
 
