@@ -25,6 +25,7 @@ menu: false
 * [dexter](https://github.com/rajatsharma/dexter) - A minimal Pokemon search made with Fable, Feliz and Elmish. It demoes React components designed with Typesafe styling.
 * [FSharp React Starter](https://github.com/dam5s/fsharp-react-starter) - A starter application with examples of common architecture and testing patterns.
 * [F# trivia game](https://github.com/aaronpowell/ondotnet-fsharp-complete) - A trivia game written in Fable + F# Azure Functions, deployed to Azure Static Web Apps
+* [Bleeter](https://github.com/sumeetdas/Bleeter) - UI for GTA 5's microblogging site built using F# + Fable, React and Tailwind CSS
 
 ## Learn
 
