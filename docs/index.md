@@ -187,23 +187,22 @@ without scrollbar on almost any screen size -->
 type Face =
     | Ace | King | Queen | Jack
     | Number of int
+
 type Color =
     | Spades | Hearts | Diamonds | Clubs
+
 type Card =
     | Face * Color
 
-let aceOfHearts = Ace,Hearts
+let aceOfHearts = Ace, Hearts
 let tenOfSpades = (Number 10), Spades
 
 match card with
-| Ace, Hearts ->
-    printfn "Ace Of Hearts!"
-| _, Hearts ->
-    printfn "A lovely heart"
-| (Number 10), Spades ->
-    printfn "10 of Spades"
-| _, (Diamonds|Clubs) ->
-    printfn "Diamonds or clubs"
+| Ace, Hearts -> printfn "Ace Of Hearts!"
+| _, Hearts -> printfn "A lovely heart"
+| (Number 10), Spades -> printfn "10 of Spades"
+| _, (Diamonds|Clubs) -> printfn "Diamonds or clubs"
+
 // Warning:
 // Incomplete pattern matches on this expression.
 // For example, the value '(_,Spades)' may indicate
@@ -236,11 +235,11 @@ promise {
 
 // Declare your own computation expression
 type OptionBuilder() =
-    member __.Bind(opt, binder) =
+    member _.Bind(opt, binder) =
         match opt with
-            | Some value -> binder value
-            | None -> None
-    member __.Return(value) =
+        | Some value -> binder value
+        | None -> None
+    member _.Return(value) =
         Some value
 
 let option = OptionBuilder()
@@ -313,12 +312,8 @@ async {
     let! (_, res) = Fable.SimpleHttp.Http.get url
     let todos = Todos.ParseArray res
     for todo in todos do
-        // Compilation fail if the JSON schema changes
-        printfn "ID %i, USER: %i, TITLE %s, COMPLETED %b"
-            todo.id
-            todo.userId
-            todo.title
-            todo.completed
+        // Compilation fails if the JSON schema changes
+        printfn $"USER: {todo.userId}, TITLE {todo.title}, COMPLETED {todo.completed}"
 }
 ```
 </div> <!-- Markdown is sensible to indentation -->
@@ -421,6 +416,11 @@ async {
             <div class="column is-narrow">
                 <a class="image is-128x128 is-flex is-flex-direction-column is-justify-content-center" href="https://facemorph.me/" target="_blank">
                     <img src="static/img/users/facemorph.me.svg">
+                </a>
+            </div>
+            <div class="column is-narrow">
+                <a class="image is-128x128 is-flex is-flex-direction-column is-justify-content-center" href="https://chaldal.com/" target="_blank">
+                    <img src="static/img/users/chaldal.png">
                 </a>
             </div>
         </div>
