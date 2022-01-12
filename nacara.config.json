@@ -57,6 +57,9 @@
     },
     "remarkPlugins": [
         {
+            "resolve": "remark-gfm"
+        },
+        {
             "resolve": "gatsby-remark-vscode",
             "property": "remarkPlugin",
             "options": {
