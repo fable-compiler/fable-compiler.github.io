@@ -115,7 +115,11 @@ const render = async (rendererContext, pageContext) => {
 
     // Pre-process the blog-page files here, so we can use standard JSX afterwards
     for (const blogPage of blogPages) {
-        const abstractText = await rendererContext.MarkdownToHtml(blogPage.Attributes.abstract);
+        const abstractText =
+            await rendererContext.MarkdownToHtml(
+                blogPage.Attributes.abstract,
+                blogPage.RelativePath
+            );
         blogPage.Attributes.abstractText = abstractText;
     }
 

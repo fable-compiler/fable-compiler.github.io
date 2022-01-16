@@ -60,7 +60,11 @@ const render = async (rendererContext, pageContext) => {
     const author_link = pageContext.Attributes.author_link;
     const author_image = pageContext.Attributes.author_image;
 
-    const pageContent = await rendererContext.MarkdownToHtml(pageContext.Content)
+    const pageContent =
+        await rendererContext.MarkdownToHtml(
+            pageContext.Content,
+            pageContext.RelativePath
+        );
 
     return pageMinimal.render(
         rendererContext,
