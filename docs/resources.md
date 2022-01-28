@@ -131,6 +131,7 @@ menu: false
 * [Fable.AntD](https://github.com/uxsoft/Fable.AntD) - Ant Design bindings for Fable
 * [Fss](https://github.com/Bjorn-Strom/FSS) - Type-safe CSS styling library.
 * [office-fable](https://github.com/Freymaurer/office-fable) - Fable bindings for office-js.
+* [Fable.Etebase](https://github.com/kaeedo/Fable.Etebase) - Fable bindings for etebase-js.
 
 ## Tools
 
