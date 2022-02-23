@@ -21,6 +21,8 @@ System.Guid                           | string
 System.TimeSpan                       | number
 System.DateTime                       | Date
 System.DateTimeOffset                 | Date
+System.DateOnly                       | Date
+System.TimeOnly                       | number
 System.Timers.Timer                   | fable-core/Timer
 System.Collections.Generic.List       | Array
 System.Collections.Generic.HashSet    | Set
@@ -46,6 +48,7 @@ There is also support to convert between numeric types and to parse strings, che
 - Numeric arrays are compiled to [Typed Arrays](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray) when possible.
 - No bound checks for numeric types (unless you do explicit conversions like `byte 500`) nor for array indices.
 - `Regex` will always behave as if passed `RegexOptions.ECMAScript` flag (e.g., no negative look-behind or named groups).
+- To use `DateOnly`/`TimeOnly` you need to target `net6.0` in your .fsproj file.
 
 ## FSharp.Core
 
