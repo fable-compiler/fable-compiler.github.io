@@ -10,6 +10,15 @@ layout: navbar-only
     benefit of the navbar generation and same style across all Fable website
 -->
 
+<section class="hero is-small" style="background-color:#0057b7">
+<div class="hero-body">
+    <div class="container has-text-centered">
+        <p class="title" style="color:white">We Stand with Ukraine</p>
+        <p class="subtitle"><a style="color:#FFD500" target="_blank" rel="noreferrer" href="https://novaukraine.org/donate/">Support Nova Ukraine</a></p>
+    </div>
+</div>
+</section>
+
 <!-- Disable the copy-button on all the elements contained inside the container (all this page) -->
 <div class="container mt-5" data-disable-copy-button="true">
     <!-- Class 'is-marginless' is needed otherwise the body placement is mess up -->
@@ -18,7 +27,7 @@ layout: navbar-only
         <div class="column is-offset-2-desktop is-8-desktop is-full-tablet" id="fable-main-header">
             <!-- Fable logo -->
             <figure class="image" style="max-width: 550px; margin: auto">
-                <img class="fable-logo" src="/static/img/fable_logo.png" />
+                <img class="fable-logo" src="/static/img/logo_ukraine.png" />
             </figure>
             <br />
             <!-- Quick links -->
