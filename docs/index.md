@@ -13,8 +13,7 @@ layout: navbar-only
 <section class="hero is-small" style="background-color:#0057b7">
 <div class="hero-body">
     <div class="container has-text-centered">
-        <p class="title" style="color:white">We Stand with Ukraine</p>
-        <p class="subtitle"><a style="color:#FFD500" target="_blank" rel="noreferrer" href="https://novaukraine.org/donate/">Support Nova Ukraine</a></p>
+        <p class="title"><a style="color:#FFD500" target="_blank" rel="noreferrer" href="https://standwithukraine.com.ua/">We Stand with Ukraine</a></p>
     </div>
 </div>
 </section>
