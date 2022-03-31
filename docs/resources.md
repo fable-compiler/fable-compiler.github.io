@@ -131,6 +131,7 @@ menu: false
 * [Fss](https://github.com/Bjorn-Strom/FSS) - Type-safe CSS styling library.
 * [office-fable](https://github.com/Freymaurer/office-fable) - Fable bindings for office-js.
 * [Fable.Etebase](https://github.com/kaeedo/Fable.Etebase) - Fable bindings for etebase-js.
+* [Glutinum.Fuse](https://github.com/glutinum-org/Glutinum.Fuse) - Fable bindings for [fuse.js](https://fusejs.io/)
 
 ## Tools
 
