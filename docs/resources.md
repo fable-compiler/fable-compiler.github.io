@@ -121,6 +121,7 @@ menu: false
 * [Feliz.RoughViz][feliz-github-repository] - Feliz binding for the `rough-viz` library.
 * [Feliz.Router](https://github.com/Zaid-Ajaj/Feliz.Router) - An Elmish router that is focused, powerful and extremely easy to use.
 * [Feliz.SweetAlert](https://github.com/Shmew/Feliz.SweetAlert) - Fable bindings written in the Feliz-style for sweetalert2.
+* [Feliz.Tailwind](https://github.com/tforkmann/Feliz.Tailwind) - Feliz wrapper for `TailwindCSS` component library.
 * [Feliz.UseDeferred][feliz-github-repository] - Hooks for dead-simple data fetching with Feliz.
 * [Feliz.UseElmish][feliz-github-repository] - Hooks to build Elmish components as React components.
 * [Feliz.UseListener](https://github.com/Shmew/Feliz.UseListener) - React hooks for easy event listener management.
