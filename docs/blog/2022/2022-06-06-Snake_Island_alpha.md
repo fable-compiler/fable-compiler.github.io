@@ -15,9 +15,7 @@ We also believe that, same as it happened with JS, the interaction with other ec
 
 Please see below for specific details about each of the new language targets and how you can try each one.
 
-:::warning
-Don't update your current Fable JS projects just yet. In principle, everything should work the same as we're aiming for no breaking changes. But there won't be many JS new features (except for JSX compilation, see below) and compiler plugins do need to be updated. So if you're using `ReactComponent` attribute in your project, it won't work yet with Snake Island.
-:::
+> **Don't update your current Fable JS projects just yet.** In principle, everything should work the same as we're aiming for no breaking changes. But there won't be many JS new features (except for JSX compilation, see below) and compiler plugins do need to be updated. So if you're using `ReactComponent` attribute in your project, it won't work yet with Snake Island.
 
 ## Python
 
@@ -127,11 +125,10 @@ Which in turn gets translated by Solid into imperative code that will update onl
 
 Soon JSX will be available to Fable React apps too! Though as commented above, it won't make a big difference (and in fact it can be more limiting as JSX needs to be interpreted statically) but we are also introducing JSX templates which can be particularly helpful when bringing external HTML code to your app. And with the [F# template highlighting VS Code extension](https://marketplace.visualstudio.com/items?itemName=alfonsogarciacaro.vscode-template-fsharp-highlight) you can achieve a very similar experience to [Fable.Lit](https://fable.io/Fable.Lit/).
 
-<img src="./jsx.jpg" style="max-width: 55rem; margin: 0 auto; display: block;" />
+<img src="./jsx.jpg" style="max-width: 50rem; margin: 2rem auto; display: block;" />
 
 This basically means you'll be able to write JSX code directly into your F# app! And you can try it out already with Solid and Snake Island by cloning [this repo](https://github.com/alfonsogarciacaro/Feliz.Solid).
 
-<br />
 <hr />
 <br />
 
@@ -147,9 +144,7 @@ Now you can test the different targets by calling the tool as with Fable 3 and p
 dotnet fable MyScript.fsx --lang python
 ```
 
-:::info
-Just remember that supporting the whole .NET Base Class Library is not one of Fable's goal, so calls to `System.IO` and friends won't work. Please check the current [BCL Compatibility Guide](https://fable.io/docs/dotnet/compatibility.html) for JS as reference, though the new language targets still lag behind.
-:::
+> Just remember that supporting the whole .NET Base Class Library is not one of Fable's goal, so calls to `System.IO` and friends won't work. Please check the current [BCL Compatibility Guide](https://fable.io/docs/dotnet/compatibility.html) for JS as reference, though the new language targets still lag behind.
 
 As mentioned above this a very ambitious project, and Fable is still an Open Source project maintained by contributors in their free time. We don't have strict roadmaps or deadlines, Snake Island has emerged because each of the contributors had a personal interest in using Fable to bring F# to an ecosystem they love (if you want Fable to target a new language, contribute!). We're still in the alpha release cycle and there are many challenges left until having a stable version. We can only overcome these challenges with the help of the community, you don't need to dive into the compiler code to fix bugs and add features, but it's very important for contributors to know their work is helping others, get feedback and receive words of encouragement (in Github or Twitter). Community contributions have been crucial for previous Fable releases, let's also bring this one to life together!
 
