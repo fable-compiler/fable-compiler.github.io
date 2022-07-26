@@ -188,8 +188,8 @@ we could use the same method we used with `alert.js`:
   open Fable.Core.JsInterop // needed to call interop tools
 
   type ICanvas =
-    abstract drawSmiley: (id:string) -> unit
-    abstract drawBubble: (id:string) -> unit
+    abstract drawSmiley: string -> unit
+    abstract drawBubble: string -> unit
 
   [<ImportAll("path/to/Canvas.js")>]
   let mylib: ICanvas = jsNative
