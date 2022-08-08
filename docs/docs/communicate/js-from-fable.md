@@ -669,7 +669,7 @@ type JsOption =
     | [<CompiledName("quantity")>] QTY of int
 
 let inline sendToJs (opts: JsOption list) =
-    keyValueList CaseRules.LowerFirst opts |> aNativeJsFunction
+    keyValueList CaseRules.LowerFirst opts
 
 sendToJs [
     Flag1
