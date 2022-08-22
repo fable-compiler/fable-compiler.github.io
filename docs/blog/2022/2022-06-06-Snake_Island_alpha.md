@@ -132,10 +132,11 @@ This basically means you'll be able to write JSX code directly into your F# app!
 <hr />
 <br />
 
-Hopefully you're now as excited as we are! You can give Snake Island a go right now by following the instructions for each language above or installing it locally specifying the `snake-island` version range:
+Hopefully you're now as excited as we are! You can give Snake Island a go right now by following the instructions for each language above or installing it locally specifying the `snake-island` version range (first command is not necessary if you already have a dotnet tool manifest in the directory):
 
 ```
-dotnet tool install fable --local --version 4.0.0-snake-island-*
+dotnet new tool-manifest
+dotnet tool install fable --local --version "4.0.0-snake-island-*"
 ```
 
 Now you can test the different targets by calling the tool as with Fable 3 and passing the `--lang` option. For example if you want to compile a script to Python, run:
