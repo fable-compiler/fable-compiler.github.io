@@ -1,7 +1,18 @@
+---
+layout: fable-blog-page
+title: Flutter State in F# with Fable and Redux
+author: Ben Copeland
+date: 2022-09-13
+author_link: https://blog.bencope.land/
+author_image: https://github.com/bentok.png
+# external_link:
+abstract: |
+  Although Fable 4 is still pre-release, the Dart compilation works great - so great that I was able to migrate the entirety of my Redux state management in a Flutter app over to F#. Being able to model data and dispatch actions in F# has made Flutter so much nicer to work with, so in this post I'll be sharing info about how to do the same approach in your own Flutter app.
+---
 
 ![fhsarp loves dart](../../static/img/blog/fsharp_loves_dart.png)
 
-# Flutter State in F# with Fable and Redux
+> This article was originally posted [here](https://blog.bencope.land/flutter-state-in-f-with-fable-and-redux/).
 
 [Fable 4.0 is on the horizon](https://fable.io/blog/2022/2022-06-06-Snake_Island_alpha.html) 🎉 and with it comes the ability to compile F# code to Dart. Although Fable 4 is still pre-release, the Dart compilation works great - so great that I was able to migrate the entirety of my Redux state management in a Flutter app over to F#. Being able to model data and dispatch actions in F# has made Flutter so much nicer to work with, so in this post I'll be sharing info about how to do the same approach in your own Flutter app.
 
