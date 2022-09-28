@@ -72,16 +72,16 @@ Choose one or more of the following tags:
 - `fable-all`: Package is compatible with all Fable targets.
 
     :::warning
-    A package can only be compatible with all the target if it depends only packages that are also compatible with all the targets.
+    A package can be compatible with all targets if it depends only on packages that are also compatible with all targets.
 
-    A package compatible with all the targets cannot be a binding as bindings are target specific.
+    A package compatible with all targets cannot be a binding, as these are target-specific.
     :::
 
 Example:
 
-If your package support only JavaScript you need to use `fable-javascript`
+If your package supports only JavaScript you need to use `fable-javascript`
 
-If your package support both JavaScript and Python, you need to use `fable-javascript` and `fable-python`
+If your package supports both JavaScript and Python, you need to use `fable-javascript` and `fable-python`
 
 </li>
 
@@ -96,7 +96,7 @@ If your package is a binding which target JavaScript you need to write:
 <PackageTags>fable;fable-binding;fable-javascript</PackageTags>
 ```
 
-If your package is a library which target JavaScript and Python you need to write:
+If your package is a library which targets JavaScript and Python you need to write:
 
 ```xml
 <PropertyGroup>
