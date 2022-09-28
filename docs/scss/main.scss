@@ -1,0 +1,71 @@
+
+.content {
+    pre {
+        @include strong-shadow-box;
+    }
+}
+
+.twitter-timeline-container {
+    border: 1px solid $grey-lighter !important;
+    border-radius: $radius;
+    overflow: hidden;
+    padding: 0;
+}
+
+.has-code-block {
+    &.is-normal {
+        pre {
+            font-size: $size-6;
+        }
+    }
+}
+
+.selling-points {
+    display: grid;
+    gap: $size-4;
+    // grid-template-rows: 200px;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 1fr;
+
+    .selling-point {
+        border-radius: 4px;
+        box-shadow: 5px 5px 0px 1px lightgrey;
+        border: 1px solid lightgrey;
+        background-color: white;
+        margin-bottom: 0 !important;
+    }
+}
+
+// API gen specific
+.docs-example {
+    margin-bottom: $size-4;
+}
+
+// On mobile display the selling points has a single column
+@include mobile {
+    .selling-points {
+        grid-template-columns: 1fr;
+    }
+}
+
+.box.is-selling-point {
+    @include strong-shadow-box;
+}
+
+@include touch {
+    #fable-main-header {
+        padding: $size-3;
+    }
+}
+
+.media {
+    .media-center {
+        display: block;
+        // margin-bottom: $size-6;
+    }
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    margin-right: 0.5em;
+}

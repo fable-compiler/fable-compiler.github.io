@@ -1,58 +1,13 @@
 @import "./../node_modules/bulma/sass/utilities/initial-variables";
 
-/////////////////////////////////
-/// Customize Bulma
-/////////////////////////////////
-$fable-blue: dodgerblue;
-$purple: #7a325d;
-$blue: #0055a4;
-$primary: $fable-blue;
-$black: #202020;
-$text: #444;
+@import "./scss/bulma/custom_initial_variables.scss";
 
 @import "./../node_modules/bulma/sass/utilities/derived-variables";
 
-/////////////////////////////////
-/// nacara-layout-standard customizations
-/// Do not touch unless you know what you are doing
-/////////////////////////////////
-$navbar-breakpoint: 0px;
-$navbar-padding-vertical: 0.5rem;
-$navbar-padding-horizontal: 1rem;
-/////////////////////////////////
-
-// Specific to gatsby-remark-vscode usage
-$content-pre-padding: unset;
-
-/////////////////////////////////
-/// Customize Bulma
-/////////////////////////////////
-
-$navbar-item-color: $white;
-$navbar-background-color: $primary;
-$navbar-item-active-color: $white;
-$navbar-item-active-background-color: lighten($primary, 8%);
-$navbar-item-hover-color: $white;
-$navbar-item-hover-background-color: lighten($primary, 8%);
-$navbar-dropdown-item-active-background-color: lighten($primary, 8%);
-$navbar-dropdown-item-hover-background-color: lighten($primary, 8%);
-$navbar-dropdown-item-hover-color: $white;
-$navbar-dropdown-item-active-color: $white;
-
-$menu-item-active-background-color: $primary;
-$menu-item-active-color: $white;
-$menu-item-hover-color: $primary;
-$menu-item-hover-background-color: transparent;
-$menu-label-font-size: $size-6;
-$menu-item-radius: $radius-large $radius-large;
-
-$footer-background-color: $primary;
-$footer-color: $white;
-
-$link: darken($primary, 4%);
-$code: $red;
-
-$body-size: 14px;
+@import "./scss/bulma/custom_derived_varibales.scss";
+$tabs-border-bottom-width: 2px;
+// Code blocks have strong shadow so we need to add some margin
+$content-block-margin-bottom: 1.25rem;
 
 @import "../node_modules/bulma/sass/utilities/_all.sass";
 @import "./../node_modules/bulma/bulma.sass";
@@ -74,69 +29,4 @@ $body-size: 14px;
 @import './scss/utilities.scss';
 @import './scss/blog-index.scss';
 @import './scss/blog-post.scss';
-
-.content {
-    pre {
-        @include strong-shadow-box;
-    }
-}
-
-.twitter-timeline-container {
-    border: 1px solid $grey-lighter !important;
-    border-radius: $radius;
-    overflow: hidden;
-    padding: 0;
-}
-
-.has-code-block {
-    &.is-normal {
-        pre {
-            font-size: $size-6;
-        }
-    }
-}
-
-.selling-points {
-    display: grid;
-    gap: $size-4;
-    // grid-template-rows: 200px;
-    grid-template-columns: 1fr 1fr;
-    grid-auto-rows: 1fr;
-
-    .selling-point {
-        border-radius: 4px;
-        box-shadow: 5px 5px 0px 1px lightgrey;
-        border: 1px solid lightgrey;
-        background-color: white;
-        margin-bottom: 0 !important;
-    }
-}
-
-// API gen specific
-.docs-example {
-    margin-bottom: $size-4;
-}
-
-// On mobile display the selling points has a single column
-@include mobile {
-    .selling-points {
-        grid-template-columns: 1fr;
-    }
-}
-
-.box.is-selling-point {
-    @include strong-shadow-box;
-}
-
-@include touch {
-    #fable-main-header {
-        padding: $size-3;
-    }
-}
-
-.media {
-    .media-center {
-        display: block;
-        // margin-bottom: $size-6;
-    }
-}
+@import './scss/main.scss';
