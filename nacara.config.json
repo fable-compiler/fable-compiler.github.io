@@ -65,7 +65,8 @@
             "options": {
                 "theme": "Atom One Light",
                 "extensions": [
-                    "vscode-theme-onelight"
+                    "vscode-theme-onelight",
+                    "dart-code"
                 ]
             }
         }
