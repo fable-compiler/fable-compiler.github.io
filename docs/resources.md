@@ -189,7 +189,6 @@ menu: false
 
 * [ionide][ionide] - VS Code and Atom extension for F# development
 * [The Gamma](https://thegamma.net/) - Tools for open data-driven storytelling
-* [Casque Noir](http://www.casquenoir.com) - Web documentary about Haïti environmental issues
 * [Fable-of-the-Day](https://github.com/rommsen/fable-of-the-day) - Catch of the day by @wesbos ported to Fable
 * [Czech Republic 2018 Election Analytics](http://showme.median.cz/volby-2018/)
 * [Metadata Excel-Add-in: Swate](https://github.com/nfdi4plants/Swate)

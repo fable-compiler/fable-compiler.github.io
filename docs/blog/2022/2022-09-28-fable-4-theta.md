@@ -27,6 +27,8 @@ If you already have Fable installed in the directory, use `update` instead:
 dotnet tool update fable --prerelease
 ```
 
+<br/>
+
 > If you want to know more about what to expect of the new major release, check the [previous post](https://fable.io/blog/2022/2022-06-06-Snake_Island_alpha.html).
 
 Unless there is a critical bug, we won't publish new releases for Fable 3 anymore, so we encourage you to upgrade as soon as possible to make sure your projects will keep enjoying new features and improvements.
@@ -53,6 +55,8 @@ With this in mind, at the time of writing this is the status for each of the lan
 
 - **Rust: alpha** - Rust compilation is already quite good, but there is still discussion going on for some compilation fundamentals, so there is still room for change.
 
+- **Dart: beta** - Although missing features, Dart compilation is [already used in production](https://fable.io/blog/2022/2022-09-13-fable-flutter-redux.html). We are looking for more feedback to understand how F# Flutter apps can help the community.
+
 - **TypeScript: alpha** - We're moving TypeScript from its original experimental status to alpha, this means we want to make it a working target for Fable 4 in the future, but there's still work ahead to make sure compilation is on par with JS.
 
 - **PHP: experimental** - PHP compilation is not currently maintained.
@@ -63,9 +67,13 @@ A few dependencies needed updates to be compatible with Fable 4. If your project
 
 - Thoth.Json v6.0
 - Fable.SimpleJson v3.24
-- Feliz v2.0.0-prerelease-003
+- Feliz v2.0.0-prerelease-003 (only if you use `ReactComponent` attribute)
 
-> **Attention**: We're also taking the chance to make some restructuring of Fable.React. If your project includes packages that depend on Fable.React v8 or lower (like Fable.Elmish.React v3), they may break. You can keep using Feliz v1 instead and add the package **Feliz.CompilerPlugins v2.0.0-prerelease-003** (or higher). Note this is only necessary if you use the `ReactComponent` attribute.
+<div class="message is-warning">
+<div class="message-body">
+Updating Feliz to v2 or Fable.React to v9 will force you to upgrade other dependencies like Elmish.React or Fulma as well (some others may not be up-to-date). If you want to delay the upgrade, you can keep using Feliz v1 and add the <strong>Feliz.CompilerPlugins v2.0.0-prerelease-003</strong> (or higher) package instead.
+</div>
+</div>
 
 ## Testing other Languages
 

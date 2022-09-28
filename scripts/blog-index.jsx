@@ -63,7 +63,7 @@ const PageHeader = () => {
                 <div className="content is-size-5 has-text-weight-light mt-4">
                     Check our blog to be up-to-date with recent developments in Fable community and if you have cool stuff to share (and we're sure you do)
                     <a href="https://github.com/fable-compiler/fable-compiler.github.io/tree/dev/blog">
-                        send us a PR
+                        {" send us a PR "}
                     </a>
                     with your post or a link to your personal web.
                 </div>
