@@ -93,14 +93,15 @@ If your package is a binding which target JavaScript you need to write:
 
 ```xml
 <PropertyGroup>
-<PackageTags>fable;fable-binding;fable-javascript</PackageTags>
+    <PackageTags>fable;fable-binding;fable-javascript</PackageTags>
+</PropertyGroup>
 ```
 
 If your package is a library which targets JavaScript and Python you need to write:
 
 ```xml
 <PropertyGroup>
-<PackageTags>fable;fable-library;fable-javascript;fable-python</PackageTags>
+    <PackageTags>fable;fable-library;fable-javascript;fable-python</PackageTags>
 </PropertyGroup>
 ```
 
