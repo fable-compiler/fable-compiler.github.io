@@ -431,6 +431,11 @@ async {
                     <img src="static/img/users/chaldal.png">
                 </a>
             </div>
+            <div class="column is-narrow">
+                <a class="image is-128x128 is-flex is-flex-direction-column is-justify-content-center" href="https://rtinvestments.com/" target="_blank">
+                    <img src="static/img/users/Round_Table.webp">
+                </a>
+            </div>
         </div>
     </section>
 </div>
