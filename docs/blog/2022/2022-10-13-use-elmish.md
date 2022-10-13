@@ -42,8 +42,8 @@ let private mkProgram () =
     |> Program.withSubscription (fun model ->
         [
             if model.CheckFriendsStatus then
-                ["friends-status"], (fun model ->
-                    let id = startWebSocket()
+                ["friends-status"], (fun dispatch ->
+                    let id = startWebSocket(dispatch)
                     mkDisposable (fun () -> closeWebSocket(id)))
         ])
 ```
@@ -83,4 +83,6 @@ let App () =
 
 You can check [this example](https://github.com/alfonsogarciacaro/fable-react-sample/blob/3fc0f5ca2411432d3a34e12344fcca2a4ba6a4ce/src/TodoMVC.fs#L198) to quickly test Fable.React.UseElmish. Just clone the repository and run `npm install && npm start` to launch a development server, and try editing the code in TodoMVC.fs to see the web contents updated on the fly. Please give it a try and let us know what you think!
 
-> In order for React Fast Refresh to work, files must include **only one JS export**. This means you should only expose one functional component (decorated with `Feliz.ReactComponent` or `JSX.Component`) and the rest of the code in the file must be private.
+> In order for React Fast Refresh to work, files must **export only React components**, that is, functions decorated with `Feliz.ReactComponent` or `JSX.Component` and using PascalCase. The rest of the code in the file must be private.
+
+Special thanks to Eugene Tolmachev, Maxime Mangel, Zaid Ajaj, Cody Johnson and all the other contributors that have turned writing React apps in F# into such a great development experience!
