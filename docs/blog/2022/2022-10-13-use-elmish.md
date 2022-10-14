@@ -23,7 +23,7 @@ Thankfully, these problems have been solved now thanks to React 18 (with the new
 
 ## Elmish 4 Subscriptions
 
-Subscriptions are becoming much more powerful with Elmish 4:
+Thanks to [Kasey Speakman](https://github.com/elmish/elmish/pull/248) subscriptions are becoming much more powerful with Elmish 4:
 
 - Subscriptions must include now an `IDisposable` that will be invoked by Elmish when cleaning up.
 - The `Program.withSubscription` function is now evaluated after every update. This makes it really easy to activate or deactivate subscriptions on demand.
