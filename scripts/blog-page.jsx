@@ -1,5 +1,6 @@
 import React from "react";
 import * as pageMinimal from "nacara-layout-standard/dist/Page.Minimal.js";
+import { rehypePlugins, remarkPlugins } from "nacara-layout-standard/dist/Page.Standard.js";
 
 const AuthorImage = ({ imageLink }) => {
     return <figure className="image is-96x96 author-image">
@@ -63,7 +64,9 @@ const render = async (rendererContext, pageContext) => {
     const pageContent =
         await rendererContext.MarkdownToHtml(
             pageContext.Content,
-            pageContext.RelativePath
+            pageContext.RelativePath,
+            remarkPlugins,
+            rehypePlugins
         );
 
     return pageMinimal.render(
