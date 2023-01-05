@@ -89,7 +89,7 @@ Most of F# OOP features are compatible with Fable: interfaces and abstract class
 
 ## Reflection and Generics
 
-There is some reflection support in Fable, you can check the [reflection tests](https://github.com/fable-compiler/Fable/blob/master/tests/Main/ReflectionTests.fs) to see what is currently possible.
+There is some reflection support in Fable, you can check the [reflection tests](https://github.com/fable-compiler/Fable/blob/main/tests/Js/Main/ReflectionTests.fs) to see what is currently possible.
 
 Generics are erased by default in the generated JS code. However, it is still possible to access generic information (like `typeof<'T>`) at runtime by marking functions with `inline`:
 
