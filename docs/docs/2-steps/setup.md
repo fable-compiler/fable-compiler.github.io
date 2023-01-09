@@ -7,7 +7,8 @@ layout: standard
 
 In order to use Fable you will need the following tools:
 
-- [.NET Core SDK](https://dotnet.microsoft.com/) to work with F# files and dependencies
+- [.NET Core SDK 6.0]([https://dotnet.microsoft.com/](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)) to work with F# files and dependencies
+  - be sure to set this in your [global.json](https://learn.microsoft.com/en-us/dotnet/core/tools/global-json) if you're having trouble
 - [Node.js](https://nodejs.org/) to execute JS code
 - A JS package manager, like [npm](https://www.npmjs.com/) (which comes with Node) or [yarn](https://yarnpkg.com/)
 
