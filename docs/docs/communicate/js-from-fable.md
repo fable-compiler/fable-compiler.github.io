@@ -471,7 +471,7 @@ By default, the compiled string will have the first letter lowered. If you want 
 ```fsharp
 open Fable.Core
 
-[<StringEnum>]
+[<StringEnumAttribute>]
 type MyStrings =
     | Vertical
     | [<CompiledName("Horizontal")>] Horizontal
