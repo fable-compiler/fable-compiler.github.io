@@ -116,6 +116,7 @@ menu: false
 * [Feliz.Plotly](https://github.com/Shmew/Feliz.Plotly) - Fable bindings written in the Feliz-style for plotly.js.
 * [Feliz.Popover][feliz-github-repository] - `react-popover` bindings based on the Feliz API.
 * [Feliz.ReactFlow](https://github.com/tforkmann/Feliz.ReactFlow) - `ReactFlow` bindings based on the Feliz API.
+* [Feliz.ReactNative](https://github.com/carne8/Feliz.ReactNative) - `ReactNative` bindings for react native based on the Feliz API.
 * [Feliz.GridLayout](https://github.com/tforkmann/Feliz.GridLayout) - Feliz binding for React Grid Layout.
 * [Feliz.ChartJS](https://github.com/tforkmann/Feliz.ChartJS) - Feliz binding for React ChartJS.
 * [Feliz.Recharts][feliz-github-repository] - `Recharts` bindings based on the Feliz API.
