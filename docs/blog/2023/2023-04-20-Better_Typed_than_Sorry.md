@@ -257,6 +257,32 @@ test(MyUnion_Bar(5))
 test(MyUnion_Baz())
 ```
 
+## Compilation options
+
+In order to compile to TypeScript, you only need to pass the `--lang ts` option to Fable tool, but let's have a look at [the extra options in the compostjs example](https://github.com/alfonsogarciacaro/compost/blob/e783ed687bc19887f02aa0b071585a1a152c8956/package.json#L7-L11):
+
+```
+dotnet fable src/compost -o src/compost-ts --lang ts --fableLib fable-library --noReflection
+```
+
+- `--fableLib fable-library`: So far, Fable has been embedding the library files in each project, but from now on we are also [distributing it through npm](https://www.npmjs.com/package/fable-library). By using this compiler option you can tell Fable to use the npm package instead of the embedded files. This is is particularly useful if a consumer installs two or more libraries compiled with Fable, to avoid duplication of the library files.
+
+> Since Fable 4.1.2, when the tool starts, after printing the compiler version it will aslo tell you the minimum fable-library version compatible with the generated code.
+
+- `--noReflection`: By default Fable emits helpers for each declared type containing reflection information. These are used, for example, when generating [auto coders with Thoth.Json](https://thoth-org.github.io/Thoth.Json/documentation/auto/introduction.html). You don't need to care much about them because if not used they will be removed by tree shaking. But if you are not using reflection you can select this option to reduce the amount of generated code.
+
+If publishing the library to npm, you will also need an extra step to compile the TypeScript code to JavaScript and generate the declaration files. You can use the TypeScript compiler for that like follows:
+
+```
+npm run fable && tsc --outDir ./dist --declaration --noEmit false
+```
+
+In most situations you will also need a [tsconfig.json file](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html). You can use [the one in the compostjs example](https://github.com/alfonsogarciacaro/compost/blob/e783ed687bc19887f02aa0b071585a1a152c8956/tsconfig.json) as reference.
+
+<br />
+
 ---
+
+<br />
 
 That was it! There are still a few things missing in TypeScript compilation, but we believe it's already in a state that will let you integrate F# in TypeScript projects and/or write npm libraries in F# with confidence. We hope you find it useful and we are looking forward for all the great things you are going to build with F# and Fable. Make sure to let us know!
