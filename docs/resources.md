@@ -83,7 +83,6 @@ menu: false
 * [Fable.Aether](https://github.com/Prolucid/fable-aether) - Optics library build for Fable
 * [Fable.Mqtt](https://github.com/Prolucid/fable-mqtt) - Fable bindings for MqttJS
 * [Fable.Mocha](https://github.com/Zaid-Ajaj/Fable.Mocha) - Fable testing library with mocha. Works in browser without any dependency.
-* [Fable.Jester](https://github.com/Shmew/Fable.Jester) - Testing Fable apps with [Jest][jest-website]
 * [Fable.Ava](https://github.com/YoloDev/Fable.Ava) - Testing Fable apps with [Ava](https://github.com/avajs/ava)
 * [Elmish.SweetAlert](https://github.com/Zaid-Ajaj/Elmish.SweetAlert) - [sweetalert2](https://sweetalert2.github.io/) integration in Fable, implmeneted as Elmish commands, see [live docs](https://zaid-ajaj.github.io/Elmish.SweetAlert/).
 * [Elmish.Toastr](https://github.com/Zaid-Ajaj/Elmish.Toastr) - [Toastr](https://github.com/CodeSeven/toastr) (notification library) integration with Fable, implemented as Elmish commands
@@ -169,15 +168,6 @@ menu: false
 * [Fable + Feliz for Azure Static Web Apps](https://github.com/aaronpowell/swa-feliz-template) - GitHub repo template for Feliz + Functions for Azure Static Web Apps
 * [Elmish for Azure Static Web Apps](https://github.com/aaronpowell/swa-elmish-template) - GitHub repo template for Elmish + Functions for Azure Static Web Apps
 
-## Old (working only before Fable3)
-* [Fable.Jest](https://github.com/jgrund/fable-jest) - Testing Fable apps with [Jest][jest-website]
-* [fable-signalr](https://github.com/Prolucid/fable-import-signalr) - Fable bindings for SignalR
-* [fable-websockets](https://github.com/Prolucid/fable-import-ws) - Archived - Fable bindings for WS
-* [fable-react-toolbox](https://github.com/Prolucid/fable-react-toolbox) - UI components for fable-react
-* [fable-momentjs](https://github.com/Prolucid/fable-import-momentjs) - Fable bindings for momentjs
-* [Fable.Import.WebMIDI](https://github.com/magicmonty/fable-import-webmidi) - Web MIDI bindings for Fable
-* [rollup-plugin-fable](https://www.npmjs.com/package/rollup-plugin-fable) - Fable plugin for Rollup
-
 ## Support
 
 *Where to find help.*
@@ -191,13 +181,12 @@ menu: false
 
 * [ionide][ionide] - VS Code and Atom extension for F# development
 * [The Gamma](https://thegamma.net/) - Tools for open data-driven storytelling
+* [CompostJS](https://compostjs.github.io/compost/) - Composable data visualization library
 * [Fable-of-the-Day](https://github.com/rommsen/fable-of-the-day) - Catch of the day by @wesbos ported to Fable
-* [Czech Republic 2018 Election Analytics](http://showme.median.cz/volby-2018/)
 * [Metadata Excel-Add-in: Swate](https://github.com/nfdi4plants/Swate)
 * [facemorph.me](https://facemorph.me) - Website for morphing faces
 
 [ionide]: https://ionide.io/
 [Hanselminutes]: https://hanselminutes.com
 [elmish]: https://github.com/elmish
-[jest-website]: https://facebook.github.io/jest/
 [feliz-github-repository]: https://github.com/Zaid-Ajaj/Feliz
