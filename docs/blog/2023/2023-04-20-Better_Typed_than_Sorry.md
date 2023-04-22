@@ -58,9 +58,17 @@ type Compost =
   interface CompostShape with
     member s.on(h: Handlers) =
       Shape.Interactive([
-        match h.mousedown with None -> () | Some f -> yield MouseDown(fun me (x, y) -> f (formatValue x) (formatValue y) me)
-        match h.mouseup with None -> () | Some f -> yield MouseUp(fun me (x, y) -> f (formatValue x) (formatValue y) me)
-        match h.mousemove with None -> () | Some f -> yield MouseMove(fun me (x, y) -> f (formatValue x) (formatValue y) me)
+        match h.mousedown with
+        | None -> ()
+        | Some f -> yield MouseDown(fun me (x, y) -> f (formatValue x) (formatValue y) me)
+        
+        match h.mouseup with
+        | None -> ()
+        | Some f -> yield MouseUp(fun me (x, y) -> f (formatValue x) (formatValue y) me)
+        
+        match h.mousemove with
+        | None -> ()
+        | Some f -> yield MouseMove(fun me (x, y) -> f (formatValue x) (formatValue y) me)
       ], s)
 ```
 
@@ -105,7 +113,7 @@ The produced JS/TS code is the same as with the module above (except for the opt
 
 ### Erased unions
 
-Precisely, because overloads are not supported in JS, TypeScript often uses what we call _erased_ unions (to tell them apart from _actual_ F# unions) to allow different types of arguments. Fable can [represent these in F#](https://fable.io/docs/communicate/js-from-fable.html#erase-attribute) with unions decorated with `Erase` attribute. You can expose them in your APIs and even use pattern matching, but be aware this is translated to standard JS runtime testing (`typeof`, `instanceof`, `Array.isArray`...) so only use erased unions with [disctinct JS primitives](https://fable.io/docs/dotnet/compatibility.html#net-base-class-library) (e.g. no `U2<int, float>`).
+Precisely, because overloads are not supported in JS, TypeScript often uses what we call _erased_ unions (to tell them apart from _actual_ F# unions) to allow different types of arguments. Fable can [represent these in F#](https://fable.io/docs/communicate/js-from-fable.html#erase-attribute) with unions decorated with `Erase` attribute. You can expose them in your APIs and even use pattern matching, but be aware this is translated to standard JS runtime testing (`typeof`, `instanceof`, `Array.isArray`...) so only use erased unions with [distinct JS primitives](https://fable.io/docs/dotnet/compatibility.html#net-base-class-library) (e.g. no `U2<int, float>`).
 
 ```fsharp
 open Fable.Core.JsInterop
@@ -153,7 +161,7 @@ function parseValue(v: float64 | [any, float64]): Value_$union {
 
 ### Named arguments
 
-While JS/TS accept optional arguments, they cannot be ommitted unless they are at the end position. Because of this, it is common to pass a dictionary object instead (as with Python). In Fable you could use the `NamedParams` to represent this situation in bindings, and now you can also use it when declaring your own APIs:
+While JS/TS accept optional arguments, they cannot be omitted unless they are at the end position. Because of this, it is common to pass a dictionary object instead (as with Python). In Fable you could use the `NamedParams` to represent this situation in bindings, and now you can also use it when declaring your own APIs:
 
 ```fsharp
 type CompostShape =
@@ -267,7 +275,7 @@ dotnet fable src/compost -o src/compost-ts --lang ts --fableLib fable-library --
 
 - `--fableLib fable-library`: So far, Fable has been embedding the library files in each project, but from now on we are also [distributing it through npm](https://www.npmjs.com/package/fable-library). By using this compiler option you can tell Fable to use the npm package instead of the embedded files. This is is particularly useful if a consumer installs two or more libraries compiled with Fable, to avoid duplication of the library files.
 
-> Since Fable 4.1.2, when the tool starts, after printing the compiler version it will aslo tell you the minimum fable-library version compatible with the generated code.
+> Since Fable 4.1.2, when the tool starts, after printing the compiler version it will also tell you the minimum fable-library version compatible with the generated code.
 
 - `--noReflection`: By default Fable emits helpers for each declared type containing reflection information. These are used, for example, when generating [auto coders with Thoth.Json](https://thoth-org.github.io/Thoth.Json/documentation/auto/introduction.html). You don't need to care much about them because if not used they will be removed by tree shaking. But if you are not using reflection you can select this option to reduce the amount of generated code.
 
