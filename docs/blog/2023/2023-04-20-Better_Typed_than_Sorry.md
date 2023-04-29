@@ -14,7 +14,7 @@ If you are a Fable user you may have noticed that we released, quite quietly, Fa
 
 > If you haven't upgraded yet, we recommend you do it soon: there are no breaking changes and you [only need to update a few packages](../2022/2022-09-28-fable-4-theta.html#packages-updated-for-fable-4).
 
-With Fable 4.1 we are happy to announce one of those targets is ready for prime-time! Thanks to the effort of [ncave](https://github.com/ncave) who has been leading the effort to add type annotations to JS output (in spite of my initial reluctance) for a long time, TypeScript compilation started to become a real possibility. We have been working together in the last month and TypeScript generated code is almost on par now with JS so we have decided to bump the status from beta to stable 🚀
+With Fable 4.1 we are happy to announce one of those targets is ready for prime-time! Thanks to the work of [ncave](https://github.com/ncave) who has been leading the effort to add type annotations to JS output (in spite of my initial reluctance) for a long time, TypeScript compilation started to become a real possibility. We have been working together in the last month and TypeScript generated code is almost on par now with JS so we have decided to bump the status from beta to stable 🚀
 
 Wait a moment, compiling to TypeScript? Does this mean I should compile all my JS apps to TypeScript from now on for extra type-safety? No, we don't recommend that. In fact, you probably shouldn't. Many Fable libraries already emit JS code that TypeScript may not accept happily and we cannot control that. TypeScript compilation is intended for integrating F# into existing TypeScript and to write libraries that can be published to npm and consumed with a type-safe API. This is in line with the focus we are giving to the new language targets: instead of trying to do everything in F#, we will concentrate our efforts on having a great experience with [Domain Programming](https://fsharpforfunandprofit.com/ddd/) in all platforms. This means spending less time writing bindings for native libraries and instead working on generating nice code that can be easily consumed.
 
@@ -82,7 +82,7 @@ c.line(data)
     })
 ```
 
-> A similar effect can be reached with [anonymous records](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/anonymous-records).
+> A similar effect can be achieved with [anonymous records](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/anonymous-records).
 
 ### Exporting members
 
@@ -264,6 +264,80 @@ test(MyUnion_Foo("a", "b"))
 test(MyUnion_Bar(5))
 test(MyUnion_Baz())
 ```
+
+### TypeScript Tagged Unions
+
+Even if F# unions can be used in a typed-safe manner from TypeScript, when you build a public API you may want your unions to feel more "native". And it happens that TypeScript does have the concept of a [discriminated union](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions): which is a union of JS objects where all of them share a common property that has the function of the "tag". Fable can compile F# unions to TypeScript tagged unions thanks to the `TypeScriptTaggedUnion` attribute. This was a feature contributed by [cannorin](https://github.com/cannorin) and since **Fable 4.1.3** it has been updated to support TypeScript annotations. You define the name of the tag property in the attribute, and the name of each case will become the value of the tag. It is also important that you use **named fields** for each case. Let's see an example:
+
+```fsharp
+[<TypeScriptTaggedUnion("type")>]
+type Command =
+    | Take of fromIndex: int * toIndex: int
+    | Edit of text: string
+    | Save
+
+let test = function
+    | Take(fromIndex, toIndex) -> printfn $"Taking from {fromIndex} to {toIndex}"
+    | Edit(text) -> printfn $"New text: {text}"
+    | Save -> printfn "Saving"
+
+Take(5, 7) |> test
+```
+
+In TypeScript it becomes:
+
+```ts
+export type Command =
+    | { type: "take", fromIndex: int32, toIndex: int32 }
+    | { type: "edit", text: string }
+    | { type: "save" }
+
+export function test(arg: Command): void {
+    switch (arg.type) {
+        case "edit": {
+            toConsole(`New text: ${arg.text}`);
+            break;
+        }
+        case "save": {
+            toConsole(printf("Saving"));
+            break;
+        }
+        default: {
+            toConsole(`Taking from ${arg.fromIndex} to ${arg.toIndex}`);
+        }
+    }
+}
+
+test({
+    type: "take",
+    fromIndex: 5,
+    toIndex: 7,
+});
+```
+
+By default the case names will change to camel case, but as with `StringEnum` you can pass a `CaseRules` argument to the attribute to control this, as well as using `CompiledName` in a case:
+
+```fsharp
+[<TypeScriptTaggedUnion("method", CaseRules.SnakeCaseAllCaps)>]
+type HttpOptions =
+    | Get
+    | Post of body: string
+    | Put of body: string
+    | [<CompiledName("HEAD")>] OnlyHeaders
+
+// TypeScript:
+//
+// type HttpOptions =
+//     | { method: "GET" }
+//     | { method: "POST", body: string }
+//     | { method: "PUT", body: string }
+//     | { method: "HEAD" }
+```
+
+
+:::warning
+Types decorated with `TypeScriptTaggedUnion` have similar limitations to `Erase` and `StringEnum`, that is, because the type has no actual representation in the JS runtime, you cannot use reflection, do type testing or attach interfaces (you can still use instance and static members from F#). It is recommended to use the special attributes only to interact with native code and not in your everyday F# programming.
+:::
 
 ## Compilation options
 
