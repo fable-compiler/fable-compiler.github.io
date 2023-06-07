@@ -10,14 +10,6 @@
     },
     {
         "type": "section",
-        "label": "New to F#?",
-        "items": [
-            "docs/new-to-fsharp/learning-the-language",
-            "docs/new-to-fsharp/let-keyword"
-        ]
-    },
-    {
-        "type": "section",
         "label": "Fable in 2 steps",
         "items": [
             "docs/2-steps/setup",
@@ -28,19 +20,37 @@
         "type": "section",
         "label": "Your Fable project",
         "items": [
-            "docs/your-fable-project/project-file",
             "docs/your-fable-project/use-a-fable-library",
             "docs/your-fable-project/author-a-fable-library",
-            "docs/your-fable-project/build-and-run",
             "docs/your-fable-project/testing"
         ]
     },
     {
         "type": "section",
-        "label": "Communicate with Javascript",
+        "label": "New to F#?",
         "items": [
-            "docs/communicate/js-from-fable",
-            "docs/communicate/fable-from-js"
+            "docs/new-to-fsharp/learning-the-language",
+            "docs/new-to-fsharp/let-keyword",
+            "docs/new-to-fsharp/project-file"
+        ]
+    },
+    {
+        "type": "section",
+        "label": "JavaScript",
+        "items": [
+            "docs/javascript/quickstart",
+            "docs/javascript/build-and-run",
+            "docs/javascript/call-js-from-fable",
+            "docs/javascript/call-fable-from-js",
+            "docs/javascript/compatibility" 
+        ]
+    },
+    {
+        "type": "section",
+        "label": "TypeScript",
+        "items": [
+            "docs/typescript/quickstart",
+            "docs/typescript/features"
         ]
     },
     {
