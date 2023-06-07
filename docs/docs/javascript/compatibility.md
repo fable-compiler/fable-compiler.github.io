@@ -40,7 +40,7 @@ The following static methods are also available:
 - `System.Diagnostics.Debugger.Break()`
 - `System.Activator.CreateInstance<'T>()`
 
-There is also support to convert between numeric types and to parse strings, check [the conversion tests](https://github.com/fable-compiler/Fable/blob/master/tests/Main/ConvertTests.fs).
+There is also support to convert between numeric types and to parse strings, check [the conversion tests](https://github.com/fable-compiler/Fable/blob/main/tests/Js/Main/ConvertTests.fs).
 
 ### Caveats
 
