@@ -239,3 +239,25 @@ function execute(command: Command) {
     }
 }
 ```
+
+
+<!-- Example with interfaces -->
+
+type Circle =
+    abstract kind: string
+    abstract radius: float
+
+type Square =
+    abstract kind: string
+    abstract sideLength: float
+
+[<TypeScriptTaggedUnion("kind")>]
+type Shape =
+    | Circle of Circle
+    | Square of Square
+
+// usage
+let describeShape (shape: Shape) =
+    match shape with
+    | Circle c -> $"circle of radius {c.radius}"
+    | Square s -> $"square of length {s.sideLength}"

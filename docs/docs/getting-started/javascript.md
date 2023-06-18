@@ -1,7 +1,11 @@
 ---
-title: Quickstart
+title: JavaScript
 layout: standard
 ---
+
+This section is specific to JavaScript targetting, it will guide you through the process of setting up your project and using Fable with JavaScript.
+
+We will cover the basics of using Node.js and [Vite](https://vitejs.dev/) for the browser, but you can use any tools you want.
 
 ## Node.js
 

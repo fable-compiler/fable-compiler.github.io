@@ -85,5 +85,4 @@ This can be expressed in the project file as:
 
 :::info{title="For JavaScript/TypeScript target"}
 An important thing to note is Fable will translate F# source files to [ES2015 modules](https://exploringjs.com/es6/ch_modules.html) using JS `import`. This means that files which are not referenced by any other **will be ignored** (except the last file) including side effects. This is different behavior from .NET, where all files are compiled and executed, regardless of their relationship with the rest of the project.
-
 :::

@@ -10,10 +10,11 @@
     },
     {
         "type": "section",
-        "label": "Fable in 2 steps",
+        "label": "Getting started",
         "items": [
-            "docs/2-steps/setup",
-            "docs/2-steps/your-first-fable-project"
+            "docs/getting-started/setup",
+            "docs/getting-started/your-first-fable-project",
+            "docs/getting-started/javascript"
         ]
     },
     {
@@ -21,8 +22,7 @@
         "label": "Your Fable project",
         "items": [
             "docs/your-fable-project/use-a-fable-library",
-            "docs/your-fable-project/author-a-fable-library",
-            "docs/your-fable-project/testing"
+            "docs/your-fable-project/author-a-fable-library"
         ]
     },
     {
@@ -38,11 +38,12 @@
         "type": "section",
         "label": "JavaScript",
         "items": [
-            "docs/javascript/quickstart",
             "docs/javascript/build-and-run",
+            "docs/javascript/testing",
+            "docs/javascript/features",
             "docs/javascript/call-js-from-fable",
             "docs/javascript/call-fable-from-js",
-            "docs/javascript/compatibility" 
+            "docs/javascript/compatibility"
         ]
     },
     {
