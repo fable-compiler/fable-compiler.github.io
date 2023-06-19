@@ -200,7 +200,7 @@ type Color =
     | Spades | Hearts | Diamonds | Clubs
 
 type Card =
-    | Face * Color
+    Face * Color
 
 let aceOfHearts = Ace, Hearts
 let tenOfSpades = (Number 10), Spades
