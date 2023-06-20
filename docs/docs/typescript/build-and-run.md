@@ -77,8 +77,10 @@ This file is the entry point of your application. It will load the generated Jav
 
 Run Fable in watch mode and Vite in parallel.
 
+### Single command
+
 ```bash
-dotnet fable watch --run npx vite
+dotnet fable watch --lang typescript --run npx tsc Program.fs.ts --target es2022 --watch --preserveWatchOutput
 ```
 
 When changes are made to your F# code, Fable will recompile it and Vite will reload the page.

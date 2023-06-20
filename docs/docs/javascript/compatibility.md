@@ -5,6 +5,66 @@ layout: standard
 
 Fable provides support for some classes of .NET BCL (Base Class Library) and most of FSharp.Core library. When possible, Fable translates .NET types and methods to native JavaScript APIs for minimum overhead.
 
+## Common types and objects
+
+Some F#/.NET types have [counterparts in JS](/../dotnet/compatibility.html). Fable takes advantage of this to compile to native types that are more performant and reduce bundle size. You can also use this to improve interop when exchanging data between F# and JS. The most important common types are:
+
+- **Strings and booleans** behave the same in F# and JS.
+- **Chars** are compiled as JS strings of length 1. This is mainly because string indexing in JS gives you another string. But you can use a char as a number with an explicit conversion like `int16 '家'`.
+- **Numeric types** compile to JS numbers, except for `long`, `decimal` and `bigint`.
+- Sine Fable 4.0.5, `int64`, `uint64` are represented using native JS BigInt
+- **Arrays** (and `ResizeArray`) compile to JS arrays. _Numeric arrays_ compile to [Typed Arrays](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray) in most situations, though this shouldn't make a difference for most common operations like indexing, iterating or mapping. You can disable this behavior with [the `typedArrays` option](https://www.npmjs.com/package/fable-loader#options).
+- Any **IEnumerable** (or `seq`) can be traversed in JS as if it were an [Iterable](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators#Iterables).
+- Mutable **dictionaries** (not F# maps) compile to [ES2015 Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map).
+- Mutable **hashsets** (not F# sets) compile to [ES2015 Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set).
+
+> If the dictionary or hashset requires custom or structural equality, Fable will generate a custom type, but it will share the same properties as JS maps and sets.
+
+- **Objects**: As seen above, only record fields and interface members will be attached to objects without name mangling. Take this into account when sending to or receiving an object from JS.
+
+```fsharp
+type MyRecord =
+    { Value: int
+      Add: int -> int -> int }
+    member this.FiveTimes() =
+        this.Value * 5
+
+type IMyInterface =
+    abstract Square: unit -> float
+
+type MyClass(value: float) =
+    member __.Value = value
+    interface IMyInterface with
+        member __.Square() = value * value
+
+let createRecord(value: int) =
+    { Value = value
+      Add = fun x y -> x + y }
+
+let createClass(value: float) =
+    MyClass(value)
+```
+
+```js
+import { createRecord, createClass } from "./Tests.fs"
+
+var record = createRecord(2);
+
+// Ok, we're calling a record field
+record.Add(record.Value, 2); // 4
+
+// Fails, this member is not actually attached to the object
+record.FiveTimes();
+
+var myClass = createClass(5);
+
+// Fails
+myClass.Value;
+
+// Ok, this is an interface member
+myClass.Square(); // 25
+```
+
 ## .NET Base Class Library
 
 The following classes are translated to JS and most of their methods (static and instance) should be available in Fable.
@@ -42,13 +102,18 @@ The following static methods are also available:
 
 There is also support to convert between numeric types and to parse strings, check [the conversion tests](https://github.com/fable-compiler/Fable/blob/main/tests/Js/Main/ConvertTests.fs).
 
+:::info
+Interfaces coming from .NET BCL (like System.Collections.IEnumerator) are mangled by default.
+
+See [Name mangling](/docs/javascript/features.html#name-mangling) for more information.
+:::
+
 ### Caveats
 
 - All numeric types become JS `number` (64-bit floating type), except for `int64`, `uint64`, `bigint` and `decimal`. Check the [Numeric Types](numbers.html) section to learn more about the differences between .NET and JS.
 - Numeric arrays are compiled to [Typed Arrays](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray) when possible.
 - No bound checks for numeric types (unless you do explicit conversions like `byte 500`) nor for array indices.
 - `Regex` will always behave as if passed `RegexOptions.ECMAScript` flag (e.g., no negative look-behind or named groups).
-- To use `DateOnly`/`TimeOnly` you need to target `net6.0` in your .fsproj file.
 
 ## FSharp.Core
 

@@ -80,8 +80,8 @@ You can now use this file as you would use any other native file in your project
 To go further look into the respective target documentation to have an example of how to use the generated file:
 
 - [JavaScript](/docs/getting-started/javascript.html)
-<!-- - [TypeScript](/docs/getting-started/typescript.html)
-- [Dart](/docs/getting-started/dart.html)
+- [TypeScript](/docs/getting-started/typescript.html)
+<!-- - [Dart](/docs/getting-started/dart.html)
 - [Python](/docs/getting-started/python.html)
 - [Rust](/docs/getting-started/rust.html)
 - [PHP](/docs/getting-started/php.html) -->

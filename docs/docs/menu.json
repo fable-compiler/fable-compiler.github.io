@@ -14,7 +14,8 @@
         "items": [
             "docs/getting-started/setup",
             "docs/getting-started/your-first-fable-project",
-            "docs/getting-started/javascript"
+            "docs/getting-started/javascript",
+            "docs/getting-started/typescript"
         ]
     },
     {
@@ -41,8 +42,6 @@
             "docs/javascript/build-and-run",
             "docs/javascript/testing",
             "docs/javascript/features",
-            "docs/javascript/call-js-from-fable",
-            "docs/javascript/call-fable-from-js",
             "docs/javascript/compatibility"
         ]
     },
@@ -50,8 +49,10 @@
         "type": "section",
         "label": "TypeScript",
         "items": [
-            "docs/typescript/quickstart",
-            "docs/typescript/features"
+            "docs/typescript/build-and-run",
+            "docs/typescript/testing",
+            "docs/typescript/features",
+            "docs/typescript/compatibility"
         ]
     },
     {
