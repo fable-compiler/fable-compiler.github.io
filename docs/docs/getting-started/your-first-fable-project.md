@@ -81,8 +81,8 @@ To go further look into the respective target documentation to have an example o
 
 - [JavaScript](/docs/getting-started/javascript.html)
 - [TypeScript](/docs/getting-started/typescript.html)
-<!-- - [Dart](/docs/getting-started/dart.html)
 - [Python](/docs/getting-started/python.html)
+<!-- - [Dart](/docs/getting-started/dart.html)
 - [Rust](/docs/getting-started/rust.html)
 - [PHP](/docs/getting-started/php.html) -->
 

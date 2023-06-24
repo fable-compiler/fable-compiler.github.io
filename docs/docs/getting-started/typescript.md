@@ -120,12 +120,11 @@ Run Fable and TypeScript in watch mode.
 
 The follwing command start Fable in watch mode, and after the first Fable compilation, it will start TypeScript in watch mode.
 
-In the [TypeSript]() section, we will learn how to use [Fun.Build]()
-to organize and simplify our build process.
-
 ```bash
 dotnet fable watch --lang typescript --run npx tsc Program.fs.ts --target es2022 --watch --preserveWatchOutput
 ```
+
+> You can use your favorite build system instead to launch the different commands in parallel.
 
 If you run your node script again, you should see a new file `test.txt` with the content `Hello World`.
 
