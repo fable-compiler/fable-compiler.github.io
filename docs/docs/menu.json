@@ -58,14 +58,6 @@
     },
     {
         "type": "section",
-        "label": "From .NET to Fable",
-        "items": [
-            "docs/dotnet/compatibility",
-            "docs/dotnet/numbers"
-        ]
-    },
-    {
-        "type": "section",
         "label": "Miscellaneous",
         "items": [
             "docs/miscellaneous/official-samples",
