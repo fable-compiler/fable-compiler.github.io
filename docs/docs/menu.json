@@ -41,7 +41,6 @@
         "label": "JavaScript",
         "items": [
             "docs/javascript/build-and-run",
-            "docs/javascript/testing",
             "docs/javascript/features",
             "docs/javascript/compatibility"
         ]
@@ -51,9 +50,18 @@
         "label": "TypeScript",
         "items": [
             "docs/typescript/build-and-run",
-            "docs/typescript/testing",
             "docs/typescript/features",
             "docs/typescript/compatibility"
+        ]
+    },
+
+    {
+        "type": "section",
+        "label": "Python",
+        "items": [
+            "docs/python/build-and-run",
+            "docs/python/features",
+            "docs/python/compatibility"
         ]
     },
     {

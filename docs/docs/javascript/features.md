@@ -333,7 +333,7 @@ Deconstruct a tuple of arguments and generate a JavaScript expression.
 > Expressions are values or execute to values, they can be assigned or used as operands
 
 ```fs
-open Fable.Core
+open Fable.Core.JsInterop
 
 let two : int =
     emitJsExpr (1, 1) "$0 + $1"
@@ -361,7 +361,7 @@ Deconstruct a tuple of arguments and generate a JavaScript statement.
 > Statements are the whole structure, while expressions are the building blocks. For example, a line or a block of code is a statement.
 
 ```fs
-open Fable.Core
+open Fable.Core.JsInterop
 
 let add (a : int) (b : int) = 
     emitJsStatement (a, b) "return $0 + $1;"
@@ -499,7 +499,7 @@ let test(arg: U3<string, int, float[]>) =
 
 ### Erased types
 
-Decoring a type with `[<Erased>]` allows you to instruct Fable to not generate any code for that type. This is useful when you want to use a type from a JS library that you don't want to generate bindings for.
+Decoring a type with `[<Erase>]` allows you to instruct Fable to not generate any code for that type. This is useful when you want to use a type from a JS library that you don't want to generate bindings for.
 
 ```fs
 open Fable.Core
@@ -537,7 +537,7 @@ export function User_$ctor() {
 export const x = Avatar("123");
 ```
 
-As you can see, there are some reflection information generated for the type `User`. However, if you decorate the type with `[<Erased>]`:
+As you can see, there are some reflection information generated for the type `User`. However, if you decorate the type with `[<Erase>]`:
 
 ```fs
 open Fable.Core
@@ -961,7 +961,7 @@ search("foo", {
 
 Because JavaScript doesn't support overloading or multiple modules in a single file, Fable needs to mangle the name of some members, functions to avoid clashes.
 
-However, Fable will changes the names of:
+However, Fable will never changes the names of:
 
 - Record fields
 - Interface and abstract members
@@ -1129,7 +1129,7 @@ let execute (f: int->int->int) x y =
 ```
 
 ```js
-import { execute } from "./TestFunctions.fs"
+import { execute } from "./TestFunctions.fs.js"
 
 export function execute(f, x, y) {
     return f(x, y);

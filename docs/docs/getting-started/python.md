@@ -3,6 +3,9 @@ title: Python
 layout: standard
 ---
 
+:::warning
+Python target is in beta meaning that breaking changes can happen between minor versions.
+:::
 
 This section is specific to Python targetting, it will guide you through the process of setting up your project and using Fable with Python.
 
