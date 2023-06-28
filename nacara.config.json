@@ -70,7 +70,8 @@
                 "theme": "Atom One Light",
                 "extensions": [
                     "vscode-theme-onelight",
-                    "dart-code"
+                    "dart-code",
+                    "even-better-toml"
                 ]
             }
         }

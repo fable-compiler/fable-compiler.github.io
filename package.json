@@ -15,6 +15,7 @@
     "dependencies": {
         "bulma": "^0.9.4",
         "dart-code": "github:Dart-Code/Dart-Code",
+        "even-better-toml": "https://gitpkg.now.sh/tamasfe/taplo/editors/vscode?master",
         "gatsby-remark-vscode": "^3.3.1",
         "nacara": "^1.6.1",
         "nacara-layout-standard": "^1.7.0",
