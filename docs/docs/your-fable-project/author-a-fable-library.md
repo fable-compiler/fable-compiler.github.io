@@ -105,6 +105,39 @@ If your package is a library which targets JavaScript and Python you need to wri
 </PropertyGroup>
 ```
 
+## Native dependencies
+
+When authoring a binding you often need your user to install a native dependency.
+
+For example, if you create a binding for React, your user need to install `react` npm package.
+
+[Femto](https://github.com/Zaid-Ajaj/Femto) is a tool that can help with that,
+but it needs some metadata in your `.fsproj` file.
+
+Example:
+
+For JavaScript/TypeScript packages via NPM:
+
+```xml
+<PropertyGroup>
+  <NpmDependencies>
+      <NpmPackage Name="date-fns" Version="gt 1.30.0 lt 2.0.0" ResolutionStrategy="Max" />
+  </NpmDependencies>
+</PropertyGroup>
+```
+
+For Python packages via poetry:
+
+```xml
+<PropertyGroup>
+  <PythonDependencies>
+    <Package Name="requests" Version="&gt;= 2.28.1 &lt; 3.0.0" ResolutionStrategy="Max" />
+  </PythonDependencies>
+</PropertyGroup>
+```
+
+Please refer to [Femto documentation](https://github.com/Zaid-Ajaj/Femto) for more information.
+
 ## Testing
 
 It's a good idea to write unit tests for your library to make sure everything works as expected before publishing. The simplest way for that is to use a JS test runner like [Mocha](https://mochajs.org/), as in [this sample](https://github.com/fable-compiler/fable2-samples/tree/master/mocha). Or you can also use a library like [Fable.Mocha](https://github.com/Zaid-Ajaj/Fable.Mocha) containing more tools for Fable projects.

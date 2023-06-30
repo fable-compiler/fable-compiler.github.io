@@ -10,45 +10,59 @@
     },
     {
         "type": "section",
-        "label": "New to F#?",
+        "label": "Getting started",
         "items": [
-            "docs/new-to-fsharp/learning-the-language",
-            "docs/new-to-fsharp/let-keyword"
-        ]
-    },
-    {
-        "type": "section",
-        "label": "Fable in 2 steps",
-        "items": [
-            "docs/2-steps/setup",
-            "docs/2-steps/your-first-fable-project"
+            "docs/getting-started/setup",
+            "docs/getting-started/your-first-fable-project",
+            "docs/getting-started/javascript",
+            "docs/getting-started/typescript",
+            "docs/getting-started/python",
+            "docs/getting-started/rust"
         ]
     },
     {
         "type": "section",
         "label": "Your Fable project",
         "items": [
-            "docs/your-fable-project/project-file",
             "docs/your-fable-project/use-a-fable-library",
-            "docs/your-fable-project/author-a-fable-library",
-            "docs/your-fable-project/build-and-run",
-            "docs/your-fable-project/testing"
+            "docs/your-fable-project/author-a-fable-library"
         ]
     },
     {
         "type": "section",
-        "label": "Communicate with Javascript",
+        "label": "New to F#?",
         "items": [
-            "docs/communicate/js-from-fable",
-            "docs/communicate/fable-from-js"
+            "docs/new-to-fsharp/learning-the-language",
+            "docs/new-to-fsharp/let-keyword",
+            "docs/new-to-fsharp/project-file"
         ]
     },
     {
         "type": "section",
-        "label": "From .NET to Fable",
+        "label": "JavaScript",
         "items": [
-            "docs/dotnet/compatibility",
-            "docs/dotnet/numbers"
+            "docs/javascript/build-and-run",
+            "docs/javascript/features",
+            "docs/javascript/compatibility"
+        ]
+    },
+    {
+        "type": "section",
+        "label": "TypeScript",
+        "items": [
+            "docs/typescript/build-and-run",
+            "docs/typescript/features",
+            "docs/typescript/compatibility"
+        ]
+    },
+
+    {
+        "type": "section",
+        "label": "Python",
+        "items": [
+            "docs/python/build-and-run",
+            "docs/python/features",
+            "docs/python/compatibility"
         ]
     },
     {

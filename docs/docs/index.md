@@ -3,7 +3,9 @@ title: What is Fable?
 layout: standard
 ---
 
-Fable is a compiler that lets you use [F#](https://fsharp.org/) to build applications that run in the JavaScript ecosystem.
+Fable is a compiler that lets you use [F#](https://fsharp.org/) to build applications.
+
+Historically, Fable has been used to target JavaScript but since Fable 4, you can also target other languages such as TypeScript, Rust, Python, and more.
 
 ```fsharp
 type Shape =
@@ -31,15 +33,71 @@ F# (pronounced f-sharp) is a strongly typed Functional programming language whic
 
 F# is already used on the server for web and cloud apps, and it's also used quite a lot for data science and machine learning. It's a great general-purpose language, and also a great fit for building beautiful UIs that run in the browser.
 
-## Why use F# for your next JavaScript project?
+## Available targets
 
-F# is a great choice to build beautiful apps that run in the browser. F# is:
+<table style="
+    max-width: 500px;
+">
+  <thead>
+    <tr>
+      <th>Target</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>JavaScript</td>
+      <td>Stable</td>
+    </tr>
+    <tr>
+      <td>TypeScript</td>
+      <td>Stable</td>
+    </tr>
+    <tr>
+      <td>Dart</td>
+      <td>Beta</td>
+    </tr>
+    <tr>
+      <td>Python</td>
+      <td>Beta</td>
+    </tr>
+    <tr>
+      <td>Rust</td>
+      <td>Alpha</td>
+    </tr>
+    <tr>
+      <td>PHP</td>
+      <td>Experimental</td>
+    </tr>
+  </tbody>
+</table>
 
-* Succinct with lightweight syntax
-* Robust with a great type system and pattern matching
-* Safe with immutability baked into the language
+- **Stable** production ready, breaking changes are introduced only in major versions
+- **Beta**: Users are encourage to try it out to help with development and give feedback
+- **Alpha**: Target is in active development but not all the features, APIs are implemented yet. Breaking changes can happen between minor versions.
+- **Experimental**: Target exists but actively maintained. If you are interested in helping with development, please reach out to us.
+
+## Why use F# for your next project?
+
+F# is a great choice to build applications that are robust and maintable code such as.
+
+This is because F# has:
+
+* Succinct lightweight syntax
+* Great type system and pattern matching
+* Immutability is the default, but you can still opt-in to mutability when needed
 * Supported by large companies (such as Microsoft and Jetbrains) and comes with commercial tooling support
 
-When compared with JavaScript, F# is safer, more robust, and more pleasant to read and write.
+Depending on the target you choose, those benefits will tenfold.
 
-F# is a mature language with functional programming and object programming capabilities, but it doesn't sacrifice readability or simplicity to offer these things. Because of that, we think it's a great choice for your next JavaScript application.
+### F# for JavaScript
+
+JavaScript is a dynamic so you don't have a lot of safety when writing code. This can lead to bugs that are hard to find and fix.
+
+With F#, your application will be safer, more robust and more pleasant to read and write. You can refactor your code with confidence as the compiler will tell you if you missed something.
+
+### F# for TypeScript
+
+TypeScript is safer then JavaScript but it still lacks some features.
+
+For example, it doesn't really have a way to represent discriminated unions, and so it is easy to miss a case when you are using them. In F#, the compiler will tell you if you missed a case.

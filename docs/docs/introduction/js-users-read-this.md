@@ -16,12 +16,30 @@ Don't panic! There is enough documentation to explain how the .NET tools integra
 
 Voilà. Nothing else. We'll come to explanations later in the docs. But we promise, there's nothing you won't understand right away. Apart from these facts, it's all JavaScript!
 
-**Welcome home!**
+### Welcome home!
 
-- Fable transpiles F# to ES2015 JavaScript, Fable uses the great [Babel](https://babeljs.io/) tool for that.
-- Fable integrates with the popular [Webpack](https://webpack.js.org/). And it's not hard to use another bundler.
+- Fable transpiles F# to ES2015 JavaScript
+- Fable integrates with your favorites bundler ([Vite](https://vitejs.dev/), [Parcel](https://parceljs.org/), [Webpack](https://webpack.js.org/), ...)
 - JS Dependencies are listed in your common `package.json` file.
 - Unit testing is available through [Fable.Mocha](https://github.com/Zaid-Ajaj/Fable.Mocha) (but you can use another test runner if you wish).
-- In most cases, building and running a Fable project only requires to call `npm install` and `npm start`.
 
 So since we're mainly using JavaScript tools, you won't be lost with Fable!
+
+### Fable workflow
+
+The main differences when using Fable is instead of writing JavaScript file, you will write F# and then use the generated JavaScript files.
+
+So if we consider the following JavaScript workflow:
+
+1. Write `*.js` files
+1. Use JavaScript dependencies manager
+1. Use JavaScript build tools
+1. Run the app
+
+Then when using Fable, the workflow become is:
+
+1. Write F# files
+1. *Optional:* Consume the generated files `*.fs.js` from your `*.js` files
+1. Use JavaScript dependencies manager
+1. Use JavaScript build tools
+1. Run the app

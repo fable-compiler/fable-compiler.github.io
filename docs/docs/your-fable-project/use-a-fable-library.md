@@ -3,6 +3,8 @@ title: Use a Fable library
 layout: standard
 ---
 
+## Introduction
+
 We often use libraries using [NuGet](https://www.nuget.org/), which is the defacto .NET package manager.
 
 So we do need libraries. And Fable proposes a great variety of libraries ready for you to use like:
@@ -19,38 +21,48 @@ There are 2 ways to call Fable libraries:
 1. Reference them directly in your project file
 2. Use [Paket](https://fsprojects.github.io/Paket/)
 
-## Option 1: reference a library manually in your project file
+## Install a Fable library
 
-Just like `.fs` files, we can reference libraries directly in the `.fsproj` file.
+Fable libraries are usually published on [Nuget](https://www.nuget.org/), which is the defacto .NET package manager.
 
-We need to tell what library we need and what version we'd like to use. For instance for `Fable.Browser.Dom` version `1.0.0` we'll add the following node in the `.fsproj` file:
+You can use you favorite Nuget package manager to install them, like Nuget CLI, Paket, Visual Studio, Rider, etc.
 
-```xml
-<PackageReference Include="Fable.Browser.Dom" Version="1.0.0" />
+Nuget CLI:
+
+```bash
+dotnet add package <package name>
 ```
 
-Hence the standard format for a library:
+Paket:
 
-```xml
-<PackageReference Include="[PACKAGE_ID]" Version="[PACKAGE_VERSION]" />
+```bash
+dotnet paket add <package name>
 ```
 
-The dotnet SDK offers a CLI command to do this operation without manually editing the .fsproj. Also if you omit the version number, it will automatically pick the most recent stable version for you. For instance:
+Please, refer to your Nuget package manager documentation to learn more about how to use it.
 
-`dotnet add package Fable.Elmish.React [-v 3.0.1]`
+Depending on the type of library, it can happen that you also need to install a native dependency.
 
-> Some IDEs like Visual Studio or Rider also include options in their Graphic Interface to manage Nuget packages.
+For example, if you are using a project that use React, you will need to install the `react` and `react-dom` from NPM packages.
 
-That's basically all you need to do. The build process will then automatically download the libraries for you and compile your code against them.
+You need to refer to your library documentation to know if you need to install a native dependency.
 
-> If you need to download the packages before the build (for example, to remove errors in the IDE), run the `dotnet restore` command in the folder containing the .fsproj file.
+### Femto
 
-## Option 2: use Paket!
+[Femto](https://github.com/Zaid-Ajaj/Femto) is a tool that can help you install 
+native dependencies if the library contains Femto metadata.
 
-The second way of adding libraries is to use  the [Paket](https://fsprojects.github.io/Paket/) library manager. While it's not compulsory, it's in most cases a good choice for large projects.
+Use `dotnet femto yourProject.fsproj` to check if your Fable dependencies
+requirements are met.
 
-Using Paket is clearly straightforward if you follow the [official documentation](https://fsprojects.github.io/Paket/get-started.html).
+Use `dotnet femto --resolve yourProject.fsproj` to let Femto try to install
+the native dependencies for you.
 
-But in order to make things easier for you, we created a [sample](https://github.com/fable-compiler/fable2-samples/tree/master/withpaket). This is a good companion while you read the paket doc.
+At the time of writing, Femto supports:
 
-Usually getting started with Paket takes only a few minutes.
+- JavaScript/TypeScript
+    - `npm` (default)
+    - `yarn` when `yarn.lock` is found
+    - `pnpm` when `pnpm-lock.yaml` is detected
+- Python
+    - `poetry` when `pyproject.toml` is detected

@@ -3,6 +3,12 @@ title: Testing
 layout: standard
 ---
 
+:::info
+This section is under construction.
+:::
+
+<!-- 
+
 You can use all tools of the JS ecosystem.
 
 Several js libs already have a Fable binding:
@@ -111,4 +117,4 @@ Now, run
   npm run-script watch-test
 ```
 
-Enjoy :)
+Enjoy :) -->
