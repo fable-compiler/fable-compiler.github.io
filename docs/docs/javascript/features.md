@@ -226,6 +226,20 @@ let hi : unit -> unit = importMember "./hello.js"
 // export const hi = hi_1;
 ```
 
+#### `importSideEffects`
+
+`importSideEffects` is used when you wants to import a JavaScript module that has side effects, like a CSS file or a polyfill.
+
+```fs
+importSideEffects "./style.css"
+// Generates:
+// import "./style.css";
+
+importSideEffects "whatwg-fetch"
+// Generates:
+// import 'whatwg-fetch'
+```
+
 ## Emit, when F# is not enough
 
 Emit is a features offered by Fable, that allows you to write JavaScript code directly in F#.
