@@ -229,7 +229,3 @@ The resulting printed list of pseudo-random numbers does not work in Fable:
 
 * When accurate low-order bit arithmetic is needed and overflow can result in numbers larger than 2^53 use `int64`, `uint64`, which use exact 64 bits, instead of `int32`, `uint32`.
 * Alternately, truncate all arithmetic with `>>> 0` or `>>> 0u` as appropriate before numbers can get larger than 2^53: `let rng (s:int32) = 10001*s + 12345 >>> 0`
-
-### Printing
-
-One small change from .NET in `printf`, `sprintf`, `ToString`. Negative signed integers are printed in hexadecimal format as sign + magnitude, in .NET they are printed as two's complement bit patterns.
