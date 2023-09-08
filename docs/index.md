@@ -208,7 +208,7 @@ let tenOfSpades = (Number 10), Spades
 match card with
 | Ace, Hearts -> printfn "Ace Of Hearts!"
 | _, Hearts -> printfn "A lovely heart"
-| (Number 10), Spades -> printfn "10 of Spades"
+| (Number n), Spades -> printfn "%d of Spades" n
 | _, (Diamonds|Clubs) -> printfn "Diamonds or clubs"
 
 // Warning:
