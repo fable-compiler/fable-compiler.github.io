@@ -173,7 +173,7 @@ function execute(command : Command_$union) {
 ```
 
 :::info
-Indepently of the option you choose, the compiler will warn you if you handle an invalid case.
+Independently of the option you choose, the compiler will warn you if you handle an invalid case.
 :::
 
 If you want the TypeScript compiler to warn you when you don't handle all cases, you can use the common hack of adding a `default` case that stores the value in a variable of type `never`.
