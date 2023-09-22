@@ -129,7 +129,7 @@ layout: navbar-only
                             Easy JavaScript interop
                         </span>
                         <p>
-                            Call <a href="/docs/communicate/js-from-fable.html">JavaScript from Fable</a> or <a href="/docs/communicate/fable-from-js.html">Fable from JS</a>. Use NPM packages. The entire JavaScript ecosystem is at your fingertips.
+                            Use NPM packages. The entire JavaScript ecosystem is at your fingertips. See <a href="/docs/javascript/features.html">JavaScript features</a>
                         </p>
                     </div>
                 </div>
@@ -163,7 +163,7 @@ layout: navbar-only
                             Batteries included
                         </span>
                         <p>
-                            Fable supports the <a href="docs/dotnet/compatibility.html">F# core library and some common .NET libraries</a> to supplement the JavaScript ecosystem.
+                            Fable supports the <a href="/docs/javascript/compatibility.html">F# core library and some common .NET libraries</a> to supplement the JavaScript ecosystem.
                         </p>
                     </div>
                 </div>
