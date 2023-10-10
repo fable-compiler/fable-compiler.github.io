@@ -11,14 +11,20 @@ To write a library that can be used in Fable you need to fulfill a few condition
 - Keep a simple `.fsproj` file: don't use MSBuild conditions or similar.
 - Include the source files in the Nuget package in a folder named `fable`.
 
-The last point may sound complicated but it's only a matter of adding a couple of lines to your project file and let the `dotnet pack` command do all the rest.
+    :::info
+    If your library is a pure binding, you can skip this step.
 
-```xml
-<!-- Add source files to "fable" folder in Nuget package -->
-<ItemGroup>
-    <Content Include="*.fsproj; **\*.fs; **\*.fsi" PackagePath="fable\" />
-</ItemGroup>
-```
+    This will improve Fable compilation time as the compiler will not need to parse the source files of the binding.
+    :::
+
+    Add the following to your `.fsproj` file:
+
+    ```xml
+    <!-- Add source files to "fable" folder in Nuget package -->
+    <ItemGroup>
+        <Content Include="*.fsproj; **\*.fs; **\*.fsi" PackagePath="fable\" />
+    </ItemGroup>
+    ```
 
 In order to publish the package to Nuget check [the Microsoft documentation](https://docs.microsoft.com/en-us/nuget/quickstart/create-and-publish-a-package-using-the-dotnet-cli) or alternatively you can also [use Fake](https://fake.build/dotnet-nuget.html#Creating-NuGet-packages).
 
