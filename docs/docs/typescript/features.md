@@ -200,6 +200,7 @@ function execute(command : Command_$union) {
     Added in v4.1.3
 </p>
 
+### Discriminated Unions
 
 Even if F# unions can be used in a typed-safe manner from TypeScript, when you build a public API you may want your unions to feel more "native".
 
@@ -240,24 +241,59 @@ function execute(command: Command) {
 }
 ```
 
+### Interfaces
 
-<!-- Example with interfaces -->
+It is also possible to use interfaces instead for describing tagged unions. 
 
-type Circle =
-    abstract kind: string
-    abstract radius: float
+This allows to use interfaces in the F# code to access the fields instead of tuple destructuring.
 
-type Square =
-    abstract kind: string
-    abstract sideLength: float
+```fs
+type Take =
+    abstract fromIndex: int
+    abstract toIndex: int
 
-[<TypeScriptTaggedUnion("kind")>]
-type Shape =
-    | Circle of Circle
-    | Square of Square
+type Edit =
+    abstract text: string
 
-// usage
-let describeShape (shape: Shape) =
-    match shape with
-    | Circle c -> $"circle of radius {c.radius}"
-    | Square s -> $"square of length {s.sideLength}"
+[<TypeScriptTaggedUnion("type")>]
+type Command =
+    | Take of Take
+    | Edit of Edit
+    | Save
+```
+
+In TypeScript it becomes:
+
+```ts
+export interface Take {
+    fromIndex: int32,
+    toIndex: int32
+}
+
+export interface Edit {
+    text: string
+}
+
+export type Command = 
+    | Take & { type: "take" }
+    | Edit & { type: "edit" }
+    | { type: "save" }
+```
+
+TypeScript consumer code can now use the union in a natural way:
+
+```ts
+function execute(command: Command) {
+    switch (command.type) {
+        case "take":
+            // command.fromIndex and command.toIndex are available
+            break;
+        case "edit":
+            // command.text is available
+            break;
+        case "save":
+            // No additional data
+            break;
+    }
+}
+```
