@@ -229,3 +229,31 @@ The resulting printed list of pseudo-random numbers does not work in Fable:
 
 * When accurate low-order bit arithmetic is needed and overflow can result in numbers larger than 2^53 use `int64`, `uint64`, which use exact 64 bits, instead of `int32`, `uint32`.
 * Alternately, truncate all arithmetic with `>>> 0` or `>>> 0u` as appropriate before numbers can get larger than 2^53: `let rng (s:int32) = 10001*s + 12345 >>> 0`
+
+## Unsupported Attributes and Types
+
+If your F# code contains attributes (or other types) that are not supported by Fable you will get a Compiler error similar to:
+` error FSHARP: The type 'DataContract' is not defined. (code 39)`
+for 
+```fsharp
+open System.Runtime.Serialization
+[<DataContract>]
+type Person = {
+  [<DataMember(IsRequired = true)>] FullName: string
+  [<DataMember(IsRequired = true)>] TimeOfBirth: DateTimeOffset
+}
+```
+
+If you just want the attribute (or types) to be ignored in Fable you can redefine it as an empty type:
+
+```fsharp
+#if FABLE_COMPILER
+namespace System.Runtime.Serialization
+open System
+type DataContract() = inherit Attribute()
+type DataMember(IsRequired: bool) = inherit Attribute()
+#endif
+```
+
+
+
