@@ -92,7 +92,7 @@ Depending on the target you choose, those benefits will tenfold.
 
 ### F# for JavaScript
 
-JavaScript is a dynamic so you don't have a lot of safety when writing code. This can lead to bugs that are hard to find and fix.
+JavaScript is a dynamic language so you don't have a lot of safety when writing code. This can lead to bugs that are hard to find and fix.
 
 With F#, your application will be safer, more robust and more pleasant to read and write. You can refactor your code with confidence as the compiler will tell you if you missed something.
 
