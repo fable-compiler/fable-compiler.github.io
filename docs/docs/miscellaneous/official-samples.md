@@ -19,29 +19,29 @@ If you are interested in a full-stack F# solution that covers both the backend (
 
 * **Browser samples**
 
-  * Simple HTML5 canvas and Browser DOM: *[/browser](https://github.com/fable-compiler/fable3-samples/tree/master/browser)*
+  * Simple HTML5 canvas and Browser DOM: *[/browser](https://github.com/fable-compiler/fable3-samples/tree/main/browser)*
 
-  * More complex browser app with fetch & promises & json parsing: *[/promises](https://github.com/fable-compiler/fable3-samples/tree/master/promises)*
+  * More complex browser app with fetch & promises & json parsing: *[/promises](https://github.com/fable-compiler/fable3-samples/tree/main/promises)*
 
 * **React samples**
 
-  * [Elm](https://elm-lang.org/)-like [single page application (SPA)](https://en.wikipedia.org/wiki/Single-page_application) with React: *[/minimal](https://github.com/fable-compiler/fable3-samples/tree/master/minimal)*
+  * [Elm](https://elm-lang.org/)-like [single page application (SPA)](https://en.wikipedia.org/wiki/Single-page_application) with React: *[/minimal](https://github.com/fable-compiler/fable3-samples/tree/main/minimal)*
 
   * Start a frontend app SPA using Bulma & React (`git clone https://github.com/MangelMaxime/fulma-demo`)
 
 * **Node.js samples**
 
-  * Node.js app with fetch & promises: *[/nodejs](https://github.com/fable-compiler/fable3-samples/tree/master/nodejs)*
+  * Node.js app with fetch & promises: *[/nodejs](https://github.com/fable-compiler/fable3-samples/tree/main/nodejs)*
 
-  * Bundled Node.js app with fetch & promises: */[nodejsbundle](https://github.com/fable-compiler/fable3-samples/tree/master/nodejsbundle)*
+  * Bundled Node.js app with fetch & promises: *[/nodejsbundle](https://github.com/fable-compiler/fable3-samples/tree/main/nodejsbundle)*
 
 * **Advanced samples**
 
-  * Using Paket to resolve .NET dependencies: *[/withpaket](https://github.com/fable-compiler/fable3-samples/tree/master/withpaket)*
+  * Using Paket to resolve .NET dependencies: *[/withpaket](https://github.com/fable-compiler/fable3-samples/tree/main/withpaket)*
 
-  * Interoperability: calling JS code from Fable: *[/interop](https://github.com/fable-compiler/fable3-samples/tree/master/interop)*
+  * Interoperability: calling JS code from Fable: *[/interop](https://github.com/fable-compiler/fable3-samples/tree/main/interop)*
 
-  * Interoperability: calling Fable code from JS: *[/interopFableFromJs](https://github.com/fable-compiler/fable3-samples/tree/master/interopFableFromJs)*
+  * Interoperability: calling Fable code from JS: *[/interopFableFromJs](https://github.com/fable-compiler/fable3-samples/tree/main/interopFableFromJS)*
 
 </li>
 
