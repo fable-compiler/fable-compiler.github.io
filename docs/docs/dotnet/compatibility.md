@@ -3,5 +3,10 @@ title: .NET compatibility
 layout: standard
 ---
 
-For compatibility with Javascrit and Typescript please see the [Javascript Compatibility](/docs/javascript/compatibility.html) section.
-For compatibility with Python see [Python Compatibility](/docs/python/compatibility.html)
+Please choose you target platform:
+
+- [JavaScript](/docs/javascript/compatibility.html)
+- [TypeScript](/docs/typescript/compatibility.html)
+- [Python](/docs/python/compatibility.html)
+<!-- - [Rust](/docs/rust/compatibility.html)
+- [Dart](/docs/dart/compatibility.html) -->
