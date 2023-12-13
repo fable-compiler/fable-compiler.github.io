@@ -26,6 +26,20 @@ To write a library that can be used in Fable you need to fulfill a few condition
     </ItemGroup>
     ```
 
+    If you needs native files like `.js` or `.py`, you need to include them in the `fable` folder as well.
+
+    Example:
+
+    ```xml
+    <ItemGroup>
+        <Content Include="*.fsproj; *.fs; *.js" Exclude="**\*.fs.js" PackagePath="fable\" />
+    </ItemGroup>
+    ```
+
+    :::info
+    Note that you don't want to include Fable generated files and so we exclude them with `Exclude="**\*.fs.js"`
+    :::
+
 In order to publish the package to Nuget check [the Microsoft documentation](https://docs.microsoft.com/en-us/nuget/quickstart/create-and-publish-a-package-using-the-dotnet-cli) or alternatively you can also [use Fake](https://fake.build/dotnet-nuget.html#Creating-NuGet-packages).
 
 ## Make your package discoverable
