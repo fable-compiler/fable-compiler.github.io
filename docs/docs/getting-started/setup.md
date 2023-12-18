@@ -7,22 +7,6 @@ layout: standard
 
 In order to use Fable you will need the following tools:
 
-:::warning
-Fable 3 only support up to .NET 6.
-
-If you have .NET 7 installed on your system, you will need to add a `global.json` file to your project to ensure .NET 6 is used.
-
-*Example:* 
-
-`{
-    "sdk": {
-      "version": "6.0.0",
-      "rollForward": "latestMinor"
-    }
-}
-`
-:::
-
 - [.NET Core SDK](https://dotnet.microsoft.com/) to work with F# files and dependencies
 - [Node.js](https://nodejs.org/) to execute JS code
 - A JS package manager, like [npm](https://www.npmjs.com/) (which comes with Node) or [yarn](https://yarnpkg.com/)
