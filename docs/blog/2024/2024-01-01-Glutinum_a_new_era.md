@@ -234,4 +234,6 @@ Glutinum CLI is still in early development, not all of TypeScript syntax or plan
 Currently, if the CLI encounters an unsupported syntax it will most likely crash. I am still working on making it more tolerant to unsupported syntax.
 :::
 
+You can report issues and suggest improvements on the [GitHub repository](https://github.com/glutinum-org/cli).
+
 I wish you all a happy new year and I hope you will follow me in this new adventure. 🎉
