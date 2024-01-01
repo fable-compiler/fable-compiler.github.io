@@ -4,5 +4,8 @@
         "markdown",
         "plaintext",
         "text"
-    ]
+    ],
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true
 }
