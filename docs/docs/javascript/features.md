@@ -1209,7 +1209,7 @@ open Fable.Core.JsInterop
 
 // Direct access
 jsObject?myProperty
-// Generates: jsObject?myProperty
+// Generates: jsObject.myProperty
 
 let pname = "myProperty"
 
