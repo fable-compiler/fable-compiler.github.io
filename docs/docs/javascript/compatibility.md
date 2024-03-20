@@ -68,29 +68,30 @@ myClass.Square(); // 25
 ## .NET Base Class Library
 
 The following classes are translated to JS and most of their methods (static and instance) should be available in Fable.
- 
-.NET                                  | JavaScript
---------------------------------------|----------------------------
-Numeric Types                         | number
-Arrays                                | Array / Typed Arrays
-Events                                | fable-core/Event
-System.Boolean                        | boolean
-System.Char                           | string
-System.String                         | string
-System.Guid                           | string
-System.TimeSpan                       | number
-System.DateTime                       | Date
-System.DateTimeOffset                 | Date
-System.DateOnly                       | Date
-System.TimeOnly                       | number
-System.Timers.Timer                   | fable-core/Timer
-System.Collections.Generic.List       | Array
-System.Collections.Generic.HashSet    | Set
-System.Collections.Generic.Dictionary | Map
-System.Text.RegularExpressions.Regex  | RegExp
-System.Lazy                           | fable-core/Lazy
-System.Random                         | {}
-System.Math                           | (native JS functions)
+
+.NET                                                 | JavaScript
+-----------------------------------------------------|----------------------------
+Numeric Types                                        | number
+Arrays                                               | Array / Typed Arrays
+Events                                               | fable-core/Event
+System.Boolean                                       | boolean
+System.Char                                          | string
+System.String                                        | string
+System.Guid                                          | string
+System.TimeSpan                                      | number
+System.DateTime                                      | Date
+System.DateTimeOffset                                | Date
+System.DateOnly                                      | Date
+System.TimeOnly                                      | number
+System.Timers.Timer                                  | fable-core/Timer
+System.Collections.Generic.List                      | Array
+System.Collections.Generic.HashSet                   | Set
+System.Collections.Generic.Dictionary                | Map
+System.Text.RegularExpressions.Regex                 | RegExp
+System.Lazy                                          | fable-core/Lazy
+System.Random                                        | {}
+System.Math                                          | (native JS functions)
+System.Runtime.CompilerServices.ConditionalWeakTable | WeakMap
 
 The following static methods are also available:
 
@@ -114,6 +115,29 @@ See [Name mangling](/docs/javascript/features.html#name-mangling) for more infor
 - Numeric arrays are compiled to [Typed Arrays](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray) when possible.
 - No bound checks for numeric types (unless you do explicit conversions like `byte 500`) nor for array indices.
 - `Regex` will always behave as if passed `RegexOptions.ECMAScript` flag (e.g., no negative look-behind or named groups).
+- `ConditionalWeakTable` has some limitations: the `GetOrCreateValue` method is not supported, nor is casting it to `IEnumerable` and iterating it. If you want to use a string as a key, you must manually box it in a JS `String` object:
+
+```fsharp
+open System.Runtime.CompilerServices
+
+// Only needed for strings as keys; other reference types work fine directly
+let inline boxString (str: string): obj =
+    #if FABLE_COMPILER
+    Fable.Core.JsInterop.emitJsExpr (str) "new String($0)"
+    #else
+    box str
+    #endif
+
+let table = ConditionalWeakTable()
+let key = boxString "my-key"
+let value = "something"
+table.Add(key, value)
+
+// Use the same `key` object later to get the value..
+match table.TryGetValue(key) with
+| true, value -> // ...
+| _ -> // ...
+```
 
 ## FSharp.Core
 
