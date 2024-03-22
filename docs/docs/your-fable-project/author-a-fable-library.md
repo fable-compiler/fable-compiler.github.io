@@ -22,7 +22,10 @@ To write a library that can be used in Fable you need to fulfill a few condition
     ```xml
     <!-- Add source files to "fable" folder in Nuget package -->
     <ItemGroup>
-        <Content Include="*.fsproj; **\*.fs; **\*.fsi" PackagePath="fable\" />
+        <!-- Include all files that are compiled with this project -->
+        <Content Include="@(Compile)" Pack="true" PackagePath="fable/%(RelativeDir)%(Filename)%(Extension)" />
+        <!-- Include the project file itself as well -->
+        <Content Include="$(MSBuildThisFileFullPath)" Pack="true" PackagePath="fable/" />
     </ItemGroup>
     ```
 
@@ -32,7 +35,8 @@ To write a library that can be used in Fable you need to fulfill a few condition
 
     ```xml
     <ItemGroup>
-        <Content Include="*.fsproj; *.fs; *.js" Exclude="**\*.fs.js" PackagePath="fable\" />
+        <!-- You your F# code is included because of the previous code, so you only need to ensure the .js files are included as well -->
+        <Content Include="**/*.js" Exclude="**\*.fs.js" PackagePath="fable/%(RelativeDir)%(Filename)%(Extension)" />
     </ItemGroup>
     ```
 
@@ -41,6 +45,21 @@ To write a library that can be used in Fable you need to fulfill a few condition
     :::
 
 In order to publish the package to Nuget check [the Microsoft documentation](https://docs.microsoft.com/en-us/nuget/quickstart/create-and-publish-a-package-using-the-dotnet-cli) or alternatively you can also [use Fake](https://fake.build/dotnet-nuget.html#Creating-NuGet-packages).
+
+## Make your package usable by others
+
+In addition to the source files, there are a few things you should to to make your package easier to consume by others. Adding these items will improve the development experience for your users inside their editors,
+specifically enabling Go To Definition (F12 in most editors) to work on your library's code.
+
+```xml
+<PropertyGroup>
+   <!-- Ensure debugging information is easily found, so that editors can locate the source code locations for your library.
+        This slightly increases the size of your package, but the usability benefits are worth it. -->
+   <DebugType>embedded</DebugType>
+   <!-- Ensure that files that are generated during the build by the .NET SDK are also included in your compiled library. -->
+   <EmbedUntrackedSources>true</EmbedUntrackedSources>
+</PropertyGroup>
+```
 
 ## Make your package discoverable
 
