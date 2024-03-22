@@ -35,7 +35,7 @@ To write a library that can be used in Fable you need to fulfill a few condition
 
     ```xml
     <ItemGroup>
-        <!-- You your F# code is included because of the previous code, so you only need to ensure the .js files are included as well -->
+        <!-- Your F# code is already included because of the previous rules, so you only need to ensure the .js files are included as well -->
         <Content Include="**/*.js" Exclude="**\*.fs.js" PackagePath="fable/%(RelativeDir)%(Filename)%(Extension)" />
     </ItemGroup>
     ```
@@ -48,7 +48,7 @@ In order to publish the package to Nuget check [the Microsoft documentation](htt
 
 ## Make your package usable by others
 
-In addition to the source files, there are a few things you should to to make your package easier to consume by others. Adding these items will improve the development experience for your users inside their editors,
+In addition to the source files, there are a few things you should do to make your package easier to consume by others. Adding these items will improve the development experience for your users inside their editors,
 specifically enabling Go To Definition (F12 in most editors) to work on your library's code.
 
 ```xml
