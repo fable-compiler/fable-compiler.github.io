@@ -232,8 +232,14 @@ document.body.appendChild div |> ignore
 Run Fable in watch mode and Vite in parallel.
 
 ```bash
-dotnet fable watch --run npx vite
+dotnet fable watch --verbose --run npx vite
 ```
+
+:::info
+We need to use `--verbose` mode when running `vite` from Fable because of a freezing issue.
+
+The issue is tracked [here[(https://github.com/fable-compiler/Fable/issues/3631)
+:::
 
 If you open the browser, you should see `Hello world!`.
 
