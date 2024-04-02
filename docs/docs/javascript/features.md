@@ -633,7 +633,7 @@ event("click", () => {
 - `CaseRules.None`: `MouseOver` becomes `MouseOver`
 - `CaseRules.LowerFirst`: `MouseOver` becomes `mouseOver`
 - `CaseRules.SnakeCase`: `MouseOver` becomes `mouse_over`
-- `CaseRules.SnakeCaseAllCaps`: `MouseOver` becomes `MOUSE-OVER`
+- `CaseRules.SnakeCaseAllCaps`: `MouseOver` becomes `MOUSE_OVER`
 - `CaseRules.KebabCase`: `MouseOver` becomes `mouse-over`
 
 The default is `CaseRules.LowerFirst`.
