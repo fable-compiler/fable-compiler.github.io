@@ -62,7 +62,7 @@ You can report missing APIs or send PR on the [Fable.Python repository](https://
 Run Fable in watch mode
 
 ```bash
-dotnet fable watch
+dotnet fable watch --lang python
 ```
 
 If you run your node script again, you should see a new file `test.txt` with the content `Hello World`.
