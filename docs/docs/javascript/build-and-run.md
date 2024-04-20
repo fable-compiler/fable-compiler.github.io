@@ -92,3 +92,7 @@ During the bundling process, Vite will minify your code and remove dead code.
 ```bash
 dotnet fable --run npx vite build
 ```
+
+## Alternative
+
+When using Vite, you could also consider working with [vite-plugin-fable](https://nojaf.com/vite-plugin-fable/) instead.

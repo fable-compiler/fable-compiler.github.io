@@ -15,7 +15,7 @@ Please make sure you followed the [Fable setup guide](/docs/2-steps/your-first-f
 
 In this section, we are going to see how to run Fable code using Node.js.
 
-When using JavaScript, you will need a `package.json` to manage your dependencies. 
+When using JavaScript, you will need a `package.json` to manage your dependencies.
 This file also allows you to confiture the type of `module` that Node.js use to interpret your code.
 
 <ul class="textual-steps">
@@ -248,3 +248,7 @@ Try changing the content of `Program.fs` and see the result in the browser.
 </li>
 
 </ul>
+
+### Alternative
+
+When using Vite, you could also consider working with [vite-plugin-fable](https://nojaf.com/vite-plugin-fable/) instead.
