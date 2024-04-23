@@ -25,7 +25,7 @@
     },
     "devDependencies": {
         "@babel/preset-react": "^7.18.6",
-        "gh-pages": "^4.0.0",
+        "gh-pages": "^5.0.0",
         "remark-gfm": "^3.0.1",
         "shx": "^0.3.4"
     }
