@@ -12,7 +12,7 @@ Some F#/.NET types have [counterparts in JS](/../dotnet/compatibility.html). Fab
 - **Strings and booleans** behave the same in F# and JS.
 - **Chars** are compiled as JS strings of length 1. This is mainly because string indexing in JS gives you another string. But you can use a char as a number with an explicit conversion like `int16 '家'`.
 - **Numeric types** compile to JS numbers, except for `long`, `decimal` and `bigint`.
-- Sine Fable 4.0.5, `int64`, `uint64` are represented using native JS BigInt
+- Since Fable 4.0.5, `int64`, `uint64` are represented using native JS BigInt
 - **Arrays** (and `ResizeArray`) compile to JS arrays. _Numeric arrays_ compile to [Typed Arrays](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray) in most situations, though this shouldn't make a difference for most common operations like indexing, iterating or mapping. You can disable this behavior with [the `typedArrays` option](https://www.npmjs.com/package/fable-loader#options).
 - Any **IEnumerable** (or `seq`) can be traversed in JS as if it were an [Iterable](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators#Iterables).
 - Mutable **dictionaries** (not F# maps) compile to [ES2015 Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map).
