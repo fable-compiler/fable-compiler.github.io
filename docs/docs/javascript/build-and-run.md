@@ -83,7 +83,7 @@ dotnet fable watch --run npx vite
 
 When changes are made to your F# code, Fable will recompile it and Vite will reload the page.
 
-In watch mode Fable will also compile code behind `#if DEBUG` compiler directives.
+In watch mode Fable will also compile code behind `#if DEBUG` compiler directives. Including debug directives from referenced fable-nuget packages.
 
 ## Build for production
 
