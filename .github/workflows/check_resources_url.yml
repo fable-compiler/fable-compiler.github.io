@@ -14,4 +14,4 @@ jobs:
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - run: |
         gem install awesome_bot
-        awesome_bot docs/resources.md --allow-redirect --allow-ssl
+        awesome_bot docs/resources.md --allow-redirect --allow-ssl --allow 429
