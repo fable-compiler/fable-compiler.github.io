@@ -17,7 +17,8 @@
             "docs/getting-started/javascript",
             "docs/getting-started/typescript",
             "docs/getting-started/python",
-            "docs/getting-started/rust"
+            "docs/getting-started/rust",
+            "docs/getting-started/cli"
         ]
     },
     {
