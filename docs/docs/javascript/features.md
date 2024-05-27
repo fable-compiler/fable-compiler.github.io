@@ -84,7 +84,7 @@ import { hello as hello_1 } from "./hello.js";
 export const hello = hello_1;
 ```
 
-Some JavaScript optimizations tools can remove the intermediate variable, but not all of them. So if you want to favor the smallest and cleanest output, using the attribute-based imports is recommanded.
+Some JavaScript optimizations tools can remove the intermediate variable, but not all of them. So if you want to favor the smallest and cleanest output, using the attribute-based imports is recommended.
 
 ### Attributes
 
