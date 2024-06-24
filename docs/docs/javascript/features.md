@@ -140,7 +140,7 @@ let hello : unit -> unit = jsNative
 `ImportMember` is used to import a specific member from a JavaScript module, the name is based on the name of the F# value.
 
 ```fs
-[<ImportMember("hello", "./hello.js")>]
+[<ImportMember("./hello.js")>]
 let hello : unit -> unit = jsNative
 // Generates: import { hello } from "./hello.js";
 ```
