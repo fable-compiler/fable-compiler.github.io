@@ -8,4 +8,4 @@ There are many resources available to learn F#. This section is only intended as
 - [Tour of F#](https://docs.microsoft.com/en-us/dotnet/fsharp/tour)
 - [F# for Fun and Profit](https://fsharpforfunandprofit.com/)
 - [F# Software Foundation](https://fsharp.org/)
-- [Get Programming with F#](https://www.manning.com/books/get-programming-with-f-sharp) (book)
+- [F# in Action](https://www.manning.com/books/f-sharp-in-action) (book)
