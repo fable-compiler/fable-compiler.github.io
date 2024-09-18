@@ -436,6 +436,11 @@ async {
                     <img src="static/img/users/Round_Table.webp">
                 </a>
             </div>
+            <div class="column is-narrow">
+                <a class="image is-128x128 is-flex is-flex-direction-column is-justify-content-center" href="https://www.rebex.net/" target="_blank">
+                    <img src="static/img/users/rebex.png">
+                </a>
+            </div>
         </div>
     </section>
 </div>
