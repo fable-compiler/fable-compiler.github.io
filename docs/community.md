@@ -16,7 +16,7 @@ News and community works are broadcasted on this site's blog and on Twitter.
 
 The community tend to congregate in the following forums:
 
-- [FSharp Discord](https://discord.com/servers/fsharp-196693847965696000)
+- [F# Discord](https://discord.com/servers/fsharp-196693847965696000)
 - [F# Software Foundation Slack](https://fsharp.org/guides/slack/)
 - [F# Reddit](https://www.reddit.com/r/fsharp/)
 - [Fable Gitter](https://gitter.im/fable-compiler/Fable) - Inoperative, but still available for referencing old topics.
