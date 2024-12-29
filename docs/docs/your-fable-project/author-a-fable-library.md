@@ -1,150 +1,87 @@
 ---
-title: Author a Fable library
+title: Author a Fable package
 layout: standard
+toc:
+    to: 3
 ---
 
-## Requirements
+## Use Glutinum.Template
 
-To write a library that can be used in Fable you need to fulfill a few conditions:
+[Glutinum.Template](https://github.com/glutinum-org/Glutinum.Template) is a template that can help you create a Fable package.
 
-- Don't use FSharp.Core/BCL APIs that are not [compatible with Fable](../dotnet/compatibility.html).
-- Keep a simple `.fsproj` file: don't use MSBuild conditions or similar.
-- Include the source files in the Nuget package in a folder named `fable`.
+To use this template, you can run the following command:
 
-    :::info
-    If your library is a pure binding, you can skip this step.
-
-    This will improve Fable compilation time as the compiler will not need to parse the source files of the binding.
-    :::
-
-    Add the following to your `.fsproj` file:
-
-    ```xml
-    <!-- Add source files to "fable" folder in Nuget package -->
-    <ItemGroup>
-        <!-- Include all files that are compiled with this project -->
-        <Content Include="@(Compile)" Pack="true" PackagePath="fable/%(RelativeDir)%(Filename)%(Extension)" />
-        <!-- Include the project file itself as well -->
-        <Content Include="$(MSBuildThisFileFullPath)" Pack="true" PackagePath="fable/" />
-    </ItemGroup>
-    ```
-
-    If you needs native files like `.js` or `.py`, you need to include them in the `fable` folder as well.
-
-    Example:
-
-    ```xml
-    <ItemGroup>
-        <!-- Your F# code is already included because of the previous rules, so you only need to ensure the .js files are included as well -->
-        <Content Include="**/*.js" Exclude="**\*.fs.js" PackagePath="fable/%(RelativeDir)%(Filename)%(Extension)" />
-    </ItemGroup>
-    ```
-
-    :::info
-    Note that you don't want to include Fable generated files and so we exclude them with `Exclude="**\*.fs.js"`
-    :::
-
-In order to publish the package to Nuget check [the Microsoft documentation](https://docs.microsoft.com/en-us/nuget/quickstart/create-and-publish-a-package-using-the-dotnet-cli) or alternatively you can also [use Fake](https://fake.build/dotnet-nuget.html#Creating-NuGet-packages).
-
-## Make your package usable by others
-
-In addition to the source files, there are a few things you should do to make your package easier to consume by others. Adding these items will improve the development experience for your users inside their editors,
-specifically enabling Go To Definition (F12 in most editors) to work on your library's code.
-
-```xml
-<PropertyGroup>
-   <!-- Ensure debugging information is easily found, so that editors can locate the source code locations for your library.
-        This slightly increases the size of your package, but the usability benefits are worth it. -->
-   <DebugType>embedded</DebugType>
-   <!-- Ensure that files that are generated during the build by the .NET SDK are also included in your compiled library. -->
-   <EmbedUntrackedSources>true</EmbedUntrackedSources>
-</PropertyGroup>
+```bash
+dotnet new -i "Glutinum.Template::*"
 ```
 
-## Make your package discoverable
+Then you can create a new project with:
 
-[Fable.Packages](https://fable.io/packages/) is a tool making it easy for users to search for Fable packages. 
+```bash
+dotnet new glutinum -n MyProject
+```
 
-To make your packages listed on Fable.Packages, you need to add some tags to your `.fsproj`.
+Once installed, you can refer to the [`MANUAL.md`](https://github.com/glutinum-org/Glutinum.Template/blob/main/content/MANUAL.md) file in the generated project for more information.
 
-<ul class="textual-steps">
+## Use Fable.Package.SDK directly
 
-<li>
+If you prefer to not use a template, here are the steps to author a Fable package manually.
 
-**All Fable** packages must have the `fable` tag.
+Install Fable.Package.SDK
 
-</li>
+[Fable.Package.SDK](https://github.com/fable-compiler/Fable.Package.SDK) is a set of MSBuild targets that can help you create a Fable package.
 
-<li>
+**.NET CLI**
 
-Specify what kind of package you are publishing.
+```bash
+dotnet add package Fable.Package.SDK
+```
 
-A fable package can be one of the following:
+This will add the package to your project file.
 
-- `fable-library`: A library that can be used in Fable
+```xml
+<PackageReference Include="Fable.Package.SDK" Version="x.y.z" />
+    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    <PrivateAssets>all</PrivateAssets>
+</PackageReference>
+```
 
-    Examples of libraries could be [Fable.Promise](https://github.com/fable-compiler/fable-promise/), [Elmish](https://elmish.github.io/), [Thoth.Json](https://thoth-org.github.io//Thoth.Json/), [Feliz](https://zaid-ajaj.github.io/Feliz/)
+These rules are necessary to ensure that the package is not included in the final package, you don't want you package to depend on `Fable.Package.SDK` at runtime.
 
-    <div></div> <!-- Force a space to improve visual -->
+**Paket**
 
-- `fable-binding`: The package consist of a set of API to make a native library available
+```bash
+# In your paket.dependencies
+nuget Fable.Package.SDK copy_local: true
 
-    For example:
-    
-    - A package which makes an NPM package API available
-    - A package which makes the Browser API available
-    - A package which makes a cargo package API available
+# In your paket.references
+Fable.Package.SDK
+```
 
-</li>
+You can then refer to the [Fable.Package.SDK documentation](https://github.com/fable-compiler/Fable.Package.SDK) for more information.
 
-<li>
+## Guidelines
 
-Specify which targets are supported by your package.
+### Include native files
 
-Choose one or more of the following tags:
-
-- `fable-dart`: Dart is supported by the package 
-- `fable-dotnet`: .NET is supported by the package 
-- `fable-javascript`: JavaScript is supported by the package 
-- `fable-python`: Python is supported by the package 
-- `fable-rust`: Rust is supported by the package 
-- `fable-all`: Package is compatible with all Fable targets.
-
-    :::warning
-    A package can be compatible with all targets if it depends only on packages that are also compatible with all targets.
-
-    A package compatible with all targets cannot be a binding, as these are target-specific.
-    :::
+If you needs native files like `.js` or `.py`, you need to include them in the `fable` folder as well.
 
 Example:
 
-If your package supports only JavaScript you need to use `fable-javascript`
-
-If your package supports both JavaScript and Python, you need to use `fable-javascript` and `fable-python`
-
-</li>
-
-</ul>
-
-Examples:
-
-If your package is a binding which target JavaScript you need to write:
-
 ```xml
-<PropertyGroup>
-    <PackageTags>fable;fable-binding;fable-javascript</PackageTags>
-</PropertyGroup>
+<ItemGroup>
+    <!-- Your F# code is already included because of the previous rules, so you only need to ensure the .js files are included as well -->
+    <Content Include="**/*.js" Exclude="**\*.fs.js" PackagePath="fable/%(RelativeDir)%(Filename)%(Extension)" />
+</ItemGroup>
 ```
 
-If your package is a library which targets JavaScript and Python you need to write:
+:::info
+Note that you don't want to include Fable generated files and so we exclude them with `Exclude="**\*.fs.js"`
+:::
 
-```xml
-<PropertyGroup>
-    <PackageTags>fable;fable-library;fable-javascript;fable-python</PackageTags>
-</PropertyGroup>
-```
+In order to publish the package to Nuget check [the Microsoft documentation](https://docs.microsoft.com/en-us/nuget/quickstart/create-and-publish-a-package-using-the-dotnet-cli) or alternatively you can also [use Fake](https://fake.build/dotnet-nuget.html#Creating-NuGet-packages).
 
-## Native dependencies
+### Native dependencies with Femto
 
 When authoring a binding you often need your user to install a native dependency.
 
@@ -177,6 +114,20 @@ For Python packages via poetry:
 
 Please refer to [Femto documentation](https://github.com/Zaid-Ajaj/Femto) for more information.
 
-## Testing
+### Testing
 
-It's a good idea to write unit tests for your library to make sure everything works as expected before publishing. The simplest way for that is to use a JS test runner like [Mocha](https://mochajs.org/), as in [this sample](https://github.com/fable-compiler/fable2-samples/tree/master/mocha). Or you can also use a library like [Fable.Mocha](https://github.com/Zaid-Ajaj/Fable.Mocha) containing more tools for Fable projects.
+It's a good idea to write unit tests for your library to make sure everything works as expected before publishing.
+
+Find below some libraries that can help you write tests for your Fable library:
+
+- [Fable.Pyxpecto](https://github.com/Freymaurer/Fable.Pyxpecto): Inspired by the popular Expecto library for F#, Fable.Pyxpecto can be used to run tests in Python, JavaScript, TypeScript and .NET!
+- [Fable.Mocha](https://github.com/Zaid-Ajaj/Fable.Mocha): Fable library for testing. Inspired by the popular Expecto library for F# and adopts the testList, testCase and testCaseAsync primitives for defining tests.
+- Native runner like [Mocha](https://mochajs.org/), [example](https://github.com/fable-compiler/fable2-samples/tree/master/mocha).
+
+### Listing
+
+Once published to [NuGet](https://www.nuget.org/), your package will also be available on [Fable.Packages](https://fable.io/packages/) for easy discovery by the Fable community.
+
+:::info
+This can take a few minutes to a few hours to be available on the website, depending on Nuget's indexing.
+:::
