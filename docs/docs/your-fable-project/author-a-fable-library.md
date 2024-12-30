@@ -12,7 +12,7 @@ toc:
 To use this template, you can run the following command:
 
 ```bash
-dotnet new -i "Glutinum.Template::*"
+dotnet new install "Glutinum.Template::*"
 ```
 
 Then you can create a new project with:
