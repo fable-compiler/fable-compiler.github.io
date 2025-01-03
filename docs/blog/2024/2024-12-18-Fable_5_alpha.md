@@ -57,8 +57,8 @@ Only the features that makes sense in the context of Fable are listed here.
         </tr>
         <tr>
             <td><a href="https://learn.microsoft.com/en-us/dotnet/fsharp/whats-new/fsharp-9#discriminated-union-is-properties">Discriminated union <code>.Is*</code> properties</a></td>
-            <td align="center">⚠️</td>
-            <td>TypeScript not fully supported (<a href="https://github.com/fable-compiler/Fable/pull/3982">#3982</a>)</td>
+            <td align="center">✅</td>
+            <td></td>
         </tr>
         <tr>
             <td><a href="https://learn.microsoft.com/en-us/dotnet/fsharp/whats-new/fsharp-9#partial-active-patterns-can-return-bool-instead-of-unit-option">Partial active patterns can return <code>bool</code> instead of <code>unit option</code></a></td>
