@@ -36,6 +36,8 @@ export function hello() {
 And this F# code:
 
 ```fs
+open Fable.Core
+
 [<Import("hello", "./hello.js")>]
 let hello : unit -> unit = jsNative
 
@@ -64,6 +66,8 @@ There are 2 families of imports:
 They archieve the same goal, but with a slightly generated code.
 
 ```fs
+open Fable.Core
+
 [<Import("hello", "./hello.js")>]
 let hello : unit -> unit = jsNative
 
@@ -93,6 +97,8 @@ Some JavaScript optimizations tools can remove the intermediate variable, but no
 When trying to bind a global variable, you can use the `[<Global>]` attribute.
 
 ```fs
+open Fable.Core
+
 [<Global>]
 let console: JS.Console = jsNative
 ```
@@ -100,6 +106,8 @@ let console: JS.Console = jsNative
 If you want to use a different in you F# code, you can use the `name` parameter:
 
 ```fs
+open Fable.Core
+
 [<Global("console")>]
 let logger: JS.Console = jsNative
 ```
@@ -112,6 +120,8 @@ This attributes takes two parameters:
 - `from`: the path to the JavaScript file / module
 
 ```fs
+open Fable.Core
+
 [<Import("hello", "./hello.js")>]
 let hello : unit -> unit = jsNative
 // Generates: import { hello } from "./hello.js";
@@ -130,6 +140,8 @@ let hello : unit -> unit = jsNative
 `ImportAll` is used to import all members from a JavaScript module and use the F# value name as the name of the imported module.
 
 ```fs
+open Fable.Core
+
 [<ImportAll("./hello.js")>]
 let hello : unit -> unit = jsNative
 // Generates: import * as hello from "./hello.js";
@@ -140,6 +152,8 @@ let hello : unit -> unit = jsNative
 `ImportMember` is used to import a specific member from a JavaScript module, the name is based on the name of the F# value.
 
 ```fs
+open Fable.Core
+
 [<ImportMember("./hello.js")>]
 let hello : unit -> unit = jsNative
 // Generates: import { hello } from "./hello.js";
@@ -150,6 +164,8 @@ let hello : unit -> unit = jsNative
 `ImportDefault` is used to import the default member from a JavaScript module, the name is based on the name of imported module.
 
 ```fs
+open Fable.Core
+
 [<ImportDefault("./hello.js")>]
 let hello : unit -> unit = jsNative
 // Generates: import hello from "./hello.js";
