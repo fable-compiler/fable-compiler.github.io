@@ -251,4 +251,4 @@ Try changing the content of `Program.fs` and see the result in the browser.
 
 ### Alternative
 
-When using Vite, you could also consider working with [vite-plugin-fable](https://nojaf.com/vite-plugin-fable/) instead.
+When using Vite, you could also consider working with [vite-plugin-fable](https://fable.io/vite-plugin-fable/) instead.
