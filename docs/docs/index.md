@@ -63,7 +63,7 @@ F# is already used on the server for web and cloud apps, and it's also used quit
     </tr>
     <tr>
       <td>Rust</td>
-      <td>Alpha</td>
+      <td>Beta</td>
     </tr>
     <tr>
       <td>PHP</td>
