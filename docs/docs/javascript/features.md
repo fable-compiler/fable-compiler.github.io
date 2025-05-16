@@ -11,7 +11,7 @@ In this section, we will cover specific features of Fable that are used when int
 
 ### `jsNative`
 
-`jsNative` provide a dummy implementation that we use when writing bindings.
+`jsNative` provides a dummy implementation that we use when writing bindings.
 
 Here is its definition:
 
@@ -21,7 +21,7 @@ Here is its definition:
         failwith "You've hit dummy code used for Fable bindings. This probably means you're compiling Fable code to .NET by mistake, please check."
 ```
 
-The thrown exception should never be seen as `jsNative` calls should be replaced by actual JavaScript code calls.
+The thrown exception should never be seen as `jsNative` calls, it should be replaced by actual JavaScript code calls.
 
 Examples:
 
@@ -54,16 +54,16 @@ hello();
 
 ## Imports
 
-In JavaScript, the static `import` declaration is used to import codes that are exported by another module.
+In JavaScript, the static `import` declaration is used to import code that is exported by another module.
 
-Fable provides different ways to import JavaScript code, to cover different scenarios.
+Fable provides different ways to import JavaScript in order to cover different scenarios.
 
 There are 2 families of imports:
 
 - Attribute-based imports
 - Function-based imports
 
-They archieve the same goal, but with a slightly generated code.
+They achieve the same goal but have differences in the generated code that they produce.
 
 ```fs
 open Fable.Core
@@ -94,7 +94,7 @@ Some JavaScript optimizations tools can remove the intermediate variable, but no
 
 #### `[<Global>]`
 
-When trying to bind a global variable, you can use the `[<Global>]` attribute.
+To bind a global variable, you can use the `[<Global>]` attribute.
 
 ```fs
 open Fable.Core
@@ -103,7 +103,7 @@ open Fable.Core
 let console: JS.Console = jsNative
 ```
 
-If you want to use a different in you F# code, you can use the `name` parameter:
+If you want to use a different name within your F# code you can specify it with the `name` parameter:
 
 ```fs
 open Fable.Core
@@ -114,7 +114,7 @@ let logger: JS.Console = jsNative
 
 #### `[<Import(...)>]`
 
-This attributes takes two parameters:
+This attribute takes two parameters:
 
 - `selector`: the import selector, can be `*`, `default` or a name
 - `from`: the path to the JavaScript file / module
@@ -161,7 +161,7 @@ let hello : unit -> unit = jsNative
 
 #### `[<ImportDefault(...)>]`
 
-`ImportDefault` is used to import the default member from a JavaScript module, the name is based on the name of imported module.
+`ImportDefault` is used to import the default member from a JavaScript module, the name is based on the name of the imported module.
 
 ```fs
 open Fable.Core
@@ -244,7 +244,7 @@ let hi : unit -> unit = importMember "./hello.js"
 
 #### `importSideEffects`
 
-`importSideEffects` is used when you wants to import a JavaScript module that has side effects, like a CSS file or a polyfill.
+`importSideEffects` is used when you want to import a JavaScript module that has sideeffects, like a CSS file or a polyfill.
 
 ```fs
 importSideEffects "./style.css"
@@ -258,10 +258,10 @@ importSideEffects "whatwg-fetch"
 
 ## Emit, when F# is not enough
 
-Emit is a features offered by Fable, that allows you to write JavaScript code directly in F#.
+Emit is a feature offered by Fable, that allows you to write JavaScript code directly in F#.
 
 :::danger
-Content of emit snippet, is not validated by F# compiler, so you should use this feature sparingly.
+The emit snippet is not validated by the F# compiler so you should use this feature sparingly.
 :::
 
 Main use cases:
@@ -483,7 +483,7 @@ Note how Fable replaced the union union type with the underlying type.
 
 #### `U2`, `U3`, ..., `U9`
 
-Fable provides already erased union types, from `U2` to `U9` than you can use without having to define custom erased union each time.
+Fable provides already erased union types, from `U2` to `U9` that you can use without having to define custom erased union each time.
 
 ```fs
 open Fable.Core
@@ -529,7 +529,7 @@ let test(arg: U3<string, int, float[]>) =
 
 ### Erased types
 
-Decoring a type with `[<Erase>]` allows you to instruct Fable to not generate any code for that type. This is useful when you want to use a type from a JS library that you don't want to generate bindings for.
+Decorating a type with `[<Erase>]` allows you to instruct Fable to not generate any code for that type. This is useful when you want to use a type from a JS library that you don't want to generate bindings for.
 
 ```fs
 open Fable.Core
@@ -592,7 +592,7 @@ import { Avatar } from "./user.jsx";
 export const x = Avatar("123");
 ```
 
-The generated code is much smaller and doesn't include any reflection information. This trick is useful when you want to minimize the size of your bundle, this is the trick used by [Feliz ecosystem](https://github.com/Zaid-Ajaj/Feliz/) to generate React code that is almost as small as if you were writing it by hand in JavaScript.
+The generated code is much smaller and doesn't include any reflection information. This trick is useful when you want to minimize the size of your bundle, this is the trick used by the [Feliz ecosystem](https://github.com/Zaid-Ajaj/Feliz/) to generate React code that is almost as small as if you were writing it by hand in JavaScript.
 
 ## `[<StringEnum>]`
 
@@ -615,7 +615,7 @@ function on(event, callback) {
 Fable supports this feature by using union types and `StringEnum` attributes.
 
 :::info 
-These union types must not have any data fields as they will be compiled to a string matching the name of the union case.
+These union types should not have any data fields as they will be compiled to a string which matches the name of the union case.
 :::
 
 ```fs
@@ -644,7 +644,7 @@ event("click", () => {
 
 ### `CaseRules`
 
-`StringEnum` accept a parameters allowing you to control the casing used to conver the union case name to a string.
+`StringEnum` accepts parameters which allow you to control the casing used to convert the union case name to a string.
 
 - `CaseRules.None`: `MouseOver` becomes `MouseOver`
 - `CaseRules.LowerFirst`: `MouseOver` becomes `mouseOver`
@@ -663,9 +663,9 @@ open Fable.Core
 
 [<StringEnum>]
 type EventType =
-    | [<CompiledName("Abracadabra")>] MouveOver
+    | [<CompiledName("Abracadabra")>] MouseOver
 
-let eventType = EventType.MouveOver
+let eventType = EventType.MouseOver
 ```
 
 generates
@@ -676,7 +676,7 @@ export const eventType = "Abracadabra";
 
 ## Plain Old JavaScript Objects
 
-POJO (Plain Old JavaScript Objects) are one of the most common types in JavaScript.
+POJO (Plain Old JavaScript Objects) is one of the most common types in JavaScript.
 
 ```js
 export const user = {
@@ -687,11 +687,11 @@ export const user = {
 
 Fable offers several ways to work with POJOs.
 
-The recommended way to work with POJOs is to use `[<ParamObject>]` as they are the closest to normal F# classes. But we are going to explore all the options from the simpler to put in practice to the more verbose.
+The recommended way to work with POJOs is to use `[<ParamObject>]` as they are the closest to normal F# classes. But we will explore all the potential options, from the simplest to the more verbose.
 
 ### Anonymous records
 
-Fable translates anonymous records to POJOs, making them perfect one of the simplest ways to work with POJOs.
+Fable translates anonymous records to POJOs, making them perfect as one of the simplest ways to work with POJOs.
 
 ```fs
 let user =
@@ -767,7 +767,7 @@ user.Age = 20;
 
 ### `jsOptions`
 
-`jsOptions` is a function that gives you access to an objet of the provided type and allows you to set the fields.
+`jsOptions` is a function that gives you access to an object of the provided type and allows you to set the fields.
 
 ```fs
 open Fable.Core
@@ -850,7 +850,7 @@ options2.isCaseSensitive
 
 #### Optional properties
 
-When a property is option, the argument in the method is of the form `?<arg name>: <type>` and the getter/setter is of the form `<arg name>: <type> option`.
+When a property is an `option`, the argument in the method is of the form `?<arg name>: <type>` and the getter/setter is of the form `<arg name>: <type> option`.
 
 ```fs
 [<AllowNullLiteral>]
@@ -1056,7 +1056,7 @@ Note how each method has a different name in JavaScript.
 
 ### `[<AttachMembers>]`
 
-If you want to have all members attached to a class (as in standard JS classes) and not-mangled use the `AttachMembers` attribute. But be aware overloads won't work in this case.
+If you want to have all members attached to a class (as in standard JS classes) and not-mangled, use the `AttachMembers` attribute. But be aware overloads won't work in this case.
 
 <p class="tag is-info is-medium">
     Added in v3.2.2
@@ -1214,7 +1214,7 @@ Dynamic typing allows you to access an object property by name
 :::danger
 This feature is not type-safe and should be used with caution. 
 
-Adocate use case for this feature is when you are prototyping or don't have the time to write a proper type-safe interop.
+The use case for this feature is when you are prototyping or don't have the time to write a proper type-safe interop.
 :::
 
 ### Property access
