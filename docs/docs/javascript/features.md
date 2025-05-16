@@ -11,7 +11,7 @@ In this section, we will cover specific features of Fable that are used when int
 
 ### `jsNative`
 
-jsNative provides a dummy implementation that we use when writing bindings.
+`jsNative` provides a dummy implementation that we use when writing bindings.
 
 Here is its definition:
 
