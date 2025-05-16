@@ -103,7 +103,7 @@ open Fable.Core
 let console: JS.Console = jsNative
 ```
 
-If you want to use a different name, you can specify it with the `name` parameter:
+If you want to use a different name within your F# code you can specify it with the `name` parameter:
 
 ```fs
 open Fable.Core
