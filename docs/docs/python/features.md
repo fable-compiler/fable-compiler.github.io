@@ -18,7 +18,7 @@ Python target is in beta meaning that breaking changes can happen between minor 
 When targetting Python, Fable will automatically convert F# camelCase names to Python snake_case names.
 
 ```fs
-let addTwoNumber x y = 
+let addTwoNumber x y =
     x + y
 ```
 
@@ -29,6 +29,36 @@ def add_two_number(x: int, y: int) -> int:
     return x + y
 ```
 
+Records snake-case all member fields:
+
+<p class="tag is-info is-medium">
+    Added in v5.0.0-alpha.14
+</p>
+
+```fs
+type User = { FirstName: string }
+```
+
+generates:
+
+```py
+class User:
+    def __init__(self, first_name: str):
+        self.first_name = first_name
+```
+
+Anonymous records preserve original casing:
+
+```fs
+let user = {| FirstName = "John" |}
+```
+
+generates:
+
+```py
+user = {"FirstName": "John"}
+```
+
 ### `nativeOnly`
 
 `nativeOnly` provide a dummy implementation that we use when writing bindings.
@@ -37,7 +67,7 @@ Here is its definition:
 
 ```fs
     /// Alias of nativeOnly
-    let inline nativeOnly<'T> : 'T = 
+    let inline nativeOnly<'T> : 'T =
         failwith "You've hit dummy code used for Fable bindings. This probably means you're compiling Fable code to .NET by mistake, please check."
 ```
 
@@ -80,7 +110,7 @@ There are 2 families of imports:
 - Attribute-based imports
 - Function-based imports
 
-They archieve the same goal, but with a slightly generated code.
+They achieve the same goal, but with a slightly generated code.
 
 ```fs
 [<Import("sayHello", "hello")>]
@@ -107,7 +137,7 @@ say_hello: Callable[[], None] = say_hello_1
 say_hello()
 ```
 
-Using the attribute-based imports is recommanded as it generates a smaller output.
+Using the attribute-based imports is recommended as it generates a smaller output.
 
 ### Attributes
 
@@ -211,7 +241,7 @@ This function takes two parameters:
 let hi : unit -> unit = import "say_hello" "hello"
 
 hi()
-// Generates: 
+// Generates:
 // from typing import Callable
 // from hello import say_hello as say_hello_1
 // say_hello: Callable[[], None] = say_hello_1
@@ -231,7 +261,7 @@ let hi : unit -> unit = importAll "./hello.js"
 
 #### `importMember`
 
-`importMember` is used to import a specific member from a JavaScript module, the name is based on the name of the F# value.
+`importMember` is used to import a specific member from a Python module, the name is based on the name of the F# value.
 
 ```fs
 let say_hello : unit -> unit = importMember "hello"
@@ -245,6 +275,16 @@ let sayHello : unit -> unit = importMember "hello"
 // from typing import Callable
 // from hello import say_hello as say_hello_1
 // say_hello: Callable[[], None] = say_hello_1
+```
+
+#### `importSideEffects`
+
+`importSideEffects` is used when you want to import a Python module for its side effects only.
+
+```fs
+importSideEffects "some_module"
+// Generates:
+// import some_module
 ```
 
 ## Emit, when F# is not enough
@@ -265,7 +305,7 @@ When using `emit`, you can use placeholders like `$0`, `$1`, `$2`, ... to refere
 
 ### `[<Emit("...")>]`
 
-You can use the `Emit` attribute to decorate function, methods, 
+You can use the `Emit` attribute to decorate function, methods,
 
 ```fs
 [<Emit("$0 + $1")>]
@@ -343,11 +383,11 @@ Deconstruct a tuple of arguments and generate a Python statement.
 ```fs
 open Fable.Core.PyInterop
 
-let add (a : int) (b : int) : int = 
+let add (a : int) (b : int) : int =
     emitStatement (a, b) "return $0 + $1;"
 
 let repeatHello (count : int) : unit =
-    emitStatement 
+    emitStatement
         count
         """cond = count;
     while cond > 0:
@@ -373,10 +413,10 @@ def repeat_hello(count: int) -> None:
 ### `emitExpr` vs `emitStatement`
 
 ```fs
-let add1 (a : int) (b : int) = 
+let add1 (a : int) (b : int) =
     emitExpr (a, b) "$0 + $1"
 
-let add2 (a : int) (b : int) = 
+let add2 (a : int) (b : int) =
     emitStatement (a, b) "$0 + $1"
 ```
 
@@ -395,6 +435,96 @@ def add2(a: int, b: int) -> Any:
 
 Note how `return` has been added to `add1` and not to `add2`. In this situation if you use `emitStatement`, you need to write `return $0 + $1"`
 
+### `Py.python`
+
+<p class="tag is-info is-medium">
+    Added in v5.0.0
+</p>
+
+`Py.python` allows you to embed literal Python code directly in F#.
+
+```fs
+open Fable.Core
+
+let add a b = Py.python $"""return {a+b}"""
+```
+
+generates:
+
+```py
+def add(a, b):
+    return a + b
+```
+
+`Py.python` executes as statements, so use `return` keyword to return values.
+
+## Python Decorators
+
+<p class="tag is-info is-medium">
+    Added in v5.0.0
+</p>
+
+`Py.Decorator` allows you to apply Python decorators to classes and functions.
+
+```fs
+open Fable.Core
+
+[<Py.Decorator("dataclasses.dataclass")>]
+type User =
+    { Name: string
+      Age: int }
+```
+
+generates:
+
+```py
+@dataclasses.dataclass
+class User:
+    name: str
+    age: int
+```
+
+You can also pass parameters to decorators:
+
+```fs
+[<Py.Decorator("functools.lru_cache", "maxsize=128")>]
+let expensiveFunction x = x * 2
+```
+
+generates:
+
+```py
+@functools.lru_cache(maxsize=128)
+def expensive_function(x):
+    return x * 2
+```
+
+## Class Attributes
+
+<p class="tag is-info is-medium">
+    Added in v5.0.0
+</p>
+
+`Py.ClassAttributes` controls how class members are generated in Python.
+
+```fs
+open Fable.Core
+
+[<Py.ClassAttributes(Py.ClassAttributeStyle.Attributes)>]
+type Config() =
+    member val Name = "default" with get, set
+    member val Port = 8080 with get, set
+```
+
+generates:
+
+```py
+class Config:
+    name: str = "default"
+    port: int = 8080
+```
+
+Without `ClassAttributes`, members would be generated as properties with instance backing.
 
 ## `[<Erase>]`
 
@@ -402,7 +532,7 @@ Note how `return` has been added to `add1` and not to `add2`. In this situation 
 
 You can decode a type with `[<Erase>]` to tells fable to not emit code for that type.
 
-This is useful for creating DSL for examples or when trying to represent a virtual type 
+This is useful for creating DSL for examples or when trying to represent a virtual type
 for which you don't want to impact the size of the generated code.
 
 ```fs
@@ -472,13 +602,13 @@ let test(arg: U3<string, int, float[]>) =
 //         to_console(printf("An int %i"))(arg)
 //     elif is_array_like(arg):
 //         to_console(printf("An array with sum %f"))(arg)
-//     else: 
+//     else:
 //         to_console(printf("A string %s"))(arg)
 ```
 
 ### Erased types
 
-Decoring a type with `[<Erase>]` allows you to instruct Fable to not generate any code for that type. This is useful when you want to use a type from a Python library that you don't want to generate bindings for.
+Decorating a type with `[<Erase>]` allows you to instruct Fable to not generate any code for that type. This is useful when you want to use a type from a Python library that you don't want to generate bindings for.
 
 ```fs
 open Fable.Core
@@ -555,7 +685,7 @@ The generated code is much smaller and doesn't include any reflection informatio
 
 ## `[<StringEnum>]`
 
-:::info 
+:::info
 These union types must not have any data fields as they will be compiled to a string matching the name of the union case.
 :::
 
@@ -585,7 +715,7 @@ on_event("click", ignore)
 
 ### `CaseRules`
 
-`StringEnum` accept a parameters allowing you to control the casing used to conver the union case name to a string.
+`StringEnum` accept a parameters allowing you to control the casing used to convert the union case name to a string.
 
 - `CaseRules.None`: `MouseOver` becomes `MouseOver`
 - `CaseRules.LowerFirst`: `MouseOver` becomes `mouseOver`
@@ -681,7 +811,7 @@ You then need to set each field manually.
 open Fable.Core
 open Fable.Core.PyInterop
 
-type IUser = 
+type IUser =
     abstract Name : string with get, set
     abstract Age : int with get, set
 
@@ -801,7 +931,7 @@ class MinStack:
     Added in v3.2.0
 </p>
 
-If you are not planning to use an interface to interact with Python and want to have overloaded members, you can decorate the interface declaration with the `Mangle` attribute. 
+If you are not planning to use an interface to interact with Python and want to have overloaded members, you can decorate the interface declaration with the `Mangle` attribute.
 
 > Interfaces coming from .NET BCL (like System.Collections.IEnumerator) are mangled by default.
 
@@ -814,10 +944,10 @@ type IRenderer =
 
 type Renderer() =
     interface IRenderer with
-        member this.Render() = 
+        member this.Render() =
             failwith "Not implemented"
 
-        member this.Render(indentation) = 
+        member this.Render(indentation) =
             failwith "Not implemented"
 ```
 
@@ -913,12 +1043,12 @@ useEffect(Func<_,_> myEffect)
 
 ## Dynamic typing, proceed with caution
 
-Dynamic typing allows you to access an object property by name 
+Dynamic typing allows you to access an object property by name
 
 :::danger
-This feature is not type-safe and should be used with caution. 
+This feature is not type-safe and should be used with caution.
 
-Adocate use case for this feature is when you are prototyping or don't have the time to write a proper type-safe interop.
+Advocate use case for this feature is when you are prototyping or don't have the time to write a proper type-safe interop.
 :::
 
 ### Property access
