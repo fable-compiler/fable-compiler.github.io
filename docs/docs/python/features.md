@@ -1048,7 +1048,7 @@ Dynamic typing allows you to access an object property by name
 :::danger
 This feature is not type-safe and should be used with caution.
 
-Advocate use case for this feature is when you are prototyping or don't have the time to write a proper type-safe interop.
+Adequate use case for this feature is when you are prototyping or don't have the time to write a proper type-safe interop.
 :::
 
 ### Property access
