@@ -32,7 +32,7 @@ def add_two_number(x: int, y: int) -> int:
 Records snake-case all member fields:
 
 <p class="tag is-info is-medium">
-    Added in v5.0.0-alpha.14
+    Added in v5.0.0
 </p>
 
 ```fs
