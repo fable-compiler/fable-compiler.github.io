@@ -21,9 +21,11 @@ python3 Program.py
 
 ## Publishing to PyPI
 
-When building a library that uses Fable Python and you want to publish it to PyPI, you cannot bundle the Fable library the normal way. This is because the Fable library is partially written in Rust and needs to be built for all architectures.
+If you want to publish a library to PyPI that uses Fable Python, you need to use `--fableLib` option to reference the pre-build Fable library:
 
-Instead, use the `--fableLib` option to reference a pre-built Fable library:
+:::info
+This is because the Fable library is partially written in Rust and needs to be built for all architectures
+:::
 
 ```bash
 dotnet fable --lang python --fableLib fable-library
