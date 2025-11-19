@@ -26,7 +26,7 @@ When building a library that uses Fable Python and you want to publish it to PyP
 Instead, use the `--fableLib` option to reference a pre-built Fable library:
 
 ```bash
-fable --lang python --fableLib fable-library
+dotnet fable --lang python --fableLib fable-library
 ```
 
 This will make any reference to the Fable library point to a package in the Python search path (e.g., site-packages) instead of the normally bundled library. Your package will then need to declare `fable-library` as a dependency so users can install it from PyPI.
