@@ -5,7 +5,7 @@ layout: standard
 
 ## Python Version
 
-Fable targets Python 3.12 or higher. Python 3.14 is also supported.
+Fable targets Python 3.12 or higher.
 
 Python 3.10 and 3.11 are deprecated.
 
