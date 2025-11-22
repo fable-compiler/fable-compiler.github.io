@@ -452,7 +452,7 @@ let add a b = Py.python $"""return {a+b}"""
 generates:
 
 ```py
-def add(a, b):
+def add(a: int32, b: int32) -> Any:
     return a + b
 ```
 
@@ -481,7 +481,7 @@ generates:
 @dataclasses.dataclass
 class User:
     name: str
-    age: int
+    age: int32
 ```
 
 You can also pass parameters to decorators:
