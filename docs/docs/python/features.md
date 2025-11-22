@@ -32,7 +32,7 @@ def add_two_number(x: int, y: int) -> int:
 Records snake-case all member fields:
 
 <p class="tag is-info is-medium">
-    Added in v5.0.0
+    Added in v5.0.0-alpha
 </p>
 
 ```fs
@@ -438,7 +438,7 @@ Note how `return` has been added to `add1` and not to `add2`. In this situation 
 ### `Py.python`
 
 <p class="tag is-info is-medium">
-    Added in v5.0.0
+    Added in v4.0.0
 </p>
 
 `Py.python` allows you to embed literal Python code directly in F#.
@@ -461,7 +461,7 @@ def add(a, b):
 ## Python Decorators
 
 <p class="tag is-info is-medium">
-    Added in v5.0.0
+    Added in v5.0.0-alpha
 </p>
 
 `Py.Decorator` allows you to apply Python decorators to classes and functions.
@@ -502,7 +502,7 @@ def expensive_function(x):
 ## Class Attributes
 
 <p class="tag is-info is-medium">
-    Added in v5.0.0
+    Added in v5.0.0-alpha
 </p>
 
 `Py.ClassAttributes` controls how class members are generated in Python.
