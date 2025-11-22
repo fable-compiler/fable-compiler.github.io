@@ -15,7 +15,7 @@ Some F#/.NET types have counterparts in Python. Fable takes advantage of this to
 
 - **Strings and booleans** behave the same in F# and Python.
 - **Chars** are compiled as Python strings of length 1.
-- **Numeric types** - Most numeric types are implemented using custom pyo3 wrapper types that maintain F#-style semantics while integrating with Python. Only `bigint` is translated to Python's native `int` type. See the [Numeric Types](#numeric-types) section for details.
+- **Numeric types** - Most numeric types are implemented in Rust using custom [PyO3](https://pyo3.rs/) wrapper types that maintain F#-style semantics while integrating with Python. Only `bigint` is translated to Python's native `int` type. See the [Numeric Types](#numeric-types) section for details.
 - **Arrays** compile to custom `FSharpArray` wrappers to maintain F# semantics.
 - **ResizeArray** compiles to Python `list`.
 - Any **IEnumerable** (or `seq`) can be traversed in Python using the iterator protocol (`__iter__`).
