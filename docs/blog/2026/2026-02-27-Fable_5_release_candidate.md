@@ -55,9 +55,9 @@ Fable will now treat all warnings from **your** code as errors, but it will stil
 
 This behavior should mimic how standard F# compiler works.
 
-## F# 9 support
+## .NET 10 and F# 10 support
 
-Fable 5 add support for F# 9 features:
+Fable 5 add support for the following F# features:
 
 * [Nullable reference types](https://learn.microsoft.com/en-us/dotnet/fsharp/whats-new/fsharp-9#nullable-reference-types)
 * [Discriminated union <code>.Is*</code> properties](https://learn.microsoft.com/en-us/dotnet/fsharp/whats-new/fsharp-9#discriminated-union-is-properties)
