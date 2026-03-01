@@ -40,7 +40,7 @@ Numeric Types                          | Native integers and floats
 Arrays                                 | Process dict refs (lists / atomics for byte[])
 System.Boolean                         | `true` / `false` atoms
 System.Char                            | Binary (string of length 1)
-System.String                          | Binary (`<<"...">>`")
+System.String                          | Binary (`<<"...">>`)
 System.Decimal                         | Custom fixed-scale integer
 System.DateTime                        | `{Ticks, Kind}` tuple
 System.DateTimeOffset                  | `{Ticks, OffsetTicks, Kind}` tuple
@@ -124,12 +124,12 @@ float32 / single | Single     | `float()`    | Native IEEE 754
 decimal          | Decimal    | Custom       | Fixed-scale integer implementation
 bigint           | BigInteger | `integer()`  | Native (Erlang integers ARE arbitrary-precision)
 
-### Erlang Advantage: No Wrapper Types Needed
+### Sized Integer Overflow
 
-Unlike the Python target which requires custom PyO3/Rust wrapper types for sized integers (~1200 lines), Erlang handles all integer operations natively. Sized integer wrapping (when needed for overflow semantics) uses Erlang's bit syntax:
+Like Python, Erlang has native arbitrary-precision integers. Sized integer wrapping (for overflow semantics of `int32`, `int64`, etc.) uses Erlang's bit syntax:
 
 ```erlang
-%% Wrapping int32 arithmetic — pure Erlang, no NIF
+%% Wrapping int32 arithmetic
 wrap32(N) ->
     <<V:32/signed-integer>> = <<N:32/signed-integer>>,
     V.
@@ -158,6 +158,10 @@ F#                          | Erlang
 `Async.Parallel`            | `spawn` per computation, `receive` to collect
 `Async.Sleep`               | `timer:sleep(Ms)`
 `task { return x }`         | Same as async (alias on Beam)
+
+:::info
+`task { }` and `async { }` compile to the same CPS representation on Beam. The hot-start semantics of .NET `Task` are not preserved. Downcasting from `obj` to `Task<T>` or `Async<T>` is not supported.
+:::
 
 ### CancellationToken
 

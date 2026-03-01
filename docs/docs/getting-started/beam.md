@@ -40,8 +40,8 @@ This generates `.erl` files in the output directory (default `./output`).
 Compile the generated Erlang files:
 
 ```bash
-erlc -o output output/*.erl
 erlc -o output/fable_modules/fable-library-beam output/fable_modules/fable-library-beam/*.erl
+erlc -pa output/fable_modules/fable-library-beam -o output output/*.erl
 ```
 
 </li>
@@ -67,3 +67,5 @@ dotnet fable watch --lang beam
 </li>
 
 </ul>
+
+For more details, see [Build and Run](/docs/beam/build-and-run).

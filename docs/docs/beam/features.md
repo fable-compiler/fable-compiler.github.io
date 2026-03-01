@@ -13,6 +13,17 @@ Beam target is in alpha meaning that breaking changes can happen between minor v
 
 ## Utilities
 
+### `nativeOnly`
+
+`nativeOnly` provides a dummy implementation used when writing bindings to Erlang libraries.
+
+```fs
+[<Import("reverse", "lists")>]
+let reverse : 'a list -> 'a list = nativeOnly
+```
+
+The thrown exception should never be seen as `nativeOnly` calls are replaced by actual Erlang module calls.
+
 ### Automatic case conversion
 
 When targeting Erlang, Fable automatically converts F# camelCase names to Erlang snake_case names.
@@ -56,17 +67,6 @@ generates:
 maybe_(X) -> X + 1.
 receive_(X) -> X * 2.
 ```
-
-### `nativeOnly`
-
-`nativeOnly` provides a dummy implementation used when writing bindings to Erlang libraries.
-
-```fs
-[<Import("lists", "reverse")>]
-let reverse : 'a list -> 'a list = nativeOnly
-```
-
-The thrown exception should never be seen as `nativeOnly` calls are replaced by actual Erlang module calls.
 
 ## Imports
 
@@ -289,7 +289,7 @@ Async.RunSynchronously (fetchData ())
 
 - `Async.Parallel` spawns one Erlang process per computation and collects results via message passing
 - `Async.Sleep` uses `timer:sleep`
-- `task { }` is an alias for `async { }` on the Beam target
+- `task { }` is an alias for `async { }` on the Beam target — both compile to the same CPS representation. The hot-start semantics of .NET `Task` are not preserved. Downcasting from `obj` to `Task<T>` or `Async<T>` is not supported
 
 ## MailboxProcessor
 
