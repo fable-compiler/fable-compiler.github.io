@@ -87,11 +87,7 @@ Erlang requires the module name to match the filename, so this conversion is aut
 
 ## Program vs Library
 
-Fable projects compiling to Erlang should set `OutputType` to `Exe` for projects with a `[<EntryPoint>]`:
-
-```xml
-<OutputType>Exe</OutputType>
-```
+The Beam backend currently does not differentiate between `Exe` and `Library` output types. All top-level code is compiled into a `main/0` Erlang function regardless of the `OutputType` setting. The `[<EntryPoint>]` attribute is not used.
 
 ## Watch Mode
 
