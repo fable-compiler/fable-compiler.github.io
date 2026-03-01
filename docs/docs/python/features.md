@@ -458,47 +458,6 @@ def add(a: int32, b: int32) -> Any:
 
 `Py.python` executes as statements, so use `return` keyword to return values.
 
-## Python Decorators
-
-<p class="tag is-info is-medium">
-    Added in v5.0.0-alpha
-</p>
-
-`Py.Decorator` allows you to apply Python decorators to classes and functions.
-
-```fs
-open Fable.Core
-
-[<Py.Decorator("dataclasses.dataclass")>]
-type User =
-    { Name: string
-      Age: int }
-```
-
-generates:
-
-```py
-@dataclasses.dataclass
-class User:
-    name: str
-    age: int32
-```
-
-You can also pass parameters to decorators:
-
-```fs
-[<Py.Decorator("functools.lru_cache", "maxsize=128")>]
-let expensiveFunction x = x * 2
-```
-
-generates:
-
-```py
-@functools.lru_cache(maxsize=128)
-def expensive_function(x):
-    return x * 2
-```
-
 ## Class Attributes
 
 <p class="tag is-info is-medium">
@@ -525,6 +484,41 @@ class Config:
 ```
 
 Without `ClassAttributes`, members would be generated as properties with instance backing.
+
+## Python Decorators
+
+<p class="tag is-info is-medium">
+    Added in v5.0.0-alpha
+</p>
+
+`Py.Decorate` allows you to apply Python decorators to types.
+
+```fs
+open Fable.Core
+
+[<Py.Decorate("dataclass", "dataclasses")>]
+[<Py.ClassAttributes(Py.ClassAttributeStyle.Attributes, false)>]
+type DecoratedUser() =
+    member val Name: string = "" with get, set
+    member val Age: int = 0 with get, set
+```
+
+generates:
+
+```py
+@dataclass
+class DecoratedUser:
+    Age: int32 = int32.ZERO
+    Name: str = ""
+```
+
+The single argument form can be used for local decorators where you don't need to import anything:
+
+```fs
+[<Py.Decorate("my_decorator")>]
+type MyClass() =
+    member val Value: int = 0 with get, set
+```
 
 ## `[<Erase>]`
 
