@@ -31,7 +31,7 @@ Compile your project to Erlang:
 dotnet fable --lang beam
 ```
 
-This generates `.erl` files in the output directory (default `./output`).
+This generates `.erl` files in the project directory (where the `.fsproj` is) by default.
 
 </li>
 

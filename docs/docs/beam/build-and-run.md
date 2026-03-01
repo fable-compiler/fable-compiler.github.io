@@ -31,7 +31,7 @@ The generated `.erl` files are standard Erlang that can be compiled with `erlc` 
 dotnet fable --lang beam
 ```
 
-By default, output goes to `./output`. You can change this with `--outDir`:
+By default, output goes to the project directory (where the `.fsproj` is). You can change this with `--outDir`:
 
 ```bash
 dotnet fable --lang beam --outDir /path/to/output
