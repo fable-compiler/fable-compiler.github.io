@@ -485,6 +485,25 @@ class Config:
 
 Without `ClassAttributes`, members would be generated as properties with instance backing.
 
+|      Parameter       |                           Effect                           |
+| -------------------- | ---------------------------------------------------------- |
+| `style = Attributes` | Generate class-level type annotations                      |
+| `style = Properties` | Generate properties with instance attribute backing        |
+| `init = false`       | Don't generate `__init__` (Pydantic/dataclass provides it) |
+| `init = true`        | Generate `__init__` with attribute assignments             |
+
+`Py.DataClass` is shorthand for `Py.ClassAttributes(style = Attributes, init = false)`.
+This is useful when working with frameworks like Pydantic, dataclasses, and attrs that
+expect class-level type annotations:
+
+```fs
+[<Py.DataClass>]
+type User() =
+    inherit BaseModel()
+    member val Name: string = "" with get, set
+    member val Age: int = 0 with get, set
+```
+
 ## Python Decorators
 
 <p class="tag is-info is-medium">
