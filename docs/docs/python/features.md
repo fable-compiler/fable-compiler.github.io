@@ -458,47 +458,6 @@ def add(a: int32, b: int32) -> Any:
 
 `Py.python` executes as statements, so use `return` keyword to return values.
 
-## Python Decorators
-
-<p class="tag is-info is-medium">
-    Added in v5.0.0-alpha
-</p>
-
-`Py.Decorator` allows you to apply Python decorators to classes and functions.
-
-```fs
-open Fable.Core
-
-[<Py.Decorator("dataclasses.dataclass")>]
-type User =
-    { Name: string
-      Age: int }
-```
-
-generates:
-
-```py
-@dataclasses.dataclass
-class User:
-    name: str
-    age: int32
-```
-
-You can also pass parameters to decorators:
-
-```fs
-[<Py.Decorator("functools.lru_cache", "maxsize=128")>]
-let expensiveFunction x = x * 2
-```
-
-generates:
-
-```py
-@functools.lru_cache(maxsize=128)
-def expensive_function(x):
-    return x * 2
-```
-
 ## Class Attributes
 
 <p class="tag is-info is-medium">
@@ -525,6 +484,85 @@ class Config:
 ```
 
 Without `ClassAttributes`, members would be generated as properties with instance backing.
+
+|      Parameter       |                           Effect                           |
+| -------------------- | ---------------------------------------------------------- |
+| `style = Attributes` | Generate class-level type annotations                      |
+| `style = Properties` | Generate properties with instance attribute backing        |
+| `init = false`       | Don't generate `__init__` (Pydantic/dataclass provides it) |
+| `init = true`        | Generate `__init__` with attribute assignments             |
+
+`Py.DataClass` is shorthand for `Py.ClassAttributes(style = Attributes, init = false)`.
+This is useful when working with frameworks like Pydantic, dataclasses, and attrs that
+expect class-level type annotations:
+
+```fs
+[<Py.DataClass>]
+type User() =
+    inherit BaseModel()
+    member val Name: string = "" with get, set
+    member val Age: int = 0 with get, set
+```
+
+## Python Decorators
+
+<p class="tag is-info is-medium">
+    Added in v5.0.0-alpha
+</p>
+
+`Py.Decorate` allows you to apply Python decorators to types.
+
+```fs
+open Fable.Core
+
+[<Py.Decorate("dataclass", "dataclasses")>]
+[<Py.ClassAttributes(Py.ClassAttributeStyle.Attributes, false)>]
+type DecoratedUser() =
+    member val Name: string = "" with get, set
+    member val Age: int = 0 with get, set
+```
+
+generates:
+
+```py
+@dataclass
+class DecoratedUser:
+    Age: int32 = int32.ZERO
+    Name: str = ""
+```
+
+The single argument form can be used for local decorators where you don't need to import anything:
+
+```fs
+[<Py.Decorate("my_decorator")>]
+type MyClass() =
+    member val Value: int = 0 with get, set
+```
+
+### DecorateTemplate for Library Authors
+
+When building a library, you can create custom decorator attributes that users
+can apply without knowing the underlying Python syntax. Use `Py.DecorateTemplate`:
+
+```fs
+/// Custom route decorator for a web framework
+[<Erase>]
+[<Py.DecorateTemplate("app.get('{0}')", "fastapi")>]
+type GetRouteAttribute(path: string) =
+    inherit System.Attribute()
+```
+
+Now users of your library can simply write:
+
+```fs
+[<GetRoute("/users")>]
+static member get_users() = ...
+// Generates: @app.get('/users')
+```
+
+The template string uses `{0}`, `{1}`, etc. as placeholders for the attribute's
+constructor arguments. The `[<Erase>]` attribute prevents the attribute type
+from being emitted to Python.
 
 ## `[<Erase>]`
 
