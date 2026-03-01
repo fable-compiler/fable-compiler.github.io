@@ -539,6 +539,31 @@ type MyClass() =
     member val Value: int = 0 with get, set
 ```
 
+### DecorateTemplate for Library Authors
+
+When building a library, you can create custom decorator attributes that users
+can apply without knowing the underlying Python syntax. Use `Py.DecorateTemplate`:
+
+```fs
+/// Custom route decorator for a web framework
+[<Erase>]
+[<Py.DecorateTemplate("app.get('{0}')", "fastapi")>]
+type GetRouteAttribute(path: string) =
+    inherit System.Attribute()
+```
+
+Now users of your library can simply write:
+
+```fs
+[<GetRoute("/users")>]
+static member get_users() = ...
+// Generates: @app.get('/users')
+```
+
+The template string uses `{0}`, `{1}`, etc. as placeholders for the attribute's
+constructor arguments. The `[<Erase>]` attribute prevents the attribute type
+from being emitted to Python.
+
 ## `[<Erase>]`
 
 ### Erased unions
