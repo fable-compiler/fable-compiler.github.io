@@ -5,7 +5,7 @@ layout: standard
 
 ## Erlang/OTP Version
 
-Fable targets Erlang/OTP 24 or higher. OTP 25+ is recommended for the full keyword set support.
+Fable targets Erlang/OTP 25 or higher.
 
 ## Architecture
 
