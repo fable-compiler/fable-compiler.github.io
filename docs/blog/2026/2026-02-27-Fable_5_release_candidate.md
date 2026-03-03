@@ -158,56 +158,42 @@ If you have been following the Fable 5 alpha releases, you know the Python targe
 
 This is all thanks to Dag and early adopters who have been testing it.
 
-### Interop has been improved
+* **Python 3.12-3.14 support** (3.10/3.11 are deprecated)
+* **fable-library via PyPI** - No more bundled runtime files
+* **Modern type parameter syntax** - Better type hinting in generated code
+* **`Py.Decorate` attribute** - Add Python decorators from F#
+* **`Py.ClassAttributes` attribute** - Fine-grained class generation control
+* **Improved Pydantic interop** - First-class support for data validation
 
-Python interop has been improved to support more features of Python, such as decorators, classes, etc.
+### Rust Core with PyO3
 
-#### Decorators
+One of the biggest changes is that the core of fable-library is now written in Rust using PyO3.
+The motivation is **correctness**, not performance:
 
-```fs
-open Fable.Core
+**Why Rust?**
 
-[<Py.Decorator("dataclasses.dataclass")>]
-type User =
-    {
-        Name: string
-        Age: int
-    }
+* **Correct .NET semantics** - Sized/signed integers (int8, int16, int32, int64, uint8, etc.)
+* **Proper overflow behavior** - Matches .NET exactly
+* **Fixed-size arrays** - No more Python list quirks for byte streams
+* **Reliable numerics** - Fable 4's pure Python numerics were a constant source of bugs
+
+### fable-library via PyPI
+
+Before Fable v5, the runtime was bundled in the NuGet package and copied to your output directory.
+
+Now it's a simple pip/uv dependency:
+
+```bash
+# Install with pip
+pip install fable-library
+
+# Or with uv (recommended)
+uv add fable-library
 ```
 
-generates
-
-```python
-@dataclasses.dataclass
-class User:
-    name: str
-    age: int32
-```
-
-#### Classes
-
-```fs
-open Fable.Core
-
-[<Py.ClassAttributes(Py.ClassAttributeStyle.Attributes)>]
-type Config() =
-    member val Name = "default" with get, set
-    member val Port = 8080 with get, set
-```
-
-generates
-
-```python
-class Config:
-    name: str = "default"
-    port: int = 8080
-```
-
-You can learn more about Python interop in the [Python target documentation](https://fable.io/docs/python/features.html).
-
-#### Native task
-
-You can use `task { }` computation to write asynchronous code that compiles to native Python `async def` functions.
+:::info
+You can learn more about Fable.Python in general on our [documentation](https://fable.io/docs/python/build-and-run.html) or this [blog post](https://cardamomcode.dev/fable-python#heading-introduction-to-fablepython)
+:::
 
 ## Rust
 
