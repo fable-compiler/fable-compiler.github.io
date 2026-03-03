@@ -1,4 +1,5 @@
 {
+    "name": "fable-compiler.github.io",
     "private": true,
     "engines": {
         "node": ">=14.0.0",
