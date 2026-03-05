@@ -87,6 +87,32 @@ generates:
 lists:reverse(Xs)
 ```
 
+### `[<ImportAll(...)>]` with `[<Erase>]` interfaces
+
+Use `ImportAll` combined with an `Erase`-decorated interface to create typed FFI bindings to an entire Erlang module. Method calls on the interface are emitted as direct Erlang remote calls, with automatic camelCase-to-snake_case conversion:
+
+```fs
+[<Erase>]
+type INativeCode =
+    abstract getName: unit -> string
+    abstract addValues: x: int * y: int -> int
+
+[<ImportAll("native_code")>]
+let nativeCode: INativeCode = nativeOnly
+
+nativeCode.addValues(3, 4)
+nativeCode.getName()
+```
+
+generates:
+
+```erlang
+native_code:add_values(3, 4).
+native_code:get_name().
+```
+
+This pattern is useful when you want to bind multiple functions from a single Erlang module without writing a separate `[<Import(...)>]` for each one.
+
 ### `[<Emit(...)>]`
 
 Use the `Emit` attribute to inline Erlang code directly:
