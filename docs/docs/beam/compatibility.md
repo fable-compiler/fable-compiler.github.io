@@ -5,6 +5,10 @@ toc:
   to: 4
 ---
 
+<p class="tag is-info is-medium">
+    Added in v5.0.0-rc.1
+</p>
+
 :::warning
 Beam target is in alpha meaning that breaking changes can happen between minor versions.
 :::

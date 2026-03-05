@@ -5,6 +5,10 @@ toc:
   to: 4
 ---
 
+<p class="tag is-info is-medium">
+    Added in v5.0.0-rc.1
+</p>
+
 In this section, we will cover specific features of Fable when targeting the BEAM (Erlang).
 
 :::warning
