@@ -69,6 +69,10 @@ F# is already used on the server for web and cloud apps, and it's also used quit
       <td>PHP</td>
       <td>Experimental</td>
     </tr>
+    <tr>
+      <td>Beam (Erlang)</td>
+      <td>Experimental</td>
+    </tr>
   </tbody>
 </table>
 

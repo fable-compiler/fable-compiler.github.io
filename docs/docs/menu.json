@@ -17,6 +17,7 @@
             "docs/getting-started/javascript",
             "docs/getting-started/typescript",
             "docs/getting-started/python",
+            "docs/getting-started/beam",
             "docs/getting-started/rust",
             "docs/getting-started/cli"
         ]
@@ -64,6 +65,15 @@
             "docs/python/build-and-run",
             "docs/python/features",
             "docs/python/compatibility"
+        ]
+    },
+    {
+        "type": "section",
+        "label": "Beam (Erlang)",
+        "items": [
+            "docs/beam/build-and-run",
+            "docs/beam/features",
+            "docs/beam/compatibility"
         ]
     },
     {
