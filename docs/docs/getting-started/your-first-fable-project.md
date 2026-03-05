@@ -54,7 +54,6 @@ dotnet add package Fable.Core
 
 </li>
 
-
 <li>
 
 We can now call Fable to transpile our F# code to the desired target.
@@ -69,6 +68,7 @@ dotnet fable --lang typescript
 # If you want to transpile to Python
 dotnet fable --lang python
 ```
+
 :::info
 If you are switching between languages make sure to delete the `fable_modules` folder before invoking Fable again.
 :::
@@ -83,6 +83,7 @@ To go further look into the respective target documentation to have an example o
 - [TypeScript](/docs/getting-started/typescript.html)
 - [Python](/docs/getting-started/python.html)
 - [Rust](/docs/getting-started/rust.html)
+- [Beam](/docs/getting-started/beam.html)
 <!-- - [Dart](/docs/getting-started/dart.html)
 - [PHP](/docs/getting-started/php.html) -->
 

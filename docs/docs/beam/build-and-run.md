@@ -3,6 +3,10 @@ title: Build and Run
 layout: standard
 ---
 
+<p class="tag is-info is-medium">
+    Added in v5.0.0-rc.1
+</p>
+
 ## Erlang/OTP Version
 
 Fable targets Erlang/OTP 25 or higher.
