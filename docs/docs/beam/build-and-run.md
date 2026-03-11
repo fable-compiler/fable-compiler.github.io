@@ -7,9 +7,10 @@ layout: standard
     Added in v5.0.0-rc.1
 </p>
 
-## Erlang/OTP Version
+## Prerequisites
 
-Fable targets Erlang/OTP 25 or higher.
+- [Erlang/OTP](https://www.erlang.org/downloads) 25 or higher
+- [rebar3](https://rebar3.org/) (the standard Erlang build tool)
 
 ## Architecture
 
@@ -27,7 +28,7 @@ Erlang AST
 .erl source files
 ```
 
-The generated `.erl` files are standard Erlang that can be compiled with `erlc` and run on the BEAM VM.
+The generated `.erl` files are standard Erlang that can be compiled with rebar3 and run on the BEAM VM.
 
 ## Compiling to Erlang
 
@@ -43,42 +44,52 @@ dotnet fable --lang beam --outDir /path/to/output
 
 ## Output Structure
 
-The output directory will contain:
+Fable automatically generates a complete [rebar3](https://rebar3.org/) project scaffold alongside the compiled `.erl` files. The output directory will contain:
 
 ```text
 output/
-  program.erl                              # Your compiled F# modules
+  rebar.config                             # rebar3 project config (auto-generated)
+  src/
+    program.erl                            # Your compiled F# modules
+    my_project.app.src                     # OTP application resource file
   fable_modules/
     fable-library-beam/
-      fable_list.erl                       # F# List runtime
-      fable_map.erl                        # F# Map runtime
-      fable_string.erl                     # String utilities
-      fable_seq.erl                        # Seq/IEnumerable support
-      ...                                  # Other runtime modules
+      rebar.config                         # Per-dependency rebar3 config
+      src/
+        fable_library_beam.app.src         # OTP app resource for the library
+        fable_list.erl                     # F# List runtime
+        fable_map.erl                      # F# Map runtime
+        fable_string.erl                   # String utilities
+        fable_seq.erl                      # Seq/IEnumerable support
+        ...                                # Other runtime modules
 ```
 
-## Compiling Erlang
+### Rebar3 Scaffold Details
 
-After Fable generates `.erl` files, compile them with `erlc`:
+— if you create your own `rebar.config` (without the Fable marker), it will be left untouched (a warning is emitted)
+— project and dependency names are normalized to valid OTP application names (e.g., `Fable.Logging.0.10.0` → `fable_logging`, `fable-library-beam` → `fable_library_beam`)
+— the generated `rebar.config` uses `{project_app_dirs, [".", "fable_modules/*"]}` so rebar3 treats each NuGet dependency as a sub-application
+
+## Compiling with rebar3
+
+After Fable generates the scaffold, compile everything with rebar3:
 
 ```bash
-# Compile the runtime library
-erlc -o output/fable_modules/fable-library-beam output/fable_modules/fable-library-beam/*.erl
-
-# Compile your project files
-erlc -pa output/fable_modules/fable-library-beam -o output output/*.erl
+rebar3 compile
 ```
+
+This compiles all `.erl` files (your project and all dependencies) and places `.beam` files in `_build/default/lib/*/ebin/`.
 
 ## Running Erlang Code
 
 Run your compiled module using the Erlang shell:
 
 ```bash
-erl -pa output -pa output/fable_modules/fable-library-beam \
-    -noshell -eval 'program:main(), halt().'
+erl -noshell -pa _build/default/lib/*/ebin \
+    -eval 'program:main(), halt().'
 ```
 
-The `-pa` flag adds directories to the code path so Erlang can find both your modules and the Fable runtime library.
+The `-pa` flag adds the rebar3 output directories to the code path so Erlang can find both your modules and the Fable runtime library.
 
 ## Module Naming
 

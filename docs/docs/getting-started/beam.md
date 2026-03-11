@@ -15,10 +15,11 @@ Please make sure you followed the [Fable setup guide](/docs/2-steps/your-first-f
 
 ## Prerequisites
 
-You need [Erlang/OTP](https://www.erlang.org/downloads) 24 or higher installed. Verify with:
+You need [Erlang/OTP](https://www.erlang.org/downloads) 25 or higher and [rebar3](https://rebar3.org/) installed. Verify with:
 
 ```bash
 erl -eval 'erlang:display(erlang:system_info(otp_release)), halt().' -noshell
+rebar3 version
 ```
 
 <ul class="textual-steps">
@@ -31,17 +32,16 @@ Compile your project to Erlang:
 dotnet fable --lang beam
 ```
 
-This generates `.erl` files in the project directory (where the `.fsproj` is) by default.
+Fable generates `.erl` files in `src/` subdirectories and automatically creates a [rebar3](https://rebar3.org/) project scaffold (`rebar.config`, `.app.src` files).
 
 </li>
 
 <li>
 
-Compile the generated Erlang files:
+Compile the generated Erlang files with rebar3:
 
 ```bash
-erlc -o output/fable_modules/fable-library-beam output/fable_modules/fable-library-beam/*.erl
-erlc -pa output/fable_modules/fable-library-beam -o output output/*.erl
+rebar3 compile
 ```
 
 </li>
@@ -51,7 +51,7 @@ erlc -pa output/fable_modules/fable-library-beam -o output output/*.erl
 Run your code:
 
 ```bash
-erl -pa output -pa output/fable_modules/fable-library-beam -noshell -eval 'program:main(), halt().'
+erl -noshell -pa _build/default/lib/*/ebin -eval 'program:main(), halt().'
 ```
 
 </li>
