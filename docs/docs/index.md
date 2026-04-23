@@ -87,7 +87,7 @@ F# is a great choice to build applications that are robust and maintable code su
 
 This is because F# has:
 
-* Succinct lightweight syntax
+* Succinct lightweight syntax   
 * Great type system and pattern matching
 * Immutability is the default, but you can still opt-in to mutability when needed
 * Supported by large companies (such as Microsoft and Jetbrains) and comes with commercial tooling support
@@ -104,4 +104,9 @@ With F#, your application will be safer, more robust and more pleasant to read a
 
 TypeScript is safer then JavaScript but it still lacks some features.
 
-For example, it doesn't really have a way to represent discriminated unions, and so it is easy to miss a case when you are using them. In F#, the compiler will tell you if you missed a case.
+For example, F# is best at:
+
+- Making Illegal States Irrepresentable
+- Emmutable by default
+- Allows for easier domain modelling thanks to is type system and intuitive `|>` (pipe) operator
+- Has powerful and exhastive pattern matching
