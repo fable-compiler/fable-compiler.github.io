@@ -146,7 +146,7 @@ Don't print any log during compilation
 </td>
 <td>
 
-Compile numeric arrays as JS typed arrays (default is true for JS, false for TS)
+Compile numeric arrays as JS typed arrays (default is true for JS and TS)
 </td>
 </tr>
 
