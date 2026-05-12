@@ -687,7 +687,9 @@ export const user = {
 
 Fable offers several ways to work with POJOs.
 
-The recommended way to work with POJOs is to use `[<ParamObject>]` as they are the closest to normal F# classes. But we will explore all the potential options, from the simplest to the more verbose.
+The recommended way to work with POJOs is to use `[<JS.Pojo>]` when you can target Fable 5 or newer. For older Fable versions, or for methods where only some arguments should be grouped into an options object, use `[<ParamObject>]`.
+
+We will explore all the potential options, from the simplest to the more verbose.
 
 ### Anonymous records
 
@@ -792,13 +794,54 @@ export const user = {
 };
 ```
 
+### `[<JS.Pojo>]`
+
+<p class="tag is-info is-medium">
+    Added in v5.0.0
+</p>
+
+`JS.Pojo` is the simplest way to write class-based POJO bindings when targeting Fable 5 or newer.
+
+It lets you define an F# class that is created as a plain JavaScript object, without combining `[<Global>]`, `[<ParamObject>]` and `[<Emit("$0")>]`.
+
+```fs
+open Fable.Core
+
+[<AllowNullLiteral>]
+[<JS.Pojo>]
+type Options
+    (
+        searchTerm: string,
+        ?isCaseSensitive: bool
+    ) =
+    member val searchTerm: string = jsNative with get, set
+    member val isCaseSensitive: bool option = jsNative with get, set
+
+let options1 = new Options("foo")
+
+let options2 = new Options("foo", isCaseSensitive = true)
+```
+
+generates
+
+```js
+export const options1 = {
+    searchTerm: "foo",
+};
+
+export const options2 = {
+    searchTerm: "foo",
+    isCaseSensitive: true,
+};
+```
+
 ### `[<ParamObject>]`
 
 <p class="tag is-info is-medium">
     Added in v3.4.0
 </p>
 
-`ParamObject` allows the most native F# experience when working with POJOs.
+`ParamObject` allows a native F# experience when working with POJOs, and is the pre-Fable 5 way to define class-based POJO bindings.
 
 It also has the benefit of supporting other ways of creating POJOs, allowing consumer of your code to use the method they prefer.
 
