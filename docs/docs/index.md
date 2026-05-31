@@ -107,6 +107,6 @@ TypeScript is safer then JavaScript but it still lacks some features.
 For example, F# is best at:
 
 - Making Illegal States Irrepresentable
-- Emmutable by default
+- Immutable by default
 - Allows for easier domain modelling thanks to is type system and intuitive `|>` (pipe) operator
 - Has powerful and exhastive pattern matching
