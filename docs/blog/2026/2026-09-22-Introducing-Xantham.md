@@ -223,7 +223,7 @@ compiles clean.
 Anime.js publishes an `exports` map, so only the subpaths it lists are importable.
 Every one of Xantham's **181 import sites** points at a listed subpath — `animejs`,
 `animejs/utils`, `animejs/svg`, `animejs/easings/spring`.
-Of Glutinum's **569 import sites, 267 target 27 paths that the map does not
+Of Glutinum's **578 import sites, 279 target 28 paths that the map does not
 expose**, reaching into `dist/` instead:
 
 ```sh
@@ -362,6 +362,17 @@ offered `from.center`. Xantham does record the loss rather than hide it;
 (*string literal type widened to string*). Both tools agree on the simpler
 `axis?: "x" | "y" | "z"`, which each emits as a `StringEnum`.
 
+This is not an animejs quirk. `@types/node` holds 18 of the same shape:
+
+| TypeScript | Glutinum | Xantham |
+|---|---|---|
+| `family?: "IPv4" \| "IPv6" \| number` | `IPv4 \| IPv6 \| Case1 of float` | `U2<float, string>` |
+| `BufferEncodingOption = "buffer" \| { encoding: "buffer" }` | `buffer \| Case1 of …` | `U2<string, BufferEncodingOption2>` |
+| `StdioNull` | `ignore \| Case1 of …` | widened |
+
+`fs.realpath(path, options)` takes exactly `"buffer"` there. Xantham's signature
+accepts `!^ "utf8"` and compiles.
+
 Xantham does not emit that DU automatically because its safety rests on Fable being
 able to type-test each payload arm. For `from` it can: `float` and `ResizeArray<float>`
 lower to `typeof x === "number"` and `Array.isArray(x)`. For a union of two interface
@@ -375,8 +386,21 @@ types, or of anything Fable erases, it cannot, and it fails two ways:
 Both compile. When the DU is safe to emit is a judgement about the arms, and Xantham
 does not yet make it; it records `TR006` instead.
 
-One package, one pair of versions. Anime.js 4.5.0 spreads its API over 70 declaration
-files and is a hard case; this is not a verdict on Glutinum.
+Two more, from the same `@types/node` pair. Glutinum overloads where the arity is
+small — `fetch` gets three members taking `string`, `URL` and `Request` — against
+Xantham's single `U3<string, Request, URL>` that needs `!^` at every call site. The
+`TargetsParam` argument above is about six arms; at three, the overload is simply
+nicer. And Glutinum reads TypeScript's `Array<T>` as `ResizeArray<T>`, 865 times,
+where Xantham emits `T[]`, 2,378 times. F# arrays are fixed-size, so `push` and
+`splice` on a JS array are out of reach without a cast.
+
+Neither file is uniformly better. Glutinum leaves 97 types as `interface end` —
+including the global `RequestInit` and `Response` — against Xantham's 3, and 43
+`= obj` abbreviations against 8; Xantham emits 596 `StringEnum`s to Glutinum's 131.
+It wins the pure literal unions and loses the mixed ones.
+
+Two packages, one pair of versions each. Anime.js 4.5.0 spreads its API over 70
+declaration files and is a hard case; this is not a verdict on Glutinum.
 
 Next package? Change the input directory.
 [Start with the docs](https://shayanhabibi.github.io/Xantham/xantham-cli/),
