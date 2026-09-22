@@ -6,8 +6,8 @@ date: 2026-09-22
 author_link: https://github.com/shayanhabibi
 author_image: https://github.com/shayanhabibi.png
 abstract: |
-    1,600 particles. A ripple of rotation and colour. Zero handwritten Anime.js bindings.
-    Generate the package's F# API with Xantham, compile with Fable, and run it in the browser.
+    1,600 particles rippling in rotation and colour, and no handwritten Anime.js bindings.
+    Generate the package's F# API with Xantham, compile with Fable, run it in the browser.
 ---
 
 ![Xantham — TypeScript to F# bindings](/static/img/blog/xantham-workflow-banner.png)
@@ -102,13 +102,10 @@ let options = jsOptions<AnimationParams>(fun p ->
 let animation = Exports.animate(!^ "#field i", options)
 ```
 
-`Exports.animate`, `Exports.stagger`, and the option types are generated.
-`Dom.Document` comes from Xantham; `[<Global>]` connects it to the browser's `document`.
-The small delegate adapts stagger's five arguments to the delay callback's four.
-
-`bindings/Animejs.fs` is unedited generator output; the only adapter is the delegate
-in `Program.fs`. That is the result for this package at these versions, not a promise
-for every npm package.
+`Exports.animate`, `Exports.stagger` and the option types all come from
+`bindings/Animejs.fs`, which is unedited generator output. `Dom.Document` comes from
+Xantham too; `[<Global>]` ties it to the browser's `document`. The one piece of glue
+is the delegate, which adapts stagger's five arguments to the delay callback's four.
 
 Add `index.html`:
 
@@ -134,16 +131,15 @@ npx vite
 
 Open the local URL.
 
-The GIF at the top is a capture of this build running in headless Chrome, no page
-errors.
+The GIF at the top is this build, captured in headless Chrome with no page errors.
 
 ## Beyond one package
 
-Real projects need configuration: `xantham.json`, passed with `--config`.
+Past one package you'll want `xantham.json`, passed with `--config`.
 
 **Names are yours.** `module` sets the generated F# module — it defaults to the npm
-name, so `@scope/pkg-name` becomes `Scope.PkgName` — and `namespace` groups a family
-of related packages under one roof. `runtime` overrides the JavaScript import path
+name, so `@scope/pkg-name` becomes `Scope.PkgName` — and `namespace` wraps related
+packages in one namespace. `runtime` overrides the JavaScript import path
 when it differs from the package name.
 
 **Four ways to handle a dependency.** When a declaration reaches into another
@@ -205,26 +201,23 @@ npm install --save-dev --save-exact @glutinum/cli@0.14.1
 npx glue animejs --out-file Glutinum.Animejs.fs
 ```
 
-That command succeeds. The file it writes, however, [did not compile unmodified](https://github.com/glutinum-org/cli/issues/220) —
-against `Fable.Core` 5.2.0 and `Glutinum.Web` 0.1.0, `dotnet build` stops at:
+The command succeeds. The file it writes [does not compile](https://github.com/glutinum-org/cli/issues/220)
+against `Fable.Core` 5.2.0 and `Glutinum.Web` 0.1.0:
 
 ```text
 Glutinum.Animejs.fs(1732,14): error FS0037: Duplicate definition of type, exception or module 'Animatable'
 ```
 
-Inside one module the generator emits both the real declaration and a
-`type Animatable = obj` placeholder; 18 types in that file collide this way.
-
-That is this package, not the tool in general: Glutinum's `@types/node` binding
-compiles clean.
+The generator emits the real declaration and a `type Animatable = obj` placeholder
+in the same module; 18 types collide this way. It is specific to this package —
+Glutinum's `@types/node` binding compiles clean.
 
 ### Imports have to resolve
 
 Anime.js publishes an `exports` map, so only the subpaths it lists are importable.
-Every one of Xantham's **181 import sites** points at a listed subpath — `animejs`,
-`animejs/utils`, `animejs/svg`, `animejs/easings/spring`.
-Of Glutinum's **578 import sites, 279 target 28 paths that the map does not
-expose**, reaching into `dist/` instead:
+All 181 of Xantham's import sites point at a listed subpath: `animejs`,
+`animejs/utils`, `animejs/svg`, `animejs/easings/spring`. Of Glutinum's 578, 279
+target 28 paths the map does not expose, reaching into `dist/` instead:
 
 ```sh
 $ node -e "import('animejs/dist/modules/core/helpers.js')"
@@ -235,7 +228,7 @@ is not defined by "exports"
 Xantham reads the `exports` map and mirrors the public subpaths as nested modules,
 so `animejs/svg` becomes `Animejs.Svg`.
 
-`@types/node` 22.20.2 splits the same way for a different reason. All 2,047 of
+`@types/node` 22.20.2 shows the same split for a different reason. All 2,047 of
 Xantham's import sites are `node:`-prefixed — `node:fs`, `node:crypto`,
 `node:stream`. Glutinum emits 2,634, of which 165 point at `undici-types`: a
 types-only package whose directory holds `.d.ts` files and nothing else, with no
@@ -246,8 +239,8 @@ $ node -e "import('undici-types/fetch.js')"   # ERR_MODULE_NOT_FOUND
 $ node -e "import('node:fs')"                 # resolves
 ```
 
-Bare `fs` resolves too, so the prefix on its own is not a defect. It removes the
-ambiguity with an npm package of the same name, and Deno and Bun prefer it.
+Bare `fs` resolves too, so the prefix is not the point; it only rules out a
+same-named npm package, and Deno and Bun prefer it.
 
 Back on animejs, both tools read the same `animate(targets, params)`.
 
@@ -296,15 +289,15 @@ inside a union, so `!^ (fun a b -> "x")` is FS0002 unless you write
 `System.Func<_,_,_>(fun a b -> "x")` by hand. An overload for the delegate arm lets
 the lambda infer.
 
-Neither rendering wins; it depends on the calling code. Arm expansion is opt-in:
+Which is better depends on the calling code, so arm expansion is opt-in:
 
 ```json
 { "unionArmOverloads": { "enabled": false, "maxArms": 4 } }
 ```
 
 Members whose arms collapse to one F# signature — `U2<string, string>`, or two arms
-that both map to `obj` — are skipped rather than emitted as an overload set that
-would be FS0041 at every call site; the manifest lists which and why.
+that both map to `obj` — are skipped, since that overload set would be FS0041 at
+every call site. The manifest lists which and why.
 
 ### Module names come from declarations, not directories
 
@@ -335,8 +328,8 @@ static member Create (?start: TimelinePosition, ?from: U3<float, string, float[]
                       ?reversed: bool, ?grid: U2<bool, float[]>, …) : StaggerParams = jsNative
 ```
 
-There are 66 such factories in the Xantham output and none in Glutinum's, which
-leaves you to `jsOptions` or an object expression.
+There are 66 such factories in the Xantham output and none in Glutinum's, so there
+you write `jsOptions` or an object expression instead.
 
 ### Where Glutinum does it better
 
@@ -357,12 +350,12 @@ type from =
 
 Xantham widens the literals to `string` — `U3<float, string, float[]>` — so
 `from = !^ "center"` in the demo is an unchecked string where Glutinum would have
-offered `from.center`. Xantham does record the loss rather than hide it;
-`symbols.jsonl` marks `StaggerParams` as `widened` and cites `TR006`
+offered `from.center`. Xantham records the loss: `symbols.jsonl` marks
+`StaggerParams` as `widened` and cites `TR006`
 (*string literal type widened to string*). Both tools agree on the simpler
 `axis?: "x" | "y" | "z"`, which each emits as a `StringEnum`.
 
-This is not an animejs quirk. `@types/node` holds 18 of the same shape:
+Not an animejs quirk: `@types/node` has 18 of the same shape.
 
 | TypeScript | Glutinum | Xantham |
 |---|---|---|
@@ -370,8 +363,8 @@ This is not an animejs quirk. `@types/node` holds 18 of the same shape:
 | `BufferEncodingOption = "buffer" \| { encoding: "buffer" }` | `buffer \| Case1 of …` | `U2<string, BufferEncodingOption2>` |
 | `StdioNull` | `ignore \| Case1 of …` | widened |
 
-`fs.realpath(path, options)` takes exactly `"buffer"` there. Xantham's signature
-accepts `!^ "utf8"` and compiles.
+`fs.realpath` takes exactly `"buffer"` for its options; Xantham's signature accepts
+`!^ "utf8"` and compiles.
 
 Xantham does not emit that DU automatically because its safety rests on Fable being
 able to type-test each payload arm. For `from` it can: `float` and `ResizeArray<float>`
@@ -386,21 +379,21 @@ types, or of anything Fable erases, it cannot, and it fails two ways:
 Both compile. When the DU is safe to emit is a judgement about the arms, and Xantham
 does not yet make it; it records `TR006` instead.
 
-Two more, from the same `@types/node` pair. Glutinum overloads where the arity is
-small — `fetch` gets three members taking `string`, `URL` and `Request` — against
-Xantham's single `U3<string, Request, URL>` that needs `!^` at every call site. The
-`TargetsParam` argument above is about six arms; at three, the overload is simply
-nicer. And Glutinum reads TypeScript's `Array<T>` as `ResizeArray<T>`, 865 times,
-where Xantham emits `T[]`, 2,378 times. F# arrays are fixed-size, so `push` and
-`splice` on a JS array are out of reach without a cast.
+Two more from `@types/node`. Glutinum overloads at small arity — `fetch` gets three
+members taking `string`, `URL` and `Request` — where Xantham has one
+`U3<string, Request, URL>` that needs `!^` at every call. The `TargetsParam` argument
+above is about six arms; at three, the overloads are just nicer. And Glutinum reads
+TypeScript's `Array<T>` as `ResizeArray<T>`, 865 times, where Xantham emits `T[]`,
+2,378 times. F# arrays are fixed-size, so `push` and `splice` on a JS array need a
+cast first.
 
-Neither file is uniformly better. Glutinum leaves 97 types as `interface end` —
-including the global `RequestInit` and `Response` — against Xantham's 3, and 43
-`= obj` abbreviations against 8; Xantham emits 596 `StringEnum`s to Glutinum's 131.
-It wins the pure literal unions and loses the mixed ones.
+On the other side, Glutinum leaves 97 types as `interface end` — the global
+`RequestInit` and `Response` among them — against Xantham's 3, and 43 `= obj`
+abbreviations against 8. Xantham emits 596 `StringEnum`s to Glutinum's 131: it wins
+pure literal unions and loses mixed ones.
 
 Two packages, one pair of versions each. Anime.js 4.5.0 spreads its API over 70
-declaration files and is a hard case; this is not a verdict on Glutinum.
+declaration files and is a hard case.
 
 Next package? Change the input directory.
 [Start with the docs](https://shayanhabibi.github.io/Xantham/xantham-cli/),
