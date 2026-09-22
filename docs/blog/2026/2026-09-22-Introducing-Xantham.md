@@ -268,9 +268,46 @@ static member animate (targets: Glutinum.Web.SVGElement, parameters: Animejs.dis
 ```
 
 Overloads read well at a call site with a known argument type. They stop working
-when the value *is* a union — you cannot pass "whatever `TargetsParam` holds"
-without matching it out first. `!^ "#field i"` in the demo above is the union
+when the value *is* a union. `!^ "#field i"` in the demo above is the union
 version of the same call.
+
+That much is easy to assert and worth measuring, so we probed the shapes against
+Fable.Core 5.2.0 on net8.0. The failures are compiler errors, not taste:
+
+| Shape | Call style | Result |
+|---|---|---|
+| union only | `f(!^ x)` | compiles |
+| union only | bare lambda into a delegate arm | **FS0002** |
+| arms only, union member dropped | argument held at union type | **FS0041** |
+| union + arms | plain arm value, `f("x")` | compiles |
+| union + arms | `f(!^ x)` | **FS0041** |
+
+Row three is Glutinum's shape. With the union member gone, a value already held
+at `TargetsParam` has nowhere to go — you have to match it out and re-enter the
+overload set at a concrete type. Row five is why keeping both does not rescue it:
+put arms beside the union and `!^` loses its unique target, so a coercion that
+compiled before the arms existed stops compiling after.
+
+Row two is the honest case *for* overloads, and it is the one that made us build
+the machinery anyway. A bare lambda has no target type to infer against inside a
+union, so `!^ (fun a b -> "x")` is FS0002 and you have to write
+`System.Func<_,_,_>(fun a b -> "x")` by hand. Give the delegate arm an overload of
+its own and the lambda infers.
+
+So the two renderings are not rivals with a winner; which one you want is a
+property of your calling code, which the `.d.ts` cannot tell us. Across the 108
+goldens there are 484 imported static members, 59 with a union parameter, 57 of
+those with exactly one. Arm expansion exists as an opt-in pass over that set:
+
+```json
+{ "unionArmOverloads": { "enabled": false, "maxArms": 4 } }
+```
+
+It defaults to off, because turning it on rewrites call resolution for 59 members
+at once. A member whose arms collapse to a single F# signature — say
+`U2<string, string>`, or two arms that both map to `obj` — is refused whole
+rather than expanded into an overload set that would be FS0041 at every call
+site, and the manifest records which members were refused and why.
 
 ### Module names come from declarations, not directories
 
@@ -328,6 +365,26 @@ offered `from.center`. Xantham does record the loss rather than hide it;
 `symbols.jsonl` marks `StaggerParams` as `widened` and cites `TR006`
 (*string literal type widened to string*). Both tools agree on the simpler
 `axis?: "x" | "y" | "z"`, which each emits as a `StringEnum`.
+
+Why not simply copy it? Because the construct's safety rests on Fable being able
+to tell the arms apart at runtime. An `[<Erase>]` DU discriminates through
+`transformUnionCaseTest`: a fieldless case like `center` becomes `x === "center"`,
+which is exactly right, while a case carrying a payload becomes a type test on
+that payload's type. There are two ways that goes wrong and only one of them
+tells you:
+
+| Failure | Fable's response | Result |
+|---|---|---|
+| an arm Fable cannot type test | `warning FABLE: Cannot type test (evals to false): T` | that branch is silently absent |
+| two arms sharing one type test | nothing at all | the second branch is silently dead |
+
+Both compile. Both ship a `match` that quietly never takes a branch. `from` is a
+good case for the DU — `float` and `ResizeArray<float>` lower to
+`typeof x === "number"` and `Array.isArray(x)`, which really are distinct — but a
+union of two interface types, or of anything Fable erases, is not, and nothing in
+the build will tell you. Emitting the DU is a judgement about the arms rather than
+about the literals, which is why Xantham does not make it automatically and
+records `TR006` instead.
 
 ### Imports have to resolve
 
