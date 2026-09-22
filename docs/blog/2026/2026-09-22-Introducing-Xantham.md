@@ -12,19 +12,14 @@ abstract: |
 
 ![Xantham — TypeScript to F# bindings](/static/img/blog/xantham-workflow-banner.png)
 
-**1,600 particles. Zero handwritten Anime.js bindings.**
-
 ![1,600 coloured particles rippling outward from the centre, rotating and shrinking](/static/img/blog/xantham-particles.gif)
 
-This is [Anime.js](https://animejs.com/), called from F#. Xantham generates the
-bindings; Fable compiles the application; Anime.js runs the animation.
+[Anime.js](https://animejs.com/) driven from F# through a binding Xantham generated.
 
 [Xantham](https://shayanhabibi.github.io/Xantham/) turns an npm package's
 TypeScript declarations into F# bindings using TypeScript 7's native compiler API.
 It follows declarations across files, generates runtime imports and public
 subpath modules, and can generate or reuse dependency bindings.
-
-Let's build the picture.
 
 ## Install → generate
 
@@ -45,9 +40,8 @@ dotnet xantham tsc init
 dotnet xantham generate node_modules/animejs -o bindings
 ```
 
-That last command generates the package binding, including imports and option
-types. Keep `manifest.json`: it reports where the mapping is exact, ergonomic,
-widened, or requires an escape hatch.
+That writes `bindings/Animejs.fs`, plus `manifest.json` and `symbols.jsonl` (graded
+below). `tsc init` fetches the TypeScript 7 compiler.
 
 Replace `Demo.fsproj` with:
 
@@ -67,9 +61,7 @@ Replace `Demo.fsproj` with:
 </Project>
 ```
 
-The Xantham package provides the browser bindings and brings in its core helpers
-and Fable.Core transitively.
-Generated files go **before** the code that uses them.
+`Xantham.Fable.Core.TS` supplies the DOM types and pulls in Fable.Core.
 
 ## Animate
 
@@ -111,15 +103,10 @@ let animation = Exports.animate(!^ "#field i", options)
 `Exports.animate`, `Exports.stagger`, and the option types are generated.
 `Dom.Document` comes from Xantham; `[<Global>]` connects it to the browser's `document`.
 The small delegate adapts stagger's five arguments to the delay callback's four.
-`!^` converts each value to the expected erased-union type without adding a
-JavaScript wrapper.
 
-`bindings/Animejs.fs` was never opened in an editor. Delete it, run `generate`
-again, and you get the same bytes back — the demo above compiles and runs against
-exactly what the tool wrote. The delegate described above is the adapter doing the
-work, and it lives in `Program.fs`, on the application side of the boundary.
-That is the result for this package at these versions, not a guarantee that every
-npm package lands this cleanly.
+`bindings/Animejs.fs` is unedited generator output; the only adapter is the delegate
+in `Program.fs`. That is the result for this package at these versions, not a promise
+for every npm package.
 
 Add `index.html`:
 
@@ -143,29 +130,21 @@ dotnet fable Demo.fsproj --outDir dist
 npx vite
 ```
 
-Open the local URL. The grid shrinks and spins outward from its centre, then
-reverses and repeats.
+Open the local URL.
 
-**Verified:** Xantham 0.1.0, Fable 5.13.0, Anime.js 4.5.0, .NET 10, Vite 8.3.0 — a
-clean Fable compilation followed by a headless Chrome run with all 1,600 elements
-animating and no page errors. The animation at the top of this post is a frame
-capture of that run, not a mock-up.
-
-Bindings still need review: TypeScript and F# do not represent every type in the
-same way. Check the generated signatures and findings for the APIs you use.
+The GIF at the top is a capture of this build running in headless Chrome, no page
+errors.
 
 ## Beyond one package
 
-The demo needed no configuration. Real projects usually need some, and it lives in
-a `xantham.json` passed with `--config`.
+Real projects need configuration: `xantham.json`, passed with `--config`.
 
 **Names are yours.** `module` sets the generated F# module — it defaults to the npm
 name, so `@scope/pkg-name` becomes `Scope.PkgName` — and `namespace` groups a family
 of related packages under one roof. `runtime` overrides the JavaScript import path
-when it differs from the package name. Changing `dist_modules_types` into something
-you want to type is a config key, not a find-and-replace.
+when it differs from the package name.
 
-**Dependencies have four dispositions.** When a declaration reaches into another
+**Four ways to handle a dependency.** When a declaration reaches into another
 package, `groups` decides what happens, keyed by npm name:
 
 ```json
@@ -182,12 +161,11 @@ package, `groups` decides what happens, keyed by npm name:
 `ship` emits the dependency's declarations alongside yours, `reference` points at a
 separately generated binding, `map` redirects named types to F# types that already
 exist, and `widen` — the default for anything unlisted — renders the reference as
-`obj` and files a finding. The choice is explicit instead of implied by whatever the
-generator happened to reach.
+`obj` and files a finding.
 
-**Declaration catalogues keep identities stable.** Two bindings that both mention
-the same TypeScript type should produce the *same* F# type, not two structurally
-identical strangers. A producer sets `declarationCatalog: true` and writes a
+**Declaration catalogues keep identities stable.** Two bindings that mention the same
+TypeScript type should share one F# type. A producer sets `declarationCatalog: true`
+and writes a
 `declarations.json` next to its output; a consumer lists it in
 `declarationReferences` and reuses those identities while keeping its own imports:
 
@@ -200,12 +178,11 @@ identical strangers. A producer sets `declarationCatalog: true` and writes a
 }
 ```
 
-Catalogues verify declaration identity, package and source hashes, and F# API
-compatibility, and are rejected with a diagnostic rather than silently mismatching.
-Compile producers first, in the catalogue's `owners` order.
+A catalogue whose package hashes or F# API no longer match is rejected with a
+diagnostic.
 
 **Every symbol is graded.** Alongside the binding, each run writes `manifest.json`
-and `symbols.jsonl`, which sorts the 351 symbols it catalogues into four tiers:
+and `symbols.jsonl`, which sorts Anime.js's 351 symbols into four tiers:
 
 | Tier | Count | Meaning |
 |---|---|---|
@@ -214,15 +191,12 @@ and `symbols.jsonl`, which sorts the 351 symbols it catalogues into four tiers:
 | `widened` | 14 | detail lost — the `StaggerParams.from` case below |
 | `escape` | 79 | an escape hatch such as `obj` is in play |
 
-That is the answer to "can I trust this file": you do not have to read 5,000 lines
-to find the soft spots, because the generator already listed them with codes you can
-look up.
+Read the 93 `widened` and `escape` entries, not the 5,000-line `Animejs.fs`.
 
 ## What about Glutinum?
 
 [Glutinum](https://github.com/glutinum-org/cli) is the established TypeScript-to-F#
-generator for Fable, so it is the fair thing to measure against. It reads the same
-declarations:
+generator for Fable. Same input:
 
 ```sh
 npm install --save-dev --save-exact @glutinum/cli@0.14.1
@@ -237,12 +211,26 @@ Glutinum.Animejs.fs(1732,14): error FS0037: Duplicate definition of type, except
 ```
 
 Inside one module the generator emits both the real declaration and a
-`type Animatable = obj` placeholder. The same collision is present for 18 types in
-that file — `JSAnimation`, `Scope`, `Timeline`, `Timer`, `Draggable`, `WAAPIAnimation`
-and the whole `Layout*` group — so the first error is not a one-line fix.
+`type Animatable = obj` placeholder; 18 types in that file collide this way.
 
-The more interesting differences are in the API each tool arrives at. Both read the
-same `animate(targets, params)`.
+### Imports have to resolve
+
+Anime.js publishes an `exports` map, so only the subpaths it lists are importable.
+Every one of Xantham's **181 import sites** points at a listed subpath — `animejs`,
+`animejs/utils`, `animejs/svg`, `animejs/easings/spring`.
+Of Glutinum's **569 import sites, 267 target 27 paths that the map does not
+expose**, reaching into `dist/` instead:
+
+```sh
+$ node -e "import('animejs/dist/modules/core/helpers.js')"
+ERR_PACKAGE_PATH_NOT_EXPORTED: Package subpath './dist/modules/core/helpers.js'
+is not defined by "exports"
+```
+
+Xantham reads the `exports` map and mirrors the public subpaths as nested modules,
+so `animejs/svg` becomes `Animejs.Svg`.
+
+Both tools see the same `animate(targets, params)`.
 
 ### Unions stay unions
 
@@ -268,11 +256,9 @@ static member animate (targets: Glutinum.Web.SVGElement, parameters: Animejs.dis
 ```
 
 Overloads read well at a call site with a known argument type. They stop working
-when the value *is* a union. `!^ "#field i"` in the demo above is the union
-version of the same call.
+when the value *is* a union.
 
-That much is easy to assert and worth measuring, so we probed the shapes against
-Fable.Core 5.2.0 on net8.0. The failures are compiler errors, not taste:
+Measured against Fable.Core 5.2.0 on net10.0:
 
 | Shape | Call style | Result |
 |---|---|---|
@@ -282,32 +268,24 @@ Fable.Core 5.2.0 on net8.0. The failures are compiler errors, not taste:
 | union + arms | plain arm value, `f("x")` | compiles |
 | union + arms | `f(!^ x)` | **FS0041** |
 
-Row three is Glutinum's shape. With the union member gone, a value already held
-at `TargetsParam` has nowhere to go — you have to match it out and re-enter the
-overload set at a concrete type. Row five is why keeping both does not rescue it:
-put arms beside the union and `!^` loses its unique target, so a coercion that
-compiled before the arms existed stops compiling after.
+Row three is Glutinum's shape: a value already held at `TargetsParam` has to be matched
+out and re-entered at a concrete type. Row five is why adding the union member back
+does not help — beside the arms, `!^` loses its unique target.
 
-Row two is the honest case *for* overloads, and it is the one that made us build
-the machinery anyway. A bare lambda has no target type to infer against inside a
-union, so `!^ (fun a b -> "x")` is FS0002 and you have to write
-`System.Func<_,_,_>(fun a b -> "x")` by hand. Give the delegate arm an overload of
-its own and the lambda infers.
+Row two is the case for overloads. A bare lambda has no target type to infer against
+inside a union, so `!^ (fun a b -> "x")` is FS0002 unless you write
+`System.Func<_,_,_>(fun a b -> "x")` by hand. An overload for the delegate arm lets
+the lambda infer.
 
-So the two renderings are not rivals with a winner; which one you want is a
-property of your calling code, which the `.d.ts` cannot tell us. Across the 108
-goldens there are 484 imported static members, 59 with a union parameter, 57 of
-those with exactly one. Arm expansion exists as an opt-in pass over that set:
+Neither rendering wins; it depends on the calling code. Arm expansion is opt-in:
 
 ```json
 { "unionArmOverloads": { "enabled": false, "maxArms": 4 } }
 ```
 
-It defaults to off, because turning it on rewrites call resolution for 59 members
-at once. A member whose arms collapse to a single F# signature — say
-`U2<string, string>`, or two arms that both map to `obj` — is refused whole
-rather than expanded into an overload set that would be FS0041 at every call
-site, and the manifest records which members were refused and why.
+Members whose arms collapse to one F# signature — `U2<string, string>`, or two arms
+that both map to `obj` — are skipped rather than emitted as an overload set that
+would be FS0041 at every call site; the manifest lists which and why.
 
 ### Module names come from declarations, not directories
 
@@ -325,8 +303,7 @@ module Animejs =
 
 Xantham emits `module rec Animejs` and nests by declaration — `Animatable`,
 `DurationKeyframes.Item`, `Utils.Stagger.Result` — so types are referenced by
-short name. Rename the root with one config key rather than living with
-`dist_modules_types`.
+short name.
 
 ### Option objects get constructors
 
@@ -344,7 +321,7 @@ leaves you to `jsOptions` or an object expression.
 
 ### Where Glutinum does it better
 
-Credit where it is due. For `from?: number | "first" | "center" | "last" | "random" | Array<number>`,
+For `from?: number | "first" | "center" | "last" | "random" | Array<number>`,
 Glutinum keeps the string literals as named cases:
 
 ```fs
@@ -366,47 +343,21 @@ offered `from.center`. Xantham does record the loss rather than hide it;
 (*string literal type widened to string*). Both tools agree on the simpler
 `axis?: "x" | "y" | "z"`, which each emits as a `StringEnum`.
 
-Why not simply copy it? Because the construct's safety rests on Fable being able
-to tell the arms apart at runtime. An `[<Erase>]` DU discriminates through
-`transformUnionCaseTest`: a fieldless case like `center` becomes `x === "center"`,
-which is exactly right, while a case carrying a payload becomes a type test on
-that payload's type. There are two ways that goes wrong and only one of them
-tells you:
+Xantham does not emit that DU automatically because its safety rests on Fable being
+able to type-test each payload arm. For `from` it can: `float` and `ResizeArray<float>`
+lower to `typeof x === "number"` and `Array.isArray(x)`. For a union of two interface
+types, or of anything Fable erases, it cannot, and it fails two ways:
 
 | Failure | Fable's response | Result |
 |---|---|---|
 | an arm Fable cannot type test | `warning FABLE: Cannot type test (evals to false): T` | that branch is silently absent |
 | two arms sharing one type test | nothing at all | the second branch is silently dead |
 
-Both compile. Both ship a `match` that quietly never takes a branch. `from` is a
-good case for the DU — `float` and `ResizeArray<float>` lower to
-`typeof x === "number"` and `Array.isArray(x)`, which really are distinct — but a
-union of two interface types, or of anything Fable erases, is not, and nothing in
-the build will tell you. Emitting the DU is a judgement about the arms rather than
-about the literals, which is why Xantham does not make it automatically and
-records `TR006` instead.
+Both compile. When the DU is safe to emit is a judgement about the arms, and Xantham
+does not yet make it; it records `TR006` instead.
 
-### Imports have to resolve
-
-This one has teeth. Anime.js publishes an `exports` map, so only the subpaths it
-lists are importable. Every one of Xantham's **181 import sites** points at a
-listed subpath — `animejs`, `animejs/utils`, `animejs/svg`, `animejs/easings/spring`.
-Of Glutinum's **569 import sites, 267 target 27 paths that the map does not
-expose**, reaching into `dist/` instead:
-
-```sh
-$ node -e "import('animejs/dist/modules/core/helpers.js')"
-ERR_PACKAGE_PATH_NOT_EXPORTED: Package subpath './dist/modules/core/helpers.js'
-is not defined by "exports"
-```
-
-Xantham reads the `exports` map and mirrors the public subpaths as nested modules,
-so `animejs/svg` becomes `Animejs.Svg`.
-
-This is one package on one pair of versions — Anime.js 4.5.0 spreads its API over 70
-declaration files — and not a verdict on Glutinum, which generates plenty that
-Anime.js never exercises. Both commands above are cheap to re-run when the versions
-move.
+One package, one pair of versions. Anime.js 4.5.0 spreads its API over 70 declaration
+files and is a hard case; this is not a verdict on Glutinum.
 
 Next package? Change the input directory.
 [Start with the docs](https://shayanhabibi.github.io/Xantham/xantham-cli/),
