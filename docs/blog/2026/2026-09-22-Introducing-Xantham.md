@@ -23,7 +23,9 @@ subpath modules, and can generate or reuse dependency bindings.
 
 ## Install → generate
 
-You'll need **.NET 10** and **Node.js 22.12+**. In a new directory:
+> Prerequisites:
+> * .NET10
+> * Node.js 22.12+
 
 ```sh
 mkdir xantham-demo
@@ -203,7 +205,7 @@ npm install --save-dev --save-exact @glutinum/cli@0.14.1
 npx glue animejs --out-file Glutinum.Animejs.fs
 ```
 
-That command succeeds. The file it writes, however, did not compile unmodified —
+That command succeeds. The file it writes, however, [did not compile unmodified](https://github.com/glutinum-org/cli/issues/220) —
 against `Fable.Core` 5.2.0 and `Glutinum.Web` 0.1.0, `dotnet build` stops at:
 
 ```text
@@ -212,6 +214,9 @@ Glutinum.Animejs.fs(1732,14): error FS0037: Duplicate definition of type, except
 
 Inside one module the generator emits both the real declaration and a
 `type Animatable = obj` placeholder; 18 types in that file collide this way.
+
+That is this package, not the tool in general: Glutinum's `@types/node` binding
+compiles clean.
 
 ### Imports have to resolve
 
@@ -230,7 +235,21 @@ is not defined by "exports"
 Xantham reads the `exports` map and mirrors the public subpaths as nested modules,
 so `animejs/svg` becomes `Animejs.Svg`.
 
-Both tools see the same `animate(targets, params)`.
+`@types/node` 22.20.2 splits the same way for a different reason. All 2,047 of
+Xantham's import sites are `node:`-prefixed — `node:fs`, `node:crypto`,
+`node:stream`. Glutinum emits 2,634, of which 165 point at `undici-types`: a
+types-only package whose directory holds `.d.ts` files and nothing else, with no
+`index.js` and no `undici-types/fetch.js` to import.
+
+```sh
+$ node -e "import('undici-types/fetch.js')"   # ERR_MODULE_NOT_FOUND
+$ node -e "import('node:fs')"                 # resolves
+```
+
+Bare `fs` resolves too, so the prefix on its own is not a defect. It removes the
+ambiguity with an npm package of the same name, and Deno and Bun prefer it.
+
+Back on animejs, both tools read the same `animate(targets, params)`.
 
 ### Unions stay unions
 
