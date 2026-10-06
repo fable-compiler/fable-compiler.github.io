@@ -5,6 +5,9 @@
         "node": ">=18.0.0",
         "npm": ">=7.0.0"
     },
+    "volta": {
+        "node": "22"
+    },
     "type": "module",
     "scripts": {
         "clean": "nacara clean",
