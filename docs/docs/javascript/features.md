@@ -424,6 +424,97 @@ export const regex2 = new RegExp("abc",'g');
 export const regex3 = new RegExp("abc",'gi');
 ```
 
+### Emit shortcuts
+
+Four attributes expand to a fixed `Emit` macro. `$0` is the instance the member is called on, or the type itself for a static member, and `$1`, `$2` are the arguments. `{{=$n}}` is emitted only when the member is used as a setter.
+
+The examples below use this binding:
+
+```fs
+open Fable.Core
+
+type Headers =
+    [<EmitIndexer>]
+    abstract Item: key: string -> string with get, set
+
+    [<EmitProperty("status")>]
+    abstract Status: string with get, set
+
+    [<EmitMethod("append")>]
+    abstract Add: key: string * value: string -> unit
+
+type HeadersCtor =
+    [<EmitConstructor>]
+    abstract Create: unit -> Headers
+
+[<Global("Headers")>]
+let headersCtor: HeadersCtor = jsNative
+
+let headers = headersCtor.Create()
+```
+
+#### `[<EmitIndexer>]`
+
+Same as `[<Emit("$0[$1]{{=$2}}")>]`. Use it on an `Item` property to read and write `obj[key]`.
+
+```fs
+let accept = headers["accept"]
+headers["accept"] <- "text/html"
+```
+
+generates:
+
+```js
+export const accept = headers["accept"];
+
+headers["accept"]="text/html";
+```
+
+#### `[<EmitProperty("...")>]`
+
+Same as `[<Emit("$0.propertyName{{=$1}}")>]`. The argument is the JavaScript property name.
+
+```fs
+let status = headers.Status
+headers.Status <- "application/json"
+```
+
+generates:
+
+```js
+export const status = headers.status;
+
+headers.status="application/json";
+```
+
+#### `[<EmitMethod("...")>]`
+
+Same as `[<Emit("$0.methodName($1...)")>]`. The argument is the JavaScript method name.
+
+```fs
+headers.Add("x-id", "42")
+```
+
+generates:
+
+```js
+headers.append("x-id", "42");
+```
+
+#### `[<EmitConstructor>]`
+
+Same as `[<Emit("new $0($1...)")>]`.
+
+```fs
+let headers = headersCtor.Create()
+```
+
+generates:
+
+```js
+export const headers = new Headers();
+```
+
 ### `emitJsExpr`
 
 <p class="tag is-info is-medium">
