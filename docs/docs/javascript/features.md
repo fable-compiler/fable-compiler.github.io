@@ -256,6 +256,78 @@ importSideEffects "whatwg-fetch"
 // import 'whatwg-fetch'
 ```
 
+### Path macros
+
+A relative import path is resolved from the F# source file. Fable rewrites it so that it stays valid from the location of the generated file. To resolve a path from another location, start it with one of the macros below.
+
+The examples use this project, compiled with `dotnet fable src/App.fsproj -o build/js`:
+
+```
+src/                  project directory, ${entryDir}
+├── App.fsproj
+├── lib/
+│   └── foo.js
+└── Nested/
+    ├── Imp.fs        source file of the examples
+    └── foo.js
+build/js/             output directory, ${outDir}
+├── lib/
+│   └── foo.js
+└── Nested/
+    ├── foo.js
+    └── Imp.js        generated from src/Nested/Imp.fs
+```
+
+Without a macro, `./foo.js` written in `src/Nested/Imp.fs` points to `src/Nested/foo.js`:
+
+```fs
+[<Import("d", "./foo.js")>]
+let d : unit -> unit = jsNative
+```
+
+```js
+import { d } from "../../../src/Nested/foo.js";
+```
+
+#### `${outDir}`
+
+The path is resolved from the output directory given with `-o|--outDir`. Without `--outDir`, it is resolved from the generated file.
+
+```fs
+[<Import("a", "${outDir}/lib/foo.js")>]
+let a : unit -> unit = jsNative
+```
+
+```js
+import { a } from "../lib/foo.js";
+```
+
+#### `${entryDir}`
+
+The path is resolved from the directory of the project file.
+
+```fs
+[<Import("b", "${entryDir}/lib/foo.js")>]
+let b : unit -> unit = jsNative
+```
+
+```js
+import { b } from "../../../src/lib/foo.js";
+```
+
+#### `${outPath}`
+
+The path is resolved from the generated file and is emitted as written.
+
+```fs
+[<Import("c", "${outPath}/foo.js")>]
+let c : unit -> unit = jsNative
+```
+
+```js
+import { c } from "./foo.js";
+```
+
 ## Emit, when F# is not enough
 
 Emit is a feature offered by Fable, that allows you to write JavaScript code directly in F#.

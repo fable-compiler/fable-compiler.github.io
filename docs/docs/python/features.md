@@ -287,6 +287,78 @@ importSideEffects "some_module"
 // import some_module
 ```
 
+### Path macros
+
+A relative import path is resolved from the F# source file. Fable rewrites it so that it stays valid from the location of the generated file. To resolve a path from another location, start it with one of the macros below.
+
+The examples use this project, compiled with `dotnet fable src/App.fsproj --lang python -o build/py`:
+
+```
+src/                  project directory, ${entryDir}
+├── App.fsproj
+├── lib/
+│   └── foo.py
+└── Nested/
+    ├── Imp.fs        source file of the examples
+    └── foo.py
+build/py/             output directory, ${outDir}
+├── lib/
+│   └── foo.py
+└── Nested/
+    ├── foo.py
+    └── imp.py        generated from src/Nested/Imp.fs
+```
+
+Without a macro, `./foo.py` written in `src/Nested/Imp.fs` points to `src/Nested/foo.py`:
+
+```fs
+[<Import("d", "./foo.py")>]
+let d : unit -> unit = nativeOnly
+```
+
+```py
+from ....src.Nested.foo import d
+```
+
+#### `${outDir}`
+
+The path is resolved from the output directory given with `-o|--outDir`. Without `--outDir`, it is resolved from the generated file.
+
+```fs
+[<Import("a", "${outDir}/lib/foo.py")>]
+let a : unit -> unit = nativeOnly
+```
+
+```py
+from ..lib.foo import a
+```
+
+#### `${entryDir}`
+
+The path is resolved from the directory of the project file.
+
+```fs
+[<Import("b", "${entryDir}/lib/foo.py")>]
+let b : unit -> unit = nativeOnly
+```
+
+```py
+from ....src.lib.foo import b
+```
+
+#### `${outPath}`
+
+The path is resolved from the generated file and is emitted as written.
+
+```fs
+[<Import("c", "${outPath}/foo.py")>]
+let c : unit -> unit = nativeOnly
+```
+
+```py
+from .foo import c
+```
+
 ## Emit, when F# is not enough
 
 Emit is a features offered by Fable, that allows you to write Python code directly in F#.
