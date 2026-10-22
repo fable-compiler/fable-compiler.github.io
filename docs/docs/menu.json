@@ -27,7 +27,8 @@
         "label": "Your Fable project",
         "items": [
             "docs/your-fable-project/use-a-fable-library",
-            "docs/your-fable-project/author-a-fable-library"
+            "docs/your-fable-project/author-a-fable-library",
+            "docs/your-fable-project/warnings"
         ]
     },
     {
