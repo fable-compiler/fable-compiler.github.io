@@ -812,6 +812,51 @@ let user =
     ]
 ```
 
+### `keyValueList`
+
+`keyValueList` takes a list of union cases and returns a POJO. The name of each case becomes a key, converted with the given [`CaseRules`](#caserules), and the field of the case becomes the value.
+
+```fs
+open Fable.Core
+open Fable.Core.JsInterop
+
+type Props =
+    | Name of string
+    | Age of int
+    | Active
+    | Size of width: int * height: int
+    | [<CompiledName("data-id")>] DataId of string
+
+let user =
+    keyValueList CaseRules.LowerFirst [
+        Name "Kaladin"
+        Age 20
+        Active
+        Size(10, 20)
+        DataId "42"
+    ]
+```
+
+generates:
+
+```js
+export const user = {
+    name: "Kaladin",
+    age: 20,
+    active: true,
+    size: [10, 20],
+    "data-id": "42",
+};
+```
+
+- A case without fields has the value `true`.
+- A case with several fields has an array as value.
+- `[<CompiledName>]` on a case sets the key.
+- A list written in place is compiled to an object literal. A list built at runtime is converted by a call to `keyValueList` from the Fable library, and each case is an instance of the union class until then.
+- A field holding a list of union cases is not converted. Call `keyValueList` on the nested list first.
+
+The props of [Fable.React](https://github.com/fable-compiler/fable-react/blob/master/docs/using-third-party-react-components.md) use this pattern.
+
 ### `createEmpty`
 
 `createEmpty` is a function that takes a type and returns an empty POJO.
