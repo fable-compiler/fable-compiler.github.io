@@ -139,6 +139,23 @@ match table.TryGetValue(key) with
 | _ -> // ...
 ```
 
+## Globalization
+
+Fable has no culture at runtime. Formatting, parsing and comparison behave as if `CultureInfo.CurrentCulture` were `CultureInfo.InvariantCulture`, whatever the locale of the machine or the browser.
+
+- `CultureInfo.CurrentCulture` and `CultureInfo.GetCultureInfo` are not supported and fail to compile.
+- A `CultureInfo` or `IFormatProvider` argument is accepted and ignored. Fable reports it with warning `FABLE0100` or `FABLE0102`, see [Warnings](/docs/your-fable-project/warnings.html).
+- `ToUpper` and `ToLower` compile to `toLocaleUpperCase` and `toLocaleLowerCase`, which follow the locale of the JavaScript host. Use `ToUpperInvariant` and `ToLowerInvariant` for a culture-independent result.
+
+Expression                                     | .NET with `de-DE` culture | Fable
+-----------------------------------------------|---------------------------|---------------------
+`(1234.5).ToString()`                          | `1234,5`                  | `1234.5`
+`String.Format("{0:N2}", 1234.5)`              | `1.234,50`                | `1,234.50`
+`String.Format("{0:C}", 1234.5)`               | `1.234,50 €`              | `¤1,234.50`
+`DateTime(2026, 10, 22, 13, 5, 0).ToString()`  | `22.10.2026 13:05:00`     | `10/22/2026 13:05:00`
+`Double.Parse("1,5")`                          | `1.5`                     | throws `FormatException`
+`DateTime.Parse("10/22/2026")`                 | throws `FormatException`  | 22 October 2026
+
 ## FSharp.Core
 
 Most of FSharp.Core operators are supported, as well as formatting with `sprintf`, `printfn` or `failwithf` (`String.Format` is also available).

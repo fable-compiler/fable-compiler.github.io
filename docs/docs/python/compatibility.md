@@ -40,6 +40,19 @@ System.Collections.Generic.Dictionary  | dict
 Anonymous Records                      | dict
 Tuples                                 | tuple
 
+## Globalization
+
+Fable has no culture at runtime. Formatting and parsing behave as if `CultureInfo.CurrentCulture` were `CultureInfo.InvariantCulture`, whatever the locale of the machine.
+
+- `CultureInfo.CurrentCulture` and `CultureInfo.GetCultureInfo` are not supported and fail to compile.
+- A `CultureInfo` or `IFormatProvider` argument is accepted and ignored. Fable reports it with warning `FABLE0100` or `FABLE0102`, see [Warnings](/docs/your-fable-project/warnings.html).
+
+Expression               | .NET with `de-DE` culture | Fable
+-------------------------|---------------------------|---------------------
+`(1234.5).ToString()`    | `1234,5`                  | `1234.5`
+`Double.Parse("1,5")`    | `1.5`                     | throws `FormatException`
+`Double.Parse("1.5")`    | `15`                      | `1.5`
+
 ## FSharp.Core
 
 Most of FSharp.Core operators are supported, as well as formatting with `sprintf`, `printfn` or `failwithf`.
