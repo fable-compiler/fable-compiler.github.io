@@ -667,9 +667,9 @@ myFunction !^5 // Equivalent to: myFunction(U2.Case2 5)
 myFunction !^2.3
 ```
 
-:::info
-Please note erased unions are mainly intended for typing the signature of imported JS functions and not as a cheap replacement of `Choice`. It's possible to do pattern matching against an erased union type but this will be compiled as type testing, and since **type testing is very weak in Fable**, this is only recommended if the generic arguments of the erased union are types that can be easily told apart in the JS runtime (like a string, a number and an array).
-:::
+#### Pattern matching
+
+Pattern matching against an erased union compiles to runtime type tests (`typeof`, `instanceof`, `Array.isArray`...).
 
 ```fs
 let test(arg: U3<string, int, float[]>) =
@@ -689,6 +689,121 @@ let test(arg: U3<string, int, float[]>) =
 //   }
 // }
 ```
+
+`U2` to `U9` are not checked by the compiler. Use them with types that can be told apart in the JS runtime, like a string, a number and an array. `U2<int, float>` compiles to the same `typeof` test for both cases.
+
+<p class="tag is-info is-medium">
+    Added in v5.24.0
+</p>
+
+For a union declared with `[<Erase>]`, Fable reports a compile error when two cases cannot be told apart at runtime:
+
+- the same runtime type, like two `string` cases or an `int` and a `float` case
+- a type and one of its subtypes
+- two interfaces with the same required members
+- a `Pojo` class, a generic parameter or `obj`
+
+```
+error FABLE: Cases 'Slug' and 'Name' of 'Id' cannot be told apart at runtime: both have type 'string'. Add a CaseTest attribute to 'Slug' or 'Name'.
+```
+
+Add a [`CaseTest`](#casetest) attribute to all but one case of each group named in the error.
+
+#### Interface cases
+
+<p class="tag is-info is-medium">
+    Added in v5.24.0
+</p>
+
+When a case holds an interface, the test is derived from the required members of the interface, inherited members included. A member declared by one interface only is tested with `in`. Members typed `option` are ignored. Cases holding a type with a runtime test are excluded first, so `in` never runs on a primitive.
+
+```fs
+type Circle =
+    abstract radius: float
+
+type Rect =
+    abstract width: float
+
+[<Erase>]
+type Shape =
+    | Circle of Circle
+    | Rect of Rect
+    | Count of int
+    | Label of string
+
+let area (s: Shape) =
+    match s with
+    | Circle c -> c.radius * c.radius
+    | Rect r -> r.width
+    | Count n -> float n
+    | Label l -> float l.Length
+```
+
+generates:
+
+```js
+export function area(s) {
+    if ((!(typeof s === "number") && !(typeof s === "string")) && ("width" in s)) {
+        return s.width;
+    }
+    else if (typeof s === "number") {
+        return s;
+    }
+    else if (typeof s === "string") {
+        return s.length;
+    }
+    else {
+        const c = s;
+        return c.radius * c.radius;
+    }
+}
+```
+
+Members with an `Emit`, `Import` or `Global` attribute are not used. Mangled interfaces and interfaces from the `System` namespace are not supported and need a `CaseTest`.
+
+#### `CaseTest`
+
+<p class="tag is-info is-medium">
+    Added in v5.24.0
+</p>
+
+`CaseTest` adds a runtime test to a case of an erased union. The test is a JavaScript expression in `Emit` syntax, where `$0` is the tested value. It is combined with the type test of the case using `&&`. When the type of the case has no runtime test, like an interface, the `CaseTest` is used on its own.
+
+```fs
+[<Erase>]
+type Id =
+    | [<CaseTest("$0.startsWith('n:')")>] Name of string
+    | Slug of string
+    | Count of int
+
+let describe (id: Id) =
+    match id with
+    | Name n -> "name " + n
+    | Slug s -> "slug " + s
+    | Count c -> "count " + string c
+```
+
+generates:
+
+```js
+export function describe(id) {
+    if ((typeof id === "string") && (!(id.startsWith('n:')))) {
+        return "slug " + id;
+    }
+    else if (typeof id === "number") {
+        return "count " + int32ToString(id);
+    }
+    else {
+        return "name " + id;
+    }
+}
+```
+
+The test must be true for every value of its case. Its negation is added to the test of the other cases with the same runtime type. A `CaseTest` takes precedence over the test derived from an interface.
+
+`CaseTest` only applies when targeting JavaScript or TypeScript. On other targets, and on a union without `Erase` or `TypeScriptTaggedUnion`, it is ignored and reported as warning `FABLE0116`. See [Warnings](/docs/your-fable-project/warnings.html).
+
+`CaseTest` on `TypeScriptTaggedUnion` cases is documented in [Tagged Unions](/docs/typescript/features.html#casetest).
 
 ### Erased types
 

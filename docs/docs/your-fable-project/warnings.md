@@ -8,7 +8,7 @@ Fable reports a warning when it compiles code whose behaviour differs from .NET.
 Each Fable warning has a code made of `FABLE` followed by four digits. The code is printed in the compiler output:
 
 ```
-src/App.fs(3,0): (3,57) warning FABLE FABLE0100: CultureInfo argument is ignored
+src/App.fs(3,0): (3,57) warning FABLE0100: CultureInfo argument is ignored
 ```
 
 ## Treat warnings as errors
@@ -118,8 +118,9 @@ The complete list is in [WarningCodes.fs](https://github.com/fable-compiler/Fabl
 | `FABLE0113` | Ignoring base call |
 | `FABLE0114` | Only inheriting from primary constructors is supported |
 | `FABLE0115` | Inlined argument is being captured but is also used somewhere else. There's a risk of double evaluation |
-| `FABLE0116` | CaseTest attribute is ignored: it is only supported on TypeScriptTaggedUnion cases |
+| `FABLE0116` | CaseTest attribute is ignored: it is only supported on TypeScriptTaggedUnion and Erase union cases |
 | `FABLE0117` | String.Compare and String.CompareTo will be compiled as String.CompareOrdinal (Rust) |
 | `FABLE0118` | Rust chars are Unicode scalar values, so surrogate tests will be false |
 | `FABLE0119` | Support for F# static and module do bindings is disabled by default (Rust) |
 | `FABLE0120` | Regex flag is not supported in Php |
+| `FABLE0121` | Two cases of a union both compile to the same name |
